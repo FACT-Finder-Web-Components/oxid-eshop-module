@@ -6,7 +6,7 @@ namespace Omikron\FactFinder\Oxid\Model\Db;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
-use octrine\DBAL\Query\QueryBuilder;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Omikron\FactFinder\Oxid\Contract\Db\JoinInterface;
 use Omikron\FactFinder\Oxid\Contract\Db\SelectInterface;
 use Omikron\FactFinder\Oxid\Contract\Db\WhereInterface;
