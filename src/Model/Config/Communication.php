@@ -43,12 +43,17 @@ class Communication implements ParametersSourceInterface
 
     private function getCategoryPath(Category $category, string $param = 'CategoryPath'): string
     {
+        $categories = [$category];
+        while ($parent = $category->getParentCategory()) {
+            $categories[] = $parent;
+            $category = $parent;
+        }
+
         $path  = 'ROOT';
         $value = ['navigation=true'];
-        while ($category) {
-            $value[]  = sprintf("filter{$param}%s=%s", $path, urlencode($category->getTitle()));
+        foreach (array_reverse($categories) as $category) {
+            $value[] = sprintf("filter{$param}%s=%s", $path, urlencode($category->getTitle()));
             $path     .= urlencode('/' . $category->getTitle());
-            $category = $category->getParentCategory();
         }
         return implode(',', $value);
     }
