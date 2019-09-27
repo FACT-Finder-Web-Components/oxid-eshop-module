@@ -7,7 +7,7 @@ define('OX_IS_ADMIN', true);
 use Omikron\FactFinder\Oxid\Model\ArticleFeed;
 use Omikron\FactFinder\Oxid\Model\Export\FileWriter;
 
-if (!isset($_SERVER["HTTP_HOST"])) {
+if (!isset($_SERVER['HTTP_HOST'])) {
     parse_str($argv[1], $_GET);
     parse_str($argv[1], $_POST);
 }
