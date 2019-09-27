@@ -47,7 +47,7 @@ class CategoryPath implements FieldModifierInterface
         return implode('|', $paths);
     }
 
-    private function getCategoryById(string $id = ''): Category
+    private function getCategoryById(string $id): Category
     {
         $category = oxNew(Category::class);
         if (!$category->load($id)) {
