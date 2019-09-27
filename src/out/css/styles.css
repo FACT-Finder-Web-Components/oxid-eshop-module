@@ -1,4 +1,4 @@
-.ff-asn, .ff-asn .h4 { font-weight: 300; }
+.ff-asn, .ff-asn .h4 { font-weight: 300; cursor: pointer }
 ff-asn-group, ff-asn-group-slider { max-width: none; min-width: auto; }
 
 .boxwrapper .toolbar { margin-bottom: 2rem; }
