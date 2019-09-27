@@ -39,7 +39,7 @@ class CategoryPath implements FieldModifierInterface
 
                 if (!empty($path)) {
                     $this->cachedPaths[$pathId] = implode('/', array_reverse($path));
-                    $paths[] = $this->cachedPaths[$pathId];
+                    $paths[]                    = $this->cachedPaths[$pathId];
                 }
             }
         }
