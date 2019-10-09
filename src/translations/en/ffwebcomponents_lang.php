@@ -13,4 +13,6 @@ $aLang = [
     'FF_SEARCH_SUGGESTIONS'   => 'Search Suggestions',
     'FF_SUGGESTED_PRODUCTS'   => 'Suggested Products',
     'FF_YOUR_SEARCH_FOR'      => 'Your search for:',
+    'FF_RECOMMENDATION'       => 'Recommended Products',
+    'FF_SIMILAR_PRODUCTS'     => 'Similar Products',
 ];
