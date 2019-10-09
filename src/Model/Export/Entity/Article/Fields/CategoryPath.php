@@ -34,6 +34,7 @@ class CategoryPath implements FieldModifierInterface
                     $path[] = $category->oxcategories__oxtitle->value;
                     $category = $this->getCategoryById($category->oxcategories__oxparentid->value);
                 }
+                $path[] = $category->oxcategories__oxtitle->value;
                 if (!empty($path)) {
                     $this->cachedPaths[$pathId] = implode('/', array_reverse($path));
                     $paths[] = $this->cachedPaths[$pathId];
