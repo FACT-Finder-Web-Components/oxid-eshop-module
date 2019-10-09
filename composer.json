@@ -22,7 +22,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Omikron\\FactFinder\\Oxid\\": "src"
+      "Omikron\\FactFinder\\Oxid\\": "../../../source/modules/ff/ffwebcomponents"
     }
   },
   "extra": {
