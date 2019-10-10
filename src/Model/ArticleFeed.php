@@ -50,11 +50,7 @@ class ArticleFeed
     public function generate(): File
     {
         $this->output->addEntity($this->articleCollection->getFields());
-        return $this->exporter->export($this->articleCollection, $this->output, [
-            oxNew(ArticleUrl::class),
-            oxNew(ImageUrl::class),
-            oxNew(CategoryPath::class),
-        ]);
+        return $this->exporter->export($this->articleCollection, $this->output, $this->getFieldModifiers());
     }
 
     public function getFileName(): string
@@ -62,5 +58,14 @@ class ArticleFeed
         $extPos = strrpos($this->fileName, '.');
         return substr($this->fileName, 0, $extPos) . '_' . $this->config->getShopId() .
             '_' . $this->language->getLanguageAbbr() . substr($this->fileName, $extPos);
+    }
+
+    protected function getFieldModifiers(): array
+    {
+        return [
+            oxNew(ArticleUrl::class),
+            oxNew(ImageUrl::class),
+            oxNew(CategoryPath::class),
+        ];
     }
 }
