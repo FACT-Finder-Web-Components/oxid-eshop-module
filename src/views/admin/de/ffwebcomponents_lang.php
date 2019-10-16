@@ -16,7 +16,6 @@ $aLang = [
     'SHOP_MODULE_ffApiVersion_7.2'            => '7.2',
     'SHOP_MODULE_ffApiVersion_7.3'            => '7.3',
     'SHOP_MODULE_ffUseUrlParams'              => 'URL-Parameter benutzen?',
-    'SHOP_MODULE_ffUseBrowserCache'           => 'Use browser cache?',
     'SHOP_MODULE_ffAddSearchParams'           => 'Add search params',
     'SHOP_MODULE_ffDisableSingleHit'          => 'Disable single hit redirects',
     'SHOP_MODULE_GROUP_ffFeatures'            => 'Features Settings',

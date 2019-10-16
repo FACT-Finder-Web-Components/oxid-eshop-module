@@ -11,11 +11,8 @@ abstract class AbstractEntity
 
     public function __construct(array $data = [])
     {
-        $this->data = $data;
-        //cast all values to string in case of NULL value is fetched from db
-        array_walk($data, function ($value, $key) {
-            $this->data[$key] = (string) $value;
-        });
+        // Cast all values to string in case NULL is fetched from the DB
+        $this->data = array_map('strval', $data);
     }
 
     public function setData(string $key, string $value = '')
@@ -29,9 +26,8 @@ abstract class AbstractEntity
     {
         if (substr($method, 0, 3) == 'get') {
             $key = substr($method, 3);
-            return isset($this->data[$key]) ? $this->data[$key] : '';
+            return $this->data[$key] ?? '';
         }
-
         return '';
     }
 

@@ -27,11 +27,13 @@ class Communication implements ParametersSourceInterface
             'channel'                     => $this->getConfig('ffChannel'),
             'use-url-parameter'           => $this->getConfig('ffUseUrlParams') ? 'true' : 'false',
             'disable-single-hit-redirect' => $this->getConfig('ffDisableSingleHit') ? 'true' : 'false',
-            'use-browser-history'         => $this->getConfig('ffUseBrowserCache') ? 'true' : 'false',
             'currency-code'               => $this->view->getActCurrency()->name,
             'currency-country-code'       => $this->getLocale($this->view->getActiveLangAbbr()),
             'add-params'                  => $this->useForCategories() ? $this->getCategoryPath($category) : '',
             'search-immediate'            => $this->isSearch() || $this->useForCategories() ? 'true' : 'false',
+            'keep-url-params'             => 'true',
+            'only-search-params'          => 'true',
+            'use-browser-history'         => 'true',
         ];
     }
 

@@ -12,6 +12,7 @@ document.addEventListener('ffReady', function () {
 [{if $oView->getClassKey() neq 'search_result'}]
     factfinder.communication.FFCommunicationEventAggregator.addBeforeDispatchingCallback(function (event) {
         if (event.type === 'search' && !event.__immediate) {
+            delete event.type;
             window.location = '[{$oViewConf->getHomeLink()|escape:"javascript"}]' + factfinder.common.dictToParameterString(event) + '&cl=search_result';
         }
     });
