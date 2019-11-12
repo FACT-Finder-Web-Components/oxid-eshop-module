@@ -25,26 +25,26 @@ class Base implements SelectInterface
 
     public function __construct()
     {
-        $this->articleView = getViewName('oxarticles');
+        $this->articleView         = getViewName('oxarticles');
         $this->object2CategoryView = getViewName('oxobject2category');
-        $this->manufacturerView = getViewName('oxmanufacturers');
-        $this->articleExtendView = getViewName('oxartextends');
+        $this->manufacturerView    = getViewName('oxmanufacturers');
+        $this->articleExtendView   = getViewName('oxartextends');
     }
 
     public function getFields(): array
     {
         return [
-            'Master' => "{$this->articleView}.oxid as Master",
-            'Name' => "{$this->articleView}.oxtitle as Name",
-            'ImageUrl' => "{$this->articleView}.oxpic1  as ImageUrl",
-            'Short' => "{$this->articleView}.oxshortdesc as Short",
-            'ProductNumber' => "{$this->articleView}.oxartnum as ProductNumber",
-            'Description' => "{$this->articleExtendView}.oxlongdesc as Description",
-            'ArticleUrl' => "{$this->seoTable}.oxseourl as ArticleUrl",
-            'Brand' => "{$this->manufacturerView}.oxtitle as Manufacturer",
-            'Availability' => "if ({$this->articleView}.oxvarcount > 0, 1, 0) as Availability",
-            'OxidId' => "{$this->articleView}.oxid as OxidId",
-            'CategoryPath' => "GROUP_CONCAT(DISTINCT {$this->object2CategoryView}.oxcatnid SEPARATOR ',') as CategoryPath",
+            'Master'        => "{$this->articleView}.oxid",
+            'Name'          => "{$this->articleView}.oxtitle",
+            'ImageUrl'      => "{$this->articleView}.oxpic1",
+            'Short'         => "{$this->articleView}.oxshortdesc",
+            'ProductNumber' => "{$this->articleView}.oxartnum",
+            'Description'   => "{$this->articleExtendView}.oxlongdesc",
+            'ArticleUrl'    => "{$this->seoTable}.oxseourl",
+            'Brand'         => "{$this->manufacturerView}.oxtitle",
+            'Availability'  => "IF({$this->articleView}.oxvarcount > 0, 1, 0)",
+            'OxidId'        => "{$this->articleView}.oxid",
+            'CategoryPath'  => "GROUP_CONCAT(DISTINCT {$this->object2CategoryView}.oxcatnid SEPARATOR ',')",
         ];
     }
 }

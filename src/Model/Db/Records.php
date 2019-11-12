@@ -71,17 +71,24 @@ class Records
     private function getQuery(): string
     {
         if ($this->query == '') {
-            $this->queryBuilder->select($this->select->getFields())
+            $this->queryBuilder->select($this->getFields($this->select))
                 ->from($this->from, $this->from)
                 ->where(new CompositeExpression(CompositeExpression::TYPE_AND, $this->where->getClause()))
                 ->add('join', $this->join->getJoin());
             if ($this->groupBy != '') {
                 $this->queryBuilder->groupBy($this->groupBy);
             }
-
-            $this->query = $this->queryBuilder->__toString();
+            $this->query = $this->queryBuilder->getSQL();
         }
-
         return $this->query;
+    }
+
+    private function getFields(SelectInterface $select): array
+    {
+        $fields = [];
+        foreach ($select->getFields() as $key => $value) {
+            $fields[$key] = $value . ' AS ' . $key;
+        }
+        return $fields;
     }
 }

@@ -27,22 +27,22 @@ class Article extends AbstractEntity implements DataProviderInterface, ExportEnt
 
     public function toArray(): array
     {
-        if ($this->getAttributes() != '') {
-            $this->attributes[] = $this->getAttributes();
-        }
-        $this->setData('Attributes', !empty($this->attributes) ? ('|' . implode('|', $this->attributes) . '|') : '');
-
+        $attributes = array_unique(array_filter(array_reduce($this->attributes, function (array $result, string $item) {
+            array_push($result, '', ...explode('|', $item));
+            return $result;
+        }, [])));
+        $this->setData('Attributes', $attributes ? ('|' . implode('|', $attributes) . '|') : '');
         return $this->data;
     }
 
     public function getEntities(): iterable
     {
+        $this->attributes = [$this->getOxidId() => $this->getAttributes()];
         foreach ($this->variantRecords->getRecords() as $articleRow) {
             $variant = new Variant($articleRow);
-            if ($variant->getAttributes() != '') {
-                $this->attributes[$variant->getOxidId()] = $variant->getAttributes();
-            }
             yield $variant;
+            $this->attributes[$variant->getOxidId()] = $variant->getAttributes();
         }
+        yield $this;
     }
 }

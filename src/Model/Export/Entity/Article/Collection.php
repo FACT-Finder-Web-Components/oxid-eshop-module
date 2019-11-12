@@ -25,7 +25,6 @@ class Collection implements DataProviderInterface, ColumnProviderInterface
         foreach ($this->records->getRecords() as $articleRow) {
             $parent = new Article($articleRow);
             yield from $parent->getEntities();
-            yield $parent;
         }
     }
 

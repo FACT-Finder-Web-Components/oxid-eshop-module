@@ -15,10 +15,10 @@ class Base extends ParentBase implements SelectInterface
         $parentArticleTable = ParentArticle::PARENT_ARTICLE_ALIAS;
 
         return [
-                'Master' => "{$this->articleView}.oxparentid as Master",
-                'Name' => "$parentArticleTable.oxtitle as Name",
-                'ImageUrl' => "if ({$this->articleView}.oxpic1 = '', $parentArticleTable.oxpic1, {$this->articleView}.oxpic1) as ImageUrl",
-                'Short' => "$parentArticleTable.oxshortdesc as Short"
+                'Master'   => "{$this->articleView}.oxparentid",
+                'Name'     => "$parentArticleTable.oxtitle",
+                'ImageUrl' => "if ({$this->articleView}.oxpic1 = '', $parentArticleTable.oxpic1, {$this->articleView}.oxpic1)",
+                'Short'    => "$parentArticleTable.oxshortdesc",
             ] + parent::getFields();
     }
 }

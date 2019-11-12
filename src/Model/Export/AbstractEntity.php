@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Model\Export;
 
+/**
+ * @method string getAttributes()
+ * @method string getOxidId()
+ */
 abstract class AbstractEntity
 {
     /** @var array */
@@ -18,7 +22,6 @@ abstract class AbstractEntity
     public function setData(string $key, string $value = '')
     {
         $this->data[$key] = $value;
-
         return $this;
     }
 
