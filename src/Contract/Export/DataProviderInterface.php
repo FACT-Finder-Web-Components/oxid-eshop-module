@@ -2,12 +2,14 @@
 
 namespace Omikron\FactFinder\Oxid\Contract\Export;
 
+use Iterator;
+
 interface DataProviderInterface
 {
     /**
      * Iterate trough entities to be exported
      *
-     * @return iterable
+     * @return Iterator
      */
-    public function getEntities(): iterable;
+    public function getEntities(): Iterator;
 }

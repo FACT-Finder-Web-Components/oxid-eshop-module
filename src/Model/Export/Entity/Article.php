@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Model\Export\Entity;
 
+use Iterator;
 use Omikron\FactFinder\Oxid\Contract\Export\DataProviderInterface;
 use Omikron\FactFinder\Oxid\Contract\Export\ExportEntityInterface;
 use Omikron\FactFinder\Oxid\Model\Db\Article\Variant\RecordsFactory as VariantRecordFactory;
@@ -35,7 +36,7 @@ class Article extends AbstractEntity implements DataProviderInterface, ExportEnt
         return $this->data;
     }
 
-    public function getEntities(): iterable
+    public function getEntities(): Iterator
     {
         $this->attributes = [$this->getOxidId() => $this->getAttributes()];
         foreach ($this->variantRecords->getRecords() as $articleRow) {
