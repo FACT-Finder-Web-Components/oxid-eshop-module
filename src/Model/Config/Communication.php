@@ -34,7 +34,7 @@ class Communication implements ParametersSourceInterface
             'keep-url-params'             => 'true',
             'only-search-params'          => 'true',
             'use-browser-history'         => 'true',
-        ];
+        ] + ($this->getConfig('ffApiVersion') === 'NG' ? ['api' => 'v3'] : []);
     }
 
     private function getLocale(string $abbr): string
@@ -49,6 +49,14 @@ class Communication implements ParametersSourceInterface
         while ($parent = $category->getParentCategory()) {
             $categories[] = $parent;
             $category     = $parent;
+        }
+
+        if ($this->getConfig('ffApiVersion') === 'NG') {
+            $path = implode('/', array_map(function (Category $category) {
+                return $category->getTitle();
+            }, array_reverse($categories)));
+
+            return sprintf("navigation=true,filter=%s:%s", urlencode($param), urlencode($path));
         }
 
         $path  = 'ROOT';
