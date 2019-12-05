@@ -50,8 +50,7 @@ class ArticleFeedController extends AdminController
             $this->addTranslatedMessage('FF_ARTICLE_FEED_IMPORT_TRIGGERED');
             $this->success = true;
         } catch (\Exception $e) {
-            $this->result  = $e->getMessage();
-            $this->success = false;
+            $this->result = $e->getMessage();
         }
     }
 

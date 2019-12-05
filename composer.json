@@ -14,8 +14,7 @@
     "php": "^7.0",
     "ext-json": "*",
     "ext-ftp": "*",
-    "guzzle/http": "~3.1",
-    "symfony/http-foundation": "^4.3"
+    "guzzle/http": "~3.1"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.4"

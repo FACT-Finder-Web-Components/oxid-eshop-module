@@ -56,7 +56,7 @@ class Communication implements ParametersSourceInterface
                 return $category->getTitle();
             }, array_reverse($categories)));
 
-            return sprintf("navigation=true,filter=%s:%s", urlencode($param), urlencode($path));
+            return sprintf('navigation=true,filter=%s:%s', urlencode($param), urlencode($path));
         }
 
         $path  = 'ROOT';
