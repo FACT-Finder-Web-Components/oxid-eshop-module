@@ -11,7 +11,7 @@ use OxidEsales\Eshop\Application\Model\Category;
 class Communication implements ParametersSourceInterface
 {
     /** @var FrontendController */
-    private $view;
+    protected $view;
 
     public function __construct(FrontendController $view)
     {
@@ -22,28 +22,28 @@ class Communication implements ParametersSourceInterface
     {
         $category = $this->view->getActiveCategory();
         return [
-            'url'                         => $this->getConfig('ffServerUrl'),
-            'version'                     => $this->getConfig('ffApiVersion'),
-            'channel'                     => $this->getConfig('ffChannel'),
-            'use-url-parameter'           => $this->getConfig('ffUseUrlParams') ? 'true' : 'false',
-            'disable-single-hit-redirect' => $this->getConfig('ffDisableSingleHit') ? 'true' : 'false',
-            'currency-code'               => $this->view->getActCurrency()->name,
-            'currency-country-code'       => $this->getLocale($this->view->getActiveLangAbbr()),
-            'add-params'                  => $this->useForCategories() ? $this->getCategoryPath($category) : '',
-            'search-immediate'            => $this->isSearch() || $this->useForCategories() ? 'true' : 'false',
-            'keep-url-params'             => 'true',
-            'only-search-params'          => 'true',
-            'use-browser-history'         => 'true',
-        ] + ($this->getConfig('ffApiVersion') === 'NG' ? ['api' => 'v3'] : []);
+                'url'                         => $this->getConfig('ffServerUrl'),
+                'version'                     => $this->getConfig('ffApiVersion'),
+                'channel'                     => $this->getConfig('ffChannel'),
+                'use-url-parameter'           => $this->getConfig('ffUseUrlParams') ? 'true' : 'false',
+                'disable-single-hit-redirect' => $this->getConfig('ffDisableSingleHit') ? 'true' : 'false',
+                'currency-code'               => $this->view->getActCurrency()->name,
+                'currency-country-code'       => $this->getLocale($this->view->getActiveLangAbbr()),
+                'add-params'                  => $this->useForCategories() ? $this->getCategoryPath($category) : '',
+                'search-immediate'            => $this->isSearch() || $this->useForCategories() ? 'true' : 'false',
+                'keep-url-params'             => 'true',
+                'only-search-params'          => 'true',
+                'use-browser-history'         => 'true',
+            ] + ($this->getConfig('ffApiVersion') === 'NG' ? ['api' => 'v3'] : []);
     }
 
-    private function getLocale(string $abbr): string
+    protected function getLocale(string $abbr): string
     {
         $locales = ['de' => 'de-DE', 'en' => 'en-US'];
         return $locales[$abbr] ?? $locales['en'];
     }
 
-    private function getCategoryPath(Category $category, string $param = 'CategoryPath'): string
+    protected function getCategoryPath(Category $category, string $param = 'CategoryPath'): string
     {
         $categories = [$category];
         while ($parent = $category->getParentCategory()) {
@@ -68,17 +68,17 @@ class Communication implements ParametersSourceInterface
         return implode(',', $value);
     }
 
-    private function getConfig(string $name)
+    protected function getConfig(string $name)
     {
         return $this->view->getConfig()->getConfigParam($name);
     }
 
-    private function isSearch(): bool
+    protected function isSearch(): bool
     {
         return $this->view->getActionClassName() === 'search_result';
     }
 
-    private function useForCategories(): bool
+    protected function useForCategories(): bool
     {
         return $this->getConfig('ffUseForCategories') && $this->view->getActionClassName() === 'alist';
     }
