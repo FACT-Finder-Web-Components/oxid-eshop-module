@@ -18,19 +18,19 @@ class ArticleFeedController extends AdminController
     protected $_sThisTemplate = 'admin/page/ajax_result.tpl';
 
     /** @var FtpClient */
-    private $ftpClient;
+    protected $ftpClient;
 
     /** @var ArticleFeed */
-    private $articleFeed;
+    protected $articleFeed;
 
     /** @var PushImport */
-    private $pushImport;
+    protected $pushImport;
 
     /** @var array */
-    private $result = [];
+    protected $result = [];
 
     /** @var bool */
-    private $success = false;
+    protected $success = false;
 
     public function __construct()
     {
@@ -44,13 +44,16 @@ class ArticleFeedController extends AdminController
         try {
             $file = $this->articleFeed->generate();
             $this->addTranslatedMessage('FF_ARTICLE_FEED_EXPORT_SUCCESS');
+
             $this->ftpClient->upload($file, $this->articleFeed->getFileName());
             $this->addTranslatedMessage('FF_ARTICLE_FEED_UPLOAD_SUCCESS');
+
             $this->pushImport->execute();
             $this->addTranslatedMessage('FF_ARTICLE_FEED_IMPORT_TRIGGERED');
+
             $this->success = true;
         } catch (\Exception $e) {
-            $this->result = $e->getMessage();
+            $this->result = [$e->getMessage()];
         }
     }
 
@@ -61,8 +64,8 @@ class ArticleFeedController extends AdminController
         return parent::render();
     }
 
-    private function addTranslatedMessage(string $messageCode)
+    protected function addTranslatedMessage(string $message)
     {
-        $this->result[] = Registry::getLang()->translateString($messageCode, null, true);
+        $this->result[] = Registry::getLang()->translateString($message, null, true);
     }
 }
