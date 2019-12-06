@@ -11,9 +11,10 @@ interface ClientInterface
      *
      * @param string $endpoint
      * @param array  $params
+     * @param array  $headers
      *
      * @return array
      * @throws ResponseException
      */
-    public function sendRequest(string $endpoint, array $params): array;
+    public function sendRequest(string $endpoint, array $params, array $headers): array;
 }

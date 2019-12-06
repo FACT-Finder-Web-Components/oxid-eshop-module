@@ -15,9 +15,13 @@ class TestConnection
     /** @var string */
     private $apiQuery = 'FACT-Finder version';
 
-    public function __construct(ClientFactory $clientFactory)
+    /** @var string */
+    private $version;
+
+    public function __construct(ClientInterface $client, string $version)
     {
-        $this->apiClient = $clientFactory->create();
+        $this->apiClient = $client;
+        $this->version   = $version;
     }
 
     /**
@@ -26,8 +30,20 @@ class TestConnection
      *
      * @throws ResponseException
      */
-    public function execute(string $endpoint, array $params)
+    public function execute(string $serverUrl, string $channel, Credentials $credentials)
     {
-        $this->apiClient->sendRequest(rtrim($endpoint, '/') . '/Search.ff', $params + ['query' => $this->apiQuery]);
+        switch ($this->version) {
+            case 'NG':
+                $endpoint = sprintf('%s/rest/v3/search/%s', rtrim($serverUrl), $channel);
+                $this->apiClient->sendRequest($endpoint, ['query' => $this->apiQuery], [
+                    'Authorization' => 'Basic ' . $credentials->toBasicAuth(),
+                ]);
+                break;
+
+            default:
+                $params = ['channel' => $channel, 'query' => $this->apiClient] + $credentials->toArray();
+                $this->apiClient->sendRequest(rtrim($serverUrl, '/') . '/Search.ff', $params);
+                break;
+        }
     }
 }

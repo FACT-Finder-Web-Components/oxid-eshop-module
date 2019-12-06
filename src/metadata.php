@@ -129,7 +129,7 @@ $aModule = [
             'position' => $settingPosition++,
         ],
         [
-            'group'       => 'ffAdvanced',
+            'group'       => 'ffMain',
             'name'        => 'ffApiVersion',
             'type'        => 'select',
             'value'       => '7.3',

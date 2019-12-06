@@ -17,33 +17,17 @@ class TestConnectionController extends AdminController
     /** @var string */
     protected $_sThisTemplate = 'admin/page/ajax_result.tpl';
 
-    /** @var TestConnection */
-    private $testConnection;
-
-    /** @var Request */
-    private $request;
-
     /** @var string */
     private $result = '';
 
     /** @var bool */
     private $success = false;
 
-    public function __construct()
-    {
-        parent::__construct();
-        $this->testConnection = new TestConnection(new ClientFactory());
-        $this->request        = Registry::get(Request::class);
-    }
-
     public function testConnection()
     {
-        $params = ['channel' => $this->request->getRequestEscapedParameter('channel'), 'verbose' => true];
         try {
-            $this->testConnection->execute(
-                $this->request->getRequestEscapedParameter('serverUrl'),
-                $params + $this->getCredentials()->toArray()
-            );
+            $testConnection = oxNew(TestConnection::class, oxNew(ClientFactory::class)->create(), $this->param('version'));
+            $testConnection->execute($this->param('serverUrl'), $this->param('channel'), $this->getCredentials());
             $this->result  = Registry::getLang()->translateString('FF_TEST_CONNECTION_SUCCESS', null, true);
             $this->success = true;
         } catch (ResponseException $e) {
@@ -60,16 +44,20 @@ class TestConnectionController extends AdminController
         return $ret;
     }
 
-    /**
-     * @return Credentials
-     */
-    private function getCredentials(): Credentials
+    protected function getCredentials(): Credentials
     {
         return new Credentials(
-            $this->request->getRequestEscapedParameter('username'),
-            $this->request->getRequestEscapedParameter('password'),
-            $this->request->getRequestEscapedParameter('prefix'),
-            $this->request->getRequestEscapedParameter('postfix')
+            $this->param('username'),
+            $this->param('password'),
+            $this->param('prefix'),
+            $this->param('postfix')
         );
+    }
+
+    protected function param(string $key): string
+    {
+        /** @var Request $request */
+        $request = Registry::get(Request::class);
+        return (string) $request->getRequestEscapedParameter($key);
     }
 }

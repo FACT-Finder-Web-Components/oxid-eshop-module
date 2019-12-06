@@ -6,7 +6,6 @@ namespace Omikron\FactFinder\Oxid\Model\Api;
 
 use Guzzle\Http\Client as HttpClient;
 use Guzzle\Http\Exception\ServerErrorResponseException;
-use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
 use Omikron\FactFinder\Oxid\Contract\Api\ClientInterface;
 use Omikron\FactFinder\Oxid\Contract\Api\SerializerInterface;
@@ -26,43 +25,34 @@ class Client implements ClientInterface
 
     public function __construct(SerializerInterface $serializer)
     {
-        $this->serializer = $serializer;
+        $this->serializer          = $serializer;
         $this->authorizationParams = new Authorization();
-        $this->client = new HttpClient();
+        $this->client              = new HttpClient();
     }
 
     /**
      * @inheritDoc
      */
-    public function sendRequest(string $endpoint, array $params = []): array
+    public function sendRequest(string $endpoint, array $params = [], array $headers = []): array
     {
-        $params = ['format' => 'json'] + $params + $this->getCredentials()->toArray();
+        $params = ['format' => 'json'] + $params;
         $query  = preg_replace('#products%5B\d+%5D%5B(.+?)%5D=#', '\1=', http_build_query($params));
         try {
-            /** @var RequestInterface */
-            $request = $this->client->get($endpoint . '?' . $query, ['Accept' => 'application/json']);
-            /** @var Response $response */
+            $request  = $this->client->get($endpoint . '?' . $query, ['Accept' => 'application/json'] + $headers);
             $response = $request->send();
-            if ($response->getStatusCode() >= 200 && $response->getStatusCode() < 300) {
+            if ($response->isSuccessful()) {
                 return $this->serializer->unserialize((string) $response->getBody());
             }
+
+            $this->badRequest($response);
         } catch (ServerErrorResponseException $e) {
             $this->badRequest($e->getResponse());
         } catch (\Exception $e) {
             throw new ResponseException($e->getMessage()); // When request didn't take place
         }
-        $this->badRequest($response);
     }
 
-    /**
-     * @return Credentials
-     */
-    private function getCredentials(): Credentials
-    {
-        return new Credentials(...$this->authorizationParams->getParameters());
-    }
-
-    private function badRequest(Response $response)
+    protected function badRequest(Response $response)
     {
         $errorMessage = current($this->serializer->unserialize((string) $response->getBody()));
         throw new ResponseException((isset($errorMessage['error']) ? $errorMessage['error'] : $errorMessage), $response->getStatusCode());
