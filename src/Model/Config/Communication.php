@@ -22,19 +22,20 @@ class Communication implements ParametersSourceInterface
     {
         $category = $this->view->getActiveCategory();
         return [
-                'url'                         => $this->getConfig('ffServerUrl'),
-                'version'                     => $this->getConfig('ffApiVersion'),
-                'channel'                     => $this->getConfig('ffChannel'),
-                'use-url-parameter'           => $this->getConfig('ffUseUrlParams') ? 'true' : 'false',
-                'disable-single-hit-redirect' => $this->getConfig('ffDisableSingleHit') ? 'true' : 'false',
-                'currency-code'               => $this->view->getActCurrency()->name,
-                'currency-country-code'       => $this->getLocale($this->view->getActiveLangAbbr()),
-                'add-params'                  => $this->useForCategories() ? $this->getCategoryPath($category) : '',
-                'search-immediate'            => $this->isSearch() || $this->useForCategories() ? 'true' : 'false',
-                'keep-url-params'             => 'true',
-                'only-search-params'          => 'true',
-                'use-browser-history'         => 'true',
-            ] + ($this->getConfig('ffApiVersion') === 'NG' ? ['api' => 'v3'] : []);
+            'url'                         => $this->getConfig('ffServerUrl'),
+            'version'                     => $this->getConfig('ffApiVersion'),
+            'api'                         => $this->getConfig('ffApiVersion') ? 'v3' : '',
+            'channel'                     => $this->getConfig('ffChannel'),
+            'use-url-parameter'           => $this->getConfig('ffUseUrlParams') ? 'true' : 'false',
+            'disable-single-hit-redirect' => $this->getConfig('ffDisableSingleHit') ? 'true' : 'false',
+            'currency-code'               => $this->view->getActCurrency()->name,
+            'currency-country-code'       => $this->getLocale($this->view->getActiveLangAbbr()),
+            'add-params'                  => $this->useForCategories() ? $this->getCategoryPath($category) : '',
+            'search-immediate'            => $this->isSearch() || $this->useForCategories() ? 'true' : 'false',
+            'keep-url-params'             => 'true',
+            'only-search-params'          => 'true',
+            'use-browser-history'         => 'true',
+        ];
     }
 
     protected function getLocale(string $abbr): string
