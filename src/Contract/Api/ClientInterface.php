@@ -2,7 +2,7 @@
 
 namespace Omikron\FactFinder\Oxid\Contract\Api;
 
-use Omikron\Factfinder\Oxid\Exception\ResponseException;
+use Omikron\FactFinder\Oxid\Exception\ResponseException;
 
 interface ClientInterface
 {
@@ -16,5 +16,18 @@ interface ClientInterface
      * @return array
      * @throws ResponseException
      */
-    public function sendRequest(string $endpoint, array $params, array $headers): array;
+    public function sendRequest(string $endpoint, array $params, array $headers = []): array;
+
+    /**
+     * Sends HTTP POST request to FACT-Finder. Returns the parsed server response.
+     *
+     * @param string $endpoint
+     * @param array  $params
+     * @param array  $headers
+     * @param string $method
+     *
+     * @return array
+     * @throws ResponseException
+     */
+    public function postRequest(string $endpoint, array $params, array $headers = []): array;
 }

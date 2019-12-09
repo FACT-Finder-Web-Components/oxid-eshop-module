@@ -7,7 +7,7 @@ namespace Omikron\FactFinder\Oxid\Controller\Admin;
 use Omikron\FactFinder\Oxid\Exception\ResponseException;
 use Omikron\FactFinder\Oxid\Model\Api\ClientFactory;
 use Omikron\FactFinder\Oxid\Model\Api\Credentials;
-use Omikron\FactFinder\Oxid\Model\Api\TestConnection;
+use Omikron\FactFinder\Oxid\Model\Api\Resource\Builder as ResourceBuilder;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Request;
@@ -18,21 +18,27 @@ class TestConnectionController extends AdminController
     protected $_sThisTemplate = 'admin/page/ajax_result.tpl';
 
     /** @var string */
-    private $result = '';
+    protected $result = '';
 
     /** @var bool */
-    private $success = false;
+    protected $success = false;
 
     public function testConnection()
     {
         try {
-            $testConnection = oxNew(TestConnection::class, oxNew(ClientFactory::class)->create(), $this->param('version'));
-            $testConnection->execute($this->param('serverUrl'), $this->param('channel'), $this->getCredentials());
-            $this->result  = Registry::getLang()->translateString('FF_TEST_CONNECTION_SUCCESS', null, true);
+            $resource = oxNew(ResourceBuilder::class)
+                ->withServerUrl($this->param('serverUrl'))
+                ->withApiVersion($this->param('version'))
+                ->withCredentials($this->getCredentials())
+                ->withClient(oxNew(ClientFactory::class)->create())
+                ->build();
+
+            $resource->search('FACT-Finder version', $this->param('channel'));
+
             $this->success = true;
+            $this->result  = Registry::getLang()->translateString('FF_TEST_CONNECTION_SUCCESS', null, true);
         } catch (ResponseException $e) {
-            $this->result  = $e->getMessage();
-            $this->success = false;
+            $this->result = $e->getMessage();
         }
     }
 
@@ -46,12 +52,7 @@ class TestConnectionController extends AdminController
 
     protected function getCredentials(): Credentials
     {
-        return new Credentials(
-            $this->param('username'),
-            $this->param('password'),
-            $this->param('prefix'),
-            $this->param('postfix')
-        );
+        return new Credentials(...array_map([$this, 'param'], ['username', 'password', 'prefix', 'postfix']));
     }
 
     protected function param(string $key): string

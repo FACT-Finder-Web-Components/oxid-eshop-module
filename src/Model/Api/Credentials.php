@@ -46,7 +46,7 @@ class Credentials
 
     public function toBasicAuth(): string
     {
-        return base64_encode("{$this->username}:{$this->password}");
+        return 'Basic ' . base64_encode("{$this->username}:{$this->password}");
     }
 
     public function __toString(): string
