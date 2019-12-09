@@ -24,7 +24,6 @@ interface ClientInterface
      * @param string $endpoint
      * @param array  $params
      * @param array  $headers
-     * @param string $method
      *
      * @return array
      * @throws ResponseException
