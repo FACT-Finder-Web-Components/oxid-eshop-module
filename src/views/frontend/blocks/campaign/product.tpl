@@ -1,5 +1,6 @@
 [{$smarty.block.parent}]
 
+[{assign var="oConfig" value=$oViewConf->getConfig()}]
 [{assign var="recordId" value=$oView->getProduct()|record_id}]
 
 [{if $oConfig->getConfigParam("ffCampaigns")}]

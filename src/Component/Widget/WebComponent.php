@@ -11,6 +11,6 @@ class WebComponent extends WidgetController
 {
     public function getCommunicationParams(): array
     {
-        return oxNew(CommunicationConfig::class, $this->getConfig()->getTopActiveView())->getParameters();
+        return array_filter(oxNew(CommunicationConfig::class, $this->getConfig()->getTopActiveView())->getParameters());
     }
 }

@@ -4,25 +4,23 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Model\Api;
 
-use Omikron\FactFinder\Oxid\Contract\Api\ClientInterface;
+use Omikron\FactFinder\Oxid\Model\Api\Resource\Builder as ResourceBuilder;
+use Omikron\FactFinder\Oxid\Model\Config\Authorization;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
 
 class PushImport
 {
-    /** @var ClientInterface */
-    private $apiClient;
+    /** @var ClientFactory */
+    protected $clientFactory;
 
     /** @var Config */
-    private $config;
-
-    /** @var string */
-    private $apiName = 'Import.ff';
+    protected $config;
 
     public function __construct(ClientFactory $clientFactory)
     {
-        $this->apiClient = $clientFactory->create();
-        $this->config    = Registry::getConfig();
+        $this->clientFactory = $clientFactory;
+        $this->config        = Registry::getConfig();
     }
 
     public function execute(array $params = [])
@@ -30,24 +28,25 @@ class PushImport
         if (!$this->isPushImportEnabled()) {
             return false;
         }
-        $params += [
-            'channel' => $this->config->getConfigParam('ffChannel'),
-            'quiet' => 'true',
-            'download' => 'true',
-        ];
+
+        $resource = oxNew(ResourceBuilder::class)
+            ->withServerUrl($this->config->getConfigParam('ffServerUrl'))
+            ->withApiVersion($this->config->getConfigParam('ffApiVersion'))
+            ->withClient($this->clientFactory->create())
+            ->withCredentials(oxNew(Credentials::class, ...oxNew(Authorization::class)->getParameters()))
+            ->build();
 
         $response = [];
-        $endpoint = $this->config->getConfigParam('ffServerUrl') . '/' . $this->apiName;
-        foreach (['suggest','data'] as $type) {
-            $params['type'] = $type;
-            $response = array_merge_recursive($response, $this->apiClient->sendRequest($endpoint, $params));
+        $channel  = $this->config->getConfigParam('ffChannel');
+        foreach (['search', 'suggest'] as $type) {
+            $response = array_merge_recursive($response, $resource->import($type, $channel, $params));
         }
 
-        return $response && !(isset($response['errors']) || isset($response['error']));
+        return $response && !($response['errors'] ?? $response['error'] ?? false);
     }
 
-    private function isPushImportEnabled(): bool
+    protected function isPushImportEnabled(): bool
     {
-        return $this->config->getConfigParam('ffAutomaticImport');
+        return (bool) $this->config->getConfigParam('ffAutomaticImport');
     }
 }

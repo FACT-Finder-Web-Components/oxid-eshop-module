@@ -6,8 +6,8 @@ namespace Omikron\FactFinder\Oxid\Controller;
 
 use Omikron\FactFinder\Oxid\Model\ArticleFeed;
 use Omikron\FactFinder\Oxid\Model\Export\Http\Authentication;
-use Omikron\FactFinder\Oxid\Model\Export\Http\CsvResponse;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
+use OxidEsales\Eshop\Core\Registry;
 
 class ArticleFeedController extends FrontendController
 {
@@ -22,11 +22,20 @@ class ArticleFeedController extends FrontendController
 
     public function export()
     {
-        /** @var ArticleFeed $articleFeed */
-        $articleFeed = oxNew(ArticleFeed::class);
-        $output      = $articleFeed->generate();
-        $response = new CsvResponse($output, $articleFeed->getFileName());
+        $oUtils = Registry::getUtils();
 
-        return $response->send();
+        try {
+            /** @var ArticleFeed $feed */
+            $feed = oxNew(ArticleFeed::class);
+            $oUtils->setHeader('Pragma: public');
+            $oUtils->setHeader('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            $oUtils->setHeader('Expires: 0');
+            $oUtils->setHeader('Content-Disposition: attachment; filename=' . $feed->getFileName());
+            $oUtils->setHeader('Content-Type: text/csv; charset=utf-8');
+
+            $feed->generate()->fpassthru();
+        } finally {
+            $oUtils->showMessageAndExit('');
+        }
     }
 }
