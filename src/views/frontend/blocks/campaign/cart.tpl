@@ -1,3 +1,5 @@
+[{assign var="oConfig" value=$oView->getConfig()}]
+
 [{if $oConfig->getConfigParam("ffCampaigns")}]
     [{include file="ff/campaign/feedbacktext.tpl" flag="is-shopping-cart-campaign"}]
 [{/if}]
