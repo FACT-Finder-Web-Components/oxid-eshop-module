@@ -11,16 +11,16 @@ use Omikron\FactFinder\Oxid\Model\Api\Credentials;
 class Builder
 {
     /** @var ClientInterface */
-    private $client;
+    protected $client;
 
     /** @var Credentials */
-    private $credentials;
+    protected $credentials;
 
     /** @var string */
-    private $serverUrl;
+    protected $serverUrl;
 
     /** @var string */
-    private $apiVersion = '7.3';
+    protected $apiVersion = '7.3';
 
     public function withClient(ClientInterface $client): Builder
     {
