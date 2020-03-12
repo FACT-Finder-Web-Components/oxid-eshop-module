@@ -12,21 +12,18 @@ class Attributes implements SelectInterface
     protected $attributeView;
 
     /** @var string */
-    private $articleView;
-
-    /** @var string */
     private $object2attributeView;
 
     public function __construct()
     {
-        $this->attributeView = getViewName('oxattribute');
+        $this->attributeView        = getViewName('oxattribute');
         $this->object2attributeView = getViewName('oxobject2attribute');
     }
 
     public function getFields(): array
     {
         return [
-            'Attributes' => "GROUP_CONCAT(DISTINCT CONCAT({$this->attributeView}.oxtitle, '=', {$this->object2attributeView}.oxvalue) SEPARATOR '|') as Attributes"
+            'Attributes' => "GROUP_CONCAT(DISTINCT CONCAT({$this->attributeView}.oxtitle, '=', {$this->object2attributeView}.oxvalue) SEPARATOR '|')",
         ];
     }
 }

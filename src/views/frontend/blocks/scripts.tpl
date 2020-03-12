@@ -8,13 +8,19 @@
 
 <script>
 document.addEventListener('ffReady', function () {
-    factfinder.communication.fieldRoles = {"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"Deeplink","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageURL","masterArticleNumber":"Master","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"};
-[{if $oView->getClassKey() neq 'search_result'}]
-    factfinder.communication.FFCommunicationEventAggregator.addBeforeDispatchingCallback(function (event) {
-        if (event.type === 'search' && !event.__immediate) {
-            window.location = '[{$oViewConf->getHomeLink()|escape:"javascript"}]' + factfinder.common.dictToParameterString(event) + '&cl=search_result';
+    factfinder.communication.fieldRoles = {"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"ArticleUrl","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageURL","masterArticleNumber":"Master","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"};
+
+    factfinder.communication.EventAggregator.addBeforeDispatchingCallback(function (event) {
+        if (event.type === 'search') {
+            event['cl'] = 'search_result';
         }
-    });
+[{if $oView->getClassKey() neq 'search_result'}]
+
+        if (event.type === 'search' && !event.__immediate) {
+            delete event.type;
+            window.location = '[{$oViewConf->getHomeLink()|escape:"javascript"}]' + factfinder.common.dictToParameterString(event);
+        }
 [{/if}]
+    });
 });
 </script>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Model\Export\Entity;
 
+use Iterator;
 use Omikron\FactFinder\Oxid\Contract\Export\DataProviderInterface;
 use Omikron\FactFinder\Oxid\Contract\Export\ExportEntityInterface;
 use Omikron\FactFinder\Oxid\Model\Db\Article\Variant\RecordsFactory as VariantRecordFactory;
@@ -27,22 +28,22 @@ class Article extends AbstractEntity implements DataProviderInterface, ExportEnt
 
     public function toArray(): array
     {
-        if ($this->getAttributes() != '') {
-            $this->attributes[] = $this->getAttributes();
-        }
-        $this->setData('Attributes', !empty($this->attributes) ? ('|' . implode('|', $this->attributes) . '|') : '');
-
+        $attributes = array_unique(array_filter(array_reduce($this->attributes, function (array $result, string $item) {
+            array_push($result, '', ...explode('|', $item));
+            return $result;
+        }, [])));
+        $this->setData('Attributes', $attributes ? ('|' . implode('|', $attributes) . '|') : '');
         return $this->data;
     }
 
-    public function getEntities(): iterable
+    public function getEntities(): Iterator
     {
+        $this->attributes = [$this->getOxidId() => $this->getAttributes()];
         foreach ($this->variantRecords->getRecords() as $articleRow) {
             $variant = new Variant($articleRow);
-            if ($variant->getAttributes() != '') {
-                $this->attributes[$variant->getOxidId()] = $variant->getAttributes();
-            }
             yield $variant;
+            $this->attributes[$variant->getOxidId()] = $variant->getAttributes();
         }
+        yield $this;
     }
 }

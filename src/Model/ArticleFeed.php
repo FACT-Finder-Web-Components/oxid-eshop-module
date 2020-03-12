@@ -18,25 +18,19 @@ use SplFileObject as File;
 class ArticleFeed
 {
     /** @var Collection */
-    private $articleCollection;
-
-    /** @var StreamInterface */
-    private $output;
+    protected $articleCollection;
 
     /** @var Language */
-    private $language;
+    protected $language;
 
     /** @var Exporter */
-    private $exporter;
+    protected $exporter;
 
     /** @var Config */
-    private $config;
+    protected $config;
 
     /** @var string */
-    private $directoryPath = '/export/factfinder/';
-
-    /** @var string */
-    private $fileName = 'factfinder.csv';
+    protected $filenamePattern = 'factfinder_%d_%s.csv';
 
     public function __construct()
     {
@@ -44,23 +38,26 @@ class ArticleFeed
         $this->exporter          = oxNew(Exporter::class);
         $this->config            = Registry::getConfig();
         $this->language          = Registry::getLang();
-        $this->output            = new Csv();
     }
 
     public function generate(): File
     {
-        $this->output->addEntity($this->articleCollection->getFields());
-        return $this->exporter->export($this->articleCollection, $this->output, [
-            oxNew(ArticleUrl::class),
-            oxNew(ImageUrl::class),
-            oxNew(CategoryPath::class),
-        ]);
+        $output = new Csv();
+        $output->addEntity($this->articleCollection->getFields());
+        return $this->exporter->export($this->articleCollection, $output, $this->getFieldModifiers());
     }
 
     public function getFileName(): string
     {
-        $extPos = strrpos($this->fileName, '.');
-        return substr($this->fileName, 0, $extPos) . '_' . $this->config->getShopId() .
-            '_' . $this->language->getLanguageAbbr() . substr($this->fileName, $extPos);
+        return sprintf($this->filenamePattern, $this->config->getShopId(), $this->language->getLanguageAbbr());
+    }
+
+    protected function getFieldModifiers(): array
+    {
+        return [
+            oxNew(ArticleUrl::class),
+            oxNew(ImageUrl::class),
+            oxNew(CategoryPath::class),
+        ];
     }
 }

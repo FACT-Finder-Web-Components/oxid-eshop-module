@@ -26,17 +26,20 @@ class CategoryPath implements FieldModifierInterface
 
         foreach (explode(',', $entity->getCategoryPath()) as $pathId) {
             if (isset($this->cachedPaths[$pathId])) {
-                $paths [] = $this->cachedPaths[$pathId];
+                $paths[] = $this->cachedPaths[$pathId];
             } else {
-                $category = $this->getCategoryById($pathId);
                 $path = [];
-                while ($category->oxcategories__oxparentid->value != 'oxrootid') {
-                    $path[] = $category->oxcategories__oxtitle->value;
-                    $category = $this->getCategoryById($category->oxcategories__oxparentid->value);
+                while ($category = $this->getCategoryById($pathId)) {
+                    $path[] = $category->getTitle();
+                    if (!$category->getParentCategory()) {
+                        break;
+                    }
+                    $pathId = $category->getParentCategory()->getId();
                 }
+
                 if (!empty($path)) {
                     $this->cachedPaths[$pathId] = implode('/', array_reverse($path));
-                    $paths[] = $this->cachedPaths[$pathId];
+                    $paths[]                    = $this->cachedPaths[$pathId];
                 }
             }
         }

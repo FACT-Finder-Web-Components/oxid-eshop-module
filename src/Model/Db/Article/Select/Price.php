@@ -19,11 +19,11 @@ class Price implements SelectInterface
     public function getFields(): array
     {
         return [
-            'Price' => "if (
+            'Price' => "IF(
                 {$this->articleView}.oxprice = '0' and {$this->articleView}.oxvarcount > 0,
                 {$this->articleView}.oxvarminprice,
                 {$this->articleView}.oxprice
-            ) as Price"
+            )",
         ];
     }
 }

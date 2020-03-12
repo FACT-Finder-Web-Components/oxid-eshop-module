@@ -4,25 +4,25 @@ namespace Omikron\FactFinder\Oxid;
 
 $moduleId        = 'ffwebcomponents';
 $moduleName      = 'FACT-Finder<sup>&reg;</sup> Web Components';
+$companyName     = 'Omikron Data Quality GmbH';
 $settingPosition = 0;
-$titlePattern    = 'Omikron Data Quality GmbH | %s';
 
 $sMetadataVersion = '2.1';
 
 $aModule = [
     'id'          => $moduleId,
-    'title'       => sprintf($titlePattern, $moduleName),
-    'author'      => 'FACT-Finder<sup>&reg;</sup> Web Components Team',
+    'title'       => "{$moduleName} | {$companyName}",
+    'author'      => "{$moduleName} Team",
     'url'         => 'https://web-components.fact-finder.de',
-    'description' => 'Module for integration Oxid eShop application with FACT-Finder<sup>&reg;</sup> Web Components of <a href="https://web-components.fact-finder.de/home" target="_blank">Omikron Data Quality GmbH</a>',
+    'description' => "{$moduleName} integration for OXID eShop by {$companyName}",
     'version'     => '0.0.1',
     'thumbnail'   => 'out/pictures/logo.png',
     'controllers' => [
-        'ffWebComponent'       => Component\Widget\WebComponent::class,
-        'search_result'        => Controller\SearchResultController::class,
-        'test_connection'      => Controller\Admin\TestConnectionController::class,
-        'article_feed'         => Controller\Admin\ArticleFeedController::class,
-        'http_article_feed'    => Controller\ArticleFeedController::class,
+        'ffWebComponent'    => Component\Widget\WebComponent::class,
+        'search_result'     => Controller\SearchResultController::class,
+        'test_connection'   => Controller\Admin\TestConnectionController::class,
+        'article_feed'      => Controller\Admin\ArticleFeedController::class,
+        'http_article_feed' => Controller\ArticleFeedController::class,
     ],
     'blocks'      => [
         [
@@ -72,7 +72,7 @@ $aModule = [
         ],
     ],
     'templates'   => [
-        'admin/page/ajax_result.tpl'    => 'ff/ffwebcomponents/views/admin/ajax_result.tpl',
+        'admin/page/ajax_result.tpl'      => 'ff/ffwebcomponents/views/admin/ajax_result.tpl',
         'page/factfinder/result.tpl'      => 'ff/ffwebcomponents/views/frontend/page/result.tpl',
         'ff/asn.tpl'                      => 'ff/ffwebcomponents/views/frontend/widget/asn.tpl',
         'ff/breadcrumbs.tpl'              => 'ff/ffwebcomponents/views/frontend/widget/breadcrumbs.tpl',
@@ -129,11 +129,11 @@ $aModule = [
             'position' => $settingPosition++,
         ],
         [
-            'group'       => 'ffAdvanced',
+            'group'       => 'ffMain',
             'name'        => 'ffApiVersion',
             'type'        => 'select',
             'value'       => '7.3',
-            'constraints' => '7.2|7.3',
+            'constraints' => '7.2|7.3|ng',
             'position'    => $settingPosition++,
         ],
         [
@@ -141,13 +141,6 @@ $aModule = [
             'name'     => 'ffUseUrlParams',
             'type'     => 'bool',
             'value'    => true,
-            'position' => $settingPosition++,
-        ],
-        [
-            'group'    => 'ffAdvanced',
-            'name'     => 'ffUseBrowserCache',
-            'type'     => 'bool',
-            'value'    => false,
             'position' => $settingPosition++,
         ],
         [
