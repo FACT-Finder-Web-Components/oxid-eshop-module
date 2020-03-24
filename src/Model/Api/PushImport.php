@@ -38,7 +38,7 @@ class PushImport
 
         $response = [];
         $channel  = $this->config->getConfigParam('ffChannel');
-        foreach (['search', 'suggest'] as $type) {
+        foreach ($this->getPushImportTypes() as $type) {
             $response = array_merge_recursive($response, $resource->import($type, $channel, $params));
         }
 
@@ -48,5 +48,15 @@ class PushImport
     protected function isPushImportEnabled(): bool
     {
         return (bool) $this->config->getConfigParam('ffAutomaticImport');
+    }
+
+    protected function getPushImportTypes(): array
+    {
+        return array_reduce(['Data', 'Suggest', 'Recommendation'], function (array $types, string $type): array {
+            if ((bool) $this->config->getConfigParam("ffAutomaticImport$type")) {
+                $types[] = strtolower($type);
+            }
+            return $types;
+        }, []);
     }
 }
