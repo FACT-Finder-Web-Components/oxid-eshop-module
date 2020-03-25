@@ -233,7 +233,7 @@ $aModule = [
             'group'    => 'ffExport',
             'name'     => 'ffAutomaticImportData',
             'type'     => 'bool',
-            'value'    => 'Data',
+            'value'    => true,
             'position' => $settingPosition++,
         ],
         [
