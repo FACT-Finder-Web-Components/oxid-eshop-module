@@ -52,11 +52,8 @@ class PushImport
 
     protected function getPushImportTypes(): array
     {
-        return array_reduce(['Data', 'Suggest', 'Recommendation'], function (array $types, string $type): array {
-            if ((bool) $this->config->getConfigParam("ffAutomaticImport$type")) {
-                $types[] = strtolower($type);
-            }
-            return $types;
-        }, []);
+        return array_filter(['data', 'suggest', 'recommendation'], function (string $type): bool {
+            return (bool) $this->config->getConfigParam('ffAutomaticImport' . ucfirst($type));
+        });
     }
 }
