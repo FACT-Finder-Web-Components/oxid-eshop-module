@@ -231,6 +231,27 @@ $aModule = [
         ],
         [
             'group'    => 'ffExport',
+            'name'     => 'ffAutomaticImportData',
+            'type'     => 'bool',
+            'value'    => true,
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffExport',
+            'name'     => 'ffAutomaticImportSuggest',
+            'type'     => 'bool',
+            'value'    => false,
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffExport',
+            'name'     => 'ffAutomaticImportRecommendation',
+            'type'     => 'bool',
+            'value'    => false,
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffExport',
             'name'     => 'ffHTTPExportUser',
             'type'     => 'str',
             'value'    => 'basic_auth_user',
