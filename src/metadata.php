@@ -133,7 +133,7 @@ $aModule = [
             'name'        => 'ffApiVersion',
             'type'        => 'select',
             'value'       => '7.3',
-            'constraints' => '7.2|7.3|ng',
+            'constraints' => '6.9|6.10|6.11|7.0|7.1|7.2|7.3|ng',
             'position'    => $settingPosition++,
         ],
         [
