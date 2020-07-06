@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Model\Export;
 
 use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
-use SplFileObject as File;
+use \Exception as Exception;
 
 class FtpClient
 {
@@ -17,13 +17,19 @@ class FtpClient
         $this->params = $params;
     }
 
-    public function upload(File $handle, string $filename = '')
+    /**
+     * @param resource $handle
+     * @param string   $filename
+     *
+     * @throws Exception
+     */
+    public function upload($handle, string $filename = '')
     {
         $connection = $this->connect($this->params);
         try {
-            $handle->fpassthru();
-            $handle->rewind();
-            ftp_fput($connection, $filename ?: $handle->getFilename(), fopen($handle, '+r'), FTP_ASCII);
+            fpassthru($handle);
+            rewind($handle);
+            ftp_fput($connection, $filename, $handle, FTP_ASCII);
         } finally {
             $this->close($connection);
         }

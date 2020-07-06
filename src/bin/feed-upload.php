@@ -20,5 +20,5 @@ $ftpUploader = new FtpClient(new FtpParams());
 $pushImport  = new PushImport(new ClientFactory());
 
 $feed = $articleFeed->generate();
-$ftpUploader->upload($feed);
+$ftpUploader->upload($feed, $articleFeed->getFileName());
 $pushImport->execute();

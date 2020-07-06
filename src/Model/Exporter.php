@@ -8,11 +8,17 @@ use Omikron\FactFinder\Oxid\Contract\Export\DataProviderInterface;
 use Omikron\FactFinder\Oxid\Contract\Export\Entity\FieldModifierInterface;
 use Omikron\FactFinder\Oxid\Contract\Export\StreamInterface;
 use Omikron\FactFinder\Oxid\Model\Export\AbstractEntity;
-use SplFileObject as File;
 
 class Exporter
 {
-    public function export(DataProviderInterface $dataProvider, StreamInterface $stream, array $fieldsModifiers = []): File
+    /**
+     * @param DataProviderInterface $dataProvider
+     * @param StreamInterface $stream
+     * @param array $fieldsModifiers
+     *
+     * @return resource
+     */
+    public function export(DataProviderInterface $dataProvider, StreamInterface $stream, array $fieldsModifiers = [])
     {
         $handle = null;
         /** @var AbstractEntity $entity */
@@ -24,7 +30,7 @@ class Exporter
             $handle = $stream->addEntity($entity->toArray());
         }
 
-        $handle->rewind();
+        rewind($handle);
         return $handle;
     }
 }

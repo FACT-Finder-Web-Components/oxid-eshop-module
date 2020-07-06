@@ -13,7 +13,6 @@ use Omikron\FactFinder\Oxid\Model\Export\Output\Csv;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Language;
 use OxidEsales\Eshop\Core\Registry;
-use SplFileObject as File;
 
 class ArticleFeed
 {
@@ -40,7 +39,10 @@ class ArticleFeed
         $this->language          = Registry::getLang();
     }
 
-    public function generate(): File
+    /**
+     * @return resource
+     */
+    public function generate()
     {
         $output = new Csv();
         $output->addEntity($this->articleCollection->getFields());
