@@ -150,13 +150,6 @@ $aModule = [
             'position' => $settingPosition++,
         ],
         [
-            'group'    => 'ffAdvanced',
-            'name'     => 'ffDisableSingleHit',
-            'type'     => 'bool',
-            'value'    => false,
-            'position' => $settingPosition++,
-        ],
-        [
             'group'    => 'ffFeatures',
             'name'     => 'ffUseForCategories',
             'type'     => 'bool',
