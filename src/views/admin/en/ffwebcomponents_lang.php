@@ -23,7 +23,6 @@ $aLang = [
     'SHOP_MODULE_ffApiVersion_ng'                 => 'NG',
     'SHOP_MODULE_ffUseUrlParams'                  => 'Use URL params?',
     'SHOP_MODULE_ffAddSearchParams'               => 'Add search params',
-    'SHOP_MODULE_ffDisableSingleHit'              => 'Disable single hit redirects',
     'SHOP_MODULE_GROUP_ffFeatures'                => 'Features Settings',
     'SHOP_MODULE_ffUseForCategories'              => 'Use FACT-Finder® for category pages?',
     'SHOP_MODULE_ffCampaigns'                     => 'Campaigns',
