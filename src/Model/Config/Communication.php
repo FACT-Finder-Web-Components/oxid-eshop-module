@@ -27,7 +27,7 @@ class Communication implements ParametersSourceInterface
             'api'                         => $this->getConfig('ffApiVersion') ? 'v3' : '',
             'channel'                     => $this->getConfig('ffChannel'),
             'use-url-parameter'           => $this->getConfig('ffUseUrlParams') ? 'true' : 'false',
-            'disable-single-hit-redirect' => $this->getConfig('ffDisableSingleHit') ? 'true' : 'false',
+            'disable-single-hit-redirect' => 'true',
             'currency-code'               => $this->view->getActCurrency()->name,
             'currency-country-code'       => $this->getLocale($this->view->getActiveLangAbbr()),
             'add-params'                  => $this->useForCategories() ? $this->getCategoryPath($category) : '',
