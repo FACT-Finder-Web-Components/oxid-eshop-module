@@ -10,6 +10,7 @@ use OxidEsales\Eshop\Application\Model\Category;
 
 class CategoryPath implements FieldModifierInterface
 {
+    /** @var string[] */
     private $cachedPaths = [];
 
     public function getName(): string
@@ -19,18 +20,18 @@ class CategoryPath implements FieldModifierInterface
 
     public function getValue(AbstractEntity $entity): string
     {
-        $paths = [];
-        if ($entity->getCategoryPath() == '') {
-            return $entity->getCategoryPath();
+        if (!$entity->getCategoryPath()) {
+            return (string) $entity->getCategoryPath();
         }
 
+        $paths = [];
         foreach (explode(',', $entity->getCategoryPath()) as $pathId) {
             if (isset($this->cachedPaths[$pathId])) {
                 $paths[] = $this->cachedPaths[$pathId];
             } else {
                 $path = [];
                 while ($category = $this->getCategoryById($pathId)) {
-                    $path[] = $category->getTitle();
+                    $path[] = rawurlencode($category->getTitle());
                     if (!$category->getParentCategory()) {
                         break;
                     }
@@ -38,13 +39,12 @@ class CategoryPath implements FieldModifierInterface
                 }
 
                 if (!empty($path)) {
-                    $this->cachedPaths[$pathId] = implode('/', array_reverse($path));
-                    $paths[]                    = $this->cachedPaths[$pathId];
+                    $this->cachedPaths[$pathId] = $paths[] = implode('/', array_reverse($path));
                 }
             }
         }
 
-        return implode('|', $paths);
+        return $paths ? '|' . implode('|', $paths) . '|' : '';
     }
 
     private function getCategoryById(string $id): Category
@@ -53,7 +53,6 @@ class CategoryPath implements FieldModifierInterface
         if (!$category->load($id)) {
             throw new \Exception('Could not load category for id:' . $id);
         }
-
         return $category;
     }
 }

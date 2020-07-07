@@ -6,8 +6,6 @@ interface StreamInterface
 {
     /**
      * @param array $entity
-     *
-     * @return resource
      */
     public function addEntity(array $entity);
 }
