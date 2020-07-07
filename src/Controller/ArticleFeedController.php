@@ -26,15 +26,18 @@ class ArticleFeedController extends FrontendController
 
         try {
             /** @var ArticleFeed $feed */
-            $feed = oxNew(ArticleFeed::class);
+            $feed   = oxNew(ArticleFeed::class);
+            $handle = $feed->tmpFile();
+            $feed->generate($handle);
+
             $oUtils->setHeader('Pragma: public');
             $oUtils->setHeader('Cache-Control: must-revalidate, post-check=0, pre-check=0');
             $oUtils->setHeader('Expires: 0');
             $oUtils->setHeader('Content-Disposition: attachment; filename=' . $feed->getFileName());
             $oUtils->setHeader('Content-Type: text/csv; charset=utf-8');
-
-            $feed->generate()->fpassthru();
+            fpassthru($handle);
         } finally {
+            fclose($handle);
             $oUtils->showMessageAndExit('');
         }
     }

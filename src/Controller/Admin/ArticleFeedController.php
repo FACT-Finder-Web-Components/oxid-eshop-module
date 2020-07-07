@@ -41,11 +41,13 @@ class ArticleFeedController extends AdminController
 
     public function export()
     {
+        $handle = fopen(OX_BASE_PATH . 'export/' . $this->articleFeed->getFileName(), 'w+');
+
         try {
-            $file = $this->articleFeed->generate();
+            $this->articleFeed->generate($handle);
             $this->addTranslatedMessage('FF_ARTICLE_FEED_EXPORT_SUCCESS');
 
-            $this->ftpClient->upload($file, $this->articleFeed->getFileName());
+            $this->ftpClient->upload($handle, $this->articleFeed->getFileName());
             $this->addTranslatedMessage('FF_ARTICLE_FEED_UPLOAD_SUCCESS');
 
             $this->pushImport->execute();
@@ -53,6 +55,7 @@ class ArticleFeedController extends AdminController
 
             $this->success = true;
         } catch (\Exception $e) {
+            fclose($handle);
             $this->result = [$e->getMessage()];
         }
     }

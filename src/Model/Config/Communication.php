@@ -54,7 +54,7 @@ class Communication implements ParametersSourceInterface
 
         if ($this->getConfig('ffApiVersion') === 'NG') {
             $path = implode('/', array_map(function (Category $category) {
-                return $category->getTitle();
+                return rawurlencode($category->getTitle());
             }, array_reverse($categories)));
 
             return sprintf('navigation=true,filter=%s:%s', urlencode($param), urlencode($path));
@@ -63,8 +63,8 @@ class Communication implements ParametersSourceInterface
         $path  = 'ROOT';
         $value = ['navigation=true'];
         foreach (array_reverse($categories) as $category) {
-            $value[] = sprintf("filter{$param}%s=%s", $path, urlencode($category->getTitle()));
-            $path    .= urlencode('/' . $category->getTitle());
+            $value[] = sprintf("filter{$param}%s=%s", $path, rawurlencode($category->getTitle()));
+            $path    .= '/' . rawurlencode($category->getTitle());
         }
         return implode(',', $value);
     }

@@ -19,7 +19,7 @@ class FtpParams
 
     public function getHost(): string
     {
-        return $this->config->getConfigParam('ffFtpHost');
+        return (string) $this->config->getConfigParam('ffFtpHost');
     }
 
     public function getPort(): int
@@ -29,12 +29,12 @@ class FtpParams
 
     public function getUser(): string
     {
-        return $this->config->getConfigParam('ffFtpUser');
+        return (string) $this->config->getConfigParam('ffFtpUser');
     }
 
     public function getPassword(): string
     {
-        return $this->config->getConfigParam('ffFtpPassword');
+        return (string) $this->config->getConfigParam('ffFtpPassword');
     }
 
     public function useSsl(): bool

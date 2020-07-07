@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Model\Export;
 
+use Exception;
 use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
-use SplFileObject as File;
 
 class FtpClient
 {
@@ -17,15 +17,19 @@ class FtpClient
         $this->params = $params;
     }
 
-    public function upload(File $handle, string $filename = '')
+    /**
+     * @param resource $handle
+     * @param string   $filename
+     *
+     * @throws Exception
+     */
+    public function upload($handle, string $filename)
     {
-        $connection = $this->connect($this->params);
         try {
-            $handle->fpassthru();
-            $handle->rewind();
-            ftp_fput($connection, $filename ?: $handle->getFilename(), fopen($handle, '+r'), FTP_ASCII);
+            $connection = $this->connect($this->params);
+            ftp_fput($connection, $filename, $handle, FTP_ASCII);
         } finally {
-            $this->close($connection);
+            if ($connection) $this->close($connection);
         }
     }
 
@@ -36,16 +40,15 @@ class FtpClient
             @ftp_connect($params->getHost(), $params->getPort(), $timeout);
 
         if (!$connection) {
-            throw new \Exception('FTP connection failed to open');
+            throw new Exception('FTP connection failed to open');
         }
 
         if (!@ftp_login($connection, $params->getUser(), $params->getPassword())) {
-            $this->close($connection);
-            throw new \Exception('The FTP username or password is invalid. Verify both and try again.');
+            throw new Exception('The FTP username or password is invalid. Verify both and try again.');
         }
+
         if (!@ftp_pasv($connection, true)) {
-            $this->close($connection);
-            throw new \Exception('The file transfer mode is invalid. Verify and try again.');
+            throw new Exception('The file transfer mode is invalid. Verify and try again.');
         }
 
         return $connection;

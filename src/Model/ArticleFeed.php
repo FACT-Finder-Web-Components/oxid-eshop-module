@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Model;
 
-use Omikron\FactFinder\Oxid\Contract\Export\StreamInterface;
 use Omikron\FactFinder\Oxid\Model\Export\Entity\Article\Collection;
 use Omikron\FactFinder\Oxid\Model\Export\Entity\Article\Fields\ArticleUrl;
 use Omikron\FactFinder\Oxid\Model\Export\Entity\Article\Fields\CategoryPath;
@@ -13,7 +12,6 @@ use Omikron\FactFinder\Oxid\Model\Export\Output\Csv;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Language;
 use OxidEsales\Eshop\Core\Registry;
-use SplFileObject as File;
 
 class ArticleFeed
 {
@@ -40,11 +38,20 @@ class ArticleFeed
         $this->language          = Registry::getLang();
     }
 
-    public function generate(): File
+    /**
+     * @param resource $fileHandle
+     */
+    public function generate($fileHandle)
     {
-        $output = new Csv();
+        $output = new Csv($fileHandle);
         $output->addEntity($this->articleCollection->getFields());
-        return $this->exporter->export($this->articleCollection, $output, $this->getFieldModifiers());
+        $this->exporter->export($this->articleCollection, $output, $this->getFieldModifiers());
+        rewind($fileHandle);
+    }
+
+    public function tmpFile()
+    {
+        return fopen('php://temp', 'w+');
     }
 
     public function getFileName(): string
