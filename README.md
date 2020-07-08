@@ -158,8 +158,9 @@ There are two console commands located in the module `bin` directory, available 
 * feed-write - only saves the feed file on local file system
 * feed-upload - run full integration (just like clicking the `Export Feed` button in admin panel)
 
-If your shop supports multiple languages, enter the language identifier of the language you want to export by adding `lang` option to the command (e.g. `php bin/feed-write.php lang 1`)
-You can check the language identifies at "Master Settings -> Languages" 
+If your shop supports multiple languages, enter the language identifier of the language you want to export by adding `lang` option to the command (e.g. `php bin/feed-write.php lang 1`).
+You can check the language identifiers at "Master Settings -> Languages". 
+
 ![Languages](docs/assets/languages.png "Languages")
     
 ## Contribute
