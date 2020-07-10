@@ -13,7 +13,7 @@ class Communication implements ParametersSourceInterface
     /** @var FrontendController */
     protected $view;
 
-    /** @var string[]  */
+    /** @var string[] */
     protected $mergeableParams = ['add-params', 'add-tracking-params', 'keep-url-params', 'parameter-whitelist'];
 
     public function __construct(FrontendController $view)
@@ -23,6 +23,8 @@ class Communication implements ParametersSourceInterface
 
     public function getParameters(): array
     {
+        $category = $this->view->getActiveCategory();
+
         $params = [
             'url'                         => $this->getConfig('ffServerUrl'),
             'version'                     => $this->getConfig('ffApiVersion'),
@@ -32,12 +34,13 @@ class Communication implements ParametersSourceInterface
             'disable-single-hit-redirect' => 'true',
             'currency-code'               => $this->view->getActCurrency()->name,
             'currency-country-code'       => $this->getLocale($this->view->getActiveLangAbbr()),
+            'add-params'                  => $this->useForCategories() ? $this->getCategoryPath($category) : '',
             'search-immediate'            => $this->isSearch() || $this->useForCategories() ? 'true' : 'false',
             'only-search-params'          => 'true',
             'use-browser-history'         => 'true',
         ];
 
-        return $this->mergeParameters($this->getAdditionalParameters(), ['add-params' => $this->useForCategories() ? $this->getCategoryPath($this->view->getActiveCategory()) : '']) + $params;
+        return array_filter($this->mergeParameters($params, $this->getAdditionalParameters()));
     }
 
     protected function getLocale(string $abbr): string
@@ -88,19 +91,13 @@ class Communication implements ParametersSourceInterface
 
     protected function getAdditionalParameters(): array
     {
-        return $this->getConfig('ffAddSearchParams');
+        return (array) $this->getConfig('ffAddSearchParams');
     }
 
-    protected function mergeParameters(array ...$params): array
+    protected function mergeParameters(array $baseParams, array $additionalParams): array
     {
-        $mergeable = array_combine($this->mergeableParams, array_fill(0, count($this->mergeableParams), ''));
-
-        $params = array_map(function (array $param) use ($mergeable): array {
-            return array_intersect_key($param + $mergeable, $mergeable);
-        }, $params);
-
-        return array_filter(array_reduce(array_keys($mergeable), function ($result, $key) use ($params): array {
-            return $result + [$key => implode(',', array_filter(array_column($params, $key)))];
-        }, []), 'boolval');
+        return array_reduce($this->mergeableParams, function (array $result, string $param) use ($additionalParams) {
+            return [$param => implode(',', array_column([$additionalParams, $result], $param))] + $result;
+        }, $baseParams);
     }
 }

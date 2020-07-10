@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Model;
 
-use Omikron\FactFinder\Oxid\Contract\Export\StreamInterface;
 use Omikron\FactFinder\Oxid\Model\Export\Entity\Article\Collection;
 use Omikron\FactFinder\Oxid\Model\Export\Entity\Article\Fields\ArticleUrl;
 use Omikron\FactFinder\Oxid\Model\Export\Entity\Article\Fields\CategoryPath;
