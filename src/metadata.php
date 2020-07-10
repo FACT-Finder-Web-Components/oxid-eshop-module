@@ -146,7 +146,8 @@ $aModule = [
         [
             'group'    => 'ffAdvanced',
             'name'     => 'ffAddSearchParams',
-            'type'     => 'str',
+            'type'     => 'aarr',
+            'value'    => ['add-params' => '', 'add-tracking-params' => ''],
             'position' => $settingPosition++,
         ],
         [

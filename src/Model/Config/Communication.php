@@ -13,6 +13,9 @@ class Communication implements ParametersSourceInterface
     /** @var FrontendController */
     protected $view;
 
+    /** @var string[] */
+    protected $mergeableParams = ['add-params', 'add-tracking-params', 'keep-url-params', 'parameter-whitelist'];
+
     public function __construct(FrontendController $view)
     {
         $this->view = $view;
@@ -21,7 +24,8 @@ class Communication implements ParametersSourceInterface
     public function getParameters(): array
     {
         $category = $this->view->getActiveCategory();
-        return [
+
+        $params = [
             'url'                         => $this->getConfig('ffServerUrl'),
             'version'                     => $this->getConfig('ffApiVersion'),
             'api'                         => $this->getConfig('ffApiVersion') ? 'v3' : '',
@@ -32,10 +36,12 @@ class Communication implements ParametersSourceInterface
             'currency-country-code'       => $this->getLocale($this->view->getActiveLangAbbr()),
             'add-params'                  => $this->useForCategories() ? $this->getCategoryPath($category) : '',
             'search-immediate'            => $this->isSearch() || $this->useForCategories() ? 'true' : 'false',
-            'keep-url-params'             => 'true',
+            'keep-url-params'             => 'cl',
             'only-search-params'          => 'true',
             'use-browser-history'         => 'true',
         ];
+
+        return array_filter($this->mergeParameters($params, $this->getAdditionalParameters()));
     }
 
     protected function getLocale(string $abbr): string
@@ -82,5 +88,17 @@ class Communication implements ParametersSourceInterface
     protected function useForCategories(): bool
     {
         return $this->getConfig('ffUseForCategories') && $this->view->getActionClassName() === 'alist';
+    }
+
+    protected function getAdditionalParameters(): array
+    {
+        return (array) $this->getConfig('ffAddSearchParams');
+    }
+
+    protected function mergeParameters(array $baseParams, array $additionalParams): array
+    {
+        return array_reduce($this->mergeableParams, function (array $result, string $param) use ($additionalParams) {
+            return [$param => implode(',', array_column([$additionalParams, $result], $param))] + $result;
+        }, $baseParams);
     }
 }
