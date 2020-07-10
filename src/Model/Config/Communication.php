@@ -36,6 +36,7 @@ class Communication implements ParametersSourceInterface
             'currency-country-code'       => $this->getLocale($this->view->getActiveLangAbbr()),
             'add-params'                  => $this->useForCategories() ? $this->getCategoryPath($category) : '',
             'search-immediate'            => $this->isSearch() || $this->useForCategories() ? 'true' : 'false',
+            'keep-url-params'             => 'cl',
             'only-search-params'          => 'true',
             'use-browser-history'         => 'true',
         ];
