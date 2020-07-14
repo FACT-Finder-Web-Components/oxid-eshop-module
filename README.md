@@ -88,8 +88,10 @@ It is a one of possible ways of exporting feed. You can find more details in sec
 
 ### Advanced Settings
 ![Advanced Settings](docs/assets/advanced-settings.png "Advanced settings")
-* `Use URL params?` - check this option if you like to pass additional, static parameters, used during a communication with FACT-Finder®.
-* `Add search parms` - here you can define the parameters, mentioned in point above.
+* `Use URL params?` - check this option if you want Web Components to push each used query parameter to the URL,
+* `Additional parameters` - here you can define extra parameters for each of these properties: `add-params`, `add-tracking-params`, `keep-url-params`, `parameter-whitelist`.
+Values will be passed to the Web Components and used in communication.
+You can find more information about mentioned properties purposes in Web Components [documentation](https://web-components.fact-finder.de/api/3.x/ff-communication#tab=api).  
 
 ### Features Settings
 ![Features Settings](docs/assets/features-settings.png "Features settings")
