@@ -29,7 +29,7 @@ class FtpClient
             $connection = $this->connect($this->params);
             ftp_fput($connection, $filename, $handle, FTP_ASCII);
         } finally {
-            if ($connection) $this->close($connection);
+            if (isset($connection) && $connection) $this->close($connection);
         }
     }
 
