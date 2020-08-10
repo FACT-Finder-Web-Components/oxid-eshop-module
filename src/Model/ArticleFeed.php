@@ -49,11 +49,6 @@ class ArticleFeed
         rewind($fileHandle);
     }
 
-    public function tmpFile()
-    {
-        return fopen('php://temp', 'w+');
-    }
-
     public function getFileName(): string
     {
         return sprintf($this->filenamePattern, $this->config->getShopId(), $this->language->getLanguageAbbr());

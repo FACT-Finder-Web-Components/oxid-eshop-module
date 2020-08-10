@@ -20,7 +20,7 @@ $ftpUploader = new FtpClient(new FtpParams());
 $pushImport  = new PushImport(new ClientFactory());
 
 try {
-    $handle = $articleFeed->tmpFile();
+    $handle = tmpfile();
     $articleFeed->generate($handle);
     $ftpUploader->upload($handle, $articleFeed->getFileName());
     $pushImport->execute();
