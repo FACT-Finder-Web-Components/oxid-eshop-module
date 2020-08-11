@@ -28,7 +28,7 @@ class ArticleFeed
     protected $config;
 
     /** @var string */
-    protected $filenamePattern = 'factfinder_%d_%s.csv';
+    protected $filenamePattern = 'export.%s.csv';
 
     public function __construct()
     {
@@ -49,14 +49,9 @@ class ArticleFeed
         rewind($fileHandle);
     }
 
-    public function tmpFile()
-    {
-        return fopen('php://temp', 'w+');
-    }
-
     public function getFileName(): string
     {
-        return sprintf($this->filenamePattern, $this->config->getShopId(), $this->language->getLanguageAbbr());
+        return sprintf($this->filenamePattern, $this->config->getConfigParam('ffChannel'));
     }
 
     protected function getFieldModifiers(): array

@@ -27,7 +27,7 @@ class ArticleFeedController extends FrontendController
         try {
             /** @var ArticleFeed $feed */
             $feed   = oxNew(ArticleFeed::class);
-            $handle = $feed->tmpFile();
+            $handle = tmpfile();
             $feed->generate($handle);
 
             $oUtils->setHeader('Pragma: public');
