@@ -35,6 +35,7 @@ class ArticleCollection implements \IteratorAggregate
     protected function getBatch(int $from): ArticleList
     {
         $articleList = oxNew(ArticleList::class);
+        $articleList->setBaseObject(new ExportArticle());
         $articleList->setSqlLimit($from * $this->batchSize, $this->batchSize);
         return $articleList->getList();
     }
