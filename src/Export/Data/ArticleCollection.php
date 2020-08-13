@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omikron\FactFinder\Oxid\Model\Export;
+namespace Omikron\FactFinder\Oxid\Export\Data;
 
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\ArticleList;
