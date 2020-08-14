@@ -12,6 +12,9 @@
     <rule ref="PSR2" />
     <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
     <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter" />
+    <rule ref="Generic.ControlStructures.InlineControlStructure">
+        <severity>0</severity>
+    </rule>
     <rule ref="Generic.Files.LineLength">
         <exclude-pattern>*Test.php</exclude-pattern>
         <properties>

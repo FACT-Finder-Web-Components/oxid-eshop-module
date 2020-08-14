@@ -8,7 +8,7 @@
 
 <script>
 document.addEventListener('ffReady', function () {
-    factfinder.communication.fieldRoles = {"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"ArticleUrl","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageURL","masterArticleNumber":"Master","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"};
+    factfinder.communication.fieldRoles = {"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"Deeplink","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageURL","masterArticleNumber":"Master","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"};
 
     factfinder.communication.EventAggregator.addBeforeDispatchingCallback(function (event) {
         if (event.type === 'search' && !event.searchImmediate && event.navigation !== 'true') {
