@@ -7,39 +7,42 @@ namespace Omikron\FactFinder\Oxid\Export;
 use Omikron\FactFinder\Oxid\Export\Entity\DataProvider;
 use Omikron\FactFinder\Oxid\Export\Field\Brand;
 use Omikron\FactFinder\Oxid\Export\Field\CategoryPath;
+use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 
 class Feed
 {
-    /** @var array */
-    private $fields;
+    /** @var FieldInterface[] */
+    protected $fields;
 
-    /** @var array */
-    private $columns;
+    /** @var string[] */
+    protected $columns = [
+        'ProductNumber',
+        'Master',
+        'Name',
+        'Short',
+        'Description',
+        'Price',
+        'Deeplink',
+        'ImageUrl',
+    ];
 
-    public function __construct(array $fields = [], array $columns = [])
+    public function __construct(FieldInterface ...$fields)
     {
-        $this->fields   = $fields;
-        $this->fields[] = oxNew(Brand::class);
-        $this->fields[] = oxNew(CategoryPath::class);
-
-        $this->columns = array_merge([
-            'ProductNumber',
-            'Master',
-            'Name',
-            'Short',
-            'Description',
-            'Brand',
-            'Price',
-            'Deeplink',
-            'ImageUrl',
-            'CategoryPath',
-        ], $columns);
+        $this->fields = $fields;
     }
 
     public function generate(StreamInterface $stream): void
     {
-        $stream->addEntity($this->columns);
-        oxNew(Exporter::class)->exportEntities($stream, oxNew(DataProvider::class, ...$this->fields), $this->columns);
+        $fields  = array_merge([oxNew(Brand::class), oxNew(CategoryPath::class)], $this->fields);
+        $columns = array_unique(array_merge($this->columns, array_map([$this, 'getFieldName'], $fields)));
+
+        $stream->addEntity($columns);
+        oxNew(Exporter::class)->exportEntities($stream, oxNew(DataProvider::class, ...$fields), $columns);
+    }
+
+    protected function getFieldName(FieldInterface $field): string
+    {
+        return $field->getName();
     }
 }
