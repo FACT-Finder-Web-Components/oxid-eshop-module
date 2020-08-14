@@ -23,7 +23,7 @@ class Feed
         $this->fields[] = oxNew(Brand::class);
         $this->fields[] = oxNew(CategoryPath::class);
 
-        $this->columns = array_merge($columns, [
+        $this->columns = array_merge([
             'ProductNumber',
             'Master',
             'Name',
@@ -34,7 +34,7 @@ class Feed
             'Deeplink',
             'ImageUrl',
             'CategoryPath',
-        ]);
+        ], $columns);
     }
 
     public function generate(StreamInterface $stream): void
