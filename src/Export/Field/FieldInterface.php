@@ -8,5 +8,5 @@ interface FieldInterface
 {
     public function getName(): string;
 
-    public function getValue(Article $article): string;
+    public function getValue(Article $article, Article $parent): string;
 }

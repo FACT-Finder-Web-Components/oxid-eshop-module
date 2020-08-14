@@ -8,6 +8,7 @@ use Omikron\FactFinder\Oxid\Export\Entity\DataProvider;
 use Omikron\FactFinder\Oxid\Export\Field\Brand;
 use Omikron\FactFinder\Oxid\Export\Field\CategoryPath;
 use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
+use Omikron\FactFinder\Oxid\Export\Field\FilterAttributes;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 
 class Feed
@@ -34,7 +35,8 @@ class Feed
 
     public function generate(StreamInterface $stream): void
     {
-        $fields  = array_merge([oxNew(Brand::class), oxNew(CategoryPath::class)], $this->fields);
+        $columns = [oxNew(Brand::class), oxNew(CategoryPath::class), oxNew(FilterAttributes::class)];
+        $fields  = array_merge($columns, $this->fields);
         $columns = array_unique(array_merge($this->columns, array_map([$this, 'getFieldName'], $fields)));
 
         $stream->addEntity($columns);

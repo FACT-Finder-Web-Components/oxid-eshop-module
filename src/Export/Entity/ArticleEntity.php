@@ -13,33 +13,33 @@ class ArticleEntity implements ExportEntityInterface, DataProviderInterface
     protected $article;
 
     /** @var Article */
-    protected $variant;
+    protected $parent;
 
     /** @var FieldInterface[] */
     protected $fields;
 
-    public function __construct(Article $article, Article $variant, array $fields = [])
+    public function __construct(Article $article, Article $parent, array $fields = [])
     {
         $this->article = $article;
-        $this->variant = $variant;
+        $this->parent  = $parent;
         $this->fields  = $fields;
     }
 
     public function toArray(): array
     {
         $data = [
-            'ProductNumber' => $this->variant->getFieldData('oxartnum'),
-            'Master'        => $this->article->getFieldData('oxartnum'),
-            'Name'          => $this->article->getFieldData('oxtitle'),
-            'Short'         => $this->article->getFieldData('oxshortdesc'),
-            'Description'   => $this->article->getLongDescription(),
-            'Price'         => $this->formatNumber((float) $this->variant->getBasePrice()),
-            'Deeplink'      => $this->article->getLink(),
-            'ImageUrl'      => $this->variant->getPictureUrl(),
+            'ProductNumber' => $this->article->getFieldData('oxartnum'),
+            'Master'        => $this->parent->getFieldData('oxartnum'),
+            'Name'          => $this->parent->getFieldData('oxtitle'),
+            'Short'         => $this->parent->getFieldData('oxshortdesc'),
+            'Description'   => $this->parent->getLongDescription(),
+            'Price'         => $this->formatNumber((float) $this->article->getBasePrice()),
+            'Deeplink'      => $this->parent->getLink(),
+            'ImageUrl'      => $this->article->getPictureUrl(),
         ];
 
         return array_reduce($this->fields, function (array $result, FieldInterface $field): array {
-            return [$field->getName() => $field->getValue($this->article)] + $result;
+            return [$field->getName() => $field->getValue($this->article, $this->parent)] + $result;
         }, $data);
     }
 
@@ -47,7 +47,7 @@ class ArticleEntity implements ExportEntityInterface, DataProviderInterface
     {
         yield $this;
         foreach ($this->article->getSimpleVariants() ?? [] as $variant) {
-            yield new static($this->article, $variant, $this->fields);
+            yield new static($variant, $this->article, $this->fields);
         }
     }
 

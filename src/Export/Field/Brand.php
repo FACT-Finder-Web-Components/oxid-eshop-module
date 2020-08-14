@@ -17,11 +17,11 @@ class Brand implements FieldInterface
         return 'Brand';
     }
 
-    public function getValue(Article $article): string
+    public function getValue(Article $article, Article $parent): string
     {
-        $id = $article->getManufacturerId();
+        $id = $parent->getManufacturerId();
         if ($id) {
-            $brand = $this->brands[$id] = $this->brands[$id] ?? $article->getManufacturer();
+            $brand = $this->brands[$id] = $this->brands[$id] ?? $parent->getManufacturer();
             return $brand ? (string) $brand->getTitle() : '';
         }
         return '';
