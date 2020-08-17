@@ -26,17 +26,27 @@ class FilterAttributes implements FieldInterface
 
     public function getValue(Article $article, Article $parent): string
     {
-        /** @var VariantSelectList[] $variants */
-        $variants = $article->getVariantSelections()['selections'] ?? [];
+        $attributes = $article === $parent ? $this->getAllValues($article) : $this->getVariantValues($article, $parent);
+        return $attributes ? '|' . $attributes : '';
+    }
 
-        $attributes = array_reduce($variants, function (string $result, VariantSelectList $variant): string {
+    protected function getVariantValues(Article $article, Article $parent): string
+    {
+        return implode('', array_map(function (string $key, string $value): string {
+            return $this->filter->filterValue($key) . '=' . $this->filter->filterValue($value) . '|';
+        }, ...array_map(function (string $value): array {
+            return explode(' | ', $value);
+        }, [$parent->getFieldData('oxvarname'), $article->getFieldData('oxvarselect')])));
+    }
+
+    protected function getAllValues(Article $article): string
+    {
+        $variants = $article->getVariantSelections()['selections'] ?? [];
+        return array_reduce($variants, function (string $result, VariantSelectList $variant): string {
             $values = array_map(function (Selection $selection) {
                 return $this->filter->filterValue($selection->getName());
             }, $variant->getSelections());
-
-            return $result . $variant->getLabel() . '=' . implode('#', $values) . '|';
+            return $result . $this->filter->filterValue($variant->getLabel()) . '=' . implode('#', $values) . '|';
         }, '');
-
-        return $attributes ? '|' . $attributes : '';
     }
 }
