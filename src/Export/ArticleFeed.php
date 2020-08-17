@@ -10,8 +10,9 @@ use Omikron\FactFinder\Oxid\Export\Field\CategoryPath;
 use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Field\FilterAttributes;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
+use OxidEsales\Eshop\Core\Registry;
 
-class Feed
+class ArticleFeed
 {
     /** @var FieldInterface[] */
     protected $fields;
@@ -33,18 +34,31 @@ class Feed
         $this->fields = $fields;
     }
 
+    public function getFileName(): string
+    {
+        return sprintf('export.%s.csv', Registry::getConfig()->getConfigParam('ffChannel'));
+    }
+
     public function generate(StreamInterface $stream): void
     {
-        $columns = [oxNew(Brand::class), oxNew(CategoryPath::class), oxNew(FilterAttributes::class)];
-        $fields  = array_merge($columns, $this->fields);
+        $fields  = array_merge($this->getAdditionalFields(), $this->fields);
         $columns = array_unique(array_merge($this->columns, array_map([$this, 'getFieldName'], $fields)));
 
         $stream->addEntity($columns);
         oxNew(Exporter::class)->exportEntities($stream, oxNew(DataProvider::class, ...$fields), $columns);
     }
 
-    protected function getFieldName(FieldInterface $field): string
+    private function getFieldName(FieldInterface $field): string
     {
         return $field->getName();
+    }
+
+    protected function getAdditionalFields(): array
+    {
+        return [
+            oxNew(Brand::class),
+            oxNew(CategoryPath::class),
+            oxNew(FilterAttributes::class),
+        ];
     }
 }

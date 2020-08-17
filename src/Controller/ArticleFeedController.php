@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller;
 
-use Omikron\FactFinder\Oxid\Model\ArticleFeed;
+use Omikron\FactFinder\Oxid\Export\ArticleFeed;
+use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use Omikron\FactFinder\Oxid\Model\Export\Http\Authentication;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Core\Registry;
@@ -28,13 +29,14 @@ class ArticleFeedController extends FrontendController
             /** @var ArticleFeed $feed */
             $feed   = oxNew(ArticleFeed::class);
             $handle = tmpfile();
-            $feed->generate($handle);
+            $feed->generate(new Csv($handle));
 
             $oUtils->setHeader('Pragma: public');
             $oUtils->setHeader('Cache-Control: must-revalidate, post-check=0, pre-check=0');
             $oUtils->setHeader('Expires: 0');
             $oUtils->setHeader('Content-Disposition: attachment; filename=' . $feed->getFileName());
             $oUtils->setHeader('Content-Type: text/csv; charset=utf-8');
+            rewind($handle);
             fpassthru($handle);
         } finally {
             fclose($handle);
