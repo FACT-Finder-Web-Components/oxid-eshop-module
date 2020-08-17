@@ -23,7 +23,7 @@ class Attribute implements FieldInterface
         return $this->name;
     }
 
-    public function getValue(Article $article, Article $parent): string
+    public function getValue(Article $article, Article $parent): string // phpcs:ignore
     {
         return (string) ($this->getData($article)[$this->name] ?? '');
     }

@@ -17,7 +17,7 @@ class Brand implements FieldInterface
         return 'Brand';
     }
 
-    public function getValue(Article $article, Article $parent): string
+    public function getValue(Article $article, Article $parent): string // phpcs:ignore
     {
         $id = $parent->getManufacturerId();
         if ($id) {

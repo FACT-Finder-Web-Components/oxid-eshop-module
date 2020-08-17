@@ -26,7 +26,7 @@ class CategoryPath implements FieldInterface
         return 'CategoryPath';
     }
 
-    public function getValue(Article $article, Article $parent): string
+    public function getValue(Article $article, Article $parent): string // phpcs:ignore
     {
         return implode('|', array_map([$this, 'getPath'], $parent->getCategoryIds()));
     }
