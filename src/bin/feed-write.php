@@ -18,5 +18,5 @@ use OxidEsales\Eshop\Core\Registry;
 Registry::getConfig()->setShopId($shopId);
 Registry::set(Config::class, null);
 
-$feed = new ArticleFeed();
-$feed->generate(new Csv(STDOUT));
+$feed = oxNew(ArticleFeed::class);
+$feed->generate(oxNew(Csv::class, STDOUT));
