@@ -25,7 +25,7 @@ class ArticleFeedController extends AdminController
 
         try {
             $articleFeed = oxNew(ArticleFeed::class);
-            $articleFeed->generate(new Csv($handle));
+            $articleFeed->generate(oxNew(Csv::class, $handle));
             $result[] = $this->translate('FF_ARTICLE_FEED_EXPORT_SUCCESS');
 
             $ftpClient = oxNew(FtpClient::class, oxNew(FtpParams::class));

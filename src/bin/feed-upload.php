@@ -28,7 +28,7 @@ try {
     $pushImport  = oxNew(PushImport::class, oxNew(ClientFactory::class));
 
     $handle = tmpfile();
-    $articleFeed->generate(new Csv($handle));
+    $articleFeed->generate(oxNew(Csv::class, $handle));
     $ftpUploader->upload($handle, $articleFeed->getFileName());
     $pushImport->execute();
 } finally {
