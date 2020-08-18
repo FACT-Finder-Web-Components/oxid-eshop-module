@@ -10,9 +10,10 @@ require_once dirname(__FILE__) . '/../../../../bootstrap.php';
 
 define('OX_IS_ADMIN', true);
 
+use Omikron\FactFinder\Oxid\Export\ArticleFeed;
+use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use Omikron\FactFinder\Oxid\Model\Api\ClientFactory;
 use Omikron\FactFinder\Oxid\Model\Api\PushImport;
-use Omikron\FactFinder\Oxid\Model\ArticleFeed;
 use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
 use Omikron\FactFinder\Oxid\Model\Export\FtpClient;
 use OxidEsales\Eshop\Core\Config;
@@ -27,7 +28,7 @@ try {
     $pushImport  = oxNew(PushImport::class, oxNew(ClientFactory::class));
 
     $handle = tmpfile();
-    $articleFeed->generate($handle);
+    $articleFeed->generate(oxNew(Csv::class, $handle));
     $ftpUploader->upload($handle, $articleFeed->getFileName());
     $pushImport->execute();
 } finally {

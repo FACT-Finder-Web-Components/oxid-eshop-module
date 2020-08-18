@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Model\Config;
 
 use Omikron\FactFinder\Oxid\Contract\Config\ParametersSourceInterface;
+use Omikron\FactFinder\Oxid\Export\Filter\TextFilter;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Application\Model\Category;
 
@@ -16,9 +17,13 @@ class Communication implements ParametersSourceInterface
     /** @var string[] */
     protected $mergeableParams = ['add-params', 'add-tracking-params', 'keep-url-params', 'parameter-whitelist'];
 
+    /** @var TextFilter */
+    private $filter;
+
     public function __construct(FrontendController $view)
     {
-        $this->view = $view;
+        $this->view   = $view;
+        $this->filter = oxNew(TextFilter::class);
     }
 
     public function getParameters(): array
@@ -52,25 +57,22 @@ class Communication implements ParametersSourceInterface
 
     protected function getCategoryPath(Category $category, string $param = 'CategoryPath'): string
     {
-        $categories = [$category];
+        $categories = [rawurlencode($this->filter->filterValue($category->getTitle()))];
         while ($parent = $category->getParentCategory()) {
-            $categories[] = $parent;
+            $categories[] = rawurlencode($this->filter->filterValue($parent->getTitle()));
             $category     = $parent;
         }
 
         if ($this->getConfig('ffApiVersion') === 'NG') {
-            $path = implode('/', array_map(function (Category $category) {
-                return rawurlencode($category->getTitle());
-            }, array_reverse($categories)));
-
+            $path = implode('/', array_reverse($categories));
             return sprintf('navigation=true,filter=%s:%s', urlencode($param), urlencode($path));
         }
 
         $path  = 'ROOT';
         $value = ['navigation=true'];
         foreach (array_reverse($categories) as $category) {
-            $value[] = sprintf("filter{$param}%s=%s", $path, rawurlencode($category->getTitle()));
-            $path    .= '/' . rawurlencode($category->getTitle());
+            $value[] = sprintf("filter{$param}%s=%s", $path, $category);
+            $path    .= '/' . $category;
         }
         return implode(',', $value);
     }

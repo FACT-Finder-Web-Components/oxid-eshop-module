@@ -27,6 +27,7 @@ class FtpClient
     {
         try {
             $connection = $this->connect($this->params);
+            rewind($handle);
             ftp_fput($connection, $filename, $handle, FTP_ASCII);
         } finally {
             if (isset($connection) && $connection) $this->close($connection);

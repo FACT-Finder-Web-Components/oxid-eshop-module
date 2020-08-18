@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
+use Omikron\FactFinder\Oxid\Export\ArticleFeed;
+use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use Omikron\FactFinder\Oxid\Model\Api\ClientFactory;
 use Omikron\FactFinder\Oxid\Model\Api\PushImport;
-use Omikron\FactFinder\Oxid\Model\ArticleFeed;
 use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
 use Omikron\FactFinder\Oxid\Model\Export\FtpClient;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
@@ -17,58 +18,35 @@ class ArticleFeedController extends AdminController
     /** @var string */
     protected $_sThisTemplate = 'admin/page/ajax_result.tpl';
 
-    /** @var FtpClient */
-    protected $ftpClient;
-
-    /** @var ArticleFeed */
-    protected $articleFeed;
-
-    /** @var PushImport */
-    protected $pushImport;
-
-    /** @var array */
-    protected $result = [];
-
-    /** @var bool */
-    protected $success = false;
-
-    public function __construct()
-    {
-        $this->ftpClient   = new FtpClient(new FtpParams());
-        $this->articleFeed = new ArticleFeed();
-        $this->pushImport  = new PushImport(new ClientFactory());
-    }
-
     public function export()
     {
-        $handle = fopen(OX_BASE_PATH . 'export/' . $this->articleFeed->getFileName(), 'w+');
+        $handle = tmpfile();
+        $result = [];
 
         try {
-            $this->articleFeed->generate($handle);
-            $this->addTranslatedMessage('FF_ARTICLE_FEED_EXPORT_SUCCESS');
+            $articleFeed = oxNew(ArticleFeed::class);
+            $articleFeed->generate(oxNew(Csv::class, $handle));
+            $result[] = $this->translate('FF_ARTICLE_FEED_EXPORT_SUCCESS');
 
-            $this->ftpClient->upload($handle, $this->articleFeed->getFileName());
-            $this->addTranslatedMessage('FF_ARTICLE_FEED_UPLOAD_SUCCESS');
+            $ftpClient = oxNew(FtpClient::class, oxNew(FtpParams::class));
+            $ftpClient->upload($handle, $articleFeed->getFileName());
+            $result[] = $this->translate('FF_ARTICLE_FEED_UPLOAD_SUCCESS');
 
-            $this->pushImport->execute();
-            $this->addTranslatedMessage('FF_ARTICLE_FEED_IMPORT_TRIGGERED');
+            $pushImport = oxNew(PushImport::class, oxNew(ClientFactory::class));
+            $pushImport->execute();
+            $result[] = $this->translate('FF_ARTICLE_FEED_IMPORT_TRIGGERED');
 
-            $this->success = true;
+            $this->addTplParam('success', true);
         } catch (\Exception $e) {
-            fclose($handle);
-            $this->result = [$e->getMessage()];
+            $result[] = $e->getMessage();
         }
+
+        $this->addTplParam('result', $result);
+        fclose($handle);
     }
 
-    public function render(): string
+    protected function translate(string $message): string
     {
-        $this->addTplParam('result', $this->result);
-        $this->addTplParam('success', $this->success);
-        return parent::render();
-    }
-
-    protected function addTranslatedMessage(string $message)
-    {
-        $this->result[] = Registry::getLang()->translateString($message, null, true);
+        return Registry::getLang()->translateString($message, null, true);
     }
 }

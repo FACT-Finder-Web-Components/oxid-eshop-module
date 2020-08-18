@@ -12,6 +12,9 @@
     <rule ref="PSR2" />
     <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
     <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter" />
+    <rule ref="Generic.ControlStructures.InlineControlStructure">
+        <severity>0</severity>
+    </rule>
     <rule ref="Generic.Files.LineLength">
         <exclude-pattern>*Test.php</exclude-pattern>
         <properties>
@@ -29,7 +32,9 @@
     <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
         <exclude-pattern>*Test.php</exclude-pattern>
     </rule>
-    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore" />
+    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+        <exclude-pattern>*Controller.php</exclude-pattern>
+    </rule>
     <rule ref="PSR2.Files.EndFileNewline" />
     <rule ref="PSR2.Methods.MethodDeclaration.Underscore" />
     <rule ref="Squiz.ControlStructures.ControlSignature">
