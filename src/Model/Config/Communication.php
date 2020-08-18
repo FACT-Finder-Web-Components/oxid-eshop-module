@@ -8,6 +8,7 @@ use Omikron\FactFinder\Oxid\Contract\Config\ParametersSourceInterface;
 use Omikron\FactFinder\Oxid\Export\Filter\TextFilter;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Application\Model\Category;
+use OxidEsales\Eshop\Core\Registry;
 
 class Communication implements ParametersSourceInterface
 {
@@ -29,12 +30,15 @@ class Communication implements ParametersSourceInterface
     public function getParameters(): array
     {
         $category = $this->view->getActiveCategory();
+        $session  = Registry::getSession();
 
         $params = [
             'url'                         => $this->getConfig('ffServerUrl'),
             'version'                     => $this->getConfig('ffApiVersion'),
             'api'                         => $this->getConfig('ffApiVersion') ? 'v3' : '',
             'channel'                     => $this->getConfig('ffChannel'),
+            'sid'                         => substr((string) $session->getId(), 0, 30),
+            'user-id'                     => $session->getUser() ? $session->getUser()->getFieldData('oxcustnr') : '',
             'use-url-parameter'           => $this->getConfig('ffUseUrlParams') ? 'true' : 'false',
             'disable-single-hit-redirect' => 'true',
             'currency-code'               => $this->view->getActCurrency()->name,
