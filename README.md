@@ -59,6 +59,7 @@ All sections will be covered in the following paragraphs.
 ### Main Settings
 
 ![Main Settings](docs/assets/main-settings.png "Main settings")
+
 This section contains critical configuration, which is required in order module to work.
 All fields are self-explained.
 Configuration set here is used by both Web Components and during the server side communication with FACT-Finder® instance. 
