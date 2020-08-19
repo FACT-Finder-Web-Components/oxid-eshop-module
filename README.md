@@ -92,6 +92,7 @@ You can find more information about mentioned properties purposes in Web Compone
 
 ### Features Settings
 ![Features Settings](docs/assets/features-settings.png "Features settings")
+
 * `Use FACT-Finder® for category pages?` - check this option to use Web Components in category pages. More information in separate paragraph.
 * Campaigns - enables `ff-campaign-product` on product page and `ff-campaign-feedbacktext`, `ff-campaign-shopping-cart`on cart page
 * Recommendations - enables `ff-recommendation` on product page
@@ -104,6 +105,7 @@ Once user lands on category page search event is emitted immediately (thanks to 
 
 ### Export Settings
 ![Export Settings](docs/assets/export-settings.png "Export settings")
+
 Use following fields if you want to export feed file to your FTP server, where it could be then imported by FACT-Finder®.
 * FTP host 
 * FTP port 
@@ -155,6 +157,7 @@ There are two console commands located in the module `bin` directory, available 
 Simply run them using the installed PHP CLI.
 
     `php [MODULE_LOCATION]/bin/[COMMAND_NAME].php`
+
 * feed-write - only saves the feed file on local file system
 * feed-upload - run full integration (just like clicking the `Export Feed` button in admin panel)
 
