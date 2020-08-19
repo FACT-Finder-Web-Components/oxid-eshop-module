@@ -36,7 +36,7 @@ class Communication implements ParametersSourceInterface
             'url'                         => $this->getConfig('ffServerUrl'),
             'version'                     => $this->getConfig('ffApiVersion'),
             'api'                         => $this->getConfig('ffApiVersion') ? 'v3' : '',
-            'channel'                     => $this->getConfig('ffChannel'),
+            'channel'                     => $this->getChannel(),
             'sid'                         => substr((string) $session->getId(), 0, 30),
             'user-id'                     => $session->getUser() ? $session->getUser()->getFieldData('oxcustnr') : '',
             'use-url-parameter'           => $this->getConfig('ffUseUrlParams') ? 'true' : 'false',
@@ -106,5 +106,17 @@ class Communication implements ParametersSourceInterface
         return array_reduce($this->mergeableParams, function (array $result, string $param) use ($additionalParams) {
             return [$param => implode(',', array_column([$additionalParams, $result], $param))] + $result;
         }, $baseParams);
+    }
+
+    private function getChannel(): string
+    {
+        $channels = $this->getConfig('ffChannel');
+        $langAbbr = $this->view->getActiveLangAbbr();
+
+        if (isset($channels[$langAbbr])) {
+            return $channels[$langAbbr];
+        } else {
+            throw new \RuntimeException("No channel for used language: $langAbbr");
+        }
     }
 }

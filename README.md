@@ -60,14 +60,15 @@ All sections will be covered in the following paragraphs.
 
 ![Main Settings](docs/assets/main-settings.png "Main settings")
 
-This section contains critical configuration, which is required in order for the module to work.
+This section contains a critical configuration, which is required in order for the module to work.
 All fields are self-explained.
 Configuration set here is used by both Web Components and during the server side communication with FACT-Finder® instance. 
 Credentials you will be given should be placed here.
 
 * Server URL - FACT-Finder® instance url   
-  **Note:** Server URL should contain a used protocol: (e.g. `https://`) and should end with an endpoint specific for a givenversion (e.g. in version 7.3 its `FACT-Finder-7.3`, in NG `fact-finder` )
-* Channel - Channel you want to serve data from
+  **Note:** Server URL should contain a used protocol: (e.g. `https://`) and should end with an endpoint specific for a given version (e.g. in version 7.3 its `FACT-Finder-7.3`, in NG `fact-finder` )
+* Channel - Channel you want to serve data from     
+  **Note** that this is a `aarr` field which means you need to provide a map of languages and channels dedicated in a following pattern: `language_abbreviation => channel_name`
 * Username
 * Password
 * Authorization Prefix
@@ -165,7 +166,7 @@ If you are using Oxid Enterprise and its multishop feature, you can specify the 
 
     php source/modules/ff/ffwebcomponents/bin/feed-write.php -s1
 
-If your shop supports multiple languages, enter the language identifier of the language you want to export by adding `lang` option to the command (e.g. `php bin/feed-write.php lang 1`).
+If your shop supports multiple languages, enter the language identifier of the language you want to export by adding `-l` parameter to the command (e.g. `php bin/feed-write.php -l 1`).
 You can check the language identifiers at "Master Settings -> Languages". 
 
 ![Languages](docs/assets/languages.png "Languages")
