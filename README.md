@@ -156,14 +156,14 @@ By clicking this button, you trigger the whole export process, including upload 
 There are two console commands located in the module `bin` directory, available for use.
 Simply run them using the installed PHP CLI.
 
-    `php [MODULE_LOCATION]/bin/[COMMAND_NAME].php`
+    php [MODULE_LOCATION]/bin/[COMMAND_NAME].php
 
 * `feed-write.php` - only saves the feed file on local file system
 * `feed-upload.php` - run full integration (just like clicking the `Export Feed` button in admin panel)
 
 If you are using Oxid Enterprise and its multishop feature, you can specify the shop ID by using the `-s` parameter, e.g.
 
-    `php source/modules/ff/ffwebcomponents/bin/feed-write.php -s1`
+    php source/modules/ff/ffwebcomponents/bin/feed-write.php -s1
 
 If your shop supports multiple languages, enter the language identifier of the language you want to export by adding `lang` option to the command (e.g. `php bin/feed-write.php lang 1`).
 You can check the language identifiers at "Master Settings -> Languages". 
