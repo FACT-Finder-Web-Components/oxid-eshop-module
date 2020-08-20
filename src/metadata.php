@@ -101,9 +101,6 @@ $aModule = [
             'name'     => 'ffChannel',
             'type'     => 'aarr',
             'position' => $settingPosition++,
-            'value'    => [
-                'language_abbreviation' => 'channel_name'
-            ]
         ],
         [
             'group'    => 'ffMain',

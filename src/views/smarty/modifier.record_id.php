@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use OxidEsales\Eshop\Core\Model\BaseModel;
 
-function smarty_modifier_record_id(BaseModel $article, string $table = 'oxarticles'): string
+function smarty_modifier_record_id(BaseModel $article): string
 {
-    return (string) $article->{$table . '__oxartnum'};
+    return (string) $article->getFieldData('oxartnum');
 }
