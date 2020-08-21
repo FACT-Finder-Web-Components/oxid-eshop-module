@@ -17,8 +17,8 @@ use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
 
 Registry::getConfig()->setShopId($shopId);
-Registry::getLang()->setBaseLanguage($languageId);
 Registry::set(Config::class, null);
+Registry::getLang()->setBaseLanguage($languageId);
 
 $feed = oxNew(ArticleFeed::class);
 $feed->generate(oxNew(Csv::class, STDOUT));

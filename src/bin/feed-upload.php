@@ -22,8 +22,8 @@ use OxidEsales\Eshop\Core\Registry;
 
 try {
     Registry::getConfig()->setShopId($shopId);
-    Registry::getLang()->setBaseLanguage($languageId);
     Registry::set(Config::class, null);
+    Registry::getLang()->setBaseLanguage($languageId);
 
     $articleFeed = oxNew(ArticleFeed::class);
     $ftpUploader = oxNew(FtpClient::class, oxNew(FtpParams::class));
