@@ -36,7 +36,7 @@ class ArticleFeed
 
     public function getFileName(): string
     {
-        return sprintf('export.%s.csv', Registry::getConfig()->getConfigParam('ffChannel'));
+        return sprintf('export.%s.csv', $this->getChannel(Registry::getLang()->getLanguageAbbr()));
     }
 
     public function generate(StreamInterface $stream): void
@@ -46,6 +46,11 @@ class ArticleFeed
 
         $stream->addEntity($columns);
         oxNew(Exporter::class)->exportEntities($stream, oxNew(DataProvider::class, ...$fields), $columns);
+    }
+
+    protected function getChannel(string $lang): string
+    {
+        return Registry::getConfig()->getConfigParam('ffChannel')[$lang];
     }
 
     private function getFieldName(FieldInterface $field): string

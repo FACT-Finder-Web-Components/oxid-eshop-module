@@ -37,7 +37,7 @@ class PushImport
             ->build();
 
         $response = [];
-        $channel  = $this->config->getConfigParam('ffChannel');
+        $channel  = $this->getChannel(Registry::getLang()->getLanguageAbbr());
         foreach ($this->getPushImportTypes() as $type) {
             $response = array_merge_recursive($response, $resource->import($type, $channel, $params));
         }
@@ -55,5 +55,10 @@ class PushImport
         return array_filter(['data', 'suggest', 'recommendation'], function (string $type): bool {
             return (bool) $this->config->getConfigParam('ffAutomaticImport' . ucfirst($type));
         });
+    }
+
+    protected function getChannel(string $lang): string
+    {
+        return $this->config->getConfigParam('ffChannel')[$lang];
     }
 }
