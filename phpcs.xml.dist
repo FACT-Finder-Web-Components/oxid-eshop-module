@@ -16,6 +16,7 @@
         <severity>0</severity>
     </rule>
     <rule ref="Generic.Files.LineLength">
+        <exclude-pattern>*_lang.php</exclude-pattern>
         <exclude-pattern>*Test.php</exclude-pattern>
         <properties>
             <property name="lineLimit" value="120" />
