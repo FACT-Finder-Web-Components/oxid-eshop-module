@@ -7,7 +7,7 @@ $aLang = [
     'SHOP_MODULE_GROUP_ffMain'                    => 'Grundeinstellungen',
     'SHOP_MODULE_ffServerUrl'                     => 'Server-URL',
     'SHOP_MODULE_ffChannel'                       => 'Channel',
-    'HELP_SHOP_MODULE_ffChannel'                  => 'Beispiel-Verwendung : de => channel_de, en => channel_en. Jeder Wert sollte in eine neue Zeile gesetzt werden',
+    'HELP_SHOP_MODULE_ffChannel'                  => 'Beispiel: de => channel_de, en => channel_en. Jeder Wert sollte in eine neue Zeile gesetzt werden',
     'SHOP_MODULE_ffUsername'                      => 'Benutzername',
     'SHOP_MODULE_ffPassword'                      => 'Passwort',
     'SHOP_MODULE_ffAuthPrefix'                    => 'Authorisierungs-Präfix',
