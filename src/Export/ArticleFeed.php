@@ -9,6 +9,7 @@ use Omikron\FactFinder\Oxid\Export\Field\Brand;
 use Omikron\FactFinder\Oxid\Export\Field\CategoryPath;
 use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Field\FilterAttributes;
+use Omikron\FactFinder\Oxid\Export\Field\Keywords;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 use OxidEsales\Eshop\Core\Registry;
 
@@ -59,6 +60,7 @@ class ArticleFeed
             oxNew(Brand::class),
             oxNew(CategoryPath::class),
             oxNew(FilterAttributes::class),
+            oxNew(Keywords::class),
         ];
     }
 }
