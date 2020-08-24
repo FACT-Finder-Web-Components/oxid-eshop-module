@@ -80,6 +80,7 @@ Credentials you will be given should be placed here.
 ### Test Connection Button
 By clicking the `Test Connection` button you can check if your credentials are correct.
 This functionality uses form data, so there is no need to save first.
+**Note:** This functionality uses `de` channel input value. 
 
 ### Export Feed Button
 It is a one of possible ways of exporting feed. You can find more details in section [Admin Panel Export](#admin-panel-export)  
