@@ -68,7 +68,7 @@ Credentials you will be given should be placed here.
 * Server URL - FACT-Finder® instance url   
   **Note:** Server URL should contain a used protocol: (e.g. `https://`) and should end with an endpoint specific for a given version (e.g. in version 7.3 its `FACT-Finder-7.3`, in NG `fact-finder` )
 * Channel - Channel you want to serve data from     
-  **Note** that this is a `aarr` field which means you need to provide a map of languages and channels dedicated in a following pattern: `language_abbreviation => channel_name`
+  **Note** The number of channel fields is adjusted to the number of active languages used in application. Please make sure you set a correct channel for a given language.
 * Username
 * Password
 * Authorization Prefix
@@ -80,6 +80,7 @@ Credentials you will be given should be placed here.
 ### Test Connection Button
 By clicking the `Test Connection` button you can check if your credentials are correct.
 This functionality uses form data, so there is no need to save first.
+**Note:** This functionality uses `de` channel input value. 
 
 ### Export Feed Button
 It is a one of possible ways of exporting feed. You can find more details in section [Admin Panel Export](#admin-panel-export)  
