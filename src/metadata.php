@@ -2,6 +2,8 @@
 
 namespace Omikron\FactFinder\Oxid;
 
+use OxidEsales\Eshop\Application\Controller\Admin\ModuleConfiguration;
+
 $moduleId        = 'ffwebcomponents';
 $moduleName      = 'FACT-Finder<sup>&reg;</sup> Web Components';
 $companyName     = 'Omikron Data Quality GmbH';
@@ -29,6 +31,11 @@ $aModule = [
             'template' => 'module_config.tpl',
             'block'    => 'admin_module_config_form',
             'file'     => 'views/admin/blocks/factfinder_module_config.tpl',
+        ],
+        [
+            'template' => 'module_config.tpl',
+            'block'    => 'admin_module_config_var_type_aarr',
+            'file'     => 'views/admin/blocks/factfinder_config_field_channel.tpl',
         ],
         [
             'template' => 'layout/base.tpl',
@@ -71,6 +78,9 @@ $aModule = [
             'file'     => 'views/frontend/widget/search.tpl',
         ],
     ],
+    'extend'      => [
+        ModuleConfiguration::class => \Omikron\FactFinder\Oxid\Controller\Admin\ModuleConfiguration::class,
+    ],
     'templates'   => [
         'admin/page/ajax_result.tpl'      => 'ff/ffwebcomponents/views/admin/ajax_result.tpl',
         'page/factfinder/result.tpl'      => 'ff/ffwebcomponents/views/frontend/page/result.tpl',
@@ -99,7 +109,7 @@ $aModule = [
         [
             'group'    => 'ffMain',
             'name'     => 'ffChannel',
-            'type'     => 'str',
+            'type'     => 'aarr',
             'position' => $settingPosition++,
         ],
         [

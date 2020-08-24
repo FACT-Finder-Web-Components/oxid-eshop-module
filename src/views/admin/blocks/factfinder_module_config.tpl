@@ -61,13 +61,13 @@
 
         function getTestConnectionParams() {
             return {
-                username: jQuery('[name="confstrs[ffUsername]"]').val(),
-                password: jQuery('[name="confstrs[ffPassword]"]').val(),
-                prefix: jQuery('[name="confstrs[ffAuthPrefix]"]').val(),
-                postfix: jQuery('[name="confstrs[ffAuthPostfix]"]').val(),
-                serverUrl: jQuery('[name="confstrs[ffServerUrl]"]').val(),
-                channel: jQuery('[name="confstrs[ffChannel]"]').val(),
-                version: jQuery('[name="confselects[ffApiVersion]"]').val(),
+                username:   jQuery('[name="confstrs[ffUsername]"]').val(),
+                password:   jQuery('[name="confstrs[ffPassword]"]').val(),
+                prefix:     jQuery('[name="confstrs[ffAuthPrefix]"]').val(),
+                postfix:    jQuery('[name="confstrs[ffAuthPostfix]"]').val(),
+                serverUrl:  jQuery('[name="confstrs[ffServerUrl]"]').val(),
+                channel:    jQuery('[name="confaarrs[ffChannel][de]"]').val(),
+                version:    jQuery('[name="confselects[ffApiVersion]"]').val(),
             }
         }
     </script>
