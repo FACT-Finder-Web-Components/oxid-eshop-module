@@ -49,6 +49,6 @@ class Builder
     public function build(): ResourceInterface
     {
         $params = [$this->serverUrl, $this->client, $this->credentials];
-        return oxNew($this->apiVersion === 'NG' ? NG::class : Standard::class, ...$params);
+        return oxNew($this->apiVersion === 'ng' ? NG::class : Standard::class, ...$params);
     }
 }
