@@ -31,6 +31,7 @@ $aLang = [
     'SHOP_MODULE_ffSimilarProducts'               => 'Similar products',
     'SHOP_MODULE_ffPushedProducts'                => 'Pushed products',
     'SHOP_MODULE_GROUP_ffExport'                  => 'Export Settings',
+    'SHOP_MODULE_ffExportAttributes'              => 'Exported Attributes',
     'SHOP_MODULE_ffFtpHost'                       => 'FTP host',
     'SHOP_MODULE_ffFtpPort'                       => 'FTP port',
     'SHOP_MODULE_ffFtpUser'                       => 'FTP user',

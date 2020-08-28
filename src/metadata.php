@@ -38,6 +38,11 @@ $aModule = [
             'file'     => 'views/admin/blocks/factfinder_config_field_channel.tpl',
         ],
         [
+            'template' => 'module_config.tpl',
+            'block'    => 'admin_module_config_var_type_aarr',
+            'file'     => 'views/admin/blocks/factfinder_config_field_attributes.tpl',
+        ],
+        [
             'template' => 'layout/base.tpl',
             'block'    => 'head_css',
             'file'     => 'views/frontend/blocks/scripts.tpl',
@@ -193,6 +198,12 @@ $aModule = [
             'name'     => 'ffPushedProducts',
             'type'     => 'bool',
             'value'    => false,
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffExport',
+            'name'     => 'ffExportAttributes',
+            'type'     => 'aarr',
             'position' => $settingPosition++,
         ],
         [
