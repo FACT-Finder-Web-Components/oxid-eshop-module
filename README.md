@@ -20,6 +20,7 @@ customise them.
     - [Advanced Settings](#advanced-settings)
     - [Features Settings](#features-settings)
         - [Using FACT-Finder® on category pages](#using-fact-finder-on-category-pages)
+    - [Feed Settings](#feed-settings)
     - [Export Settings](#export-settings)
 - [Export Methods](#export-methods)
     - [HTTP Export](#http-export)
@@ -104,6 +105,14 @@ You can find more information about mentioned properties purposes in Web Compone
 ### Using FACT-Finder® on category pages
 Module in order to preserve categories URLs and hence SEO get use of standard Oxid routing with the combination of FACT-Finder® availability to pass custom parameters to search request.
 Once user lands on category page search event is emitted immediately (thanks to `search-immediate` communication parameter usage).
+
+### Feed Settings
+![Feed Settings](docs/assets/feed-settings.png "Feed settings")
+This section allows setting attributes to export.
+If you want to export the attribute to separate column, choose it from the select input and set `Multi-Attribute` column value to `No`.
+If you want to export the attribute to aggregate column `NumericalAttribute` choose `Numerical` as `Multi-Attribute` column value.
+if `Multi-Attribute` is set to `Yes`, the attribute is placed in an aggregate column `FilterAttributes`
+**Note:** Selection attributes are always placed in `FilterAttributes` automatically.
 
 ### Export Settings
 ![Export Settings](docs/assets/export-settings.png "Export settings")

@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Export;
 
+use Omikron\FactFinder\Oxid\Export\Data\ExportAttribute;
 use Omikron\FactFinder\Oxid\Export\Entity\DataProvider;
+use Omikron\FactFinder\Oxid\Export\Field\Attribute as AttributeField;
 use Omikron\FactFinder\Oxid\Export\Field\Brand;
 use Omikron\FactFinder\Oxid\Export\Field\CategoryPath;
 use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Field\FilterAttributes;
 use Omikron\FactFinder\Oxid\Export\Field\Keywords;
+use Omikron\FactFinder\Oxid\Export\Field\NumericalAttributes;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
+use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
 use OxidEsales\Eshop\Core\Registry;
 
 class ArticleFeed
@@ -30,9 +34,13 @@ class ArticleFeed
         'ImageUrl',
     ];
 
+    /** @var ExportConfig */
+    protected $exportConfig;
+
     public function __construct(FieldInterface ...$fields)
     {
-        $this->fields = $fields;
+        $this->fields       = $fields;
+        $this->exportConfig =  oxNew(ExportConfig::class);
     }
 
     public function getFileName(): string
@@ -61,11 +69,14 @@ class ArticleFeed
 
     protected function getAdditionalFields(): array
     {
-        return [
-            oxNew(Brand::class),
-            oxNew(CategoryPath::class),
-            oxNew(FilterAttributes::class),
-            oxNew(Keywords::class),
-        ];
+        return array_merge([
+           oxNew(Brand::class),
+           oxNew(CategoryPath::class),
+           oxNew(FilterAttributes::class),
+           oxNew(NumericalAttributes::class),
+           oxNew(Keywords::class),
+        ], array_map(function (ExportAttribute $attribute): AttributeField {
+            return new AttributeField($attribute->getFieldData('oxtitle'));
+        }, $this->exportConfig->getSingleFields()));
     }
 }

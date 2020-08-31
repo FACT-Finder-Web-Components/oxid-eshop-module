@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
+use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Application\Model\AttributeList;
@@ -72,15 +73,17 @@ class ModuleConfiguration extends ModuleConfiguration_parent
 
     private function getSelectedAttributes(array $allAttributes): array
     {
-        $selected = $this->getConfig()->getConfigParam('ffExportAttributes');
+        /** @var ExportConfig $exportConfig */
+        $exportConfig   = oxNew(ExportConfig::class);
+        $selectedConfig = $exportConfig->getSelectedAttributesConfig();
 
-        return array_map(function (string $attributeId) use ($selected, $allAttributes) : array {
+        return array_map(function (string $attributeId) use ($selectedConfig, $allAttributes) : array {
             return [
                 'id'    => $attributeId,
                 'title' => $allAttributes[$attributeId],
-                'multi' => $selected[$attributeId]
+                'multi' => $selectedConfig[$attributeId]
             ];
-        }, array_keys($selected));
+        }, array_keys($selectedConfig));
     }
 
     private function prepareAttributes(): callable

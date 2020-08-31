@@ -201,7 +201,7 @@ $aModule = [
             'position' => $settingPosition++,
         ],
         [
-            'group'    => 'ffExport',
+            'group'    => 'ffFeed',
             'name'     => 'ffExportAttributes',
             'type'     => 'aarr',
             'position' => $settingPosition++,

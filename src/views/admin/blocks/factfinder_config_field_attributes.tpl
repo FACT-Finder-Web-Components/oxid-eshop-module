@@ -1,7 +1,5 @@
 [{if $module_var === 'ffExportAttributes'}]
     <div class="attributes_wrapper">
-        <div>[{$selectedAttributes|json_encode}]</div>
-
         <table id="attributes" style="width:300px">
             <thead>
             <tr>
@@ -30,6 +28,7 @@
                         <select id="type-[{$module_var}]-ID_PLACEHOLDER" class="separate-column-select" name="confaarrs[[{$module_var}]][ID_PLACEHOLDER][multi]">
                               <option value="0">No</option>
                               <option value="1">Yes</option>
+                              <option value="2">Numerical</option>
                         </select>
                 </td>
                 <td>
