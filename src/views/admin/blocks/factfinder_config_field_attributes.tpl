@@ -28,7 +28,6 @@
                         <select id="type-[{$module_var}]-ID_PLACEHOLDER" class="separate-column-select" name="confaarrs[[{$module_var}]][ID_PLACEHOLDER][multi]">
                               <option value="0">No</option>
                               <option value="1">Yes</option>
-                              <option value="2">Numerical</option>
                         </select>
                 </td>
                 <td>

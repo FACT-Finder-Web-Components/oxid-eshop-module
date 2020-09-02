@@ -110,7 +110,6 @@ Once user lands on category page search event is emitted immediately (thanks to 
 ![Feed Settings](docs/assets/feed-settings.png "Feed settings")
 This section allows setting attributes to export.
 If you want to export the attribute to separate column, choose it from the select input and set `Multi-Attribute` column value to `No`.
-If you want to export the attribute to aggregate column `NumericalAttribute` choose `Numerical` as `Multi-Attribute` column value.
 if `Multi-Attribute` is set to `Yes`, the attribute is placed in an aggregate column `FilterAttributes`
 **Note:** Selection attributes are always placed in `FilterAttributes` automatically.
 
