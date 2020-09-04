@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Model\Config;
 
 use Omikron\FactFinder\Oxid\Export\Data\ExportAttribute;
-use OxidEsales\EshopCommunity\Application\Model\AttributeList;
+use OxidEsales\Eshop\Application\Model\AttributeList;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
 
@@ -39,7 +39,7 @@ class Export
 
     public function getSelectedAttributesConfig(): array
     {
-        return $this->config->getConfigParam(self::ATTRIBUTE_TO_EXPORT_PATH);
+        return (array) $this->config->getConfigParam(self::ATTRIBUTE_TO_EXPORT_PATH);
     }
 
     private function getAttributes(): array
