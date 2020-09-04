@@ -5,6 +5,7 @@
     width: 50px;
     height: 50px;
 }
+
 .loading {
     border: 3px solid rgba(0, 0, 0, .3);
     border-radius: 50%;
@@ -32,5 +33,15 @@
 
 .text-success {
     color: #28a745;
-    display:block;
+    display: block;
+}
+
+input[type="button"].row-remove {
+    width:12px;
+    height: 11px;
+    background: url(../../../../../../out/admin/img/delete_button.gif) no-repeat;
+    background-size: cover;
+    padding: 0;
+    margin: 0;
+    border: 0;
 }
