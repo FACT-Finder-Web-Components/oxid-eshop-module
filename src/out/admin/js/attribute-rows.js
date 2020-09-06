@@ -1,6 +1,6 @@
 const optionTemplate = '<option value="KEY_PLACEHOLDER">ATTRIBUTE_PLACEHOLDER</option>';
 const baseTemplate = '<div class="attributes_wrapper">' +
-    '<table id="attributes" style="width:300px"><thead><tr><th>Name</th><th>Multi-Attribute</th> <th>Action</th> </tr>' +
+    '<table id="attributes" style="width:300px"><thead><tr><th>Action</th> </tr>' +
     ' </thead> <tbody> </tbody> </table> <input type="button" onclick="addNewRow()" value="Add"/> </div>';
 
 const rowTemplate = '<tr class="attribute-row" id="ID_PLACEHOLDER"><td><select id="ATTRIBUTE_CODE_PLACEHOLDER-ID_PLACEHOLDER" class="attribute-select"  name="confaarrs[ATTRIBUTE_CODE_PLACEHOLDER][ID_PLACEHOLDER][id]">' +
@@ -9,6 +9,9 @@ const rowTemplate = '<tr class="attribute-row" id="ID_PLACEHOLDER"><td><select i
 
 function AttributeRows() {
     const element = HTMLElement.call(this);
+    element.selectedAttributes = undefined;
+    element.availableAttributes = undefined;
+    element.headers = [];
     element.rowTemplate = rowTemplate;
     element.insertAdjacentHTML('beforeend', baseTemplate);
     return element;
@@ -16,21 +19,23 @@ function AttributeRows() {
 
 AttributeRows.prototype = Object.create(HTMLElement.prototype);
 AttributeRows.prototype.constructor = AttributeRows;
-
-AttributeRows.observedAttributes = ['selected-attributes', 'available-attributes'];
+AttributeRows.observedAttributes = ['selected-attributes', 'available-attributes', 'headers'];
 AttributeRows.prototype.createRow = createRow;
-AttributeRows.prototype.connectedCallback = function () {
-    this.selectedAttributes = undefined;
-    this.availableAttributes = undefined;
-};
 
-AttributeRows.prototype.attributeChangedCallback = function (name, oldValue, newValue) {
-    if (name === 'selected-attributes' && newValue !== undefined) {
-        this.selectedAttributes = JSON.parse(newValue);
-    }
-
-    if (name === 'available-attributes' && newValue !== undefined) {
-        this.availableAttributes = JSON.parse(newValue);
+AttributeRows.prototype.attributeChangedCallback = function (name, oldValue, newValue)
+{
+    if (newValue !== undefined) {
+        switch (name) {
+            case 'selected-attributes':
+                this.selectedAttributes = JSON.parse(newValue);
+                break;
+            case 'available-attributes':
+                this.availableAttributes = JSON.parse(newValue);
+                break;
+            case 'headers':
+                this.headers = newValue.split(',').concat('Action');
+                break;
+        }
     }
 
     const availableOptions = [];
@@ -50,6 +55,19 @@ AttributeRows.prototype.attributeChangedCallback = function (name, oldValue, new
         for (var id in this.selectedAttributes) {
             this.createRow(id, this.selectedAttributes[id]);
         }
+    }
+
+    if (this.headers.length) {
+        const headerElement = document.querySelector('#attributes thead tr');
+        while (headerElement.lastElementChild) {
+            headerElement.removeChild(headerElement.lastElementChild);
+        }
+
+        this.headers.forEach(function (header) {
+            const newHeader = document.createElement('th');
+            newHeader.innerText = header;
+            headerElement.appendChild(newHeader);
+        });
     }
 };
 
