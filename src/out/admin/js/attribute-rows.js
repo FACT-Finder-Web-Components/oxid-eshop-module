@@ -10,9 +10,8 @@ const rowTemplate = '<tr class="attribute-row" id="ID_PLACEHOLDER"><td><select i
 function AttributeRows() {
     const element = HTMLElement.call(this);
     element.selectedAttributes = undefined;
-    element.availableAttributes = undefined;
+    element.availableAttributes = [];
     element.headers = [];
-    element.rowTemplate = rowTemplate;
     element.insertAdjacentHTML('beforeend', baseTemplate);
     return element;
 }
@@ -22,52 +21,67 @@ AttributeRows.prototype.constructor = AttributeRows;
 AttributeRows.observedAttributes = ['selected-attributes', 'available-attributes', 'headers'];
 AttributeRows.prototype.createRow = createRow;
 
-AttributeRows.prototype.attributeChangedCallback = function (name, oldValue, newValue)
-{
-    if (newValue !== undefined) {
-        switch (name) {
-            case 'selected-attributes':
+AttributeRows.prototype.attributeChangedCallback = function (name, oldValue, newValue) {
+    const isJson = function (str) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    };
+    switch (name) {
+        case 'selected-attributes':
+            if (isJson(newValue)) {
                 this.selectedAttributes = JSON.parse(newValue);
-                break;
-            case 'available-attributes':
-                this.availableAttributes = JSON.parse(newValue);
-                break;
-            case 'headers':
-                this.headers = newValue.split(',').concat('Action');
-                break;
-        }
+            } else {
+                this.selectedAttributes = undefined;
+            }
+            break;
+        case 'available-attributes':
+            if (isJson(newValue)) {
+                const parsedAttributes = JSON.parse(newValue);
+                const replace = function (key) {
+                    this.availableAttributes.push(optionTemplate
+                        .replace('KEY_PLACEHOLDER', key)
+                        .replace('ATTRIBUTE_PLACEHOLDER', parsedAttributes[key]),
+                    );
+                };
+                if (parsedAttributes) {
+                    Object.keys(parsedAttributes).map(replace.bind(this));
+                    this.rowTemplate = rowTemplate.replace('OPTIONS_PLACEHOLDER', this.availableAttributes.join(''));
+                }
+            } else {
+                this.availableAttributes = [];
+                if (newValue !== oldValue) console.error('No available attributes specified');
+            }
+            break;
+        case 'headers':
+            this.headers = newValue.split(',').concat('Action');
+            break;
     }
 
-    const availableOptions = [];
-    if (this.availableAttributes) {
-        for (var key of Object.keys(this.availableAttributes)) {
-            availableOptions.push(optionTemplate.replace('KEY_PLACEHOLDER', key).replace('ATTRIBUTE_PLACEHOLDER', this.availableAttributes[key]));
-        }
-    }
-    if (availableOptions.length > 0) {
-        this.rowTemplate = this.rowTemplate.replace('OPTIONS_PLACEHOLDER', availableOptions.join(''));
-
-        const attributeRows = document.querySelector('#attributes tbody');
-        while (attributeRows.lastElementChild) {
-            attributeRows.removeChild(attributeRows.lastElementChild);
-        }
-
-        for (var id in this.selectedAttributes) {
-            this.createRow(id, this.selectedAttributes[id]);
-        }
+    const headerElement = document.querySelector('#attributes thead tr');
+    while (headerElement.lastElementChild) {
+        headerElement.removeChild(headerElement.lastElementChild);
     }
 
-    if (this.headers.length) {
-        const headerElement = document.querySelector('#attributes thead tr');
-        while (headerElement.lastElementChild) {
-            headerElement.removeChild(headerElement.lastElementChild);
-        }
+    const attributeRows = document.querySelector('#attributes tbody');
+    while (attributeRows.lastElementChild) {
+        attributeRows.removeChild(attributeRows.lastElementChild);
+    }
 
-        this.headers.forEach(function (header) {
-            const newHeader = document.createElement('th');
-            newHeader.innerText = header;
-            headerElement.appendChild(newHeader);
-        });
+    this.headers.forEach(function (header) {
+        const newHeader = document.createElement('th');
+        newHeader.innerText = header;
+        headerElement.appendChild(newHeader);
+    });
+
+    if (this.availableAttributes.length > 0) {
+        const createRow = function (attributeId) {
+            this.createRow(attributeId, this.selectedAttributes[attributeId]);
+        };
+        Object.keys(this.selectedAttributes).forEach(createRow.bind(this));
     }
 };
 
