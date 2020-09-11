@@ -31,12 +31,7 @@ class Attribute implements FieldInterface
     {
         $attributes = $article->getAttributes()->getArray();
         return array_reduce($attributes, function (array $result, ArticleAttribute $attribute) {
-            return $result + [$attribute->oxattribute__oxtitle->rawValue => $this->prepareValue($attribute->getFieldData('oxvalue'))];
+            return $result + [$attribute->oxattribute__oxtitle->rawValue => $attribute->getFieldData('oxvalue')];
         }, []);
-    }
-
-    private function prepareValue(string $value): string
-    {
-        return implode('#', array_map('trim', explode(',', $value)));
     }
 }

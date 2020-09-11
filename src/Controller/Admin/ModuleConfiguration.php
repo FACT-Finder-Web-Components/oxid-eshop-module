@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
 use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
-use OxidEsales\Eshop\Core\Config;
-use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\Eshop\Application\Model\AttributeList;
 use OxidEsales\Eshop\Application\Model\Attribute;
+use OxidEsales\Eshop\Application\Model\AttributeList;
+use OxidEsales\Eshop\Core\Registry;
 
 /**
  * Module Configuration
@@ -63,25 +62,20 @@ class ModuleConfiguration extends ModuleConfiguration_parent
 
     private function getAvailableAttributes(): array
     {
-        $attributeList = oxNew(AttributeList::class);
-        $attributeList->setBaseObject(oxNew(Attribute::class));
-
-        return array_reduce($attributeList->getList()->getArray(), function (array $attributes, Attribute $attribute): array {
+        $attributeList = oxNew(AttributeList::class)->getList()->getArray();
+        return array_reduce($attributeList, function (array $attributes, Attribute $attribute): array {
             return $attributes + [$attribute->getFieldData('oxid') => $attribute->getFieldData('oxtitle')];
         }, []);
     }
 
     private function getSelectedAttributes(array $allAttributes): array
     {
-        /** @var ExportConfig $exportConfig */
-        $exportConfig   = oxNew(ExportConfig::class);
-        $selectedConfig = $exportConfig->getSelectedAttributesConfig();
-
+        $selectedConfig = oxNew(ExportConfig::class)->getConfigValue();
         return array_map(function (string $attributeId) use ($selectedConfig, $allAttributes) : array {
             return [
                 'id'    => $attributeId,
                 'title' => $allAttributes[$attributeId],
-                'multi' => $selectedConfig[$attributeId]
+                'multi' => $selectedConfig[$attributeId],
             ];
         }, array_keys($selectedConfig));
     }

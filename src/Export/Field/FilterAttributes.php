@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Export\Field;
 
 use Omikron\FactFinder\Oxid\Export\Filter\ExtendedTextFilter;
+use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\Selection;
 use OxidEsales\Eshop\Application\Model\VariantSelectList;
-use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
-use Omikron\FactFinder\Oxid\Export\Data\ExportAttribute;
 
 class FilterAttributes extends Attribute implements FieldInterface
 {
@@ -21,13 +20,9 @@ class FilterAttributes extends Attribute implements FieldInterface
 
     public function __construct()
     {
+        parent::__construct('FilterAttributes');
         $this->filter       = oxNew(ExtendedTextFilter::class);
         $this->exportConfig = oxNew(ExportConfig::class);
-    }
-
-    public function getName(): string
-    {
-        return 'FilterAttributes';
     }
 
     public function getValue(Article $article, Article $parent): string
@@ -64,11 +59,11 @@ class FilterAttributes extends Attribute implements FieldInterface
         $selectedAttributes = $this->exportConfig->getMultiAttributes();
         $data               = parent::getData($article);
 
-        return array_reduce($selectedAttributes, function (string $result, ExportAttribute $attribute) use ($data) {
-            $title = $attribute->getFieldData('oxtitle');
-            return $result . (isset($data[$title])
-                ? $this->filter->filterValue($title) . '=' . $this->filter->filterValue((string) ($data[$title])) . '|'
-                : '');
+        return array_reduce($selectedAttributes, function (string $result, string $attribute) use ($data) {
+            $value = $data[$attribute] ?? '';
+            return $result . ($value
+                    ? $this->filter->filterValue($attribute) . '=' . $this->filter->filterValue((string) $value) . '|'
+                    : '');
         }, '');
     }
 }

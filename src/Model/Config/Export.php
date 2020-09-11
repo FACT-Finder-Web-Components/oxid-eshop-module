@@ -4,49 +4,42 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Model\Config;
 
-use Omikron\FactFinder\Oxid\Export\Data\ExportAttribute;
 use OxidEsales\Eshop\Application\Model\AttributeList;
-use OxidEsales\Eshop\Core\Config;
+use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
 
 class Export
 {
-    private const ATTRIBUTE_TO_EXPORT_PATH = 'ffExportAttributes';
+    private const ATTRIBUTES_TO_EXPORT_PATH = 'ffExportAttributes';
 
-    /** @var Config */
-    private $config;
-
-    public function __construct()
-    {
-        $this->config = Registry::getConfig();
-    }
+    /** @var BaseModel[] */
+    private $attributes;
 
     public function getMultiAttributes(): array
     {
-        $config = $this->getSelectedAttributesConfig();
-        return array_values(array_filter($this->getAttributes(), function (ExportAttribute $attribute) use ($config): bool {
-            return !!$config[$attribute->getFieldData('oxid')];
-        }));
+        return array_intersect_key($this->getAttributes(), array_filter($this->getConfigValue()));
     }
 
     public function getSingleFields(): array
     {
-        $config = $this->getSelectedAttributesConfig();
-        return array_values(array_filter($this->getAttributes(), function (ExportAttribute $attribute) use ($config): bool {
-            return !$config[$attribute->getFieldData('oxid')];
+        return array_intersect_key($this->getAttributes(), array_filter($this->getConfigValue(), function ($value) {
+            return !$value;
         }));
     }
 
-    public function getSelectedAttributesConfig(): array
+    public function getConfigValue(): array
     {
-        return (array) $this->config->getConfigParam(self::ATTRIBUTE_TO_EXPORT_PATH);
+        return Registry::getConfig()->getConfigParam(self::ATTRIBUTES_TO_EXPORT_PATH) ?: [];
     }
 
     private function getAttributes(): array
     {
-        $attributeList = oxNew(AttributeList::class);
-        $attributeList->setBaseObject(oxNew(ExportAttribute::class));
+        $this->attributes = $this->attributes ?? oxNew(AttributeList::class)->getList()->getArray();
+        return array_map([$this, 'getAttributeName'], $this->attributes);
+    }
 
-        return $attributeList->getList()->getArray();
+    private function getAttributeName(BaseModel $attribute): string
+    {
+        return $attribute->getFieldData('oxtitle');
     }
 }
