@@ -15,14 +15,13 @@ class FilterAttributes extends Attribute implements FieldInterface
     /** @var ExtendedTextFilter */
     private $filter;
 
-    /** @var ExportConfig */
-    private $exportConfig;
+    /** @var string[] */
+    private $multiAttributes;
 
     public function __construct()
     {
         parent::__construct('FilterAttributes');
-        $this->filter       = oxNew(ExtendedTextFilter::class);
-        $this->exportConfig = oxNew(ExportConfig::class);
+        $this->filter = oxNew(ExtendedTextFilter::class);
     }
 
     public function getValue(Article $article, Article $parent): string
@@ -56,14 +55,18 @@ class FilterAttributes extends Attribute implements FieldInterface
 
     private function getSelectedFilterAttributes(Article $article): string
     {
-        $selectedAttributes = $this->exportConfig->getMultiAttributes();
-        $data               = parent::getData($article);
+        $result = '';
+        foreach (array_intersect_key(parent::getData($article), $this->getMultiAttributes()) as $key => $value) {
+            if ($value) {
+                $result .= $this->filter->filterValue($key) . '=' . $this->filter->filterValue((string) $value) . '|';
+            }
+        }
+        return $result;
+    }
 
-        return array_reduce($selectedAttributes, function (string $result, string $attribute) use ($data) {
-            $value = $data[$attribute] ?? '';
-            return $result . ($value
-                    ? $this->filter->filterValue($attribute) . '=' . $this->filter->filterValue((string) $value) . '|'
-                    : '');
-        }, '');
+    private function getMultiAttributes(): array
+    {
+        $this->multiAttributes = $this->multiAttributes ?? array_flip(oxNew(ExportConfig::class)->getMultiAttributes());
+        return $this->multiAttributes;
     }
 }
