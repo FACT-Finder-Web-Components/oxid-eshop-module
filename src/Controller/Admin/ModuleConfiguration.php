@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
+use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
+use OxidEsales\Eshop\Application\Model\Attribute;
+use OxidEsales\Eshop\Application\Model\AttributeList;
 use OxidEsales\Eshop\Core\Registry;
 
 /**
@@ -20,8 +23,12 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     {
         $template = parent::render();
         if ($this->isFactFinder()) {
+            $allAttributes = $this->getAvailableAttributes();
+
             $this->addTplParam('shopLanguages', Registry::getLang()->getActiveShopLanguageIds());
             $this->addTplParam('localizedFields', array_reduce($this->localizedFields, [$this, 'toArray'], []));
+            $this->addTplParam('availableAttributes', $allAttributes);
+            $this->addTplParam('selectedAttributes', $this->getSelectedAttributes($allAttributes));
         }
         return $template;
     }
@@ -30,6 +37,9 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     {
         if ($this->isFactFinder()) {
             $_POST['confaarrs'] = array_reduce($this->localizedFields, [$this, 'fromArray'], $_POST['confaarrs'] ?? []);
+            $_POST['confaarrs']['ffExportAttributes'] = $this->_aarrayToMultiline(
+                $this->flatMap($this->prepareAttributes(), $_POST['confaarrs']['ffExportAttributes'] ?? [])
+            );
         }
         return parent::saveConfVars();
     }
@@ -48,5 +58,37 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     private function fromArray(array $result, string $field): array
     {
         return [$field => $this->_aarrayToMultiline($result[$field] ?? [])] + $result;
+    }
+
+    private function getAvailableAttributes(): array
+    {
+        $attributeList = oxNew(AttributeList::class)->getList()->getArray();
+        return array_reduce($attributeList, function (array $attributes, Attribute $attribute): array {
+            return $attributes + [$attribute->getFieldData('oxid') => $attribute->getFieldData('oxtitle')];
+        }, []);
+    }
+
+    private function getSelectedAttributes(array $allAttributes): array
+    {
+        $selectedConfig = oxNew(ExportConfig::class)->getConfigValue();
+        return array_map(function (string $attributeId) use ($selectedConfig, $allAttributes) : array {
+            return [
+                'id'    => $attributeId,
+                'title' => $allAttributes[$attributeId],
+                'multi' => $selectedConfig[$attributeId],
+            ];
+        }, array_keys($selectedConfig));
+    }
+
+    private function prepareAttributes(): callable
+    {
+        return function (array $attributeData): array {
+            return [$attributeData['id'] => $attributeData['multi']];
+        };
+    }
+
+    private function flatMap(callable $fn, array $arr): array
+    {
+        return array_merge([], ...array_map($fn, $arr));
     }
 }
