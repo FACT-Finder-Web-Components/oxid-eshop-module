@@ -35,8 +35,15 @@ class ArticleCollection implements \IteratorAggregate
     protected function getBatch(int $from): ArticleList
     {
         $articleList = oxNew(ArticleList::class);
-        $articleList->setBaseObject(new ExportArticle());
+        $articleList->setBaseObject(oxNew(Article::class));
         $articleList->setSqlLimit($from * $this->batchSize, $this->batchSize);
-        return $articleList->getList();
+
+        $article  = $articleList->getBaseObject();
+        $viewName = $article->getViewName();
+        $active   = $article->getSqlActiveSnippet();
+        $query    = "SELECT {$article->getSelectFields()} FROM `{$viewName}` WHERE (`{$viewName}`.`oxparentid` = '')";
+        $articleList->selectString($query . ($active ? ' AND ' . $active : ''));
+
+        return $articleList;
     }
 }
