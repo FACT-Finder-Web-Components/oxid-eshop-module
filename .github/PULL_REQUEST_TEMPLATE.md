@@ -1,4 +1,4 @@
-- Solves issue: 
+- Fixes # 
 - Description: 
 - Tested with Oxid EShop editions/versions: 
 - Tested with PHP versions: 
