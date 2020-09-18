@@ -19,6 +19,10 @@
                         <span class="filterName">{{element.name}}</span>
                     </span>
                 </div>
+
+                <div data-container="removeFilter">[{oxmultilang ident="FF_REMOVE_FILTER"}]</div>
+                <div data-container="showMore">[{oxmultilang ident="FF_SHOW_MORE"}]</div>
+                <div data-container="showLess">[{oxmultilang ident="FF_SHOW_LESS"}]</div>
             </ff-asn-group-element>
         </ff-asn-group>
 
@@ -26,6 +30,8 @@
             <div slot="groupCaption" class="groupCaption">
                 <p class="h4 facet-title hidden-sm-down">{{group.name}}</p>
             </div>
+
+            <div data-container="removeFilter">[{oxmultilang ident="FF_REMOVE_FILTER"}]</div>
         </ff-asn-group-slider>
     </ff-asn>
 </div>
