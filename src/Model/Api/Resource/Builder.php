@@ -30,7 +30,7 @@ class Builder
 
     public function withServerUrl(string $serverUrl): Builder
     {
-        $this->serverUrl = rtrim($serverUrl);
+        $this->serverUrl = rtrim(trim($serverUrl), '/');
         return $this;
     }
 
