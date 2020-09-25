@@ -6,49 +6,34 @@ namespace Omikron\FactFinder\Oxid\Model\Api\Resource;
 
 use Omikron\FactFinder\Oxid\Contract\Api\ClientInterface;
 use Omikron\FactFinder\Oxid\Contract\Api\ResourceInterface;
-use Omikron\FactFinder\Oxid\Model\Api\Credentials;
 
 class Standard implements ResourceInterface
 {
-    /** @var string */
-    protected $serverUrl;
-
     /** @var ClientInterface */
     protected $client;
 
-    /** @var Credentials */
-    protected $credentials;
-
-    public function __construct(string $serverUrl, ClientInterface $client, Credentials $credentials)
+    public function __construct(ClientInterface $client)
     {
-        $this->serverUrl   = $serverUrl;
-        $this->client      = $client;
-        $this->credentials = $credentials;
+        $this->client = $client;
     }
 
     /**
      * @inheritDoc
      */
-    public function search(string $term, string $channel, array $params = [], array $headers = []): array
+    public function search(string $term, string $channel, array $params = []): array
     {
-        $params = ['channel' => $channel, 'query' => $term] + $params + $this->credentials->toArray();
-        return $this->client->sendRequest($this->getEndpoint('search'), $params, $headers);
+        $params = ['channel' => $channel, 'query' => $term, 'format' => 'json'] + $params;
+        return $this->client->sendRequest('Search.ff', $params);
     }
 
     /**
      * @inheritDoc
      */
-    public function import(string $type, string $channel, array $params = [], array $headers = []): array
+    public function import(string $type, string $channel, array $params = []): array
     {
         $params = ['type' => str_replace('search', 'data', $type), 'channel' => $channel]
             + $params
-            + ['quiet' => true, 'download' => true]
-            + $this->credentials->toArray();
-        return $this->client->sendRequest($this->getEndpoint('import'), $params, $headers);
-    }
-
-    protected function getEndpoint(string $resource): string
-    {
-        return sprintf('%s/%s.ff', $this->serverUrl, ucfirst($resource));
+            + ['quiet' => true, 'download' => true, 'format' => 'json'];
+        return $this->client->sendRequest('Import.ff', $params);
     }
 }

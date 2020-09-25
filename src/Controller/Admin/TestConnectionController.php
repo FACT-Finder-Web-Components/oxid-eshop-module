@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
 use Omikron\FactFinder\Oxid\Exception\ResponseException;
-use Omikron\FactFinder\Oxid\Model\Api\ClientFactory;
 use Omikron\FactFinder\Oxid\Model\Api\Credentials;
 use Omikron\FactFinder\Oxid\Model\Api\Resource\Builder as ResourceBuilder;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
@@ -30,7 +29,6 @@ class TestConnectionController extends AdminController
                 ->withServerUrl($this->param('serverUrl'))
                 ->withApiVersion($this->param('version'))
                 ->withCredentials($this->getCredentials())
-                ->withClient(oxNew(ClientFactory::class)->create())
                 ->build();
 
             $resource->search('FACT-Finder version', $this->param('channel'));

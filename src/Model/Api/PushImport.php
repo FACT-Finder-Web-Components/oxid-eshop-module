@@ -11,16 +11,12 @@ use OxidEsales\Eshop\Core\Registry;
 
 class PushImport
 {
-    /** @var ClientFactory */
-    protected $clientFactory;
-
     /** @var Config */
     protected $config;
 
-    public function __construct(ClientFactory $clientFactory)
+    public function __construct()
     {
-        $this->clientFactory = $clientFactory;
-        $this->config        = Registry::getConfig();
+        $this->config = Registry::getConfig();
     }
 
     public function execute(array $params = [])
@@ -32,7 +28,6 @@ class PushImport
         $resource = oxNew(ResourceBuilder::class)
             ->withServerUrl($this->config->getConfigParam('ffServerUrl'))
             ->withApiVersion($this->config->getConfigParam('ffApiVersion'))
-            ->withClient($this->clientFactory->create())
             ->withCredentials(oxNew(Credentials::class, ...oxNew(Authorization::class)->getParameters()))
             ->build();
 
