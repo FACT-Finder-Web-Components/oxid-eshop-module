@@ -50,21 +50,12 @@ class Builder
 
     protected function createHttpClient(): HttpClient
     {
-        $httpClient = new HttpClient($this->serverUrl, [
-            HttpClient::REQUEST_OPTIONS => [
-                'headers' => [
-                    'Accept'        => 'application/json',
-                    'Content-Type'  => 'application/json',
-                    'Authorization' => $this->credentials->toBasicAuth(),
-                ],
+        $httpClient = new HttpClient($this->serverUrl, [HttpClient::REQUEST_OPTIONS => [
+            'headers' => [
+                'Accept'       => 'application/json',
+                'Content-Type' => 'application/json',
             ],
-        ]);
-
-        if ($this->apiVersion !== 'ng') {
-            ['username' => $user, 'password' => $pw, 'timestamp' => $timestamp] = $this->credentials->toArray();
-            $httpClient->setDefaultOption('headers/Authorization', sprintf('%s:%s:%s', $user, $pw, $timestamp));
-        }
-
-        return $httpClient;
+        ]]);
+        return $httpClient->addSubscriber(new Authenticator($this->apiVersion, $this->credentials));
     }
 }
