@@ -13,7 +13,6 @@ define('OX_IS_ADMIN', true);
 
 use Omikron\FactFinder\Oxid\Export\ArticleFeed;
 use Omikron\FactFinder\Oxid\Export\Stream\Csv;
-use Omikron\FactFinder\Oxid\Model\Api\ClientFactory;
 use Omikron\FactFinder\Oxid\Model\Api\PushImport;
 use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
 use Omikron\FactFinder\Oxid\Model\Export\FtpClient;
@@ -27,7 +26,7 @@ try {
 
     $articleFeed = oxNew(ArticleFeed::class);
     $ftpUploader = oxNew(FtpClient::class, oxNew(FtpParams::class));
-    $pushImport  = oxNew(PushImport::class, oxNew(ClientFactory::class));
+    $pushImport  = oxNew(PushImport::class);
 
     $handle = tmpfile();
     $articleFeed->generate(oxNew(Csv::class, $handle));

@@ -6,54 +6,48 @@ namespace Omikron\FactFinder\Oxid\Model\Api;
 
 use Guzzle\Http\Client as HttpClient;
 use Guzzle\Http\Exception\ServerErrorResponseException;
-use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
 use Omikron\FactFinder\Oxid\Contract\Api\ClientInterface;
-use Omikron\FactFinder\Oxid\Contract\Api\SerializerInterface;
 use Omikron\FactFinder\Oxid\Exception\ResponseException;
 
 class Client implements ClientInterface
 {
-    /** @var SerializerInterface */
-    private $serializer;
+    /** @var HttpClient */
+    protected $httpClient;
 
-    public function __construct(SerializerInterface $serializer)
+    public function __construct(HttpClient $httpClient)
     {
-        $this->serializer = $serializer;
-    }
-
-    protected function client(): HttpClient
-    {
-        return new HttpClient();
+        $this->httpClient = $httpClient;
     }
 
     /**
      * @inheritDoc
      */
-    public function sendRequest(string $endpoint, array $params = [], array $headers = []): array
+    public function sendRequest(string $endpoint, array $params = []): array
     {
-        return $this->send($this->client()->get(), $endpoint, $params, $headers);
+        return $this->send('GET', $this->getUri($endpoint, $params));
     }
 
     /**
      * @inheritDoc
      */
-    public function postRequest(string $endpoint, array $params, array $headers = []): array
+    public function postRequest(string $endpoint, array $params): array
     {
-        return $this->send($this->client()->post(), $endpoint, $params, $headers);
+        return $this->send('POST', $this->getUri($endpoint, $params));
     }
 
-    protected function send(RequestInterface $request, string $endpoint, array $params, array $headers)
+    protected function getUri(string $endpoint, array $params): string
+    {
+        $query = preg_replace('#products%5B\d+%5D%5B(.+?)%5D=#', '\1=', http_build_query($params));
+        return $endpoint . '?' . $query;
+    }
+
+    protected function send(string $method, string $uri)
     {
         try {
-            $params = ['format' => 'json'] + $params;
-            $query  = preg_replace('#products%5B\d+%5D%5B(.+?)%5D=#', '\1=', http_build_query($params));
-
-            $request->setUrl($endpoint . '?' . $query);
-            $request->setHeaders(['Accept' => 'application/json'] + $headers);
-            $response = $request->send();
+            $response = $this->httpClient->createRequest($method, $uri)->send();
             if ($response->isSuccessful()) {
-                return $this->serializer->unserialize((string) $response->getBody());
+                return (array) $response->json();
             }
 
             $this->badRequest($response);
@@ -66,7 +60,7 @@ class Client implements ClientInterface
 
     protected function badRequest(Response $response)
     {
-        $errorMessage = current($this->serializer->unserialize((string) $response->getBody()));
+        $errorMessage = current((array) $response->json());
         throw new ResponseException($errorMessage['error'] ?? $errorMessage, $response->getStatusCode());
     }
 }

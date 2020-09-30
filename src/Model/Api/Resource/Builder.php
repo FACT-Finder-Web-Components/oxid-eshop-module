@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Model\Api\Resource;
 
+use Guzzle\Http\Client as HttpClient;
 use Omikron\FactFinder\Oxid\Contract\Api\ClientInterface;
 use Omikron\FactFinder\Oxid\Contract\Api\ResourceInterface;
+use Omikron\FactFinder\Oxid\Model\Api\Client;
 use Omikron\FactFinder\Oxid\Model\Api\Credentials;
 
 class Builder
@@ -22,15 +24,9 @@ class Builder
     /** @var string */
     protected $apiVersion = '7.3';
 
-    public function withClient(ClientInterface $client): Builder
-    {
-        $this->client = $client;
-        return $this;
-    }
-
     public function withServerUrl(string $serverUrl): Builder
     {
-        $this->serverUrl = rtrim(trim($serverUrl), '/');
+        $this->serverUrl = trim($serverUrl);
         return $this;
     }
 
@@ -48,7 +44,18 @@ class Builder
 
     public function build(): ResourceInterface
     {
-        $params = [$this->serverUrl, $this->client, $this->credentials];
-        return oxNew($this->apiVersion === 'ng' ? NG::class : Standard::class, ...$params);
+        $client = oxNew(Client::class, $this->createHttpClient());
+        return oxNew($this->apiVersion === 'ng' ? NG::class : Standard::class, $client);
+    }
+
+    protected function createHttpClient(): HttpClient
+    {
+        $httpClient = new HttpClient($this->serverUrl, [HttpClient::REQUEST_OPTIONS => [
+            'headers' => [
+                'Accept'       => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
+        ]]);
+        return $httpClient->addSubscriber(new Authenticator($this->apiVersion, $this->credentials));
     }
 }

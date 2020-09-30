@@ -11,22 +11,20 @@ interface ClientInterface
      *
      * @param string $endpoint
      * @param array  $params
-     * @param array  $headers
      *
      * @return array
      * @throws ResponseException
      */
-    public function sendRequest(string $endpoint, array $params, array $headers = []): array;
+    public function sendRequest(string $endpoint, array $params): array;
 
     /**
      * Sends HTTP POST request to FACT-Finder. Returns the parsed server response.
      *
      * @param string $endpoint
      * @param array  $params
-     * @param array  $headers
      *
      * @return array
      * @throws ResponseException
      */
-    public function postRequest(string $endpoint, array $params, array $headers = []): array;
+    public function postRequest(string $endpoint, array $params): array;
 }

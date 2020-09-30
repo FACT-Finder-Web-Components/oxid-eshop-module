@@ -34,23 +34,15 @@ class Credentials
         $this->postfix  = $postfix;
     }
 
-    public function toArray(): array
+    public function getAuth(): array
     {
-        $timestamp = (int) (microtime(true) * 1000);
-        return [
-            'timestamp' => $timestamp,
-            'username'  => $this->username,
-            'password'  => md5($this->prefix . $timestamp . md5($this->password) . $this->postfix), // phpcs:ignore
-        ];
-    }
-
-    public function toBasicAuth(): string
-    {
-        return 'Basic ' . base64_encode("{$this->username}:{$this->password}");
+        return [$this->username, $this->password];
     }
 
     public function __toString(): string
     {
-        return http_build_query($this->toArray());
+        $timestamp = (int) (microtime(true) * 1000);
+        $password  = md5($this->prefix . $timestamp . md5($this->password) . $this->postfix);
+        return sprintf('%s:%s:%s', $this->username, $password, $timestamp);
     }
 }
