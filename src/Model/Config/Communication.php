@@ -67,7 +67,7 @@ class Communication implements ParametersSourceInterface
             $category     = $parent;
         }
 
-        if ($this->getConfig('ffApiVersion') === 'NG') {
+        if ($this->getConfig('ffApiVersion') === 'ng') {
             $path = implode('/', array_reverse($categories));
             return sprintf('navigation=true,filter=%s:%s', urlencode($param), urlencode($path));
         }
