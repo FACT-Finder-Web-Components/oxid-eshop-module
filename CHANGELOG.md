@@ -1,6 +1,13 @@
 # Changelog
-## [v1.0.1] - 2020.09.29
+## [v1.0.2] - 2020.10.08
+### Changed   
+- Refactor and simplify API communication, taking advantage of Guzzle features
+- Upgrade Web Components version to v3.15.8
 
+### Fixed   
+- Fix NG support for category filter and push import API
+
+## [v1.0.1] - 2020.09.29
 ### Fixed   
 - Remove Article class extension
 - Trim double slash from URL to prevent fatal error on request (e.g https://ng-demo.fact-finder.de/fact-finder//rest/v3/search/Bergfreunde-en)
@@ -12,5 +19,6 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v1.0.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v1.0.2
 [v1.0.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v1.0.0
 [v1.0.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v1.0.1
