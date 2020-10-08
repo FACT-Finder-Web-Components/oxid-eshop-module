@@ -25,15 +25,17 @@ class PushImport
             return false;
         }
 
+        $apiVersion = $this->config->getConfigParam('ffApiVersion');
+
         $resource = oxNew(ResourceBuilder::class)
             ->withServerUrl($this->config->getConfigParam('ffServerUrl'))
-            ->withApiVersion($this->config->getConfigParam('ffApiVersion'))
+            ->withApiVersion($apiVersion)
             ->withCredentials(oxNew(Credentials::class, ...oxNew(Authorization::class)->getParameters()))
             ->build();
 
         $response = [];
         $channel  = $this->getChannel(Registry::getLang()->getLanguageAbbr());
-        foreach ($this->getPushImportTypes() as $type) {
+        foreach ($this->getPushImportTypes($apiVersion) as $type) {
             $response = array_merge_recursive($response, $resource->import($type, $channel, $params));
         }
 
@@ -45,11 +47,13 @@ class PushImport
         return (bool) $this->config->getConfigParam('ffAutomaticImport');
     }
 
-    protected function getPushImportTypes(): array
+    protected function getPushImportTypes(string $apiVersion): array
     {
-        return array_filter(['data', 'suggest', 'recommendation'], function (string $type): bool {
+        return array_map(function (string $type) use ($apiVersion): string {
+            return $apiVersion === 'ng' && $type === 'data' ? 'search' : $type;
+        }, array_filter(['data', 'suggest', 'recommendation'], function (string $type): bool {
             return (bool) $this->config->getConfigParam('ffAutomaticImport' . ucfirst($type));
-        });
+        }));
     }
 
     protected function getChannel(string $lang): string
