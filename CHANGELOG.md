@@ -1,14 +1,18 @@
 # Changelog
+## Unreleased
+### Fixed
+- Enforce sid length to 30 chars
+
 ## [v1.0.2] - 2020.10.08
-### Changed   
+### Changed
 - Refactor and simplify API communication, taking advantage of Guzzle features
 - Upgrade Web Components version to v3.15.8
 
-### Fixed   
+### Fixed
 - Fix NG support for category filter and push import API
 
 ## [v1.0.1] - 2020.09.29
-### Fixed   
+### Fixed
 - Remove Article class extension
 - Trim double slash from URL to prevent fatal error on request (e.g https://ng-demo.fact-finder.de/fact-finder//rest/v3/search/Bergfreunde-en)
 
