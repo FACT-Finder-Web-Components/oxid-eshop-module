@@ -7,17 +7,25 @@
 <style>[unresolved]{opacity:0;display:none}</style>
 
 <script>
-document.addEventListener('ffReady', function () {
+document.addEventListener('ffReady', function (ff) {
     factfinder.communication.fieldRoles = {"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"Deeplink","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageURL","masterArticleNumber":"Master","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"};
 
-    factfinder.communication.EventAggregator.addBeforeDispatchingCallback(function (event) {
+    ff.eventAggregator.addBeforeDispatchingCallback(function (event) {
         if (event.type === 'search' && !event.searchImmediate && event.navigation !== 'true') {
             event['cl'] = 'search_result';
-[{if $oView->getClassKey() neq 'search_result'}]
+[{if $oView->getClassKey() neq "search_result"}]
             event.cancel();
             window.location = '[{$oViewConf->getHomeLink()|escape:"javascript"}]' + factfinder.common.dictToParameterString(event);
 [{/if}]
         }
     });
+
+[{if $oView->getClassKey() eq "alist"}]
+    ff.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {
+        url = url.replace(/filter=CategoryPath[^&]+&?/, '').replace(/filterCategoryPathROOT[^&]+&?/g, '');
+        ff.factfinder.communication.Util.pushParameterToHistory(res, url, event);
+        return false;
+    });
+[{/if}]
 });
 </script>
