@@ -3,6 +3,9 @@
 ### Added
 - Exclude category filter from URL on category pages
 
+`### Changed
+- Upgrade Web Components version to v3.15.9
+
 ### Fixed
 - Enforce sid length to 30 chars
 
