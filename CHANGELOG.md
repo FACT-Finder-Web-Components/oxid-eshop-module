@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Added
+- Exclude category filter from URL on category pages
+
 ### Fixed
 - Enforce sid length to 30 chars
 
