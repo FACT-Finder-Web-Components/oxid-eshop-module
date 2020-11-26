@@ -3,7 +3,7 @@
 ### Added
 - Exclude category filter from URL on category pages
 
-`### Changed
+### Changed
 - Upgrade Web Components version to v3.15.9
 
 ### Fixed
