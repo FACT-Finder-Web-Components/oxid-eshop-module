@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fixed
+- Search event is triggered twice on search result page
+
 ## [v1.0.3] - 2020.11.26
 ### Added
 - Exclude category filter from URL on category pages
