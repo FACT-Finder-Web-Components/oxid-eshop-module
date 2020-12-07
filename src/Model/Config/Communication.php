@@ -37,7 +37,6 @@ class Communication implements ParametersSourceInterface
             'version'                     => $this->getConfig('ffApiVersion'),
             'api'                         => $this->getConfig('ffApiVersion') ? 'v3' : '',
             'channel'                     => $this->getChannel($this->view->getActiveLangAbbr()),
-            'sid'                         => substr(md5((string) $session->getId()), 0, 30),
             'user-id'                     => $session->getUser() ? $session->getUser()->getFieldData('oxcustnr') : '',
             'use-url-parameters'          => $this->getConfig('ffUseUrlParams') ? 'true' : 'false',
             'disable-single-hit-redirect' => 'true',
