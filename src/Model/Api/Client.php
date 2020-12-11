@@ -54,7 +54,7 @@ class Client implements ClientInterface
         } catch (ServerErrorResponseException $e) {
             $this->badRequest($e->getResponse());
         } catch (\Exception $e) {
-            throw new ResponseException($e->getMessage()); // When request didn't take place
+            throw new ResponseException($e->getMessage(), $e->getCode(), $e); // When request didn't take place
         }
     }
 

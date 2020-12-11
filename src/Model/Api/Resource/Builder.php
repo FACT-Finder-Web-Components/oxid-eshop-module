@@ -51,10 +51,7 @@ class Builder
     protected function createHttpClient(): HttpClient
     {
         $httpClient = new HttpClient($this->serverUrl, [HttpClient::REQUEST_OPTIONS => [
-            'headers' => [
-                'Accept'       => 'application/json',
-                'Content-Type' => 'application/json',
-            ],
+            'headers' => ['Accept' => 'application/json'],
         ]]);
         return $httpClient->addSubscriber(new Authenticator($this->apiVersion, $this->credentials));
     }
