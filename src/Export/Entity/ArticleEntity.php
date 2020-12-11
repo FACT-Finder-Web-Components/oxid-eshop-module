@@ -45,8 +45,12 @@ class ArticleEntity implements ExportEntityInterface, DataProviderInterface
 
     public function getEntities(): iterable
     {
-        yield $this;
-        foreach ($this->article->getSimpleVariants() ?? [] as $variant) {
+        $variants = $this->article->getSimpleVariants();
+        if (!$variants) {
+            yield $this;
+            return;
+        }
+        foreach ($variants as $variant) {
             yield new static($variant, $this->article, $this->fields);
         }
     }
