@@ -10,15 +10,14 @@
 document.addEventListener('ffReady', function (ff) {
     factfinder.communication.fieldRoles = {"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"Deeplink","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageURL","masterArticleNumber":"Master","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"};
 
-    ff.eventAggregator.addBeforeDispatchingCallback(function (event) {
-        if (event.type === 'search' && !event.searchImmediate && event.navigation !== 'true') {
-            event['cl'] = 'search_result';
 [{if $oView->getClassKey() neq "search_result"}]
-            event.cancel();
-            window.location = '[{$oViewConf->getHomeLink()|escape:"javascript"}]' + factfinder.common.dictToParameterString(event);
-[{/if}]
+    document.addEventListener('before-search', function (event) {
+        if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {
+            event.preventDefault();
+            window.location = '[{$oViewConf->getHomeLink()|escape:"javascript"}]' + ff.factfinder.common.dictToParameterString(event.detail) + '&cl=search_result';
         }
     });
+[{/if}]
 
 [{if $oView->getClassKey() eq "alist"}]
     ff.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {

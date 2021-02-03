@@ -42,7 +42,7 @@ class Communication implements ParametersSourceInterface
             'disable-single-hit-redirect' => 'true',
             'currency-code'               => $this->view->getActCurrency()->name,
             'currency-country-code'       => $this->getLocale($this->view->getActiveLangAbbr()),
-            'add-params'                  => $this->useForCategories() ? $this->getCategoryPath($category) : '',
+            'add-params'                  => $this->useForCategories() ? $this->getCategoryPath($category) : 'cl=search_result',
             'search-immediate'            => $this->isSearch() || $this->useForCategories() ? 'true' : 'false',
             'keep-url-params'             => 'cl',
             'only-search-params'          => 'true',
