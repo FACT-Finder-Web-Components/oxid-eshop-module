@@ -4,6 +4,7 @@
 - Introduce `ff-campaign-redirect` component
 
 ### Changed
+- Redirect to search result page using `before-search` event
 - Upgrade Web Components version to v3.15.12
 
 ## [v1.0.4] - 2020.12.14
