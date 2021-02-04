@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Added
+- Introduce `ff-campaign-redirect` component
+
 ### Changed
 - Redirect to search result page using `before-search` event
 - Upgrade Web Components version to v3.15.12
