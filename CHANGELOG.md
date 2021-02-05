@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v1.0.5] - 2021.02.05
 ### Added
 - Introduce `ff-campaign-redirect` component
 
@@ -45,6 +45,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v1.0.5]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v1.0.5
 [v1.0.4]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v1.0.4
 [v1.0.3]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v1.0.3
 [v1.0.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v1.0.2
