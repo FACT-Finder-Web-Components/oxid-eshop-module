@@ -38,9 +38,7 @@ customise them.
 
 To install the module, open your terminal and run the command:
 
-    composer require omikron/oxid-factfinder:dev-master
-
-At the moment, the module is a pre-release, hence the :dev-master used as version.
+    composer require omikron/oxid-factfinder
 
 ## Activating the Module
 
