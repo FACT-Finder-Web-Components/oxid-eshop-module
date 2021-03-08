@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Model\Api;
 
-use Omikron\FactFinder\Oxid\Model\Api\Resource\Builder as ResourceBuilder;
+use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\FactFinder\Oxid\Model\Config\Authorization;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
@@ -27,16 +28,15 @@ class PushImport
 
         $apiVersion = $this->config->getConfigParam('ffApiVersion');
 
-        $resource = oxNew(ResourceBuilder::class)
+        $clientBuilder = oxNew(ClientBuilder::class)
             ->withServerUrl($this->config->getConfigParam('ffServerUrl'))
-            ->withApiVersion($apiVersion)
-            ->withCredentials(oxNew(Credentials::class, ...oxNew(Authorization::class)->getParameters()))
-            ->build();
+            ->withCredentials(oxNew(Credentials::class, ...oxNew(Authorization::class)->getParameters()));
 
-        $response = [];
-        $channel  = $this->getChannel(Registry::getLang()->getLanguageAbbr());
+        $importAdapter = (new AdapterFactory($clientBuilder, $this->param('version')))->getImportAdapter();
+        $response      = [];
+        $channel       = $this->getChannel(Registry::getLang()->getLanguageAbbr());
         foreach ($this->getPushImportTypes($apiVersion) as $type) {
-            $response = array_merge_recursive($response, $resource->import($type, $channel, $params));
+            $response = array_merge_recursive($response, $importAdapter->import($channel, $type, $params));
         }
 
         return $response && !($response['errors'] ?? $response['error'] ?? false);
