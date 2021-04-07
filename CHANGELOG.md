@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Changed
+- Introduce Communication Library for FACT-Finder communication handling
+
 ## [v1.0.5] - 2021.02.05
 ### Added
 - Introduce `ff-campaign-redirect` component
