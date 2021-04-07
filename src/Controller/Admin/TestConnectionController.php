@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
-use Omikron\FactFinder\Oxid\Exception\ResponseException;
-use Omikron\FactFinder\Oxid\Model\Api\Credentials;
-use Omikron\FactFinder\Oxid\Model\Api\Resource\Builder as ResourceBuilder;
+use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\FactFinder\Communication\Credentials;
+use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Request;
+use Psr\Http\Client\ClientExceptionInterface;
 
 class TestConnectionController extends AdminController
 {
@@ -25,17 +26,15 @@ class TestConnectionController extends AdminController
     public function testConnection()
     {
         try {
-            $resource = oxNew(ResourceBuilder::class)
+            $clientBuilder = oxNew(ClientBuilder::class)
                 ->withServerUrl($this->param('serverUrl'))
-                ->withApiVersion($this->param('version'))
-                ->withCredentials($this->getCredentials())
-                ->build();
-
-            $resource->search('FACT-Finder version', $this->param('channel'));
+                ->withCredentials($this->getCredentials());
+            $searchAdapter = (new AdapterFactory($clientBuilder, $this->param('version')))->getSearchAdapter();
+            $searchAdapter->search($this->param('channel'), 'FACT-Finder version');
 
             $this->success = true;
             $this->result  = Registry::getLang()->translateString('FF_TEST_CONNECTION_SUCCESS', null, true);
-        } catch (ResponseException $e) {
+        } catch (ClientExceptionInterface $e) {
             $this->result = $e->getMessage();
         }
     }

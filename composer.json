@@ -14,7 +14,7 @@
     "php": "^7.1",
     "ext-ftp": "*",
     "ext-json": "*",
-    "guzzle/http": "~3.1"
+    "omikron/factfinder-communication-sdk": "^0.9"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.4"
