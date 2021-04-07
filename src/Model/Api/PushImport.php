@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Model\Api;
 
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\FactFinder\Oxid\Model\Config\Authorization;
 use OxidEsales\Eshop\Core\Config;
@@ -32,14 +33,13 @@ class PushImport
             ->withServerUrl($this->config->getConfigParam('ffServerUrl'))
             ->withCredentials(oxNew(Credentials::class, ...oxNew(Authorization::class)->getParameters()));
 
-        $importAdapter = (new AdapterFactory($clientBuilder, $this->param('version')))->getImportAdapter();
-        $response      = [];
+        $importAdapter = (new AdapterFactory($clientBuilder, $apiVersion))->getImportAdapter();
         $channel       = $this->getChannel(Registry::getLang()->getLanguageAbbr());
         foreach ($this->getPushImportTypes($apiVersion) as $type) {
-            $response = array_merge_recursive($response, $importAdapter->import($channel, $type, $params));
+            $importAdapter->import($channel, $type, $params);
         }
 
-        return $response && !($response['errors'] ?? $response['error'] ?? false);
+        return true;
     }
 
     protected function isPushImportEnabled(): bool
