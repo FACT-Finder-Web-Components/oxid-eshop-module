@@ -1,4 +1,5 @@
 <div class="boxwrapper">
+    [{include file="ff/campaign/search_advisor.tpl"}]
     <div class="toolbar toolbar-top">
         <div class="pull-left">
             [{include file="ff/result_count.tpl"}]
