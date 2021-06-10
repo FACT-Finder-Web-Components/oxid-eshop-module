@@ -5,7 +5,7 @@
 
 [{if $oConfig->getConfigParam("ffCampaigns")}]
     [{include file="ff/campaign/feedbacktext.tpl" flag="is-product-campaign"}]
-    <ff-campaign-product record-id="[{$recordId|escape}]"></ff-campaign-product>
+    <ff-campaign-product record-id="[{$recordId|escape}]" id-type="productNumber"></ff-campaign-product>
 [{/if}]
 
 [{if $oConfig->getConfigParam("ffPushedProducts")}]
