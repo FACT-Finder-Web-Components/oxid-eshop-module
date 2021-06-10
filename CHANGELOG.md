@@ -1,7 +1,13 @@
 # Changelog
 ## Unreleased
-### Changed
+### Breaking
 - Introduce Communication Library for FACT-Finder communication handling
+
+### Fixed
+- Add missing `id-type` attributes to `ff-similar-products` and `ff-campaign-product` elements
+
+### Changed
+- Upgrade Web Components version to v4.0.3
 
 ## [v1.0.5] - 2021.02.05
 ### Added
