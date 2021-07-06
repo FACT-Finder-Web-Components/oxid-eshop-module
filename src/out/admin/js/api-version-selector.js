@@ -1,6 +1,6 @@
 function selectMethod(selector)
 {
-    let selectedVersion = selector.value;
+    const selectedVersion = selector.value;
     const excludedVersion = 'ng'
 
     if (selectedVersion === excludedVersion) {
