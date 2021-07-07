@@ -4,10 +4,10 @@ function selectMethod(selector)
     const excludedVersion = 'ng'
 
     if (selectedVersion === excludedVersion) {
-        jQuery('[name="confstrs[ffAuthPrefix]"]').prop("disabled", true);
-        jQuery('[name="confstrs[ffAuthPostfix]"]').prop("disabled", true);
+        jQuery('[name="confstrs[ffAuthPrefix]"]').attr("disabled", true);
+        jQuery('[name="confstrs[ffAuthPostfix]"]').attr("disabled", true);
     } else {
-        jQuery('[name="confstrs[ffAuthPrefix]"]').prop("disabled", false);
-        jQuery('[name="confstrs[ffAuthPostfix]"]').prop("disabled", false);
+        jQuery('[name="confstrs[ffAuthPrefix]"]').attr("disabled", false);
+        jQuery('[name="confstrs[ffAuthPostfix]"]').attr("disabled", false);
     }
 }
