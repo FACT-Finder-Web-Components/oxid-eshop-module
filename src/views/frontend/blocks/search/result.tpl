@@ -1,4 +1,13 @@
 <div class="boxwrapper">
+
+    [{assign var="oConfig" value=$oViewConf->getConfig()}]
+
+    [{if $oConfig->getConfigParam("ffCampaigns")}]
+        [{block name="ff_campaign_feedback_top"}]
+            [{include file="ff/campaign/feedbacktext.tpl" label="above products"}]
+        [{/block}]
+    [{/if}]
+
     [{include file="ff/campaign/search_advisor.tpl"}]
     <div class="toolbar toolbar-top">
         <div class="pull-left">
@@ -19,4 +28,9 @@
             [{include file="ff/paging.tpl"}]
         </div>
     </div>
+    [{if $oConfig->getConfigParam("ffCampaigns")}]
+        [{block name="ff_campaign_feedback_top"}]
+            [{include file="ff/campaign/feedbacktext.tpl" label="belove products"}]
+        [{/block}]
+    [{/if}]
 </div>
