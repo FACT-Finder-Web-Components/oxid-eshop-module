@@ -29,7 +29,7 @@
         </div>
     </div>
     [{if $oConfig->getConfigParam("ffCampaigns")}]
-        [{block name="ff_campaign_feedback_top"}]
+        [{block name="ff_campaign_feedback_bottom"}]
             [{include file="ff/campaign/feedbacktext.tpl" label="belove products"}]
         [{/block}]
     [{/if}]
