@@ -3,6 +3,9 @@
 ### Breaking
 - Introduce Communication Library for FACT-Finder communication handling
 
+### Added
+- Fields Authorization Prefix and Authorization Postfix are now getting disabled after selecting API version `ng` since they are not relevant for that version
+ 
 ### Fixed
 - Add missing `id-type` attributes to `ff-similar-products` and `ff-campaign-product` elements
 
