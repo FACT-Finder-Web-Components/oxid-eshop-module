@@ -3,11 +3,15 @@ function selectMethod(selector)
     const selectedVersion = selector.value;
     const excludedVersion = 'ng'
 
+    const changeDisabled = function (value) {
+        document.querySelectorAll('[name^="confstrs[ffAuth"]').forEach(function (element) {
+            element.disabled = value;
+        });
+    };
+
     if (selectedVersion === excludedVersion) {
-        jQuery('[name="confstrs[ffAuthPrefix]"]').attr("disabled", true);
-        jQuery('[name="confstrs[ffAuthPostfix]"]').attr("disabled", true);
+        changeDisabled(true);
     } else {
-        jQuery('[name="confstrs[ffAuthPrefix]"]').attr("disabled", false);
-        jQuery('[name="confstrs[ffAuthPostfix]"]').attr("disabled", false);
+        changeDisabled(false);
     }
 }
