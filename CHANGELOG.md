@@ -10,7 +10,7 @@
 - Upgrade Web Components version to v4.0.3
 
 ### Added
-- Add feedback-campaigns blocks to search result page
+- Add `ff-campaign-feedbacktext` elements to search result page
 
 ## [v1.0.5] - 2021.02.05
 ### Added
