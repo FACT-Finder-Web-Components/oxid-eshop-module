@@ -12,6 +12,9 @@
 ### Changed
 - Upgrade Web Components version to v4.0.3
 
+### Added
+- Add `ff-campaign-feedbacktext` elements to search result page
+
 ## [v1.0.5] - 2021.02.05
 ### Added
 - Introduce `ff-campaign-redirect` component
