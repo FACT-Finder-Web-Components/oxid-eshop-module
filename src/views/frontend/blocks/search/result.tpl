@@ -4,7 +4,7 @@
 
     [{if $oConfig->getConfigParam("ffCampaigns")}]
         [{block name="ff_campaign_feedback_top"}]
-            [{include file="ff/campaign/feedbacktext.tpl" label="above products"}]
+            [{include file="ff/campaign/feedbacktext.tpl" label="above search result"}]
         [{/block}]
     [{/if}]
 
@@ -30,7 +30,7 @@
     </div>
     [{if $oConfig->getConfigParam("ffCampaigns")}]
         [{block name="ff_campaign_feedback_bottom"}]
-            [{include file="ff/campaign/feedbacktext.tpl" label="belove products"}]
+            [{include file="ff/campaign/feedbacktext.tpl" label="below search result"}]
         [{/block}]
     [{/if}]
 </div>
