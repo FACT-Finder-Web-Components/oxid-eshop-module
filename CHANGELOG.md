@@ -1,7 +1,8 @@
 # Changelog
-## Unreleased
+## [v2.0.0] - 2021.07.15
 ### Breaking
-- Introduce Communication Library for FACT-Finder communication handling
+- Communication layer has been entirely replaced with (PHP Communication SDK)[https://github.com/FACT-Finder-Web-Components/php-communication-sdk].
+- Removed all interfaces and classes related to communication, which were used in previous version of module
 
 ### Added
 - Fields Authorization Prefix and Authorization Postfix are now getting disabled after selecting API version `ng` since they are not relevant for that version
@@ -60,6 +61,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v2.0.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v2.0.0
 [v1.0.5]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v1.0.5
 [v1.0.4]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v1.0.4
 [v1.0.3]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v1.0.3
