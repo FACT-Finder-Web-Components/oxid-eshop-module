@@ -5,15 +5,14 @@
 
 ### Added
 - Fields Authorization Prefix and Authorization Postfix are now getting disabled after selecting API version `ng` since they are not relevant for that version
+- Add `ff-campaign-feedbacktext` elements to search result page
  
 ### Fixed
 - Add missing `id-type` attributes to `ff-similar-products` and `ff-campaign-product` elements
+- Fix redirection to search page loses search parameters when shop supports more than one language
 
 ### Changed
 - Upgrade Web Components version to v4.0.3
-
-### Added
-- Add `ff-campaign-feedbacktext` elements to search result page
 
 ## [v1.0.5] - 2021.02.05
 ### Added

@@ -14,7 +14,9 @@ document.addEventListener('ffReady', function (ff) {
     document.addEventListener('before-search', function (event) {
         if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {
             event.preventDefault();
-            window.location = '[{$oViewConf->getHomeLink()|escape:"javascript"}]' + ff.factfinder.common.dictToParameterString(event.detail) + '&cl=search_result';
+            const baseUrl =  '[{$oViewConf->getHomeLink()|escape:"javascript"}]';
+            const params = ff.factfinder.common.dictToParameterString(factfinder.common.encodeDict(event.detail));
+            window.location = baseUrl + (baseUrl.indexOf('?') > -1 ?  params.substr(1) : params) + '&cl=search_result'
         }
     });
 [{/if}]
