@@ -1,5 +1,5 @@
 [{$smarty.block.parent}]
-
+<script src="[{$oViewConf->getModuleUrl("ffwebcomponents", "out/js/tracking.js")|escape}]"></script>
 [{assign var="oConfig" value=$oViewConf->getConfig()}]
 [{assign var="recordId" value=$oView->getProduct()|record_id}]
 
@@ -19,3 +19,6 @@
 [{if $oConfig->getConfigParam("ffSimilarProducts")}]
     [{include file="ff/similar.tpl" recordId=$recordId}]
 [{/if}]
+<script>
+    registerAddToCartListener('#toBasket',"[{$recordId}]");
+</script>
