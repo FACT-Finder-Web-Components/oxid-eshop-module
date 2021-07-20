@@ -25,8 +25,13 @@ customise them.
 - [Export Methods](#export-methods)
     - [HTTP Export](#http-export)
     - [FTP Export](#ftp-export)
-        -[Admin Panel Export](#admin-panel-export)
-        -[Console Commands](#console-commands)
+        - [Admin Panel Export](#admin-panel-export)
+        - [Console Commands](#console-commands)
+- [Tracking](#tracking)
+  - [Login](#login)
+  - [Click on Product](#click-on-product)
+  - [Add Product to Cart](#add-product-to-cart)
+  - [Place an Order](#place-an-order)
 - [Contribute](#contribute)
 - [License](#license)
 
@@ -177,7 +182,23 @@ If your shop supports multiple languages, enter the language identifier of the l
 You can check the language identifiers at "Master Settings -> Languages". 
 
 ![Languages](docs/assets/languages.png "Languages")
-    
+
+## Tracking
+Here you can find a full [Tracking Guide](https://web-components.fact-finder.de/documentation/4.x/tracking-guide). 
+This module follows that guide in order to provide tracking of following events:
+
+ ### Login
+This event is tracked automatically by the `ff-communication` element upon receiving `uid` attribute.
+
+### Click on Product
+This event is tracked automatically by the `ff-record` element bindings. **Note:** for this to work a directive `data-redirect` has to be added
+
+### Add Product to Cart
+We offer a `registerAddToCartListener` function which helps to register `click` events on form submit buttons. **Note:** Example usage can be found in `src/views/frontend/blocks/campaign/product.tpl`
+
+### Place an Order 
+This event is tracked by the `ff-checkout-tracking` element which is implemented on order confirmation page
+
 ## Contribute
 For more information, click [here](.github/CONTRIBUTING.md)
 
