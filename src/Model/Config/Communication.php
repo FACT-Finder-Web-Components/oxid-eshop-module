@@ -35,7 +35,7 @@ class Communication implements ParametersSourceInterface
         $params = [
             'url'                         => $this->getConfig('ffServerUrl'),
             'version'                     => $this->getConfig('ffApiVersion'),
-            'api'                         => $this->getConfig('ffApiVersion') ? 'v3' : '',
+            'api'                         => $this->getConfig('ffApiVersion') ? 'v4' : '',
             'channel'                     => $this->getChannel($this->view->getActiveLangAbbr()),
             'user-id'                     => $session->getUser() ? $session->getUser()->getFieldData('oxcustnr') : '',
             'use-url-parameters'          => $this->getConfig('ffUseUrlParams') ? 'true' : 'false',

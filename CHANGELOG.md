@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Added
+- Introduced cart tracking using Web Components Javascript API
+
 ## [v2.0.0] - 2021.07.15
 ### Breaking
 - Communication layer has been entirely replaced with (PHP Communication SDK)[https://github.com/FACT-Finder-Web-Components/php-communication-sdk].
