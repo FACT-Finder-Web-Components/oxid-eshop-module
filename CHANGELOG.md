@@ -4,7 +4,7 @@
 - Introduced cart tracking using Web Components Javascript API
 
 ### Fixed
-- Fix error with export handler which is does not handle non-string values properly
+- Fix error with export handler which does not handle non-string values properly
 
 ## [v2.0.0] - 2021.07.15
 ### Breaking
