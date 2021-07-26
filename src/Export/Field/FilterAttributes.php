@@ -40,13 +40,10 @@ class FilterAttributes extends Attribute implements FieldInterface
         }, ...array_map(function (string $value): array {
             return explode(' | ', $value);
         }, [
-            $parent->getFieldData('oxvarname')
-                ? $parent->getFieldData('oxvarname')
-                : 'missing field data',
-            $article->getFieldData('oxvarselect')
-                ? $article->getFieldData('oxvarselect')
-                : 'missing field data'
-        ])));
+                $parent->getFieldData('oxvarname') ? $parent->getFieldData('oxvarname') : 'missing field data',
+                $article->getFieldData('oxvarselect') ? $article->getFieldData('oxvarselect') : 'missing field data'
+            ]
+        )));
     }
 
     protected function getAllValues(Article $article): string
@@ -65,7 +62,7 @@ class FilterAttributes extends Attribute implements FieldInterface
         $result = '';
         foreach (array_intersect_key(parent::getData($article), $this->getMultiAttributes()) as $key => $value) {
             if ($value) {
-                $result .= $this->filter->filterValue($key) . '=' . $this->filter->filterValue((string) $value) . '|';
+                $result .= $this->filter->filterValue($key) . '=' . $this->filter->filterValue((string)$value) . '|';
             }
         }
         return $result;
