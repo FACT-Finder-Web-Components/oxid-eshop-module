@@ -35,15 +35,14 @@ class FilterAttributes extends Attribute implements FieldInterface
 
     protected function getVariantValues(Article $article, Article $parent): string
     {
+        $oxvarname = $parent->getFieldData('oxvarname');
+        $oxvarselect = $article->getFieldData('oxvarselect');
+
         return implode('', array_map(function (string $key, string $value): string {
             return $this->filter->filterValue($key) . '=' . $this->filter->filterValue($value) . '|';
         }, ...array_map(function (string $value): array {
             return explode(' | ', $value);
-        }, [
-                is_string($parent->getFieldData('oxvarname')) ? $parent->getFieldData('oxvarname') : '',
-                is_string($article->getFieldData('oxvarselect')) ? $article->getFieldData('oxvarselect') : ''
-            ]
-        )));
+        }, [ $this->validateValueForExport($oxvarname), $this->validateValueForExport($oxvarselect)])));
     }
 
     protected function getAllValues(Article $article): string
@@ -62,7 +61,7 @@ class FilterAttributes extends Attribute implements FieldInterface
         $result = '';
         foreach (array_intersect_key(parent::getData($article), $this->getMultiAttributes()) as $key => $value) {
             if ($value) {
-                $result .= $this->filter->filterValue($key) . '=' . $this->filter->filterValue((string)$value) . '|';
+                $result .= $this->filter->filterValue($key) . '=' . $this->filter->filterValue((string) $value) . '|';
             }
         }
         return $result;
@@ -72,5 +71,10 @@ class FilterAttributes extends Attribute implements FieldInterface
     {
         $this->multiAttributes = $this->multiAttributes ?? array_flip(oxNew(ExportConfig::class)->getMultiAttributes());
         return $this->multiAttributes;
+    }
+
+    private function validateValueForExport(mixed $exportValue): string
+    {
+        return is_numeric($exportValue) || is_string($exportValue) ? $exportValue : '';
     }
 }
