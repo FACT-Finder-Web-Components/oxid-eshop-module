@@ -39,7 +39,14 @@ class FilterAttributes extends Attribute implements FieldInterface
             return $this->filter->filterValue($key) . '=' . $this->filter->filterValue($value) . '|';
         }, ...array_map(function (string $value): array {
             return explode(' | ', $value);
-        }, [$parent->getFieldData('oxvarname'), $article->getFieldData('oxvarselect')])));
+        }, [
+            $parent->getFieldData('oxvarname')
+                ? $parent->getFieldData('oxvarname')
+                : 'missing field data',
+            $article->getFieldData('oxvarselect')
+                ? $article->getFieldData('oxvarselect')
+                : 'missing field data'
+        ])));
     }
 
     protected function getAllValues(Article $article): string
