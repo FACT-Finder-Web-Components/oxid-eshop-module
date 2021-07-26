@@ -75,6 +75,6 @@ class FilterAttributes extends Attribute implements FieldInterface
 
     private function validateValueForExport($exportValue): string
     {
-        return is_numeric($exportValue) || is_string($exportValue) ? $exportValue : '';
+        return is_numeric($exportValue) || is_string($exportValue) ? (string) $exportValue : '';
     }
 }
