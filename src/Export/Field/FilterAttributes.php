@@ -40,8 +40,8 @@ class FilterAttributes extends Attribute implements FieldInterface
         }, ...array_map(function (string $value): array {
             return explode(' | ', $value);
         }, [
-                $parent->getFieldData('oxvarname') ? $parent->getFieldData('oxvarname') : 'missing field data',
-                $article->getFieldData('oxvarselect') ? $article->getFieldData('oxvarselect') : 'missing field data'
+                $parent->getFieldData('oxvarname') ? $parent->getFieldData('oxvarname') : '',
+                $article->getFieldData('oxvarselect') ? $article->getFieldData('oxvarselect') : ''
             ]
         )));
     }
