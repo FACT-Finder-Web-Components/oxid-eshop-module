@@ -73,7 +73,7 @@ class FilterAttributes extends Attribute implements FieldInterface
         return $this->multiAttributes;
     }
 
-    private function validateValueForExport(mixed $exportValue): string
+    private function validateValueForExport($exportValue): string
     {
         return is_numeric($exportValue) || is_string($exportValue) ? $exportValue : '';
     }
