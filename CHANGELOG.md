@@ -2,6 +2,7 @@
 ## Unreleased
 ### Added
 - Introduced cart tracking using Web Components Javascript API
+- Add compatibility with Reverse Proxy
 
 ### Fixed
 - Fix error with export handler which does not handle non-string values properly
