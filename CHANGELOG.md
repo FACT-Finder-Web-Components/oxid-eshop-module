@@ -1,7 +1,8 @@
 # Changelog
-## Unreleased
+## [v2.0.1] - 2021.08.11
 ### Added
 - Introduced cart tracking using Web Components Javascript API
+- Introduced way of overwriting `currency-fields` in the `Model/Config/Communication.php` 
 
 ### Fixed
 - Fix error with export handler which does not handle non-string values properly
@@ -68,6 +69,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v2.0.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v2.0.1
 [v2.0.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v2.0.0
 [v1.0.5]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v1.0.5
 [v1.0.4]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v1.0.4
