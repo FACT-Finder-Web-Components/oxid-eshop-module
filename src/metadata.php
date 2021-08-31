@@ -48,6 +48,16 @@ $aModule = [
             'file'     => 'views/admin/blocks/factfinder_config_field_api_version.tpl',
         ],
         [
+            'template' => 'module_config.tpl',
+            'block'    => 'admin_module_config_var_type_str',
+            'file'     => 'views/admin/blocks/factfinder_config_field_server_url.tpl',
+        ],
+        [
+            'template' => 'module_config.tpl',
+            'block'    => 'admin_module_config_var_type_str',
+            'file'     => 'views/admin/blocks/factfinder_config_field_ftp_host.tpl',
+        ],
+        [
             'template' => 'layout/base.tpl',
             'block'    => 'head_css',
             'file'     => 'views/frontend/blocks/scripts.tpl',
