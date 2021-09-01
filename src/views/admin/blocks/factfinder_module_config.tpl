@@ -42,11 +42,10 @@
 
         function exportFeed() {
             let selectedValue = document.getElementById("ffExportFeed").value;
-            console.log(selectedValue);
 
             jQuery.ajax({
-                // url:  'index.php?cl=article_feed&fnc=export&stoken=' + jQuery('input[name="stoken"]').val() + '&eportyType=' + selectedValue,
-                url:  'index.php?cl=article_feed&fnc=export&stoken=' + jQuery('input[name="stoken"]').val(),
+                url:  'index.php?cl=article_feed&fnc=export&stoken=' + jQuery('input[name="stoken"]').val() + '&exportType=' + selectedValue,
+                // url:  'index.php?cl=article_feed&fnc=export&stoken=' + jQuery('input[name="stoken"]').val(),
                 type: 'POST',
                 beforeSend: function() {
                     jQuery('#spinner').addClass('loading');

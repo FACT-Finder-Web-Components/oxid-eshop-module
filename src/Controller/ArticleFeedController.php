@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller;
 
-use Omikron\FactFinder\Oxid\Export\ArticleFeed;
+use Omikron\FactFinder\Oxid\Export\ProductFeed;
 use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use Omikron\FactFinder\Oxid\Model\Export\Http\Authentication;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
@@ -26,8 +26,8 @@ class ArticleFeedController extends FrontendController
         $oUtils = Registry::getUtils();
 
         try {
-            /** @var ArticleFeed $feed */
-            $feed   = oxNew(ArticleFeed::class);
+            /** @var ProductFeed $feed */
+            $feed   = oxNew(ProductFeed::class);
             $handle = tmpfile();
             $feed->generate(oxNew(Csv::class, $handle));
             rewind($handle);
