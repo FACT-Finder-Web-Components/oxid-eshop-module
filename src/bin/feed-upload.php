@@ -11,7 +11,7 @@ require_once dirname(__FILE__) . '/../../../../bootstrap.php';
 
 define('OX_IS_ADMIN', true);
 
-use Omikron\FactFinder\Oxid\Export\ArticleFeed;
+use Omikron\FactFinder\Oxid\Export\ProductFeed;
 use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use Omikron\FactFinder\Oxid\Model\Api\PushImport;
 use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
@@ -24,7 +24,7 @@ try {
     Registry::set(Config::class, null);
     Registry::getLang()->setBaseLanguage($languageId);
 
-    $articleFeed = oxNew(ArticleFeed::class);
+    $articleFeed = oxNew(ProductFeed::class);
     $ftpUploader = oxNew(FtpClient::class, oxNew(FtpParams::class));
     $pushImport  = oxNew(PushImport::class);
 

@@ -15,7 +15,7 @@ use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
 use OxidEsales\Eshop\Core\Registry;
 
-class ArticleFeed
+class ProductFeed
 {
     /** @var FieldInterface[] */
     protected $fields;
