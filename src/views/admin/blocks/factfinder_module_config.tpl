@@ -1,12 +1,11 @@
 [{$smarty.block.parent}]
     <link rel="stylesheet" type="text/css" href="[{$oViewConf->getModuleUrl('ffwebcomponents', 'out/admin/css/styles.css')}]"/>
 [{if $var_group === 'ffExport'}]
-    <input type="button"
-           id="ffExportFeed"
-           class="confinput"
-           name="ffExportFeed"
-           value="Export feed"
-           onclick="exportFeed()"/>
+    <select name="ffExportFeed" id="ffExportFeed" onchange="exportFeed()">
+        <option value="">Please choose an option</option>
+        <option value="product">Products</option>
+        <option value="category">Categories</option>
+    </select>
 
     <input type="button"
            id="ffTestConnection"
@@ -42,7 +41,11 @@
         }
 
         function exportFeed() {
+            let selectedValue = document.getElementById("ffExportFeed").value;
+            console.log(selectedValue);
+
             jQuery.ajax({
+                // url:  'index.php?cl=article_feed&fnc=export&stoken=' + jQuery('input[name="stoken"]').val() + '&eportyType=' + selectedValue,
                 url:  'index.php?cl=article_feed&fnc=export&stoken=' + jQuery('input[name="stoken"]').val(),
                 type: 'POST',
                 beforeSend: function() {
