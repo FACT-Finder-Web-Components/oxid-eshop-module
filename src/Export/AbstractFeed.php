@@ -6,34 +6,33 @@ namespace Omikron\FactFinder\Oxid\Export;
 
 use Omikron\FactFinder\Oxid\Export\Entity\DataProvider;
 use Omikron\FactFinder\Oxid\Export\Field\Attribute as AttributeField;
-use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
+use Omikron\FactFinder\Oxid\Export\Field\BaseFieldInterface as FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
 use OxidEsales\Eshop\Core\Registry;
 
 abstract class AbstractFeed
 {
-    public function generate(StreamInterface $stream): void
-    {
-        $fields  = array_merge($this->getAdditionalFields(), $this->getConfigFields(), $this->fields);
-        $columns = array_unique(array_merge($this->columns, array_map([$this, 'getFieldName'], $fields)));
+    /** @var string[]  */
+    protected $columns;
 
-        $stream->addEntity($columns);
-        oxNew(Exporter::class)->exportEntities($stream, oxNew(DataProvider::class, ...$fields), $columns);
-    }
-    public function getFileName(): string
-    {
-        return sprintf('export.%s.csv', $this->getChannel(Registry::getLang()->getLanguageAbbr()));
-    }
+    abstract public function setColumns(): self;
+    abstract public function generate(StreamInterface $stream): void;
+    abstract protected function getAdditionalFields(): array;
 
-    protected function getFieldName(FieldInterface $field): string
+    public function getFileName(string $exportType): string
     {
-        return $field->getName();
+        return sprintf('export%s.%s.csv', $exportType, $this->getChannel(Registry::getLang()->getLanguageAbbr()));
     }
 
     protected function getChannel(string $lang): string
     {
         return Registry::getConfig()->getConfigParam('ffChannel')[$lang];
+    }
+
+    protected function getFieldName(FieldInterface $field): string
+    {
+        return $field->getName();
     }
 
     protected function getConfigFields(): array

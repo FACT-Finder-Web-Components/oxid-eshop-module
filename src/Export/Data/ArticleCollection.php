@@ -6,8 +6,9 @@ namespace Omikron\FactFinder\Oxid\Export\Data;
 
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\ArticleList;
+use OxidEsales\Eshop\Core\Model\ListModel;
 
-class ArticleCollection implements \IteratorAggregate
+class ArticleCollection implements \IteratorAggregate, CollectionInterface
 {
     /** @var int */
     private $batchSize;
@@ -32,7 +33,7 @@ class ArticleCollection implements \IteratorAggregate
         }
     }
 
-    protected function getBatch(int $from): ArticleList
+    public function getBatch(int $from): ListModel
     {
         $articleList = oxNew(ArticleList::class);
         $articleList->setBaseObject(oxNew(Article::class));
