@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
+use Omikron\FactFinder\Oxid\Export\AbstractFeed;
 use Omikron\FactFinder\Oxid\Export\CategoryFeed;
 use Omikron\FactFinder\Oxid\Export\ProductFeed;
 use Omikron\FactFinder\Oxid\Export\Stream\Csv;
@@ -40,11 +41,15 @@ class ArticleFeedController extends AdminController
     {
         $handle = tmpfile();
         $result = [];
+        /** @var AbstractFeed $feedType */
         $feedType = $this->getFeedType($_GET['exportType']);
 
         try {
             $feed = oxNew($feedType);
             $feed->generate(oxNew(Csv::class, $handle));
+
+
+
             $result[] = $this->translate('FF_ARTICLE_FEED_EXPORT_SUCCESS');
 
             $ftpClient = oxNew(FtpClient::class, oxNew(FtpParams::class));
