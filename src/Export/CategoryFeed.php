@@ -6,7 +6,6 @@ namespace Omikron\FactFinder\Oxid\Export;
 
 use Omikron\FactFinder\Oxid\Export\Data\CategoryCollection;
 use Omikron\FactFinder\Oxid\Export\Entity\DataProvider;
-use Omikron\FactFinder\Oxid\Export\Field\BaseFieldInterface;
 use Omikron\FactFinder\Oxid\Export\Field\BaseFieldInterface as FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 
@@ -26,7 +25,7 @@ class CategoryFeed extends AbstractFeed
         'Description',
     ];
 
-    public function __construct(BaseFieldInterface ...$fields)
+    public function __construct(FieldInterface ...$fields)
     {
         $this->fields = $fields;
     }
