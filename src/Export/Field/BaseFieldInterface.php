@@ -6,5 +6,4 @@ namespace Omikron\FactFinder\Oxid\Export\Field;
 
 interface BaseFieldInterface
 {
-    public function getName(): string;
 }

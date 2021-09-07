@@ -11,12 +11,11 @@ use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
 use OxidEsales\Eshop\Core\Registry;
 
-abstract class AbstractFeed
+abstract class AbstractFeed implements FieldInterface
 {
     /** @var string[]  */
     protected $columns;
 
-    abstract public function setColumns(): self;
     abstract public function generate(StreamInterface $stream): void;
     abstract protected function getAdditionalFields(): array;
 
