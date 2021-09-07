@@ -4,11 +4,12 @@
 namespace Omikron\FactFinder\Oxid\Export\Data;
 
 
+use Omikron\FactFinder\Oxid\Export\Entity\CategoryEntity;
 use OxidEsales\Eshop\Application\Model\Category;
 use OxidEsales\Eshop\Core\Model\ListModel;
-use OxidEsales\EshopCommunity\Application\Model\CategoryList;
+use OxidEsales\Eshop\Application\Model\CategoryList;
 
-class CategoryCollection implements CollectionInterface
+class CategoryCollection implements \IteratorAggregate, CollectionInterface
 {
     /** @var int */
     private $batchSize;
@@ -16,6 +17,11 @@ class CategoryCollection implements CollectionInterface
     public function __construct(int $batchSize = 100)
     {
         $this->batchSize = $batchSize;
+    }
+
+    public function getEntity(): string
+    {
+        return CategoryEntity::class;
     }
 
     /**
@@ -41,7 +47,7 @@ class CategoryCollection implements CollectionInterface
         $category = $categoryList->getBaseObject();
         $viewName = $category->getViewName();
         $active = $category->getSqlActiveSnippet();
-        $query    = "SELECT {$category->getSelectFields()} FROM `{$viewName}` WHERE (`{$viewName}`.`oxparentid` = '')";
+        $query    = "SELECT {$category->getSelectFields()} FROM `{$viewName}` WHERE 1";
         $categoryList->selectString($query . ($active ? ' AND ' . $active : ''));
 
         return $categoryList;

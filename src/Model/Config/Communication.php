@@ -35,14 +35,13 @@ class Communication implements ParametersSourceInterface
         $params = [
             'url'                         => $this->getConfig('ffServerUrl'),
             'version'                     => $this->getConfig('ffApiVersion'),
-            'api'                         => $this->getConfig('ffApiVersion') ? 'v4' : '',
+            'api'                         => $this->getConfig('ffApiVersion') ? 'v3' : '',
             'channel'                     => $this->getChannel($this->view->getActiveLangAbbr()),
             'user-id'                     => $session->getUser() ? $session->getUser()->getFieldData('oxcustnr') : '',
             'use-url-parameters'          => $this->getConfig('ffUseUrlParams') ? 'true' : 'false',
             'disable-single-hit-redirect' => 'true',
             'currency-code'               => $this->view->getActCurrency()->name,
             'currency-country-code'       => $this->getLocale($this->view->getActiveLangAbbr()),
-            'currency-fields'             => $this->getAdditionalCurrencyFields(),
             'add-params'                  => $this->useForCategories() ? $this->getCategoryPath($category) : 'cl=search_result',
             'search-immediate'            => $this->isSearch() || $this->useForCategories() ? 'true' : 'false',
             'keep-url-params'             => 'cl',
@@ -94,11 +93,6 @@ class Communication implements ParametersSourceInterface
     protected function useForCategories(): bool
     {
         return $this->getConfig('ffUseForCategories') && $this->view->getActionClassName() === 'alist';
-    }
-    
-    protected function getAdditionalCurrencyFields() : string
-    {
-        return '';
     }
 
     protected function getAdditionalParameters(): array

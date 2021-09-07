@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Export\Data;
 
+use Omikron\FactFinder\Oxid\Export\Entity\ArticleEntity;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\ArticleList;
 use OxidEsales\Eshop\Core\Model\ListModel;
@@ -17,6 +18,12 @@ class ArticleCollection implements \IteratorAggregate, CollectionInterface
     {
         $this->batchSize = $batchSize;
     }
+
+    public function getEntity(): string
+    {
+        return ArticleEntity::class;
+    }
+
 
     /**
      * @return Article[]
