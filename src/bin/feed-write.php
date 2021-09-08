@@ -1,24 +1,32 @@
 <?php
 
-$options = getopt('s:l:');
+$options = getopt('s:t:l:');
 $shopId  = $options['s'] ?? 0;
+$exportType = $options['t'] ?? null;
+
 if (!$shopId) {
     throw new RuntimeException('Please specify the shop ID using the "s" parameter!');
 }
+
+if (!$exportType) {
+    throw new RuntimeException('Please specify the export type using the "t" parameter!');
+}
+
 $languageId = $options['l'] ?? 0;
 
 require_once dirname(__FILE__) . '/../../../../bootstrap.php';
 
 define('OX_IS_ADMIN', true);
 
-use Omikron\FactFinder\Oxid\Export\ArticleFeed;
 use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
+use Omikron\FactFinder\Oxid\Controller\Admin\ArticleFeedController;
 
 Registry::getConfig()->setShopId($shopId);
 Registry::set(Config::class, null);
 Registry::getLang()->setBaseLanguage($languageId);
 
-$feed = oxNew(ArticleFeed::class);
+$feedFQN = (new ArticleFeedController())->getFeedType($exportType);
+$feed = oxNew($feedFQN);
 $feed->generate(oxNew(Csv::class, STDOUT));
