@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Export;
-
 
 use Omikron\FactFinder\Oxid\Export\Data\CategoryCollection;
 use Omikron\FactFinder\Oxid\Export\Entity\DataProvider;
@@ -12,31 +12,33 @@ use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 
 class CategoryFeed extends AbstractFeed
 {
-    /** @var FieldInterface[]  */
+    /** @var FieldInterface[] */
     protected $fields;
 
     protected $columns = [
-            'Id',
-            'ParentId',
-            'RootId',
-            'Name',
-            'ImageUrl',
-        ];
+        'Id',
+        'ShopId',
+        'ExternalLink',
+        'ParentId',
+        'RootId',
+        'Name',
+        'ImageUrl',
+        'Description',
+    ];
 
     public function __construct(BaseFieldInterface ...$fields)
     {
         $this->fields = $fields;
     }
 
-    public function getName(): string
+    protected function getFieldName(FieldInterface $field): string
     {
-        // TODO: Implement getName() method.
+        return parent::getFieldName($field);
     }
-
 
     public function generate(StreamInterface $stream): void
     {
-        $fields  = array_merge($this->getAdditionalFields(), $this->fields);
+        $fields = array_merge($this->getAdditionalFields(), $this->fields);
         $columns = array_unique(array_merge($this->columns, array_map([$this, 'getFieldName'], $fields)));
 
         $stream->addEntity($columns);
@@ -46,10 +48,5 @@ class CategoryFeed extends AbstractFeed
     public function getAdditionalFields(): array
     {
         return [];
-    }
-
-    protected function getFieldName(FieldInterface $field): string
-    {
-        return parent::getFieldName($field);
     }
 }
