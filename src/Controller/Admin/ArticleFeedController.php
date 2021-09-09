@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
+use Omikron\FactFinder\Oxid\Controller\FeedExportTrait;
 use Omikron\FactFinder\Oxid\Export\AbstractFeed;
-use Omikron\FactFinder\Oxid\Export\CategoryFeed;
-use Omikron\FactFinder\Oxid\Export\ArticleFeed;
 use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use Omikron\FactFinder\Oxid\Model\Api\PushImport;
 use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
@@ -16,26 +15,11 @@ use OxidEsales\Eshop\Core\Registry;
 
 class ArticleFeedController extends AdminController
 {
+
+    use FeedExportTrait;
+
     /** @var string */
     protected $_sThisTemplate = 'admin/page/ajax_result.tpl';
-
-    public function getFeedTypes(): array
-    {
-        return [
-            'product' => ArticleFeed::class,
-            'category' => CategoryFeed::class,
-        ];
-    }
-
-    public function getFeedType($requestedType): string
-    {
-        $feedTypes = $this->getFeedTypes();
-        if (!isset($feedTypes[$requestedType])) {
-            throw new \Exception(sprintf('Unknown feed type %s', $requestedType));
-        }
-
-        return $feedTypes[$requestedType];
-    }
 
     public function export()
     {
