@@ -17,9 +17,6 @@ class DataProvider implements DataProviderInterface
         $this->fields = $fields;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getEntities(): iterable
     {
         foreach (oxNew(ArticleCollection::class) as $article) {

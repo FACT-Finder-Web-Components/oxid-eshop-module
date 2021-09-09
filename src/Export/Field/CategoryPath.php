@@ -45,7 +45,9 @@ class CategoryPath implements FieldInterface
     protected function getCategory(string $id): Category
     {
         $category = $this->categories[$id] = $this->categories[$id] ?? oxNew(Category::class);
-        if (!$category->isLoaded()) $category->load($id);
+        if (!$category->isLoaded()) {
+            $category->load($id);
+        }
         return $category;
     }
 }

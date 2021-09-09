@@ -45,6 +45,7 @@ class Authentication
             foreach ($server as $k => $v) {
                 if (substr($k, -18) === 'HTTP_AUTHORIZATION' && !empty($v)) {
                     $server['HTTP_AUTHORIZATION'] = $v;
+
                     break;
                 }
             }
@@ -54,10 +55,10 @@ class Authentication
             $user = $server['PHP_AUTH_USER'];
             $pass = $server['PHP_AUTH_PW'];
         } elseif (!empty($server['HTTP_AUTHORIZATION'])) {
-            $auth = $server['HTTP_AUTHORIZATION'];
+            $auth              = $server['HTTP_AUTHORIZATION'];
             list($user, $pass) = explode(':', base64_decode(substr($auth, strpos($auth, ' ') + 1)));
         } elseif (!empty($server['Authorization'])) {
-            $auth = $server['Authorization'];
+            $auth              = $server['Authorization'];
             list($user, $pass) = explode(':', base64_decode(substr($auth, strpos($auth, ' ') + 1)));
         }
 
@@ -70,7 +71,7 @@ class Authentication
     }
 
     /**
-     * Set "auth failed" headers and returns to browser
+     * Set "auth failed" headers and returns to browser.
      */
     public function setAuthenticationFailed(string $realm = 'FACT-Finder')
     {

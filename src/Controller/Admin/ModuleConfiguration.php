@@ -10,7 +10,7 @@ use OxidEsales\Eshop\Application\Model\AttributeList;
 use OxidEsales\Eshop\Core\Registry;
 
 /**
- * Module Configuration
+ * Module Configuration.
  *
  * @mixin \OxidEsales\Eshop\Application\Controller\Admin\ModuleConfiguration
  */
@@ -36,7 +36,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     public function saveConfVars()
     {
         if ($this->isFactFinder()) {
-            $_POST['confaarrs'] = array_reduce($this->localizedFields, [$this, 'fromArray'], $_POST['confaarrs'] ?? []);
+            $_POST['confaarrs']                       = array_reduce($this->localizedFields, [$this, 'fromArray'], $_POST['confaarrs'] ?? []);
             $_POST['confaarrs']['ffExportAttributes'] = $this->_aarrayToMultiline(
                 $this->flatMap($this->prepareAttributes(), $_POST['confaarrs']['ffExportAttributes'] ?? [])
             );
@@ -71,7 +71,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     private function getSelectedAttributes(array $allAttributes): array
     {
         $selectedConfig = oxNew(ExportConfig::class)->getConfigValue();
-        return array_map(function (string $attributeId) use ($selectedConfig, $allAttributes) : array {
+        return array_map(function (string $attributeId) use ($selectedConfig, $allAttributes): array {
             return [
                 'id'    => $attributeId,
                 'title' => $allAttributes[$attributeId],

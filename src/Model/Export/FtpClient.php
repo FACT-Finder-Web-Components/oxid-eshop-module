@@ -30,7 +30,9 @@ class FtpClient
             rewind($handle);
             ftp_fput($connection, $filename, $handle, FTP_ASCII);
         } finally {
-            if (isset($connection) && $connection) $this->close($connection);
+            if (isset($connection) && $connection) {
+                $this->close($connection);
+            }
         }
     }
 

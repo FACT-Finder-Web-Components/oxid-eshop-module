@@ -25,7 +25,7 @@ class Authorization implements ParametersSourceInterface
              $this->config->getConfigParam('ffUsername'),
              $this->config->getConfigParam('ffPassword'),
              $this->config->getConfigParam('ffAuthPrefix'),
-             $this->config->getConfigParam('ffAuthPostfix')
+             $this->config->getConfigParam('ffAuthPostfix'),
         ];
     }
 }
