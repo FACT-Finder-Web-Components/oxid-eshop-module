@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Omikron\FactFinder\Oxid\Export;
 
 use Omikron\FactFinder\Oxid\Export\Data\CollectionInterface;

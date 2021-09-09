@@ -35,14 +35,14 @@ class FilterAttributes extends Attribute implements FieldInterface
 
     protected function getVariantValues(Article $article, Article $parent): string
     {
-        $oxvarname = $parent->getFieldData('oxvarname');
+        $oxvarname   = $parent->getFieldData('oxvarname');
         $oxvarselect = $article->getFieldData('oxvarselect');
 
         return implode('', array_map(function (string $key, string $value): string {
             return $this->filter->filterValue($key) . '=' . $this->filter->filterValue($value) . '|';
         }, ...array_map(function (string $value): array {
             return explode(' | ', $value);
-        }, [ $this->validateValueForExport($oxvarname), $this->validateValueForExport($oxvarselect)])));
+        }, [$this->validateValueForExport($oxvarname), $this->validateValueForExport($oxvarselect)])));
     }
 
     protected function getAllValues(Article $article): string
