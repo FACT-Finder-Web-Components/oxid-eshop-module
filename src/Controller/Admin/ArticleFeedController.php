@@ -47,11 +47,10 @@ class ArticleFeedController extends AdminController
         try {
             $feed = oxNew($feedType);
             $feed->generate(oxNew(Csv::class, $handle));
-
             $result[] = $this->translate('FF_ARTICLE_FEED_EXPORT_SUCCESS');
-
             $ftpClient = oxNew(FtpClient::class, oxNew(FtpParams::class));
-            $ftpClient->upload($handle, $feed->getFileName('product'));
+
+            $ftpClient->upload($handle, $feed->getFileName($_GET['exportType']));
             $result[] = $this->translate('FF_ARTICLE_FEED_UPLOAD_SUCCESS');
 
             $pushImport = oxNew(PushImport::class);
