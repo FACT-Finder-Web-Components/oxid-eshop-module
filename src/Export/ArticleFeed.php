@@ -37,11 +37,6 @@ class ArticleFeed extends AbstractFeed
         $this->fields = $fields;
     }
 
-    protected function getFieldName(FieldInterface $field): string
-    {
-        return parent::getFieldName($field);
-    }
-
     public function generate(StreamInterface $stream): void
     {
         $fields  = array_merge($this->getAdditionalFields(), $this->getConfigFields(), $this->fields);
@@ -49,6 +44,11 @@ class ArticleFeed extends AbstractFeed
 
         $stream->addEntity($columns);
         oxNew(Exporter::class)->exportEntities($stream, oxNew(DataProvider::class, ...$fields), $columns, oxNew(ArticleCollection::class));
+    }
+
+    protected function getFieldName(FieldInterface $field): string
+    {
+        return parent::getFieldName($field);
     }
 
     protected function getAdditionalFields(): array

@@ -1,10 +1,9 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Export;
 
-
-use Omikron\FactFinder\Oxid\Export\Entity\DataProvider;
 use Omikron\FactFinder\Oxid\Export\Field\Attribute as AttributeField;
 use Omikron\FactFinder\Oxid\Export\Field\BaseFieldInterface as FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
@@ -13,16 +12,17 @@ use OxidEsales\Eshop\Core\Registry;
 
 abstract class AbstractFeed implements FieldInterface
 {
-    /** @var string[]  */
+    /** @var string[] */
     protected $columns;
 
     abstract public function generate(StreamInterface $stream): void;
-    abstract protected function getAdditionalFields(): array;
 
     public function getFileName(string $exportType): string
     {
         return sprintf('export%s.%s.csv', $exportType, $this->getChannel(Registry::getLang()->getLanguageAbbr()));
     }
+
+    abstract protected function getAdditionalFields(): array;
 
     protected function getChannel(string $lang): string
     {

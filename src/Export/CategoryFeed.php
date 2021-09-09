@@ -30,14 +30,9 @@ class CategoryFeed extends AbstractFeed
         $this->fields = $fields;
     }
 
-    protected function getFieldName(FieldInterface $field): string
-    {
-        return parent::getFieldName($field);
-    }
-
     public function generate(StreamInterface $stream): void
     {
-        $fields = array_merge($this->getAdditionalFields(), $this->fields);
+        $fields  = array_merge($this->getAdditionalFields(), $this->fields);
         $columns = array_unique(array_merge($this->columns, array_map([$this, 'getFieldName'], $fields)));
 
         $stream->addEntity($columns);
@@ -47,5 +42,10 @@ class CategoryFeed extends AbstractFeed
     public function getAdditionalFields(): array
     {
         return [];
+    }
+
+    protected function getFieldName(FieldInterface $field): string
+    {
+        return parent::getFieldName($field);
     }
 }

@@ -24,7 +24,6 @@ class ArticleCollection implements \IteratorAggregate, CollectionInterface
         return ArticleEntity::class;
     }
 
-
     /**
      * @return Article[]
      */

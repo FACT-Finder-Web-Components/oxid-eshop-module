@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Export\Entity;
-
 
 use Omikron\FactFinder\Oxid\Export\Field\Category\FieldInterface;
 use OxidEsales\Eshop\Application\Model\Category;
@@ -20,15 +20,16 @@ class CategoryEntity implements DataProviderInterface, ExportEntityInterface
 
     /**
      * CategoryEntity constructor.
-     * @param Category $article
-     * @param Category $parent
+     *
+     * @param Category         $article
+     * @param Category         $parent
      * @param FieldInterface[] $fields
      */
     public function __construct(Category $article, Category $parent, array $fields)
     {
         $this->category = $article;
-        $this->parent = $parent;
-        $this->fields = $fields;
+        $this->parent   = $parent;
+        $this->fields   = $fields;
     }
 
     public function getEntities(): iterable
@@ -39,18 +40,17 @@ class CategoryEntity implements DataProviderInterface, ExportEntityInterface
         }
     }
 
-
     public function toArray(): array
     {
         $data = [
-            'Id' => $this->category->getFieldData('oxid'),
-            'ShopId' => $this->category->getFieldData('oxshopid'),
+            'Id'           => $this->category->getFieldData('oxid'),
+            'ShopId'       => $this->category->getFieldData('oxshopid'),
             'ExternalLink' => $this->category->getFieldData('oxextlink'),
-            'ParentId' => $this->category->getFieldData('oxparentid'),
-            'RootId' => $this->category->getFieldData('oxrootid'),
-            'Name' => $this->category->getFieldData('oxtitle'),
-            'ImageUrl' => $this->category->getPictureUrl(),
-            'Description' => $this->category->getFieldData('oxdesc'),
+            'ParentId'     => $this->category->getFieldData('oxparentid'),
+            'RootId'       => $this->category->getFieldData('oxrootid'),
+            'Name'         => $this->category->getFieldData('oxtitle'),
+            'ImageUrl'     => $this->category->getPictureUrl(),
+            'Description'  => $this->category->getFieldData('oxdesc'),
         ];
 
         return array_reduce($this->fields, function (array $result, FieldInterface $field): array {
