@@ -15,7 +15,6 @@ use OxidEsales\Eshop\Core\Registry;
 
 class ArticleFeedController extends AdminController
 {
-
     use FeedExportTrait;
 
     /** @var string */
@@ -31,7 +30,7 @@ class ArticleFeedController extends AdminController
         try {
             $feed = oxNew($feedType);
             $feed->generate(oxNew(Csv::class, $handle));
-            $result[] = $this->translate('FF_ARTICLE_FEED_EXPORT_SUCCESS');
+            $result[]  = $this->translate('FF_ARTICLE_FEED_EXPORT_SUCCESS');
             $ftpClient = oxNew(FtpClient::class, oxNew(FtpParams::class));
 
             $ftpClient->upload($handle, $feed->getFileName($_GET['exportType']));

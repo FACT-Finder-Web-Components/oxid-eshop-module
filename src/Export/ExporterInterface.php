@@ -11,10 +11,10 @@ use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 interface ExporterInterface
 {
     /**
-     * @param StreamInterface $stream
+     * @param StreamInterface       $stream
      * @param DataProviderInterface $dataProvider
-     * @param array $columns
-     * @param CollectionInterface $collection
+     * @param array                 $columns
+     * @param CollectionInterface   $collection
      */
     public function exportEntities(StreamInterface $stream, DataProviderInterface $dataProvider, array $columns, CollectionInterface $collection): void;
 }

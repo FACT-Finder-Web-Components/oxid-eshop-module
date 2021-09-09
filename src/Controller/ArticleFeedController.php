@@ -25,7 +25,7 @@ class ArticleFeedController extends FrontendController
     public function export()
     {
         $feedType = $this->getFeedType($_GET['exportType']);
-        $oUtils = Registry::getUtils();
+        $oUtils   = Registry::getUtils();
 
         try {
             $feed   = oxNew($feedType);

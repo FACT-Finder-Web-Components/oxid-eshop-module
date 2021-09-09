@@ -1,6 +1,8 @@
 <?php
-namespace Omikron\FactFinder\Oxid\Export\Field\Category;
 
+declare(strict_types=1);
+
+namespace Omikron\FactFinder\Oxid\Export\Field\Category;
 
 use Omikron\FactFinder\Oxid\Export\Field\BaseFieldInterface;
 use OxidEsales\Eshop\Application\Model\Category;

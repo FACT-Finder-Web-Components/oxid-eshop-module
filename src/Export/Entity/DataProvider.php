@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Export\Entity;
 
-use Omikron\FactFinder\Oxid\Export\Data\ArticleCollection;
 use Omikron\FactFinder\Oxid\Export\Data\CollectionInterface;
 use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
-use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\Model\MultiLanguageModel;
 
 class DataProvider implements DataProviderInterface
@@ -42,7 +40,7 @@ class DataProvider implements DataProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getEntities(): iterable
     {

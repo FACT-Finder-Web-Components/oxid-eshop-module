@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller;
-
 
 use Omikron\FactFinder\Oxid\Export\ArticleFeed;
 use Omikron\FactFinder\Oxid\Export\CategoryFeed;
@@ -12,7 +12,7 @@ trait FeedExportTrait
     public function getFeedTypes(): array
     {
         return [
-            'product' => ArticleFeed::class,
+            'product'  => ArticleFeed::class,
             'category' => CategoryFeed::class,
         ];
     }
