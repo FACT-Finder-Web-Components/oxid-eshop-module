@@ -1,18 +1,20 @@
 [{$smarty.block.parent}]
     <link rel="stylesheet" type="text/css" href="[{$oViewConf->getModuleUrl('ffwebcomponents', 'out/admin/css/styles.css')}]"/>
 [{if $var_group === 'ffExport'}]
-    <select name="ffExportFeed" id="ffExportFeed" onchange="exportFeed()">
-        <option value="">Please choose an option</option>
-        <option value="product">Products</option>
-        <option value="category">Categories</option>
-    </select>
-
     <input type="button"
            id="ffTestConnection"
            class="confinput"
            name="ffTestConnection"
            value="Test Connection"
            onclick="testConnection()"/>
+
+<div id="exportType">
+    <select name="ffExportFeed" id="ffExportFeed" onchange="exportFeed()" class="select">
+        <option value="">Select export type</option>
+        <option value="product">Products</option>
+        <option value="category">Categories</option>
+    </select>
+</div>
 
     <div id="spinner">
     </div>
