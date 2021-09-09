@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Controller;
 
 use Omikron\FactFinder\Oxid\Export\ArticleFeed;
+use Omikron\FactFinder\Oxid\Export\CategoryFeed;
 use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use Omikron\FactFinder\Oxid\Model\Export\Http\Authentication;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
@@ -21,13 +22,31 @@ class ArticleFeedController extends FrontendController
         }
     }
 
+    public function getFeedTypes(): array
+    {
+        return [
+            'product' => ArticleFeed::class,
+            'category' => CategoryFeed::class,
+        ];
+    }
+
+    public function getFeedType($requestedType): string
+    {
+        $feedTypes = $this->getFeedTypes();
+        if (!isset($feedTypes[$requestedType])) {
+            throw new \Exception(sprintf('Unknown feed type %s', $requestedType));
+        }
+
+        return $feedTypes[$requestedType];
+    }
+
     public function export()
     {
+        $feedType = $this->getFeedType($_GET['exportType']);
         $oUtils = Registry::getUtils();
 
         try {
-            /** @var ArticleFeed $feed */
-            $feed   = oxNew(ArticleFeed::class);
+            $feed   = oxNew($feedType);
             $handle = tmpfile();
             $feed->generate(oxNew(Csv::class, $handle));
             rewind($handle);
