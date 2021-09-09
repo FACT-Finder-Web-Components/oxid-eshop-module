@@ -76,7 +76,7 @@ class Communication implements ParametersSourceInterface
         $value = ['navigation=true'];
         foreach (array_reverse($categories) as $category) {
             $value[] = sprintf("filter{$param}%s=%s", $path, $category);
-            $path    .= '/' . $category;
+            $path .= '/' . $category;
         }
         return implode(',', $value);
     }
@@ -95,8 +95,8 @@ class Communication implements ParametersSourceInterface
     {
         return $this->getConfig('ffUseForCategories') && $this->view->getActionClassName() === 'alist';
     }
-    
-    protected function getAdditionalCurrencyFields() : string
+
+    protected function getAdditionalCurrencyFields(): string
     {
         return '';
     }
