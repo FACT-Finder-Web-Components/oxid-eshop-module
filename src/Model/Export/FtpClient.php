@@ -9,6 +9,7 @@ use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
 
 class FtpClient
 {
+    private const FTP_PROTOCOL_PREFIX = 'ftp://';
     /** @var FtpParams */
     private $params;
 
@@ -38,9 +39,15 @@ class FtpClient
 
     private function connect(FtpParams $params, int $timeout = 30)
     {
+        $ftpHost = $params->getHost();
+
+        if (is_int(strpos($ftpHost, self::FTP_PROTOCOL_PREFIX))) {
+            $ftpHost = str_replace(self::FTP_PROTOCOL_PREFIX, '', $ftpHost);
+        }
+
         $connection = $params->useSsl() ?
-            @ftp_ssl_connect($params->getHost(), $params->getPort(), $timeout) :
-            @ftp_connect($params->getHost(), $params->getPort(), $timeout);
+            @ftp_ssl_connect($ftpHost, $params->getPort(), $timeout) :
+            @ftp_connect($ftpHost, $params->getPort(), $timeout);
 
         if (!$connection) {
             throw new Exception('FTP connection failed to open');
