@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller;
 
-use Omikron\FactFinder\Oxid\Export\ArticleFeed;
-use Omikron\FactFinder\Oxid\Export\CategoryFeed;
 use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use Omikron\FactFinder\Oxid\Model\Export\Http\Authentication;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
@@ -13,6 +11,8 @@ use OxidEsales\Eshop\Core\Registry;
 
 class ArticleFeedController extends FrontendController
 {
+    use FeedExportTrait;
+
     public function init()
     {
         /** @var Authentication $auth */
@@ -20,24 +20,6 @@ class ArticleFeedController extends FrontendController
         if (!$auth->authenticate(...$auth->getCredentials())) {
             $auth->setAuthenticationFailed('FACT-Finder');
         }
-    }
-
-    public function getFeedTypes(): array
-    {
-        return [
-            'product' => ArticleFeed::class,
-            'category' => CategoryFeed::class,
-        ];
-    }
-
-    public function getFeedType($requestedType): string
-    {
-        $feedTypes = $this->getFeedTypes();
-        if (!isset($feedTypes[$requestedType])) {
-            throw new \Exception(sprintf('Unknown feed type %s', $requestedType));
-        }
-
-        return $feedTypes[$requestedType];
     }
 
     public function export()

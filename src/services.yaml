@@ -1,5 +1,0 @@
-services:
-    omikron.fact_finder.feed_export:
-        class: Omikron\FactFinder\Oxid\Command\FeedExport
-        tags:
-            - { name: 'console.command', command: 'factfinder:feed-export' }

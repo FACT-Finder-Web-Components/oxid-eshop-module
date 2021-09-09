@@ -2,14 +2,10 @@
 
 $options = getopt('s:t:l:');
 $shopId  = $options['s'] ?? 0;
-$exportType = $options['t'] ?? null;
+$exportType = $options['t'] ?? 'product';
 
 if (!$shopId) {
     throw new RuntimeException('Please specify the shop ID using the "s" parameter!');
-}
-
-if (!$exportType) {
-    throw new RuntimeException('Please specify the export type using the "t" parameter!');
 }
 
 $languageId = $options['l'] ?? 0;
@@ -24,7 +20,7 @@ use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
 use Omikron\FactFinder\Oxid\Model\Export\FtpClient;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
-use Omikron\FactFinder\Oxid\Controller\Admin\ArticleFeedController;
+use Omikron\FactFinder\Oxid\Controller\ArticleFeedController;
 
 try {
     $feedFQN = (new ArticleFeedController())->getFeedType($exportType);

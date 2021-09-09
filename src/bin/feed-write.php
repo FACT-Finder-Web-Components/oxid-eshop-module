@@ -2,14 +2,10 @@
 
 $options = getopt('s:t:l:');
 $shopId  = $options['s'] ?? 0;
-$exportType = $options['t'] ?? null;
+$exportType = $options['t'] ?? 'product';
 
 if (!$shopId) {
     throw new RuntimeException('Please specify the shop ID using the "s" parameter!');
-}
-
-if (!$exportType) {
-    throw new RuntimeException('Please specify the export type using the "t" parameter!');
 }
 
 $languageId = $options['l'] ?? 0;
@@ -21,7 +17,7 @@ define('OX_IS_ADMIN', true);
 use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
-use Omikron\FactFinder\Oxid\Controller\Admin\ArticleFeedController;
+use Omikron\FactFinder\Oxid\Controller\ArticleFeedController;
 
 Registry::getConfig()->setShopId($shopId);
 Registry::set(Config::class, null);
