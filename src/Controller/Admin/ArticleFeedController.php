@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
-use Omikron\FactFinder\Oxid\Export\ArticleFeed;
+use Omikron\FactFinder\Oxid\Controller\FeedExportTrait;
+use Omikron\FactFinder\Oxid\Export\AbstractFeed;
 use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use Omikron\FactFinder\Oxid\Model\Api\PushImport;
 use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
@@ -14,6 +15,8 @@ use OxidEsales\Eshop\Core\Registry;
 
 class ArticleFeedController extends AdminController
 {
+    use FeedExportTrait;
+
     /** @var string */
     protected $_sThisTemplate = 'admin/page/ajax_result.tpl';
 
@@ -21,14 +24,16 @@ class ArticleFeedController extends AdminController
     {
         $handle = tmpfile();
         $result = [];
+        /** @var AbstractFeed $feedType */
+        $feedType = $this->getFeedType($_GET['exportType']);
 
         try {
-            $articleFeed = oxNew(ArticleFeed::class);
-            $articleFeed->generate(oxNew(Csv::class, $handle));
-            $result[] = $this->translate('FF_ARTICLE_FEED_EXPORT_SUCCESS');
-
+            $feed = oxNew($feedType);
+            $feed->generate(oxNew(Csv::class, $handle));
+            $result[]  = $this->translate('FF_ARTICLE_FEED_EXPORT_SUCCESS');
             $ftpClient = oxNew(FtpClient::class, oxNew(FtpParams::class));
-            $ftpClient->upload($handle, $articleFeed->getFileName());
+
+            $ftpClient->upload($handle, $feed->getFileName($_GET['exportType']));
             $result[] = $this->translate('FF_ARTICLE_FEED_UPLOAD_SUCCESS');
 
             $pushImport = oxNew(PushImport::class);
