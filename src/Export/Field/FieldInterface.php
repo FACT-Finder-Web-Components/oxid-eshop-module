@@ -6,7 +6,7 @@ namespace Omikron\FactFinder\Oxid\Export\Field;
 
 use OxidEsales\Eshop\Application\Model\Article;
 
-interface FieldInterface extends BaseFieldInterface
+interface FieldInterface
 {
     public function getName(): string;
 
