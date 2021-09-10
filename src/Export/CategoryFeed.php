@@ -6,7 +6,7 @@ namespace Omikron\FactFinder\Oxid\Export;
 
 use Omikron\FactFinder\Oxid\Export\Data\CategoryCollection;
 use Omikron\FactFinder\Oxid\Export\Entity\DataProvider;
-use Omikron\FactFinder\Oxid\Export\Field\BaseFieldInterface as FieldInterface;
+use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 
 class CategoryFeed extends AbstractFeed

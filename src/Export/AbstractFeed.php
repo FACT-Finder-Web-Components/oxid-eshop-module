@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Export;
 
 use Omikron\FactFinder\Oxid\Export\Field\Attribute as AttributeField;
-use Omikron\FactFinder\Oxid\Export\Field\BaseFieldInterface as FieldInterface;
+use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
 use OxidEsales\Eshop\Core\Registry;
 
-abstract class AbstractFeed implements FieldInterface
+abstract class AbstractFeed
 {
     /** @var string[] */
     protected $columns;
