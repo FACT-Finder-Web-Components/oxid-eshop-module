@@ -28,6 +28,7 @@ return $config
                        ]
                    ],
                    'blank_line_after_opening_tag' => true,
+                   'class_attributes_separation'  => true,
                    'blank_line_before_statement'  => ['statements' => ['break', 'continue', 'declare', 'throw', 'try']],
                    'concat_space'                 => ['spacing' => 'one'],
                    'declare_strict_types'         => true,

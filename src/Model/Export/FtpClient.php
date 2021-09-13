@@ -10,6 +10,7 @@ use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
 class FtpClient
 {
     private const FTP_PROTOCOL_PREFIX = 'ftp://';
+
     /** @var FtpParams */
     private $params;
 
@@ -32,7 +33,7 @@ class FtpClient
             ftp_fput($connection, $filename, $handle, FTP_ASCII);
         } finally {
             if (isset($connection) && $connection) {
-                $this->close($connection);
+                ftp_close($connection);
             }
         }
     }
@@ -46,26 +47,21 @@ class FtpClient
         }
 
         $connection = $params->useSsl() ?
-            @ftp_ssl_connect($ftpHost, $params->getPort(), $timeout) :
-            @ftp_connect($ftpHost, $params->getPort(), $timeout);
+            ftp_ssl_connect($ftpHost, $params->getPort(), $timeout) :
+            ftp_connect($ftpHost, $params->getPort(), $timeout);
 
         if (!$connection) {
             throw new Exception('FTP connection failed to open');
         }
 
-        if (!@ftp_login($connection, $params->getUser(), $params->getPassword())) {
+        if (!ftp_login($connection, $params->getUser(), $params->getPassword())) {
             throw new Exception('The FTP username or password is invalid. Verify both and try again.');
         }
 
-        if (!@ftp_pasv($connection, true)) {
+        if (!ftp_pasv($connection, true)) {
             throw new Exception('The file transfer mode is invalid. Verify and try again.');
         }
 
         return $connection;
-    }
-
-    private function close($connection)
-    {
-        @ftp_close($connection);
     }
 }

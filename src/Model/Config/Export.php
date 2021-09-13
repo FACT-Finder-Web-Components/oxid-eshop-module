@@ -35,11 +35,8 @@ class Export
     private function getAttributes(): array
     {
         $this->attributes = $this->attributes ?? oxNew(AttributeList::class)->getList()->getArray();
-        return array_map([$this, 'getAttributeName'], $this->attributes);
-    }
-
-    private function getAttributeName(BaseModel $attribute): string
-    {
-        return $attribute->getFieldData('oxtitle');
+        return array_map(function (BaseModel $attribute): string {
+            return $attribute->getFieldData('oxtitle');
+        }, $this->attributes);
     }
 }

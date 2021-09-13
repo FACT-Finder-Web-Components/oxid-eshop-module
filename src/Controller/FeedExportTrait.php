@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller;
 
+use InvalidArgumentException;
 use Omikron\FactFinder\Oxid\Export\ArticleFeed;
 use Omikron\FactFinder\Oxid\Export\CategoryFeed;
 
@@ -21,7 +22,7 @@ trait FeedExportTrait
     {
         $feedTypes = $this->getFeedTypes();
         if (!isset($feedTypes[$requestedType])) {
-            throw new \Exception(sprintf('Unknown feed type %s', $requestedType));
+            throw new InvalidArgumentException(sprintf('Unknown feed type %s', $requestedType));
         }
 
         return $feedTypes[$requestedType];
