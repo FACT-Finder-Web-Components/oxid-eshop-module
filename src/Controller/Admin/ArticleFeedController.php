@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
 use Omikron\FactFinder\Oxid\Controller\FeedExportTrait;
-use Omikron\FactFinder\Oxid\Export\AbstractFeed;
 use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use Omikron\FactFinder\Oxid\Model\Api\PushImport;
 use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
@@ -23,8 +22,8 @@ class ArticleFeedController extends AdminController
 
     public function export()
     {
-        $handle = tmpfile();
-        $result = [];
+        $handle    = tmpfile();
+        $result    = [];
         $feedParam = Request::getRequestParameter('exportType');
         $feedType  = $this->getFeedType($feedParam);
 
