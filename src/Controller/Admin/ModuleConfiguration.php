@@ -26,7 +26,9 @@ class ModuleConfiguration extends ModuleConfiguration_parent
             $allAttributes = $this->getAvailableAttributes();
 
             $this->addTplParam('shopLanguages', Registry::getLang()->getActiveShopLanguageIds());
-            $this->addTplParam('localizedFields', array_reduce($this->localizedFields, [$this, 'toArray'], []));
+            $this->addTplParam('localizedFields', array_reduce($this->localizedFields, function (array $result, string $field): array {
+                return [$field => $this->_aarrayToMultiline($result[$field] ?? [])] + $result;
+            }, []));
             $this->addTplParam('availableAttributes', $allAttributes);
             $this->addTplParam('selectedAttributes', $this->getSelectedAttributes($allAttributes));
         }
@@ -36,7 +38,11 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     public function saveConfVars()
     {
         if ($this->isFactFinder()) {
-            $_POST['confaarrs']                       = array_reduce($this->localizedFields, [$this, 'fromArray'], $_POST['confaarrs'] ?? []);
+            $_POST['confaarrs'] = array_reduce($this->localizedFields, function (array $result, string $field): array {
+                $value = html_entity_decode($this->getViewDataElement('confaarrs')[$field] ?? '');
+                return $result + [$field => $this->_multilineToAarray($value)];
+            }, $_POST['confaarrs'] ?? []);
+
             $_POST['confaarrs']['ffExportAttributes'] = $this->_aarrayToMultiline(
                 $this->flatMap($this->prepareAttributes(), $_POST['confaarrs']['ffExportAttributes'] ?? [])
             );
@@ -47,17 +53,6 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     protected function isFactFinder(): bool
     {
         return Registry::getRequest()->getRequestEscapedParameter('oxid') === 'ffwebcomponents';
-    }
-
-    private function toArray(array $result, string $field): array
-    {
-        $value = html_entity_decode($this->getViewDataElement('confaarrs')[$field] ?? '');
-        return $result + [$field => $this->_multilineToAarray($value)];
-    }
-
-    private function fromArray(array $result, string $field): array
-    {
-        return [$field => $this->_aarrayToMultiline($result[$field] ?? [])] + $result;
     }
 
     private function getAvailableAttributes(): array
@@ -87,8 +82,8 @@ class ModuleConfiguration extends ModuleConfiguration_parent
         };
     }
 
-    private function flatMap(callable $fn, array $arr): array
+    private function flatMap(callable $fnc, array $arr): array
     {
-        return array_merge([], ...array_map($fn, $arr));
+        return array_merge([], ...array_map($fnc, $arr));
     }
 }

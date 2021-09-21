@@ -8,6 +8,7 @@ use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use Omikron\FactFinder\Oxid\Model\Export\Http\Authentication;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\Request;
 
 class ArticleFeedController extends FrontendController
 {
@@ -24,7 +25,7 @@ class ArticleFeedController extends FrontendController
 
     public function export()
     {
-        $feedType = $this->getFeedType($_GET['exportType']);
+        $feedType = $this->getFeedType(Request::getRequestParameter('exportType'));
         $oUtils   = Registry::getUtils();
 
         try {
