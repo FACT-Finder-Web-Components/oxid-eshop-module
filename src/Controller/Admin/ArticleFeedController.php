@@ -12,6 +12,7 @@ use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
 use Omikron\FactFinder\Oxid\Model\Export\FtpClient;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\Request;
 
 class ArticleFeedController extends AdminController
 {
@@ -24,8 +25,8 @@ class ArticleFeedController extends AdminController
     {
         $handle = tmpfile();
         $result = [];
-        /** @var AbstractFeed $feedType */
-        $feedType = $this->getFeedType($_GET['exportType']);
+        $feedParam = Request::getRequestParameter('exportType');
+        $feedType  = $this->getFeedType($feedParam);
 
         try {
             $feed = oxNew($feedType);
@@ -33,7 +34,7 @@ class ArticleFeedController extends AdminController
             $result[]  = $this->translate('FF_ARTICLE_FEED_EXPORT_SUCCESS');
             $ftpClient = oxNew(FtpClient::class, oxNew(FtpParams::class));
 
-            $ftpClient->upload($handle, $feed->getFileName($_GET['exportType']));
+            $ftpClient->upload($handle, $feed->getFileName($feedParam));
             $result[] = $this->translate('FF_ARTICLE_FEED_UPLOAD_SUCCESS');
 
             $pushImport = oxNew(PushImport::class);
