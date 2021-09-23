@@ -9,6 +9,7 @@ use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
 use OxidEsales\Eshop\Core\Registry;
+use ReflectionClass;
 
 abstract class AbstractFeed
 {
@@ -19,7 +20,7 @@ abstract class AbstractFeed
 
     public function getFileName(): string
     {
-        $slug = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', (new \ReflectionClass($this))->getShortName()));
+        $slug = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', (new ReflectionClass($this))->getShortName()));
         return sprintf('export.%s.%s.csv', $slug, $this->getChannel(Registry::getLang()->getLanguageAbbr()));
     }
 
