@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Export;
 
-use Omikron\FactFinder\Oxid\Export\Data\CollectionInterface;
 use Omikron\FactFinder\Oxid\Export\Entity\DataProviderInterface;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 

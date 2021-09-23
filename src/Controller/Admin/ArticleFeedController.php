@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
-use Omikron\FactFinder\Oxid\Controller\FeedExportTrait;
 use Omikron\FactFinder\Oxid\Export\ArticleFeed;
 use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use Omikron\FactFinder\Oxid\Model\Api\PushImport;
@@ -12,7 +11,6 @@ use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
 use Omikron\FactFinder\Oxid\Model\Export\FtpClient;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\Eshop\Core\Request;
 
 class ArticleFeedController extends AdminController
 {
@@ -23,6 +21,7 @@ class ArticleFeedController extends AdminController
     {
         $handle    = tmpfile();
         $result    = [];
+
         try {
             $articleFeed = oxNew(ArticleFeed::class);
             $articleFeed->generate(oxNew(Csv::class, $handle));

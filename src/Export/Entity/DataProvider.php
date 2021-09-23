@@ -19,7 +19,7 @@ class DataProvider implements DataProviderInterface
     public function __construct(CollectionInterface $collection, FieldInterface ...$fields)
     {
         $this->collection = $collection;
-        $this->fields = $fields;
+        $this->fields     = $fields;
     }
 
     /**
