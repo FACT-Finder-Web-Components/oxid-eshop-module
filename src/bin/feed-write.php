@@ -1,5 +1,7 @@
 <?php
 
+use \Omikron\FactFinder\Oxid\Export\FeedTypes;
+
 $options = getopt('s:t:l:');
 $shopId  = $options['s'] ?? 0;
 $exportType = $options['t'] ?? 'product';
@@ -23,6 +25,6 @@ Registry::getConfig()->setShopId($shopId);
 Registry::set(Config::class, null);
 Registry::getLang()->setBaseLanguage($languageId);
 
-$feedFQN = (new ArticleFeedController())->getFeedType($exportType);
+$feedFQN = FeedTypes::getFeedType($exportType);
 $feed = oxNew($feedFQN);
 $feed->generate(oxNew(Csv::class, STDOUT));

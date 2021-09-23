@@ -16,27 +16,10 @@ class DataProvider implements DataProviderInterface
     /** @var CollectionInterface */
     private $collection;
 
-    public function __construct(FieldInterface ...$fields)
-    {
-        $this->fields = $fields;
-    }
-
-    /**
-     * @return CollectionInterface
-     */
-    public function getCollection(): CollectionInterface
-    {
-        return $this->collection;
-    }
-
-    /**
-     * @param CollectionInterface $collection
-     */
-    public function setCollection(CollectionInterface $collection): self
+    public function __construct(CollectionInterface $collection, FieldInterface ...$fields)
     {
         $this->collection = $collection;
-
-        return $this;
+        $this->fields     = $fields;
     }
 
     /**
@@ -44,9 +27,9 @@ class DataProvider implements DataProviderInterface
      */
     public function getEntities(): iterable
     {
-        /** @var MultiLanguageModel $collectionElement */
-        foreach (oxNew(get_class($this->getCollection())) as $collectionElement) {
-            yield from oxNew($this->getCollection()->getEntity(), $collectionElement, $collectionElement, $this->fields)->getEntities();
+        /** @var MultiLanguageModel $item */
+        foreach ($this->collection as $item) {
+            yield from oxNew($this->collection->getEntity(), $item, $item, $this->fields)->getEntities();
         }
     }
 }

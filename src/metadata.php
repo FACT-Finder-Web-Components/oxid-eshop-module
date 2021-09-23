@@ -22,11 +22,12 @@ $aModule = [
     'version'     => '2.0.1',
     'thumbnail'   => 'out/pictures/logo.png',
     'controllers' => [
-        'ffWebComponent'    => Component\Widget\WebComponent::class,
-        'search_result'     => Controller\SearchResultController::class,
-        'test_connection'   => Controller\Admin\TestConnectionController::class,
-        'article_feed'      => Controller\Admin\ArticleFeedController::class,
-        'http_article_feed' => Controller\ArticleFeedController::class,
+        'ffWebComponent'     => Component\Widget\WebComponent::class,
+        'search_result'      => Controller\SearchResultController::class,
+        'test_connection'    => Controller\Admin\TestConnectionController::class,
+        'article_feed'       => Controller\Admin\ArticleFeedController::class,
+        'http_article_feed'  => Controller\ArticleFeedController::class,
+        'http_category_feed' => Controller\CategoryFeedController::class,
     ],
     'blocks'      => [
         [

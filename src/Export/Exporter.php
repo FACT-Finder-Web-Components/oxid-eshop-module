@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Export;
 
-use Omikron\FactFinder\Oxid\Export\Data\CollectionInterface;
 use Omikron\FactFinder\Oxid\Export\Entity\DataProviderInterface;
 use Omikron\FactFinder\Oxid\Export\Filter\TextFilter;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
@@ -19,11 +18,11 @@ class Exporter implements ExporterInterface
         $this->filter = oxNew(TextFilter::class);
     }
 
-    public function exportEntities(StreamInterface $stream, DataProviderInterface $dataProvider, array $columns, CollectionInterface $collection): void
+    public function exportEntities(StreamInterface $stream, DataProviderInterface $dataProvider, array $columns): void
     {
         $emptyRecord = array_combine($columns, array_fill(0, count($columns), ''));
 
-        foreach ($dataProvider->setCollection($collection)->getEntities() as $entity) {
+        foreach ($dataProvider->getEntities() as $entity) {
             $entityData = array_merge($emptyRecord, array_intersect_key($entity->toArray(), $emptyRecord)); // phpcs:ignore
             $stream->addEntity($this->prepare($entityData));
         }

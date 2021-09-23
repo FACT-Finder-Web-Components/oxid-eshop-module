@@ -144,6 +144,10 @@ You can set FACT-Finder® to download the feed directly from this location:
 
     [YOUR_SHOP_URL]?cl=http_article_feed&fnc=export
 
+For category export:
+
+    [YOUR_SHOP_URL]?cl=http_category_feed&fnc=export
+
 **Note:** Please keep in mind that the feed file is not directly available under the location. There is an export mechanism that does it on demand, so the whole process may take some time.
 
 #### Basic Authentication
@@ -162,8 +166,10 @@ All settings related to this exporting method are found in [Export Settings](#ex
 #### Admin Panel Export
 `Export Feed` button located in module configuration, could be used to manually trigger an export.
 By clicking this button, you trigger the whole export process, including upload to FTP server and triggering a FACT-Finder® import (if enabled).
-**Note:** This method does not download the feed file to your local file system. If you need to view it, please use the
-[HTTP Export](#http-export)
+
+**Note:** This method does not download the feed file to your local file system. If you need to view it, please use the [HTTP Export](#http-export)
+
+**Note:** Category export is not available here as clicking button start import on channel but category feed is supposed to be an enrichment for main article feed
 
 #### Console Commands
 There are two console commands located in the module `bin` directory, available for use.
@@ -179,7 +185,8 @@ If you are using Oxid Enterprise and its multishop feature, you can specify the 
     php source/modules/ff/ffwebcomponents/bin/feed-write.php -s1
 
 If your shop supports multiple languages, enter the language identifier of the language you want to export by adding `-l` parameter to the command (e.g. `php bin/feed-write.php -l 1`).
-You can check the language identifiers at "Master Settings -> Languages". 
+You can check the language identifiers at "Master Settings -> Languages".
+You can specify the type of the feed with the `-t` option. Default value is `product`. In order to switch for category, please use `-t category`
 
 ![Languages](docs/assets/languages.png "Languages")
 

@@ -9,6 +9,7 @@ use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
 use OxidEsales\Eshop\Core\Registry;
+use ReflectionClass;
 
 abstract class AbstractFeed
 {
@@ -17,9 +18,10 @@ abstract class AbstractFeed
 
     abstract public function generate(StreamInterface $stream): void;
 
-    public function getFileName(string $exportType): string
+    public function getFileName(): string
     {
-        return sprintf('export%s.%s.csv', $exportType, $this->getChannel(Registry::getLang()->getLanguageAbbr()));
+        $slug = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', (new ReflectionClass($this))->getShortName()));
+        return sprintf('export.%s.%s.csv', $slug, $this->getChannel(Registry::getLang()->getLanguageAbbr()));
     }
 
     abstract protected function getAdditionalFields(): array;

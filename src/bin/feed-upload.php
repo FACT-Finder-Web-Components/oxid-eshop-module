@@ -1,5 +1,7 @@
 <?php
 
+use \Omikron\FactFinder\Oxid\Export\FeedTypes;
+
 $options = getopt('s:t:l:');
 $shopId  = $options['s'] ?? 0;
 $exportType = $options['t'] ?? 'product';
@@ -23,7 +25,7 @@ use OxidEsales\Eshop\Core\Registry;
 use Omikron\FactFinder\Oxid\Controller\ArticleFeedController;
 
 try {
-    $feedFQN = (new ArticleFeedController())->getFeedType($exportType);
+    $feedFQN = FeedTypes::getFeedType($exportType);
     Registry::getConfig()->setShopId($shopId);
     Registry::set(Config::class, null);
     Registry::getLang()->setBaseLanguage($languageId);
