@@ -1,4 +1,12 @@
 # Changelog
+## [v3.0.0] - 2021.09.23
+### Breaking
+- Omikron\FactFinder\Oxid\Export\Entity\DataProvider
+  - changed from `public function __construct(FieldInterface ...$fields)` to `public function __construct(CollectionInterface $collection, FieldInterface ...$fields)`
+### Added
+- Introduced new feed type: Category. More information in README.md
+- Add client side validation for FACT-Finder server URL
+
 ## [v2.0.1] - 2021.08.11
 ### Added
 - Introduced cart tracking using Web Components Javascript API

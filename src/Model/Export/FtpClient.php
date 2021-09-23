@@ -40,12 +40,7 @@ class FtpClient
 
     private function connect(FtpParams $params, int $timeout = 30)
     {
-        $ftpHost = $params->getHost();
-
-        if (is_int(strpos($ftpHost, self::FTP_PROTOCOL_PREFIX))) {
-            $ftpHost = str_replace(self::FTP_PROTOCOL_PREFIX, '', $ftpHost);
-        }
-
+        $ftpHost = ltrim($params->getHost(), self::FTP_PROTOCOL_PREFIX);
         $connection = $params->useSsl() ?
             ftp_ssl_connect($ftpHost, $params->getPort(), $timeout) :
             ftp_connect($ftpHost, $params->getPort(), $timeout);

@@ -2,20 +2,17 @@
     <link rel="stylesheet" type="text/css" href="[{$oViewConf->getModuleUrl('ffwebcomponents', 'out/admin/css/styles.css')}]"/>
 [{if $var_group === 'ffExport'}]
     <input type="button"
+           id="ffExportFeed"
+           class="confinput"
+           name="ffExportFeed"
+           value="Export feed"
+           onclick="exportFeed()"/>
+    <input type="button"
            id="ffTestConnection"
            class="confinput"
            name="ffTestConnection"
            value="Test Connection"
            onclick="testConnection()"/>
-
-<div id="exportType">
-    <select name="ffExportFeed" id="ffExportFeed" onchange="exportFeed()" class="select">
-        <option value="">Select export type</option>
-        <option value="product">Products</option>
-        <option value="category">Categories</option>
-    </select>
-</div>
-
     <div id="spinner">
     </div>
     <div id="result" >
@@ -43,10 +40,8 @@
         }
 
         function exportFeed() {
-            let selectedValue = document.getElementById("ffExportFeed").value;
-
             jQuery.ajax({
-                url:  'index.php?cl=article_feed&fnc=export&stoken=' + jQuery('input[name="stoken"]').val() + '&exportType=' + selectedValue,
+                url:  'index.php?cl=article_feed&fnc=export&stoken=' + jQuery('input[name="stoken"]').val(),
                 type: 'POST',
                 beforeSend: function() {
                     jQuery('#spinner').addClass('loading');

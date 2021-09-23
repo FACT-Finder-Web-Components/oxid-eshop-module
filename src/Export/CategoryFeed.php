@@ -36,16 +36,11 @@ class CategoryFeed extends AbstractFeed
         $columns = array_unique(array_merge($this->columns, array_map([$this, 'getFieldName'], $fields)));
 
         $stream->addEntity($columns);
-        oxNew(Exporter::class)->exportEntities($stream, oxNew(DataProvider::class, ...$fields), $columns, oxNew(CategoryCollection::class));
+        oxNew(Exporter::class)->exportEntities($stream, oxNew(DataProvider::class, oxNew(CategoryCollection::class), ...$fields), $columns);
     }
 
-    public function getAdditionalFields(): array
+    protected function getAdditionalFields(): array
     {
         return [];
-    }
-
-    protected function getFieldName(FieldInterface $field): string
-    {
-        return parent::getFieldName($field);
     }
 }

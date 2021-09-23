@@ -43,12 +43,7 @@ class ArticleFeed extends AbstractFeed
         $columns = array_unique(array_merge($this->columns, array_map([$this, 'getFieldName'], $fields)));
 
         $stream->addEntity($columns);
-        oxNew(Exporter::class)->exportEntities($stream, oxNew(DataProvider::class, ...$fields), $columns, oxNew(ArticleCollection::class));
-    }
-
-    protected function getFieldName(FieldInterface $field): string
-    {
-        return parent::getFieldName($field);
+        oxNew(Exporter::class)->exportEntities($stream, oxNew(DataProvider::class, oxNew(ArticleCollection::class), ...$fields), $columns);
     }
 
     protected function getAdditionalFields(): array

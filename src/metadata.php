@@ -27,6 +27,7 @@ $aModule = [
         'test_connection'   => Controller\Admin\TestConnectionController::class,
         'article_feed'      => Controller\Admin\ArticleFeedController::class,
         'http_article_feed' => Controller\ArticleFeedController::class,
+        'http_category_feed' => Controller\CategoryFeedController::class,
     ],
     'blocks'      => [
         [
