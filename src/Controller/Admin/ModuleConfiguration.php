@@ -27,7 +27,8 @@ class ModuleConfiguration extends ModuleConfiguration_parent
 
             $this->addTplParam('shopLanguages', Registry::getLang()->getActiveShopLanguageIds());
             $this->addTplParam('localizedFields', array_reduce($this->localizedFields, function (array $result, string $field): array {
-                return [$field => $this->_aarrayToMultiline($result[$field] ?? [])] + $result;
+                $value = html_entity_decode($this->getViewDataElement('confaarrs')[$field] ?? '');
+                return $result + [$field => $this->_multilineToAarray($value)];
             }, []));
             $this->addTplParam('availableAttributes', $allAttributes);
             $this->addTplParam('selectedAttributes', $this->getSelectedAttributes($allAttributes));
@@ -39,8 +40,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     {
         if ($this->isFactFinder()) {
             $_POST['confaarrs'] = array_reduce($this->localizedFields, function (array $result, string $field): array {
-                $value = html_entity_decode($this->getViewDataElement('confaarrs')[$field] ?? '');
-                return $result + [$field => $this->_multilineToAarray($value)];
+                return [$field => $this->_aarrayToMultiline($result[$field] ?? [])] + $result;
             }, $_POST['confaarrs'] ?? []);
 
             $_POST['confaarrs']['ffExportAttributes'] = $this->_aarrayToMultiline(
