@@ -1,4 +1,8 @@
 # Changelog
+## [v3.0.1] - 2021.10.08
+### Fixed
+- Fix Configuration error for the channel field rendering/saving
+
 ## [v3.0.0] - 2021.09.23
 ### Breaking
 - Omikron\FactFinder\Oxid\Export\Entity\DataProvider
