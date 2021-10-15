@@ -1,4 +1,8 @@
 # Changelog
+## Ureleased
+### Added
+- Add possibility to upload files trough SFTP protocol
+
 ## [v3.0.1] - 2021.10.08
 ### Fixed
 - Fix Configuration error for the channel field rendering/saving

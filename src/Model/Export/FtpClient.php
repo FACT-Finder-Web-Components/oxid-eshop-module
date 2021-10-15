@@ -4,59 +4,68 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Model\Export;
 
-use Exception;
 use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
+use Omikron\FactFinder\Oxid\Service\Ftp\Factory as FtpFactory;
 
 class FtpClient
 {
-    private const FTP_PROTOCOL_PREFIX = 'ftp://';
+    public const TEST_DIR = 'ff_test';
+
+    public const UPLOAD_DIR = 'export';
+
+    public const TEST_FILE = 'testconnection';
 
     /** @var FtpParams */
-    private $params;
+    private $ftpParams;
 
-    public function __construct(FtpParams $params)
+    /** @var FtpFactory */
+    private $ftpFactory;
+
+    public function __construct(FtpParams $ftpParams)
     {
-        $this->params = $params;
+        $this->ftpParams  = $ftpParams;
+        $this->ftpFactory = oxNew(FtpFactory::class, oxNew(get_class($this->ftpParams)));
     }
 
     /**
-     * @param resource $handle
-     * @param string   $filename
-     *
-     * @throws Exception
+     * @param $handle
+     * @param string $filename
      */
     public function upload($handle, string $filename)
     {
-        try {
-            $connection = $this->connect($this->params);
-            rewind($handle);
-            ftp_fput($connection, $filename, $handle, FTP_ASCII);
-        } finally {
-            if (isset($connection) && $connection) {
-                ftp_close($connection);
-            }
-        }
+        $client = $this->ftpFactory->create();
+        $client->open();
+        $client->createDirectory(self::UPLOAD_DIR);
+        $client->writeFile($filename, $handle);
     }
 
-    private function connect(FtpParams $params, int $timeout = 30)
+    public function testConnection(array $requestParameters)
     {
-        $ftpHost    = ltrim($params->getHost(), self::FTP_PROTOCOL_PREFIX);
-        $connection = $params->useSsl() ?
-            ftp_ssl_connect($ftpHost, $params->getPort(), $timeout) :
-            ftp_connect($ftpHost, $params->getPort(), $timeout);
+        $client = $this->ftpFactory->create($this->ftpParams->toObject($this->prepareRequestValues($requestParameters)));
+        $client->open();
+        $client->createDirectory(self::TEST_DIR);
+        $client->writeFile(self::TEST_FILE, 'test');
+    }
 
-        if (!$connection) {
-            throw new Exception('FTP connection failed to open');
+    public function trimProtocol(string $host): string
+    {
+        preg_match('#^(?:s?ftps?)://(.+?)/?$#', $host, $match);
+        return $match ? $match[1] : $host;
+    }
+
+    private function prepareRequestValues(array $requestParameters): array
+    {
+        if ($requestParameters['sslEnabled']) {
+            $requestParameters['sslEnabled'] = filter_var($requestParameters['sslEnabled'], FILTER_VALIDATE_BOOLEAN);
+        }
+        if ($requestParameters['ftpPort']) {
+            $requestParameters['ftpPort'] = (int) $requestParameters['ftpPort'];
         }
 
-        if (!ftp_login($connection, $params->getUser(), $params->getPassword())) {
-            throw new Exception('The FTP username or password is invalid. Verify both and try again.');
+        if ($requestParameters['ffFtpHost']) {
+            $requestParameters['ffFtpHost'] = $this->trimProtocol($requestParameters['ffFtpHost']);
         }
 
-        if (!ftp_pasv($connection, true)) {
-            throw new Exception('The file transfer mode is invalid. Verify and try again.');
-        }
-
-        return $connection;
+        return $requestParameters;
     }
 }

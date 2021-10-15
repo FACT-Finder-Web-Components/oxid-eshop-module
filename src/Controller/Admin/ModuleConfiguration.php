@@ -46,6 +46,19 @@ class ModuleConfiguration extends ModuleConfiguration_parent
             $_POST['confaarrs']['ffExportAttributes'] = $this->_aarrayToMultiline(
                 $this->flatMap($this->prepareAttributes(), $_POST['confaarrs']['ffExportAttributes'] ?? [])
             );
+
+            if (!empty($_POST['confstrs']['ffFtpKeyFilename'])) {
+                $filename = $_POST['confstrs']['ffFtpKeyFilename'];
+                $keyDir   = __DIR__ . '../../../etc/key';
+                $key      = $_POST['confaarrs']['ffFtpKey'];
+
+                if (!is_dir($keyDir)) {
+                    mkdir($keyDir, 0700, true);
+                }
+                if (preg_match('/\S/', $key)) {
+                    file_put_contents($keyDir . DIRECTORY_SEPARATOR . $filename, trim($_POST['confaarrs']['ffFtpKey']));
+                }
+            }
         }
         return parent::saveConfVars();
     }

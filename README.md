@@ -117,15 +117,30 @@ if `Multi-Attribute` is set to `Yes`, the attribute is placed in an aggregate co
 **Note:** Selection attributes are always placed in `FilterAttributes` automatically.
 
 ### Export Settings
-![Export Settings](docs/assets/export-settings.png "Export settings")
+![Export Settings](docs/assets/export-settings-ftp.png "Export settings")
 
-Use following fields if you want to export feed file to your FTP server, where it could be then imported by FACT-Finder®.
-* FTP host 
-* FTP port 
+#### FTP Settings
+
+Use following fields if you want to export feed file to your FTP/SFTP server, where it could be then imported by FACT-Finder®.
+* Protocol (FTP or SFTP)
+* FTP host
+* FTP port
 * FTP user
+* FTP Authentication type (Password/Key)
+  
+Depends on selected Authentication type
 * FTP password
 
-Additional:
+or
+  
+* Key filename
+* Key content
+* Key passphrase (if set)
+
+
+#### Additional:
+
+![Export Settings](docs/assets/export-settings-additional.png "Export settings")
 * SSL-enabled - check this option, if your FTP server requires connection using secure protocol
 * Automatic import of product - enables import executed by FACT-Finder® after uploading   
   **Note:** This option will not work if you have no FTP server configured
