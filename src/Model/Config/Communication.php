@@ -31,8 +31,6 @@ class Communication implements ParametersSourceInterface
     {
         $category = $this->view->getActiveCategory();
         $session  = Registry::getSession();
-
-        var_dump($this->view->getActiveLangAbbr());
         $params = [
             'url'                         => $this->getConfig('ffServerUrl'),
             'version'                     => $this->getConfig('ffApiVersion'),
