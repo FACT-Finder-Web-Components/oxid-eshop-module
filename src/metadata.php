@@ -227,6 +227,14 @@ $aModule = [
         ],
         [
             'group'    => 'ffExport',
+            'name'     => 'ffFtpType',
+            'type'        => 'select',
+            'value'       => 'ftp',
+            'constraints' => 'ftp|sftp',
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffExport',
             'name'     => 'ffFtpHost',
             'type'     => 'str',
             'position' => $settingPosition++,
@@ -246,6 +254,24 @@ $aModule = [
         [
             'group'    => 'ffExport',
             'name'     => 'ffFtpPassword',
+            'type'     => 'str',
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffExport',
+            'name'     => 'ffFtpKeyFilename',
+            'type'     => 'str',
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffExport',
+            'name'     => 'ffFtpKey',
+            'type'     => 'aarr',
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffExport',
+            'name'     => 'ffFtpKeyPassphrase',
             'type'     => 'str',
             'position' => $settingPosition++,
         ],
