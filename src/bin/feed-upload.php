@@ -1,6 +1,7 @@
 <?php
 
 use \Omikron\FactFinder\Oxid\Export\FeedTypes;
+use \Omikron\FactFinder\Oxid\Model\Export\UploadFactory;
 
 $options = getopt('s:t:l:');
 $shopId  = $options['s'] ?? 0;
@@ -31,12 +32,12 @@ try {
     Registry::getLang()->setBaseLanguage($languageId);
 
     $articleFeed = oxNew($feedFQN);
-    $ftpUploader = oxNew(FtpClient::class, oxNew(FtpParams::class));
+    $uploader = oxNew(UploadFactory::class)->create();
     $pushImport  = oxNew(PushImport::class);
 
     $handle = tmpfile();
     $articleFeed->generate(oxNew(Csv::class, $handle));
-    $ftpUploader->upload($handle, $articleFeed->getFileName());
+    $uploader->upload($handle, $articleFeed->getFileName());
     $pushImport->execute();
 } finally {
     fclose($handle);

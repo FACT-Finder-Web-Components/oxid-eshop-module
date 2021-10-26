@@ -158,10 +158,13 @@ be able to download the feed file. You can include Basic Authentication credenti
     https://[username]:[password]@[REST_OF_URL]
 
 ### FTP Export
-With this approach, the exported feed file is uploaded to a specific FTP server.
+With this approach, the exported feed file is uploaded to a specific FTP/SFTP server.
 Once the feed file is uploaded, FACT-Finder® is requested to begin an import based on uploaded file (optional).
 All settings related to this exporting method are found in [Export Settings](#export-settings).
-**Note:** Used FTP server should be also accessible to FACT-Finder®.
+Fields Key and Key Passphrase are dedicated only to the SFTP.
+Field SSL Enabled is dedicated only to FTP.
+
+**Note:** Used FTP/SFTP server should be also accessible to FACT-Finder®.
 
 #### Admin Panel Export
 `Export Feed` button located in module configuration, could be used to manually trigger an export.

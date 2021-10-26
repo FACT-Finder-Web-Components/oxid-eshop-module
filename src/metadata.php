@@ -51,16 +51,6 @@ $aModule = [
             'file'     => 'views/admin/blocks/factfinder_config_field_api_version.tpl',
         ],
         [
-            'template' => 'module_config.tpl',
-            'block'    => 'admin_module_config_var_type_str',
-            'file'     => 'views/admin/blocks/factfinder_config_field_server_url.tpl',
-        ],
-        [
-            'template' => 'module_config.tpl',
-            'block'    => 'admin_module_config_var_type_str',
-            'file'     => 'views/admin/blocks/factfinder_config_field_ftp_host.tpl',
-        ],
-        [
             'template' => 'layout/base.tpl',
             'block'    => 'head_css',
             'file'     => 'views/frontend/blocks/scripts.tpl',
@@ -99,6 +89,11 @@ $aModule = [
             'template' => 'widget/header/search.tpl',
             'block'    => 'widget_header_search_form',
             'file'     => 'views/frontend/widget/search.tpl',
+        ],
+        [
+            'template' => 'module_config.tpl',
+            'block'    => 'admin_module_config_var_type_str',
+            'file'     => 'views/admin/blocks/factfinder_config_field_ftp_key.tpl',
         ],
     ],
     'extend'      => [
@@ -226,6 +221,14 @@ $aModule = [
             'position' => $settingPosition++,
         ],
         [
+            'group'       => 'ffExport',
+            'name'        => 'ffFtpType',
+            'position'    => $settingPosition++,
+            'type'        => 'select',
+            'value'       => 'ftp',
+            'constraints' => 'ftp|sftp',
+        ],
+        [
             'group'    => 'ffExport',
             'name'     => 'ffFtpHost',
             'type'     => 'str',
@@ -246,6 +249,18 @@ $aModule = [
         [
             'group'    => 'ffExport',
             'name'     => 'ffFtpPassword',
+            'type'     => 'str',
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffExport',
+            'name'     => 'ffFtpKey',
+            'type'     => 'str',
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffExport',
+            'name'     => 'ffFtpKeyPassphrase',
             'type'     => 'str',
             'position' => $settingPosition++,
         ],

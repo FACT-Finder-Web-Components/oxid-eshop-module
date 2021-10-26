@@ -5,33 +5,33 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Model\Export;
 
 use League\Flysystem\Filesystem;
-use League\Flysystem\Ftp\FtpAdapter;
-use League\Flysystem\Ftp\FtpConnectionOptions;
+use League\Flysystem\PhpseclibV2\SftpAdapter;
+use League\Flysystem\PhpseclibV2\SftpConnectionProvider;
 use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
 
-class FtpClient implements UploadInterface
+class SftpClient implements UploadInterface
 {
     /** @var FtpParams */
-    private $params;
+    private $ftpParams;
 
     /** @var Filesystem */
     private $connection;
 
-    public function __construct(FtpParams $params)
+    public function __construct(FtpParams $ftpParams)
     {
-        $this->params = $params;
+        $this->ftpParams = $ftpParams;
     }
 
     public function upload($handle, string $filename)
     {
         if (!$this->connection) {
-            $this->connect($this->params);
+            $this->connect($this->ftpParams);
         }
         $this->connection->writeStream(sprintf('/export/%s', $filename), $handle);
     }
 
     private function connect(FtpParams $params)
     {
-        $this->connection = new Filesystem(new FtpAdapter(FtpConnectionOptions::fromArray($params->toArray())));
+        $this->connection = new Filesystem(new SftpAdapter(SftpConnectionProvider::fromArray($params->toArray()), '/'));
     }
 }
