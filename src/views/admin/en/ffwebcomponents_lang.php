@@ -43,6 +43,7 @@ $aLang = [
     'SHOP_MODULE_ffFtpPassword'                   => 'Password',
     'SHOP_MODULE_ffFtpKey'                        => 'Key',
     'SHOP_MODULE_ffFtpKeyPassphrase'              => 'Key Passphrase',
+    'SHOP_MODULE_ffFtpRoot'                       => 'Server Root',
     'SHOP_MODULE_ffSSLEnabled'                    => 'SSL enabled',
     'SHOP_MODULE_ffAutomaticImport'               => 'Automatic import of product',
     'SHOP_MODULE_ffAutomaticImportData'           => 'Import Data',

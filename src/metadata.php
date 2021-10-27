@@ -19,7 +19,7 @@ $aModule = [
     'author'      => "{$moduleName} Team",
     'url'         => 'https://web-components.fact-finder.de',
     'description' => "{$moduleName} integration for OXID eShop by {$companyName}",
-    'version'     => '3.0.1',
+    'version'     => '3.1.0',
     'thumbnail'   => 'out/pictures/logo.png',
     'controllers' => [
         'ffWebComponent'     => Component\Widget\WebComponent::class,
@@ -262,6 +262,13 @@ $aModule = [
             'group'    => 'ffExport',
             'name'     => 'ffFtpKeyPassphrase',
             'type'     => 'str',
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffExport',
+            'name'     => 'ffFtpRoot',
+            'type'     => 'str',
+            'value'    => '',
             'position' => $settingPosition++,
         ],
         [

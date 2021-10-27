@@ -54,6 +54,11 @@ class FtpParams
         return (string) trim($this->overrides['privateKey'] ?? $this->config->getConfigParam('ffFtpKey'));
     }
 
+    public function getRoot(): string
+    {
+        return (string) $this->overrides['root'] ?? $this->config->getConfigParam('ffFtpRoot');
+    }
+
     public function getKeyPassphrase(): string
     {
         return (string) $this->overrides['passphrase'] ?? $this->config->getConfigParam('ffFtpKeyPassphrase');
@@ -67,6 +72,7 @@ class FtpParams
             'username'   => $this->getUser(),
             'password'   => $this->getPassword(),
             'privateKey' => $this->getPrivateKey(),
+            'root'       => $this->getRoot(),
             'passphrase' => $this->getKeyPassphrase(),
             'ssl'        => $this->useSsl(),
         ];

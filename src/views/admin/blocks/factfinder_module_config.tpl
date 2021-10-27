@@ -102,6 +102,7 @@
                 host:       jQuery('[name="confstrs[ffFtpHost]"]').val(),
                 port:       jQuery('[name="confstrs[ffFtpPort]"]').val(),
                 username:   jQuery('[name="confstrs[ffFtpUser]"]').val(),
+                root:       jQuery('[name="confstrs[ffFtpRoot]"]').val(),
                 password:   jQuery('[name="confstrs[ffFtpPassword]"]').val(),
                 privateKey: jQuery('[name="confstrs[ffFtpKey]"]').val(),
                 passphrase: jQuery('[name="confstrs[ffFtpKeyPassphrase]"]').val(),
