@@ -78,7 +78,7 @@ $aModule = [
         [
             'template' => 'module_config.tpl',
             'block'    => 'admin_module_config_var_type_str',
-            'file'     => 'views/admin/blocks/factfinder_config_field_ftp_password.tpl',
+            'file'     => 'views/admin/blocks/factfinder_config_field_ftp_password.tpl-test',
         ],
         [
             'template' => 'layout/base.tpl',
