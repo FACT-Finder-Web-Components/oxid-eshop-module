@@ -7,6 +7,7 @@ namespace Omikron\FactFinder\Oxid\Controller\Admin;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
+use Omikron\FactFinder\Oxid\Model\Export\UploadFactory;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Request;
@@ -35,6 +36,24 @@ class TestConnectionController extends AdminController
             $this->success = true;
             $this->result  = Registry::getLang()->translateString('FF_TEST_CONNECTION_SUCCESS', null, true);
         } catch (ClientExceptionInterface $e) {
+            $this->result = $e->getMessage();
+        }
+    }
+
+    public function testFtpConnection()
+    {
+        try {
+            $params = array_reduce(array_keys($_POST), function (array $acc, string $key): array {
+                $request = Registry::get(Request::class);
+                return $acc + [$key => (string) $request->getRequestEscapedParameter($key)];
+            }, []);
+
+            $ftpUploader = UploadFactory::create($params);
+            $ftpUploader->upload(tmpfile(), 'testconnection');
+
+            $this->success = true;
+            $this->result  = Registry::getLang()->translateString('FF_TEST_CONNECTION_SUCCESS', null, true);
+        } catch (\Exception $e) {
             $this->result = $e->getMessage();
         }
     }

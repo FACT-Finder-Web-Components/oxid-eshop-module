@@ -1,4 +1,11 @@
 # Changelog
+## [v4.0.0]
+### Breaking
+ - Drop php7.1 version support
+ 
+### Added
+ - Add possibility to upload feed files using SFTP 
+ 
 ## [v3.0.1] - 2021.10.08
 ### Fixed
 - Fix Configuration error for the channel field rendering/saving
@@ -81,6 +88,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.0.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.0
 [v3.0.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v3.0.1
 [v3.0.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v3.0.0
 [v2.0.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v2.0.1

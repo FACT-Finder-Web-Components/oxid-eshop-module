@@ -7,8 +7,7 @@ namespace Omikron\FactFinder\Oxid\Controller\Admin;
 use Omikron\FactFinder\Oxid\Export\ArticleFeed;
 use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use Omikron\FactFinder\Oxid\Model\Api\PushImport;
-use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
-use Omikron\FactFinder\Oxid\Model\Export\FtpClient;
+use Omikron\FactFinder\Oxid\Model\Export\UploadFactory;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Core\Registry;
 
@@ -27,8 +26,8 @@ class ArticleFeedController extends AdminController
             $articleFeed->generate(oxNew(Csv::class, $handle));
             $result[] = $this->translate('FF_ARTICLE_FEED_EXPORT_SUCCESS');
 
-            $ftpClient = oxNew(FtpClient::class, oxNew(FtpParams::class));
-            $ftpClient->upload($handle, $articleFeed->getFileName());
+            $uploader = UploadFactory::create();
+            $uploader->upload($handle, $articleFeed->getFileName());
             $result[] = $this->translate('FF_ARTICLE_FEED_UPLOAD_SUCCESS');
 
             $pushImport = oxNew(PushImport::class);
