@@ -27,7 +27,7 @@ class FtpClient implements UploadInterface
         if (!$this->connection) {
             $this->connect($this->params);
         }
-        $this->connection->writeStream(sprintf('/export/%s', $filename), $handle);
+        $this->connection->writeStream($filename, $handle);
     }
 
     private function connect(FtpParams $params)

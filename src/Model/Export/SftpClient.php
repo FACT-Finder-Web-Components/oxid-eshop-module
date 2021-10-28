@@ -27,11 +27,11 @@ class SftpClient implements UploadInterface
         if (!$this->connection) {
             $this->connect($this->ftpParams);
         }
-        $this->connection->writeStream(sprintf('/export/%s', $filename), $handle);
+        $this->connection->writeStream($filename, $handle);
     }
 
     private function connect(FtpParams $params)
     {
-        $this->connection = new Filesystem(new SftpAdapter(SftpConnectionProvider::fromArray($params->toArray()), '/'));
+        $this->connection = new Filesystem(new SftpAdapter(SftpConnectionProvider::fromArray($params->toArray()), $params->getRoot()));
     }
 }
