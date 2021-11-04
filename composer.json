@@ -14,7 +14,7 @@
     "php": ">=7.2",
     "ext-ftp": "*",
     "ext-json": "*",
-    "omikron/factfinder-communication-sdk": "dev-8.0-support",
+    "omikron/factfinder-communication-sdk": "^0.9",
     "league/flysystem-sftp": "^2.2",
     "league/flysystem-ftp": "^2.3"
   },
