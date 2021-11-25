@@ -118,7 +118,7 @@ class Communication implements ParametersSourceInterface
         $channels = $this->getConfig('ffChannel');
 
         if (!isset($channels[$langAbbr])) {
-            throw new RuntimeException("No channel for used language: $langAbbr");
+            return '';
         }
 
         return $channels[$langAbbr];

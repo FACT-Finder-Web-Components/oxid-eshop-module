@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Added
+ - Add scroll to top on pagination for category page and search result page
+
+
 ## [v4.0.1]
 ### Changed
  Compatibility
