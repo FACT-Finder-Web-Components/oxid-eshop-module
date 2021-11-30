@@ -9,7 +9,6 @@ use Omikron\FactFinder\Oxid\Export\Filter\TextFilter;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Application\Model\Category;
 use OxidEsales\Eshop\Core\Registry;
-use RuntimeException;
 
 class Communication implements ParametersSourceInterface
 {
