@@ -7,6 +7,7 @@ function registerAddToCartListener(selector, productId) {
                 id: trackingHelper.getTrackingProductId(product),
                 masterId: trackingHelper.getMasterArticleNumber(product),
                 price: trackingHelper.getPrice(product),
+                title: trackingHelper.getTitle(product),
                 count: 1,
             });
         }

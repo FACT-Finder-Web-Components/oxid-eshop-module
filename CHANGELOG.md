@@ -2,6 +2,7 @@
 ## Unreleased
 ### Added
  - add scroll to top callback after products page change
+ - send product title on cart tracking 
 
 ## [v4.0.1]
 ### Changed
