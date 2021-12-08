@@ -4,6 +4,7 @@
 <script src="[{$oViewConf->getModuleUrl('ffwebcomponents', 'out/js/ff-web-components/vendor/custom-elements-es5-adapter.js')|escape}]"></script>
 <script src="[{$oViewConf->getModuleUrl('ffwebcomponents', 'out/js/ff-web-components/vendor/webcomponents-loader.js')|escape}]"></script>
 <script src="[{$oViewConf->getModuleUrl('ffwebcomponents', 'out/js/ff-web-components/bundle.js')|escape}]" defer></script>
+<script src="[{$oViewConf->getModuleUrl("ffwebcomponents", "out/js/utils.js")|escape}]"></script>
 <style>[unresolved]{opacity:0;display:none}</style>
 
 <script>

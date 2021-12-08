@@ -1,8 +1,7 @@
 # Changelog
 ## Unreleased
 ### Added
- - Add scroll to top on pagination for category page and search result page
-
+ - add scroll to top callback after products page change
 
 ## [v4.0.1]
 ### Changed
