@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Added
+ - add scroll to top callback after products page change
+
 ## [v4.0.1]
 ### Changed
  Compatibility
