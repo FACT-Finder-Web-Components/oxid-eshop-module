@@ -43,15 +43,15 @@ class CategoryEntity implements DataProviderInterface, ExportEntityInterface
     public function toArray(): array
     {
         $data = [
-            'Id'           => $this->category->getFieldData('oxid'),
-            'ShopId'       => $this->category->getFieldData('oxshopid'),
-            'ExternalLink' => $this->category->getFieldData('oxextlink'),
-            'ParentId'     => $this->category->getFieldData('oxparentid'),
-            'RootId'       => $this->category->getFieldData('oxrootid'),
-            'Name'         => $this->category->getFieldData('oxtitle'),
-            'ImageUrl'     => $this->category->getPictureUrl(),
-            'Description'  => $this->category->getFieldData('oxdesc'),
-            'LongDescription'  => $this->category->getFieldData('oxlongdesc'),
+            'Id'              => $this->category->getFieldData('oxid'),
+            'ShopId'          => $this->category->getFieldData('oxshopid'),
+            'ExternalLink'    => $this->category->getFieldData('oxextlink'),
+            'ParentId'        => $this->category->getFieldData('oxparentid'),
+            'RootId'          => $this->category->getFieldData('oxrootid'),
+            'Name'            => $this->category->getFieldData('oxtitle'),
+            'ImageUrl'        => $this->category->getPictureUrl(),
+            'Description'     => $this->category->getFieldData('oxdesc'),
+            'LongDescription' => $this->category->getFieldData('oxlongdesc'),
         ];
 
         return array_reduce($this->fields, function (array $result, FieldInterface $field): array {
