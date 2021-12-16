@@ -51,6 +51,7 @@ class CategoryEntity implements DataProviderInterface, ExportEntityInterface
             'Name'         => $this->category->getFieldData('oxtitle'),
             'ImageUrl'     => $this->category->getPictureUrl(),
             'Description'  => $this->category->getFieldData('oxdesc'),
+            'LongDescription'  => $this->category->getFieldData('oxlongdesc'),
         ];
 
         return array_reduce($this->fields, function (array $result, FieldInterface $field): array {
