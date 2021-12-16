@@ -1,15 +1,20 @@
 # Changelog
-## Unreleased
+## [v4.0.2] - 2021.12.16
 ### Added
  - add scroll to top callback after products page change
  - send product title on cart tracking 
+ - export new field `OXLONGDESC` as `LongDescription` in Category Export
 
-## [v4.0.1]
+### Changed
+- Upgrade Web Components version to v4.0.5
+
+
+## [v4.0.1] - 2021.11.05
 ### Changed
  Compatibility
   - Declare PHP8.0 compatibility
 
-## [v4.0.0]
+## [v4.0.0] - 2021.10.28
 ### Breaking
  - Drop php7.1 version support
  
@@ -98,6 +103,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.0.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.2
 [v4.0.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.1
 [v4.0.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.0
 [v3.0.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v3.0.1
