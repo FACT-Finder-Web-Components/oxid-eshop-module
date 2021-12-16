@@ -23,6 +23,7 @@ class CategoryFeed extends AbstractFeed
         'Name',
         'ImageUrl',
         'Description',
+        'LongDescription',
     ];
 
     public function __construct(FieldInterface ...$fields)
