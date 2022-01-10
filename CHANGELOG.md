@@ -1,4 +1,13 @@
 # Changelog
+## Unreleased
+### Fixed
+- fix missing use of RuntimeException in Communication.php
+- restored setting `currency-country-code` in Communication.php
+- restored version="v4" in Communication.php
+
+### Changed
+ - removed `disable-single-hit-redirect` from Communication.php. This attribute no longer exist
+ 
 ## [v4.0.2] - 2021.12.16
 ### Added
  - add scroll to top callback after products page change
@@ -7,7 +16,6 @@
 
 ### Changed
 - Upgrade Web Components version to v4.0.5
-
 
 ## [v4.0.1] - 2021.11.05
 ### Changed
