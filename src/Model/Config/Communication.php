@@ -43,11 +43,12 @@ class Communication implements ParametersSourceInterface
             'currency-code'               => $this->view->getActCurrency()->name,
             'currency-fields'             => $this->getAdditionalCurrencyFields(),
             'currency-country-code'       => $this->getLocale($this->view->getActiveLangAbbr()),
-            'add-params'                  => $this->useForCategories() ? $this->getCategoryPath($category) : 'cl=search_result',
             'search-immediate'            => $this->isSearch() || $this->useForCategories() ? 'true' : 'false',
             'keep-url-params'             => 'cl',
             'only-search-params'          => 'true',
             'use-browser-history'         => 'true',
+            'category-page'               => $this->getConfig('ffApiVersion') === 'ng' ? $this->fillCategoryPath($category) : null,
+            'add-params'                  => $this->getConfig('ffApiVersion') === 'ng' ? $this->fillAddParamsForNg() : $this->fillAddParamsStandard($category),
         ];
 
         return array_filter($this->mergeParameters($params, $this->getAdditionalParameters()));
@@ -67,18 +68,7 @@ class Communication implements ParametersSourceInterface
             $category     = $parent;
         }
 
-        if ($this->getConfig('ffApiVersion') === 'ng') {
-            $path = implode('/', array_reverse($categories));
-            return sprintf('navigation=true,filter=%s:%s', urlencode($param), urlencode($path));
-        }
-
-        $path  = 'ROOT';
-        $value = ['navigation=true'];
-        foreach (array_reverse($categories) as $category) {
-            $value[] = sprintf("filter{$param}%s=%s", $path, $category);
-            $path .= '/' . $category;
-        }
-        return implode(',', $value);
+        return $this->getConfig('ffApiVersion') === 'ng' ? $this->encodeNgCategoryPath($categories, $param) : $this->encodeStandardCategoryPath($categories, $param);
     }
 
     protected function getConfig(string $name)
@@ -122,5 +112,45 @@ class Communication implements ParametersSourceInterface
         }
 
         return $channels[$langAbbr];
+    }
+
+    private function encodeNgCategoryPath(array $categories, string $param): string
+    {
+        $categoryPath = implode('/', array_reverse($categories));
+        $path         = sprintf('%s:%s', $param, $categoryPath);
+
+        return sprintf('filter=%s', $this->urlPlusEncodeCategoryPath($path));
+    }
+
+    private function encodeStandardCategoryPath(array $categories, string $param): string
+    {
+        $path  = 'ROOT';
+        $value = ['navigation=true'];
+        foreach (array_reverse($categories) as $category) {
+            $value[] = sprintf("filter{$param}%s=%s", $path, $category);
+            $path .= $this->urlPlusEncodeCategoryPath('/' . $category);
+        }
+
+        return implode(',', $value);
+    }
+
+    private function fillCategoryPath(?Category $category): ?string
+    {
+        return $this->useForCategories() ? $this->getCategoryPath($category) : null;
+    }
+
+    private function fillAddParamsForNg(): ?string
+    {
+        return $this->useForCategories() ? null : 'cl=search_result';
+    }
+
+    private function fillAddParamsStandard(?Category $category): string
+    {
+        return $this->useForCategories() ? $this->getCategoryPath($category) : 'cl=search_result';
+    }
+
+    private function urlPlusEncodeCategoryPath(string $path): string
+    {
+        return urlencode(str_replace('%20', ' ', $path));
     }
 }
