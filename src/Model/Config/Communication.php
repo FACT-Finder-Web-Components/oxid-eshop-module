@@ -128,12 +128,12 @@ class Communication implements ParametersSourceInterface
         $path              = 'ROOT';
         $value             = ['navigation=true'];
         foreach ($categoriesReverse as $key => $category) {
-            if ($key === 0) {
-                $value[] = sprintf("filter{$param}%s=%s", $path, $this->urlPlusEncodeCategoryPath($category));
-            } else {
+            $filterValue = sprintf("filter{$param}%s=%s", $path, $this->urlPlusEncodeCategoryPath($category));
+            if ($key >= 1) {
                 $path .= $this->urlPlusEncodeCategoryPath(urlencode('/') . $categoriesReverse[$key - 1]);
-                $value[] = sprintf("filter{$param}%s=%s", $path, $this->urlPlusEncodeCategoryPath($category));
+                $filterValue = sprintf("filter{$param}%s=%s", $path, $this->urlPlusEncodeCategoryPath($category));
             }
+            $value[] = $filterValue;
         }
 
         return implode(',', $value);
