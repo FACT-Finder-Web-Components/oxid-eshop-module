@@ -124,11 +124,17 @@ class Communication implements ParametersSourceInterface
 
     private function encodeStandardCategoryPath(array $categories, string $param): string
     {
+        $categoriesReverse = array_reverse($categories);
         $path  = 'ROOT';
         $value = ['navigation=true'];
-        foreach (array_reverse($categories) as $category) {
-            $value[] = sprintf("filter{$param}%s=%s", $path, $category);
-            $path .= $this->urlPlusEncodeCategoryPath('/' . $category);
+        foreach ($categoriesReverse as $key => $category) {
+
+            if ($key === 0) {
+                $value[] = sprintf("filter{$param}%s=%s", $path, $this->urlPlusEncodeCategoryPath($category));
+            } else {
+                $path .= $this->urlPlusEncodeCategoryPath(urlencode('/') . $categoriesReverse[$key - 1]);
+                $value[] = sprintf("filter{$param}%s=%s", $path, $this->urlPlusEncodeCategoryPath($category));
+            }
         }
 
         return implode(',', $value);
@@ -151,6 +157,6 @@ class Communication implements ParametersSourceInterface
 
     private function urlPlusEncodeCategoryPath(string $path): string
     {
-        return urlencode(str_replace('%20', ' ', $path));
+        return str_replace('%20', '+', $path);
     }
 }
