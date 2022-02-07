@@ -4,6 +4,7 @@
 - fix missing use of RuntimeException in Communication.php
 - restored setting `currency-country-code` in Communication.php
 - restored version="v4" in Communication.php
+- fix Attributes with " (quote) causes export field setting to break 
 
 ### Changed
  - removed `disable-single-hit-redirect` from Communication.php. This attribute no longer exist

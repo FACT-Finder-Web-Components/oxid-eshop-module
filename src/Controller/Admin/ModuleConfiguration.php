@@ -59,7 +59,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     {
         $attributeList = oxNew(AttributeList::class)->getList()->getArray();
         return array_reduce($attributeList, function (array $attributes, Attribute $attribute): array {
-            return $attributes + [$attribute->getFieldData('oxid') => $attribute->getFieldData('oxtitle')];
+            return $attributes + [$attribute->getFieldData('oxid') => $attribute->oxattribute__oxtitle->rawValue];
         }, []);
     }
 
