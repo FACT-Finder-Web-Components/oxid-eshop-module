@@ -36,7 +36,7 @@ class Export
     {
         $this->attributes = $this->attributes ?? oxNew(AttributeList::class)->getList()->getArray();
         return array_map(function (BaseModel $attribute): string {
-            return $attribute->getFieldData('oxtitle');
+            return $attribute->oxattribute__oxtitle->rawValue;
         }, $this->attributes);
     }
 }

@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Export;
 
-use Omikron\FactFinder\Oxid\Export\Field\Attribute as AttributeField;
 use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
-use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
 use OxidEsales\Eshop\Core\Registry;
 use ReflectionClass;
 
@@ -34,12 +32,5 @@ abstract class AbstractFeed
     protected function getFieldName(FieldInterface $field): string
     {
         return $field->getName();
-    }
-
-    protected function getConfigFields(): array
-    {
-        return array_map(function (string $attribute): FieldInterface {
-            return oxNew(AttributeField::class, $attribute);
-        }, array_values(oxNew(ExportConfig::class)->getSingleFields()));
     }
 }
