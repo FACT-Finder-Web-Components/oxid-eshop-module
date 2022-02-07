@@ -125,10 +125,9 @@ class Communication implements ParametersSourceInterface
     private function encodeStandardCategoryPath(array $categories, string $param): string
     {
         $categoriesReverse = array_reverse($categories);
-        $path  = 'ROOT';
-        $value = ['navigation=true'];
+        $path              = 'ROOT';
+        $value             = ['navigation=true'];
         foreach ($categoriesReverse as $key => $category) {
-
             if ($key === 0) {
                 $value[] = sprintf("filter{$param}%s=%s", $path, $this->urlPlusEncodeCategoryPath($category));
             } else {
