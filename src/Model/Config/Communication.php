@@ -127,7 +127,7 @@ class Communication implements ParametersSourceInterface
             return $this->plusDoubleEncode($category);
         }, array_reverse($categories)));
 
-        return sprintf("filter=%s%s", urlencode("$param:"), $categoryPath);
+        return sprintf('filter=%s%s', urlencode("$param:"), $categoryPath);
     }
 
     private function standardPath(array $categories, string $param): string
@@ -136,8 +136,9 @@ class Communication implements ParametersSourceInterface
         $path              = 'ROOT';
         $value             = ['navigation=true'];
         foreach ($categoriesReverse as $key => $category) {
-            $path .= $key === 0 ? null : urlencode('/') . $this->plusDoubleEncode($categoriesReverse[$key -1 ]);
-            $value[] = sprintf("filter%s%s=%s", urlencode($param), $path, urlencode($category));
+            $path .= $key === 0 ? null : urlencode('/') . $this->plusDoubleEncode($categoriesReverse[$key -1]);
+            $parameterKey = urlencode($param) . $path;
+            $value[] = sprintf('filter%s=%s', $parameterKey, urlencode($category));
         }
 
         return implode(',', $value);
