@@ -28,6 +28,10 @@ class Communication implements ParametersSourceInterface
         $this->filter = oxNew(TextFilter::class);
     }
 
+    /**
+     * @SuppressWarnings("PMD.CyclomaticComplexity")
+     * @return array
+     */
     public function getParameters(): array
     {
         $category = $this->view->getActiveCategory();
