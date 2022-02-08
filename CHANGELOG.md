@@ -1,5 +1,9 @@
 # Changelog
 ## Unreleased
+### Changed
+- For NG version `category-page` parameter move from `add-params` to a separate parameter 
+- For NG version remove `navigation=true` parameter
+
 ### Fixed
 - fix missing use of RuntimeException in Communication.php
 - restored setting `currency-country-code` in Communication.php
