@@ -136,9 +136,9 @@ class Communication implements ParametersSourceInterface
         $path              = 'ROOT';
         $value             = ['navigation=true'];
         foreach ($categoriesReverse as $key => $category) {
-            $path .= $key === 0 ? null : urlencode('/') . $this->plusDoubleEncode($categoriesReverse[$key -1]);
+            $path .= $key === 0 ? null : urlencode('/') . $this->plusDoubleEncode($categoriesReverse[$key - 1]);
             $parameterKey = urlencode($param) . $path;
-            $value[] = sprintf('filter%s=%s', $parameterKey, urlencode($category));
+            $value[]      = sprintf('filter%s=%s', $parameterKey, urlencode($category));
         }
 
         return implode(',', $value);
