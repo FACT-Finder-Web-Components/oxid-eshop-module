@@ -30,6 +30,7 @@ class Communication implements ParametersSourceInterface
 
     /**
      * @SuppressWarnings("PMD.CyclomaticComplexity")
+     *
      * @return array
      */
     public function getParameters(): array
