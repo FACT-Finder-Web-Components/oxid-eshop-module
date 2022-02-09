@@ -1,8 +1,9 @@
 # Changelog
-## Unreleased
+## [v4.1.0] - 2022.02.11
 ### Changed
 - For NG version `category-page` parameter move from `add-params` to a separate parameter 
 - For NG version remove `navigation=true` parameter
+- Upgrade Web Components version to v4.0.7
 
 ### Fixed
 - fix missing use of RuntimeException in Communication.php
@@ -116,6 +117,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.1.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.1.0
 [v4.0.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.2
 [v4.0.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.1
 [v4.0.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.0
