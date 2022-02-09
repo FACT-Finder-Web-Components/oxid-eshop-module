@@ -1,17 +1,19 @@
 # Changelog
-## Unreleased
-### Changed
-- For NG version `category-page` parameter move from `add-params` to a separate parameter 
-- For NG version remove `navigation=true` parameter
+## [v4.1.0] - 2022.02.11
+### Add
+- implement `category-page` attribute
 
+### Changed
+- category path filter parameter is removed from `add-params` in NG 
+- `navigation=true` parameter is removed from `add-params` in NG
+- upgrade Web Components version to v4.0.7
+- removed `disable-single-hit-redirect` from `Communication.php` This attribute no longer exist
+ 
 ### Fixed
 - fix missing use of RuntimeException in Communication.php
 - restored setting `currency-country-code` in Communication.php
 - restored version="v4" in Communication.php
-- fix Attributes with " (quote) causes export field setting to break 
-
-### Changed
- - removed `disable-single-hit-redirect` from Communication.php. This attribute no longer exist
+- fix attributes names with " and ' in their causes export field setting to break 
  
 ## [v4.0.2] - 2021.12.16
 ### Added
@@ -116,6 +118,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.1.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.1.0
 [v4.0.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.2
 [v4.0.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.1
 [v4.0.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.0
