@@ -30,8 +30,8 @@ class ModuleConfiguration extends ModuleConfiguration_parent
                 $value = html_entity_decode($this->getViewDataElement('confaarrs')[$field] ?? '');
                 return $result + [$field => $this->_multilineToAarray($value)];
             }, []));
-            $this->addTplParam('availableAttributes', $allAttributes);
-            $this->addTplParam('selectedAttributes', $this->getSelectedAttributes($allAttributes));
+            $this->addTplParam('availableAttributes', json_encode($allAttributes, JSON_HEX_QUOT | JSON_HEX_APOS));
+            $this->addTplParam('selectedAttributes', json_encode($this->getSelectedAttributes($allAttributes), JSON_HEX_QUOT | JSON_HEX_APOS));
         }
         return $template;
     }
