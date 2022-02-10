@@ -6,7 +6,7 @@ $options = getopt('s:t:l:');
 $shopId  = $options['s'] ?? 0;
 $exportType = $options['t'] ?? 'product';
 
-if (!$shopId) {
+if (!$shopId && $shopId !== 0) {
     throw new RuntimeException('Please specify the shop ID using the "s" parameter!');
 }
 
