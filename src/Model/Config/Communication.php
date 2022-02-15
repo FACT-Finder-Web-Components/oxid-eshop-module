@@ -149,7 +149,7 @@ class Communication implements ParametersSourceInterface
 
     private function encodeCategoryName(string $path): string
     {
-        //important! do not override this method
+        //important! do not modify this code
         return preg_replace('/\+/', '%2B',
             preg_replace('/\//', '%2F', preg_replace('/%/', '%25', $path)));
     }
