@@ -37,7 +37,7 @@ customise them.
 
 ## Requirements
 - OXID eShop 6.1.x
-- PHP version 7.2 or higher
+- PHP version 7.1 or higher
 
 ## Installation
 

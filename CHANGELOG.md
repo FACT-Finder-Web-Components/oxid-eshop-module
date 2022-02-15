@@ -1,41 +1,24 @@
 # Changelog
-## [v4.1.0] - 2022.02.11
+## [v3.1.0] - 2022.02.11
 ### Add
-- implement `category-page` attribute
-
-### Changed
-- category path filter parameter is removed from `add-params` in NG 
-- `navigation=true` parameter is removed from `add-params` in NG
-- upgrade Web Components version to v4.0.7
-- removed `disable-single-hit-redirect` from `Communication.php` This attribute no longer exist
- 
-### Fixed
-- fix missing use of RuntimeException in Communication.php
-- restored setting `currency-country-code` in Communication.php
-- restored version="v4" in Communication.php
-- fix attributes names with " and ' in their causes export field setting to break 
- 
-## [v4.0.2] - 2021.12.16
-### Added
+ - implement `ff-communication/category-page` attribute
  - add scroll to top callback after products page change
  - send product title on cart tracking 
  - export new field `OXLONGDESC` as `LongDescription` in Category Export
-
-### Changed
-- Upgrade Web Components version to v4.0.5
-
-## [v4.0.1] - 2021.11.05
-### Changed
- Compatibility
-  - Declare PHP8.0 compatibility
-
-## [v4.0.0] - 2021.10.28
-### Breaking
- - Drop php7.1 version support
+ - add possibility to upload feed files using SFTP 
+  
+### Change
+- category path filter parameter is removed from `add-params` in NG 
+- `navigation=true` parameter is removed from `add-params` in NG
+- upgrade Web Components version to v4.0.7
+- removed `disable-single-hit-redirect` from `Communication.php` - this attribute is no longer exist
  
-### Added
- - Add possibility to upload feed files using SFTP 
- 
+### Fix
+- fix missing use of RuntimeException in Communication.php
+- restore setting `currency-country-code` in Communication.php
+- restore version="v4" in Communication.php
+- fix attributes names with " and ' in their names cause export fields settings to break 
+
 ## [v3.0.1] - 2021.10.08
 ### Fixed
 - Fix Configuration error for the channel field rendering/saving
