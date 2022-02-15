@@ -1,4 +1,8 @@
 # Changelog
+## [v3.1.1] - 2022.02.21
+### Fix
+ - fix category names are fully encoded twice in `ff-communication/category-page`
+ 
 ## [v3.1.0] - 2022.02.16
 ### Add
  - implement `ff-communication/category-page` attribute

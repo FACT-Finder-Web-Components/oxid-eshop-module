@@ -128,29 +128,29 @@ class Communication implements ParametersSourceInterface
 
     private function ngPath(array $categories, string $param): string
     {
-        $categoryPath = implode(urlencode('/'), array_map(function ($category) {
-            return $this->plusDoubleEncode($category);
-        }, array_reverse($categories)));
+        $categoryPath = array_map(function ($category) {
+            return (string) $this->encodeCategoryName(trim($category));
+        }, array_reverse($categories));
 
-        return sprintf('filter=%s%s', urlencode("$param:"), $categoryPath);
+        return sprintf('filter=%s', urlencode($param . ':' . implode('/', $categoryPath)));
     }
 
     private function standardPath(array $categories, string $param): string
     {
-        $categoriesReverse = array_reverse($categories);
         $path              = 'ROOT';
         $value             = ['navigation=true'];
-        foreach ($categoriesReverse as $key => $category) {
-            $path .= $key === 0 ? null : urlencode('/') . $this->plusDoubleEncode($categoriesReverse[$key - 1]);
-            $parameterKey = urlencode($param) . $path;
-            $value[]      = sprintf('filter%s=%s', $parameterKey, urlencode($category));
+        foreach (array_reverse($categories) as $category) {
+            $value[] = sprintf("filter{$param}%s=%s", $path, urlencode(trim($category)));
+            $path .= urlencode('/' . $this->encodeCategoryName(trim($category)));
         }
 
         return implode(',', $value);
     }
 
-    private function plusDoubleEncode(string $path): string
+    private function encodeCategoryName(string $path): string
     {
-        return urlencode(str_replace('+', ' ', urlencode($path)));
+        //important! do not modify this code
+        return preg_replace('/\+/', '%2B',
+            preg_replace('/\//', '%2F', preg_replace('/%/', '%25', $path)));
     }
 }
