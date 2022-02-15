@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+ - Fix filters could not be deselected on some category pages 
+ 
 ## [v4.1.0] - 2022.02.11
 ### Add
 - implement `category-page` attribute
