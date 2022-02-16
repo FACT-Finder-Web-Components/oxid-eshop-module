@@ -1,5 +1,5 @@
 # Changelog
-## [v3.1.0] - 2022.02.11
+## [v3.1.0] - 2022.02.16
 ### Add
  - implement `ff-communication/category-page` attribute
  - add scroll to top callback after products page change
@@ -10,7 +10,7 @@
 ### Change
 - category path filter parameter is removed from `add-params` in NG 
 - `navigation=true` parameter is removed from `add-params` in NG
-- upgrade Web Components version to v4.0.7
+- upgrade Web Components version to v4.0.8
 - removed `disable-single-hit-redirect` from `Communication.php` - this attribute is no longer exist
  
 ### Fix
@@ -101,10 +101,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
-[v4.1.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.1.0
-[v4.0.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.2
-[v4.0.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.1
-[v4.0.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.0
+[v3.1.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v3.1.0
 [v3.0.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v3.0.1
 [v3.0.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v3.0.0
 [v2.0.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v2.0.1
