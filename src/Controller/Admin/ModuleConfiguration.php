@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
+use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\FactFinder\Communication\Credentials;
+use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
 use OxidEsales\Eshop\Application\Model\Attribute;
 use OxidEsales\Eshop\Application\Model\AttributeList;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ModuleSettingBridgeInterface;
 
 /**
  * Module Configuration.
@@ -16,6 +21,9 @@ use OxidEsales\Eshop\Core\Registry;
  */
 class ModuleConfiguration extends ModuleConfiguration_parent
 {
+    /** @var ModuleSettingBridgeInterface */
+    protected $moduleSettings;
+
     /** @var string[] */
     private $localizedFields = ['ffChannel'];
 
@@ -38,6 +46,52 @@ class ModuleConfiguration extends ModuleConfiguration_parent
 
     public function saveConfVars()
     {
+        try {
+            $this->preparePostData();
+            parent::saveConfVars();
+            $this->addTplSuccessMessage('Module configuration was saved successfully');
+        } catch (\Exception $exception) {
+            $this->addTplErrorMessage($exception->getMessage());
+        }
+    }
+
+    public function updateFieldRoles()
+    {
+        try {
+            $this->moduleSettings = ContainerFactory::getInstance()
+                ->getContainer()
+                ->get(ModuleSettingBridgeInterface::class);
+            $clientBuilder = oxNew(ClientBuilder::class)
+                ->withServerUrl($this->getConfigParam('ffServerUrl'))
+                ->withCredentials($this->getCredentials());
+            $searchAdapter                          = (new AdapterFactory($clientBuilder, $this->getConfigParam('ffApiVersion')))->getSearchAdapter();
+            $_POST['confstrs']['ffFieldRolesField'] = json_encode($searchAdapter->search($this->getConfigParam('ffChannel')[Registry::getLang()->getLanguageAbbr()], 'test')['searchResult']['fieldRoles']);
+
+            $this->preparePostData();
+            parent::saveConfVars();
+            $this->addTplSuccessMessage('Field roles was updated successfully');
+        } catch (\Exception $exception) {
+            $this->addTplErrorMessage($exception->getMessage());
+        }
+    }
+
+    protected function isFactFinder(): bool
+    {
+        return Registry::getRequest()->getRequestEscapedParameter('oxid') === 'ffwebcomponents';
+    }
+
+    protected function getCredentials(): Credentials
+    {
+        return new Credentials(...array_map([$this, 'getConfigParam'], ['ffUsername', 'ffPassword', 'ffAuthPrefix', 'ffAuthPostfix']));
+    }
+
+    protected function getConfigParam(string $key)
+    {
+        return $this->moduleSettings->get($key, 'ffwebcomponents');
+    }
+
+    private function preparePostData()
+    {
         if ($this->isFactFinder()) {
             $_POST['confaarrs'] = array_reduce($this->localizedFields, function (array $result, string $field): array {
                 return [$field => $this->_aarrayToMultiline($result[$field] ?? [])] + $result;
@@ -47,12 +101,6 @@ class ModuleConfiguration extends ModuleConfiguration_parent
                 $this->flatMap($this->prepareAttributes(), $_POST['confaarrs']['ffExportAttributes'] ?? [])
             );
         }
-        return parent::saveConfVars();
-    }
-
-    protected function isFactFinder(): bool
-    {
-        return Registry::getRequest()->getRequestEscapedParameter('oxid') === 'ffwebcomponents';
     }
 
     private function getAvailableAttributes(): array
@@ -85,5 +133,15 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     private function flatMap(callable $fnc, array $arr): array
     {
         return array_merge([], ...array_map($fnc, $arr));
+    }
+
+    private function addTplSuccessMessage(string $message): void
+    {
+        $this->addTplParam('postSubmitMessage', sprintf('<div class="text-success">%s</div>', $message));
+    }
+
+    private function addTplErrorMessage(string $message): void
+    {
+        $this->addTplParam('postSubmitMessage', sprintf('<div class="text-error">%s</div>', $message));
     }
 }

@@ -1,6 +1,12 @@
 [{$smarty.block.parent}]
     <link rel="stylesheet" type="text/css" href="[{$oViewConf->getModuleUrl('ffwebcomponents', 'out/admin/css/styles.css')}]"/>
-[{if $var_group === 'ffExport'}]
+[{if $var_group === 'ffFieldRoles'}]
+    <input type="submit"
+           id="ffFieldRoles"
+           class="confinput"
+           name="ffGetFieldRoles"
+           value="Get Field Roles from Fact-Finder"
+           onclick="Javascript:document.module_configuration.fnc.value='updateFieldRoles'"/>
     <input type="button"
            id="ffExportFeed"
            class="confinput"
@@ -23,8 +29,8 @@
     <div id="spinner">
     </div>
     <div id="result">
+        [{$postSubmitMessage}]
     </div>
-
     <script>
         function testConnection() {
             jQuery.ajax({

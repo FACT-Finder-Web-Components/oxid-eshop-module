@@ -320,6 +320,13 @@ $aModule = [
             'value'    => 'basic_auth_password',
             'position' => $settingPosition++,
         ],
+        [
+            'group'    => 'ffFieldRoles',
+            'name'     => 'ffFieldRolesField',
+            'type'     => 'str',
+            'value'    => '{"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"Deeplink","description":"Description","displayProductNumber":"ProductNumber","imageUrl":"ImageUrl","masterArticleNumber":"ProductNumber","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"}',
+            'position' => $settingPosition++,
+        ],
     ],
 
     'smartyPluginDirectories' => ['views/smarty'],
