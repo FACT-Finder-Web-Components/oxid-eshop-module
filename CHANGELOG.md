@@ -1,7 +1,10 @@
 # Changelog
-## Unreleased
+## [v4.1.1] - 2022.02.21
 ### Fix
- - Fix filters could not be deselected on some category pages 
+ - fix category names were encoded twice in `ff-communication/category-page`
+
+### Change
+ - upgrade Web Components version to v4.0.8
  
 ## [v4.1.0] - 2022.02.11
 ### Add
@@ -122,6 +125,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.1.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.1.1
 [v4.1.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.1.0
 [v4.0.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.2
 [v4.0.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.1
