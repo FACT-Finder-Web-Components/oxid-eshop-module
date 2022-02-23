@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+ - fix `Omikron\FactFinder\Oxid\Model\Config\FtpParams` does not return stored configuration 
+ 
 ## [v3.1.1] - 2022.02.21
 ### Fix
  - fix category names are fully encoded twice in `ff-communication/category-page`
