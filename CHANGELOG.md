@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.1.2] - 2022.02.23
 ### Fix
  - fix `Omikron\FactFinder\Oxid\Model\Config\FtpParams` does not return stored configuration 
  
@@ -129,6 +129,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.1.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.1.2
 [v4.1.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.1.1
 [v4.1.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.1.0
 [v4.0.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.0.2
