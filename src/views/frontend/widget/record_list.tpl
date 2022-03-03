@@ -38,7 +38,7 @@
 <script>
     document.addEventListener('ffReady', function (ff) {
         ff.eventAggregator.addBeforeDispatchingCallback(function (event) {
-            if (event.type === 'search' || event.type === 'paging') {
+            if ((event.type === 'search' && !event.searchImmediate) || event.type === 'paging') {
                 const scrollCallback = scroll();
                 event.success = factfinder.common.concatFunctions(event.success, scrollCallback);
             }
