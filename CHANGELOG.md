@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+ - fix scrollTop top page is executed on search immediate event
+
 ## [v4.1.2] - 2022.02.23
 ### Fix
  - fix `Omikron\FactFinder\Oxid\Model\Config\FtpParams` does not return stored configuration 
