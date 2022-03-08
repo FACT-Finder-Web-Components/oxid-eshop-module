@@ -166,6 +166,13 @@ $aModule = [
             'position'    => $settingPosition++,
         ],
         [
+            'group'    => 'ffMain',
+            'name'     => 'ffFieldRoles',
+            'type'     => 'str',
+            'value'    => '{"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"Deeplink","description":"Description","displayProductNumber":"ProductNumber","imageUrl":"ImageUrl","masterArticleNumber":"ProductNumber","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"}',
+            'position' => $settingPosition++,
+        ],
+        [
             'group'    => 'ffAdvanced',
             'name'     => 'ffUseUrlParams',
             'type'     => 'bool',

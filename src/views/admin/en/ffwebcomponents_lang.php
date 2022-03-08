@@ -52,6 +52,7 @@ $aLang = [
     'SHOP_MODULE_ffPushedImportTypes'             => 'Pushed import types',
     'SHOP_MODULE_ffHTTPExportUser'                => 'Basic Auth user for HTTP export',
     'SHOP_MODULE_ffHTTPExportPassword'            => 'Basic Auth password for HTTP export',
+    'SHOP_MODULE_ffFieldRoles'                    => 'Update Field Roles',
     'FF_TEST_CONNECTION_SUCCESS'                  => 'Connection has been established successfully',
     'FF_ARTICLE_FEED_EXPORT_SUCCESS'              => 'Feed has been exported successfully',
     'FF_ARTICLE_FEED_UPLOAD_SUCCESS'              => 'Feed has been uploaded successfully',
