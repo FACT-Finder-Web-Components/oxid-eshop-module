@@ -11,8 +11,6 @@ use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
 use OxidEsales\Eshop\Application\Model\Attribute;
 use OxidEsales\Eshop\Application\Model\AttributeList;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
-use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ModuleSettingBridgeInterface;
 
 /**
  * Module Configuration.
@@ -21,9 +19,6 @@ use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\Mod
  */
 class ModuleConfiguration extends ModuleConfiguration_parent
 {
-    /** @var ModuleSettingBridgeInterface */
-    protected $moduleSettings;
-
     /** @var string[] */
     private $localizedFields = ['ffChannel'];
 
@@ -63,8 +58,8 @@ class ModuleConfiguration extends ModuleConfiguration_parent
                 ->withCredentials($this->getCredentials());
 
             $searchAdapter = (new AdapterFactory($clientBuilder, $this->getConfigParam('ffApiVersion')))->getSearchAdapter();
-            $response = $searchAdapter->search($this->getConfigParam('ffChannel')[Registry::getLang()->getLanguageAbbr()], '*');
-            $fieldRoles = $response['fieldRoles'] ?? $response['searchResult']['fieldRoles'];
+            $response      = $searchAdapter->search($this->getConfigParam('ffChannel')[Registry::getLang()->getLanguageAbbr()], '*');
+            $fieldRoles    = $response['fieldRoles'] ?? $response['searchResult']['fieldRoles'];
 
             $_POST['confstrs']['ffFieldRoles'] = json_encode($fieldRoles);
 
