@@ -26,9 +26,8 @@ class FilterAttributes extends Attribute implements FieldInterface
 
     public function getValue(Article $article, Article $parent): string
     {
-        $attributes = $article === $parent
-            ? $this->getAllValues($article) . $this->getSelectedFilterAttributes($article)
-            : $this->getVariantValues($article, $parent);
+        $attributes = ($article === $parent ? $this->getAllValues($article) : $this->getVariantValues($article, $parent))
+            . $this->getSelectedFilterAttributes($article);
 
         return $attributes ? '|' . $attributes : '';
     }
