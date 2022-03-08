@@ -58,14 +58,15 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     public function updateFieldRoles()
     {
         try {
-            $this->moduleSettings = ContainerFactory::getInstance()
-                ->getContainer()
-                ->get(ModuleSettingBridgeInterface::class);
             $clientBuilder = oxNew(ClientBuilder::class)
                 ->withServerUrl($this->getConfigParam('ffServerUrl'))
                 ->withCredentials($this->getCredentials());
-            $searchAdapter                          = (new AdapterFactory($clientBuilder, $this->getConfigParam('ffApiVersion')))->getSearchAdapter();
-            $_POST['confstrs']['ffFieldRolesField'] = json_encode($searchAdapter->search($this->getConfigParam('ffChannel')[Registry::getLang()->getLanguageAbbr()], 'test')['searchResult']['fieldRoles']);
+
+            $searchAdapter = (new AdapterFactory($clientBuilder, $this->getConfigParam('ffApiVersion')))->getSearchAdapter();
+            $response = $searchAdapter->search($this->getConfigParam('ffChannel')[Registry::getLang()->getLanguageAbbr()], '*');
+            $fieldRoles = $response['fieldRoles'] ?? $response['searchResult']['fieldRoles'];
+
+            $_POST['confstrs']['ffFieldRoles'] = json_encode($fieldRoles);
 
             $this->preparePostData();
             parent::saveConfVars();
@@ -87,7 +88,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
 
     protected function getConfigParam(string $key)
     {
-        return $this->moduleSettings->get($key, 'ffwebcomponents');
+        return Registry::getConfig()->getConfigParam($key);
     }
 
     private function preparePostData()

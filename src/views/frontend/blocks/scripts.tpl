@@ -10,7 +10,7 @@
 <script>
 document.addEventListener('ffReady', function (ff) {
     factfinder.sdk = 'oe-v4.1.2';
-    factfinder.communication.fieldRoles = {"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"Deeplink","description":"Description","displayProductNumber":"ProductNumber","ean":"EAN","imageUrl":"ImageURL","masterArticleNumber":"Master","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"};
+    factfinder.communication.fieldRoles = [{$oConfig->getConfigParam('ffFieldRoles')}];
 
 [{if $oView->getClassKey() neq "search_result"}]
     document.addEventListener('before-search', function (event) {
