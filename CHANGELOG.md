@@ -2,6 +2,7 @@
 ## Unreleased
 ### Add
  - add Update FieldRoles functionality that allows user to store Field Roles received from FACT-Finder search response in shop configuration
+ - add proxy mechanism - more information in README file
  
 ### Fix
  - fix scrollTop top page is executed on search immediate event

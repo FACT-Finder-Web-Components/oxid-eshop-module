@@ -18,6 +18,7 @@ customise them.
         - [Test Connection Button](#test-connection-button)
         - [Export Feed Button](#export-feed-button)
     - [Advanced Settings](#advanced-settings)
+        - [Proxy](#proxy)
     - [Features Settings](#features-settings)
         - [Using FACT-Finder® on category pages](#using-fact-finder-on-category-pages)
     - [Feed Settings](#feed-settings)
@@ -95,6 +96,52 @@ It is a one of possible ways of exporting feed. You can find more details in sec
 * `Additional parameters` - here you can define extra parameters for each of these properties: `add-params`, `add-tracking-params`, `keep-url-params`, `parameter-whitelist`.
 Values will be passed to the Web Components and used in communication.
 You can find more information about mentioned properties purposes in Web Components [documentation](https://web-components.fact-finder.de/api/3.x/ff-communication#tab=api).  
+* `Use Proxy` - check this option if you want each request sends by Web Components first reach the dedicated module controller which forwards it to the FACT-Finder.
+**Note:** If you plan to use proxy, consider reading below paragraph as it requires full instruction how to enable it properly. 
+ 
+#### Proxy
+Proxy feature adds a oxid controller which serves as a middleware between Web Components and FACT-Finder®.
+The data flow with proxy enabled is illustrated by the graph below.
+![Communication Overview](docs/assets/communication-overview.png "Communication Overview")
+Having a middleware controller brings many possibilities to customize the request and the response.
+In addition, if forwarded request does not result with a correct response, you can implement fallback strategy, starting from this point.
+
+```php
+   //src/Controller/SearchResultController.php:65
+   protected function fallback(): void
+    {
+        //this function could be used to implement fallback logic in case of any communication error.
+        $this->showJsonAndExit('');
+    }
+```
+
+To enable proxy you need to change your HTTP server configuration by adding two rewrite rules.
+This is necessary because Web Components appends a URL parts to the base URL making it unreadable by the Oxid.
+This is because Oxid use query parameters `cl` and `fnc` to instantiate specific controller and execute its function.
+There is no routing that use url parts, hence any AJAX requests must target index.php file with the aforementioned parameters.
+Without this rules any request will lead to 404.
+
+NGINX
+
+```nginx
+  location ~ \.ff  {
+      rewrite [a-zA-Z].ff /$1 break;
+  }
+
+  # the the version might need to be adjusted, depends on the API version you use
+  location ~ /rest/v  {
+      rewrite rest/v[0-9]/[a-zA-Z]*/ /$1 break;
+   }
+```
+
+APACHE
+
+```apache
+RewriteRule (.*\.ff)$ /$1 [L]
+
+# the the version might need to be adjusted, depends on the API version you use
+RewriteRule /rest/v[0-9] /$1 [L]
+```
 
 ### Features Settings
 ![Features Settings](docs/assets/features-settings.png "Features settings")
