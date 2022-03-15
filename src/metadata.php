@@ -166,7 +166,6 @@ $aModule = [
             'position'    => $settingPosition++,
         ],
         [
-            'group'    => 'ffMain',
             'name'     => 'ffFieldRoles',
             'type'     => 'str',
             'value'    => '{"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"Deeplink","description":"Description","displayProductNumber":"ProductNumber","imageUrl":"ImageUrl","masterArticleNumber":"ProductNumber","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"}',
@@ -184,6 +183,13 @@ $aModule = [
             'name'     => 'ffAddSearchParams',
             'type'     => 'aarr',
             'value'    => ['add-params' => '', 'add-tracking-params' => ''],
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffAdvanced',
+            'name'     => 'ffUseProxy',
+            'type'     => 'bool',
+            'value'    => false,
             'position' => $settingPosition++,
         ],
         [

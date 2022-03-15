@@ -12,7 +12,24 @@ document.addEventListener('ffReady', function (ff) {
     factfinder.sdk = 'oe-v4.1.2';
     factfinder.communication.fieldRoles = [{$oConfig->getConfigParam('ffFieldRoles')}];
 
-[{if $oView->getClassKey() neq "search_result"}]
+    [{if $oConfig->getConfigParam('ffUseProxy')}]
+        factfinder.__experimental.sandboxMode.enable = true;
+
+        ff.eventAggregator.addBeforeDispatchingCallback(function (event) {
+            event.cl = 'search_result';
+            event.fnc = 'proxy';
+        });
+
+        document.addEventListener('ffUrlWrite', function (event, historyState) {
+            let url = event.url.replace(/([?&]?)fnc=proxy/, '');
+            [{if $oView->getClassKey() eq "alist"}]
+                url = url.replace(/[?&]?cl=search_result/, '');
+            [{/if}]
+            history.replaceState(historyState, "", url);
+        });
+    [{/if}]
+
+[{if $oView->getClassKey() neq "search_result" }]
     document.addEventListener('before-search', function (event) {
         if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {
             event.preventDefault();

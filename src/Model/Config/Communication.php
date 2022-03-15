@@ -39,7 +39,7 @@ class Communication implements ParametersSourceInterface
         $session  = Registry::getSession();
 
         $params = [
-            'url'                   => $this->getConfig('ffServerUrl'),
+            'url'                   => $this->getServerUrl(),
             'version'               => $this->getConfig('ffApiVersion'),
             'api'                   => $this->getConfig('ffApiVersion') ? 'v4' : '',
             'channel'               => $this->getChannel($this->view->getActiveLangAbbr()),
@@ -48,8 +48,8 @@ class Communication implements ParametersSourceInterface
             'currency-code'         => $this->view->getActCurrency()->name,
             'currency-fields'       => $this->getAdditionalCurrencyFields(),
             'currency-country-code' => $this->getLocale($this->view->getActiveLangAbbr()),
-            'search-immediate'      => $this->isSearch() || $this->useForCategories() ? 'true' : 'false',
-            'keep-url-params'       => 'cl',
+            'search-immediate'      => $this->isSearch() || $this->useForCategories() || $this->useProxy() ? 'true' : 'false',
+            'keep-url-params'       => 'true',
             'only-search-params'    => 'true',
             'use-browser-history'   => 'true',
             'category-page'         => $this->getConfig('ffApiVersion') === 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : null,
@@ -65,6 +65,11 @@ class Communication implements ParametersSourceInterface
     {
         $locales = ['de' => 'de-DE', 'en' => 'en-US'];
         return $locales[$abbr] ?? $locales['en'];
+    }
+
+    protected function getServerUrl(): string
+    {
+        return (string) $this->getConfig('ffUseProxy') ? 'index.php' : $this->getConfig('ffServerUrl');
     }
 
     /**
@@ -152,5 +157,10 @@ class Communication implements ParametersSourceInterface
         //important! do not modify this code
         return preg_replace('/\+/', '%2B',
             preg_replace('/\//', '%2F', preg_replace('/%/', '%25', $path)));
+    }
+
+    private function useProxy(): bool
+    {
+        return (bool) $this->getConfig('ffUseProxy');
     }
 }

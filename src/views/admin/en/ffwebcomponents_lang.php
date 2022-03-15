@@ -22,6 +22,7 @@ $aLang = [
     'SHOP_MODULE_ffApiVersion_7.3'                => '7.3',
     'SHOP_MODULE_ffApiVersion_ng'                 => 'NG',
     'SHOP_MODULE_ffUseUrlParams'                  => 'Use URL params?',
+    'SHOP_MODULE_ffUseProxy'                      => 'Use Proxy?',
     'SHOP_MODULE_ffAddSearchParams'               => 'Additional parameters',
     'HELP_SHOP_MODULE_ffAddSearchParams'          => 'There are four parameters you can set: `add-params`, `add-tracking-params`, `keep-url-params`, `parameter-whitelist`. Each parameter definition should be placed in separate row. Example usage : add-params => customParam1 => value1, customParam2 => value2',
     'SHOP_MODULE_GROUP_ffFeatures'                => 'Features Settings',
