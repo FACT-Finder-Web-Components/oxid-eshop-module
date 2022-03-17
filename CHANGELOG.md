@@ -2,6 +2,7 @@
 ## Unreleased
 ### Fix
  - fix scrollTop top page is executed on search immediate event
+ - fix `src/Export/Field/FilterAttributes` exports attribute selection from variant product level
 
 ## [v3.1.2] - 2022.02.23
 ### Fix
