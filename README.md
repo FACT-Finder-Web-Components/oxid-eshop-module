@@ -15,8 +15,11 @@ customise them.
 - [Activating the Module](#activating-the-module)
 - [Backend Configuration](#backend-configuration)
     - [Main Settings](#main-settings)
-        - [Test Connection Button](#test-connection-button)
-        - [Export Feed Button](#export-feed-button)
+        - [Buttons](#buttons)
+            - [Test Connection Button](#test-connection-button)
+            - [Export Feed Button](#export-feed-button)
+            - [Test FTP Connection Button](#test-ftp-connection)
+            - [Update Field Roles Button](#update-field-roles)
     - [Advanced Settings](#advanced-settings)
         - [Proxy](#proxy)
     - [Features Settings](#features-settings)
@@ -82,13 +85,26 @@ Credentials you will be given should be placed here.
 * API Version - Used FACT-Finder® version   
   **Note:** Module supports FACT-Finder® from version 6.9 up to NG. by selecting the wrong version you may cause the Web Components to be unable to communicate with FACT-Finder® 
 
-### Test Connection Button
+### Buttons
+
+![Buttons](docs/assets/configuration-buttons.png "Configuration Buttons")
+
+#### Test Connection Button
 By clicking the `Test Connection` button you can check if your credentials are correct.
 This functionality uses form data, so there is no need to save first.
 **Note:** This functionality uses `de` channel input value. 
 
-### Export Feed Button
+#### Export Feed Button
 It is a one of possible ways of exporting feed. You can find more details in section [Admin Panel Export](#admin-panel-export)  
+
+#### Test FTP Connection Button
+This functionality allows you to test if your shop can successfully connect to configured FTP/SFTP server.
+It uses parameters passed down with the request so there is no need to save the configuration before.
+
+#### Update Field Roles Button
+This functionality allows you to update field roles if you have changed them in FACT-Finder.
+The field roles are by default configured accordingly to the columns exported by the module.
+If you are about change one of the column name that serves as a role e.g. `Master` or `ProductNumber`, that holds the `Master article number` and `Product number` roles respectively, please remember to update the field roles with that functionality
 
 ### Advanced Settings
 ![Advanced Settings](docs/assets/advanced-settings.png "Advanced settings")

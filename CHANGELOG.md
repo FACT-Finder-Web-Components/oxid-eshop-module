@@ -1,7 +1,7 @@
 # Changelog
-## Unreleased
+## [v4.2.0] - 2022.03.21
 ### Add
- - add Update FieldRoles functionality that allows user to store Field Roles received from FACT-Finder search response in shop configuration
+ - add "Update FieldRoles" functionality that allows user to store Field Roles received from FACT-Finder search response in shop configuration
  - add proxy mechanism - more information in README file
  
 ### Change
@@ -141,6 +141,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.2.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.2.0
 [v4.1.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.1.2
 [v4.1.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.1.1
 [v4.1.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.1.0
