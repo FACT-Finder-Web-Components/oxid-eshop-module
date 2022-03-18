@@ -4,6 +4,9 @@
  - add Update FieldRoles functionality that allows user to store Field Roles received from FACT-Finder search response in shop configuration
  - add proxy mechanism - more information in README file
  
+### Change
+ - category filter is hidden on the category page 
+ 
 ### Fix
  - fix scrollTop top page is executed on search immediate event
  - fix `src/Export/Field/FilterAttributes` exports attribute selection from variant product level
