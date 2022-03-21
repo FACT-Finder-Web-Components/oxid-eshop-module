@@ -1,11 +1,11 @@
 # Changelog
-## Unreleased
-### Add
- - add Update FieldRoles functionality that allows user to store Field Roles received from FACT-Finder search response in shop configuration
- - add proxy mechanism - more information in README file
- 
+## [v3.1.3] - 2022.03.21
 ### Change
- - category filter is hidden on the category page 
+ - category filter is hidden on the category page
+ 
+ ### Fix
+  - fix `src/views/frontend/widget/record_list.tpl` scrollTop top page is executed on search immediate event
+  - fix `src/Export/Field/FilterAttributes.php` exports attribute selection from variant product level
  
 ## [v3.1.2] - 2022.02.23
 ### Fix
@@ -117,6 +117,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v3.1.3]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v3.1.3
 [v3.1.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v3.1.2
 [v3.1.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v3.1.1
 [v3.1.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v3.1.0
