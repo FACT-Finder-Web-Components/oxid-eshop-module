@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+## Change
+ - Replace `OxidEsales\Eshop\Application\Model\Article::getAttributes` implementation to improve performance and memory consumption 
+ 
 ## [v4.2.0] - 2022.03.21
 ### Add
  - add "Update FieldRoles" functionality that allows user to store Field Roles received from FACT-Finder search response in shop configuration
