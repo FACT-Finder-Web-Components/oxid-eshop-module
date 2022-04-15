@@ -16,7 +16,7 @@ class ArticleFeedController extends AdminController
     /** @var string */
     protected $_sThisTemplate = 'admin/page/ajax_result.tpl';
 
-    public function export()
+    public function export(): void
     {
         $handle    = tmpfile();
         $result    = [];
