@@ -38,7 +38,7 @@ class Attribute implements FieldInterface
 
     protected function getAttributes($articleId, $parentId): array
     {
-        $oDb                = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC);
+        $db                 = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC);
         $oxAttribute        = getViewName('oxattribute');
         $oxobject2Attribute = getViewName('oxobject2attribute');
 
@@ -47,10 +47,10 @@ class Attribute implements FieldInterface
             . "where o2a.oxobjectid = :oxobjectid and o2a.oxvalue != '' "
             . "order by o2a.oxpos, {$oxAttribute}.oxpos";
 
-        $articleAttributes = $oDb->getAll($select, [':oxobjectid' => $articleId]);
+        $articleAttributes = $db->getAll($select, [':oxobjectid' => $articleId]);
 
         if ($parentId) {
-            $parentAttributes = $oDb->getAll($select, [':oxobjectid' => $parentId]);
+            $parentAttributes = $db->getAll($select, [':oxobjectid' => $parentId]);
             return $this->mergeAttributes($articleAttributes, $parentAttributes);
         }
 
