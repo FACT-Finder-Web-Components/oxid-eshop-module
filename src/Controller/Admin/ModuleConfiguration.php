@@ -86,7 +86,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
         return Registry::getConfig()->getConfigParam($key);
     }
 
-    private function preparePostData()
+    private function preparePostData(): void
     {
         if ($this->isFactFinder()) {
             $_POST['confaarrs'] = array_reduce($this->localizedFields, function (array $result, string $field): array {

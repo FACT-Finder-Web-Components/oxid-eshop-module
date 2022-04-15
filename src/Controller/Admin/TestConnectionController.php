@@ -24,7 +24,7 @@ class TestConnectionController extends AdminController
     /** @var bool */
     protected $success = false;
 
-    public function testConnection()
+    public function testConnection(): void
     {
         try {
             $clientBuilder = oxNew(ClientBuilder::class)
@@ -40,7 +40,7 @@ class TestConnectionController extends AdminController
         }
     }
 
-    public function testFtpConnection()
+    public function testFtpConnection(): void
     {
         try {
             $params = array_reduce(array_keys($_POST), function (array $acc, string $key): array {

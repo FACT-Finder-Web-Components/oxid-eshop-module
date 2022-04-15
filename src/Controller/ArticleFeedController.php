@@ -23,7 +23,7 @@ class ArticleFeedController extends FrontendController
         }
     }
 
-    public function export()
+    public function export(): void
     {
         $oUtils   = Registry::getUtils();
 
