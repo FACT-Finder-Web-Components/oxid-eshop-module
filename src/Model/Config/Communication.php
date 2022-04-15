@@ -142,8 +142,8 @@ class Communication implements ParametersSourceInterface
 
     private function standardPath(array $categories, string $param): string
     {
-        $path              = 'ROOT';
-        $value             = ['navigation=true'];
+        $path  = 'ROOT';
+        $value = ['navigation=true'];
         foreach (array_reverse($categories) as $category) {
             $value[] = sprintf("filter{$param}%s=%s", $path, urlencode(trim($category)));
             $path .= urlencode('/' . $this->encodeCategoryName(trim($category)));
@@ -155,8 +155,11 @@ class Communication implements ParametersSourceInterface
     private function encodeCategoryName(string $path): string
     {
         //important! do not modify this code
-        return preg_replace('/\+/', '%2B',
-            preg_replace('/\//', '%2F', preg_replace('/%/', '%25', $path)));
+        return preg_replace(
+            '/\+/',
+            '%2B',
+            preg_replace('/\//', '%2F', preg_replace('/%/', '%25', $path))
+        );
     }
 
     private function useProxy(): bool
