@@ -9,7 +9,7 @@
 
 <script>
 document.addEventListener('ffReady', function (ff) {
-    factfinder.sdk = 'oe-v4.2.0';
+    factfinder.sdk = 'oe-v4.2.1';
     factfinder.communication.fieldRoles = [{$oConfig->getConfigParam('ffFieldRoles')}];
 
     [{if $oConfig->getConfigParam('ffUseProxy')}]
