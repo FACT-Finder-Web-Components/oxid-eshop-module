@@ -1,6 +1,8 @@
 [{$smarty.block.parent}]
 [{oxstyle include=$oViewConf->getModuleUrl("ffwebcomponents", "out/css/styles.css")}]
-
+[{if !isset($oConfig)}]
+    [{assign var="oConfig" value=$oViewConf->getConfig()}]
+[{/if}]
 <script src="[{$oViewConf->getModuleUrl('ffwebcomponents', 'out/js/ff-web-components/vendor/custom-elements-es5-adapter.js')|escape}]"></script>
 <script src="[{$oViewConf->getModuleUrl('ffwebcomponents', 'out/js/ff-web-components/vendor/webcomponents-loader.js')|escape}]"></script>
 <script src="[{$oViewConf->getModuleUrl('ffwebcomponents', 'out/js/ff-web-components/bundle.js')|escape}]" defer></script>
