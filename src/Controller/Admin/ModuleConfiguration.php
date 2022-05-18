@@ -8,6 +8,7 @@ use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
+use Omikron\FactFinder\Oxid\Model\Config\FieldRolesMapper;
 use OxidEsales\Eshop\Application\Model\Attribute;
 use OxidEsales\Eshop\Application\Model\AttributeList;
 use OxidEsales\Eshop\Core\Registry;
@@ -61,7 +62,11 @@ class ModuleConfiguration extends ModuleConfiguration_parent
             $response      = $searchAdapter->search($this->getConfigParam('ffChannel')[Registry::getLang()->getLanguageAbbr()], '*');
             $fieldRoles    = $response['fieldRoles'] ?? $response['searchResult']['fieldRoles'];
 
-            $_POST['confstrs']['ffFieldRoles'] = json_encode($fieldRoles);
+            $_POST['confstrs']['ffFieldRoles'] = json_encode(
+                $this->getConfigParam('ffApiVersion') === 'ng'
+                    ? oxNew(FieldRolesMapper::class)->map($fieldRoles)
+                    : $fieldRoles
+            );
 
             $this->preparePostData();
             parent::saveConfVars();

@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+ - fix "Update FieldRoles" does not map some of the field roles in NG format to 7.3 which is used by the Web Components
+   
 ## [v4.2.1] - 2022.04.19
 ## Change
  - Replace `OxidEsales\Eshop\Application\Model\Article::getAttributes` implementation to improve performance and memory consumption 
