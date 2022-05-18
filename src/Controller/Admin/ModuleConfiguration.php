@@ -63,7 +63,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
             $fieldRoles    = $response['fieldRoles'] ?? $response['searchResult']['fieldRoles'];
 
             $_POST['confstrs']['ffFieldRoles'] = json_encode(
-                $this->getConfig('ffApiVersion') === 'ng'
+                $this->getConfigParam('ffApiVersion') === 'ng'
                     ? oxNew(FieldRolesMapper::class)->map($fieldRoles)
                     : $fieldRoles
             );
