@@ -1,10 +1,11 @@
 # Changelog
 ## Unreleased
 ### Fix
+ - define $oConfig variable if missing in `src/views/frontend/blocks/scripts.tpl` 
  - fix "Update FieldRoles" does not map some of the field roles in NG format to 7.3 which is used by the Web Components
    
 ## [v4.2.1] - 2022.04.19
-## Change
+### Change
  - Replace `OxidEsales\Eshop\Application\Model\Article::getAttributes` implementation to improve performance and memory consumption 
  
 ## [v4.2.0] - 2022.03.21
