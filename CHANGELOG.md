@@ -1,9 +1,12 @@
 # Changelog
-## Unreleased
+## [v4.2.2] - 2022.05.30
 ### Fix
  - define $oConfig variable if missing in `src/views/frontend/blocks/scripts.tpl` 
  - fix "Update FieldRoles" does not map some of the field roles in NG format to 7.3 which is used by the Web Components
    
+### Change
+ - upgrade Web Components to version [4.0.10](https://github.com/FACT-Finder-Web-Components/ff-web-components/releases/tag/4.0.10)
+ 
 ## [v4.2.1] - 2022.04.19
 ### Change
  - Replace `OxidEsales\Eshop\Application\Model\Article::getAttributes` implementation to improve performance and memory consumption 
@@ -150,6 +153,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.2.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.2.2
 [v4.2.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.2.1
 [v4.2.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.2.0
 [v4.1.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.1.2
