@@ -19,9 +19,7 @@ class Exporter implements ExporterInterface
     /** @var bool */
     private $proceedWhileError;
 
-    /**
-     * @var FfLogger
-     */
+    /** @var FfLogger */
     private $logger;
 
     public function __construct()
@@ -45,7 +43,7 @@ class Exporter implements ExporterInterface
         }
     }
 
-    private function handleError(\Throwable $e, ExportEntityInterface $entity)
+    private function handleError(\Throwable $e, ExportEntityInterface $entity): void
     {
         if ($this->proceedWhileError === false) {
             throw $e;
