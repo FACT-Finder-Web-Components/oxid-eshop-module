@@ -10,7 +10,7 @@ class Csv implements StreamInterface
     private $handle;
 
     /** @var string */
-    private $delimiter;
+    protected $delimiter;
 
     public function __construct($fileHandle, string $delimiter = ';')
     {
