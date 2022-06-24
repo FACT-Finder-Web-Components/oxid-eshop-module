@@ -13,6 +13,10 @@ class CsvVariant extends Csv
 
     public function addEntity(array $entity): void
     {
+        if (isset($entity['DisplayError'])) {
+            throw new \Exception($entity['DisplayError']);
+        }
+
         $filename = TEST_DATA_DIRECTORY . 'tmp.csv';
         $file = fopen($filename, 'w');
         fputcsv($file, $entity, $this->delimiter);

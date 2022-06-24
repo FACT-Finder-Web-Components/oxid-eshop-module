@@ -9,8 +9,10 @@ use Omikron\FactFinder\Oxid\Export\Entity\DataProvider;
 use Omikron\FactFinder\Oxid\Export\Exporter;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 use Tests\Variant\Export\Data\ArticleCollectionVariant;
+use Tests\Variant\Export\Field\DisplayError;
 use Tests\Variant\Export\Stream\CsvVariant;
 
 class ExportEntitiesTest extends TestCase
@@ -98,5 +100,31 @@ class ExportEntitiesTest extends TestCase
         $this->assertEquals("ProductNumber;Master;Name;Short;Price\n", $output[0]);
         $this->assertEquals("1500;1500;bicycle;\"bicycle short description\";2000.00\n", $output[1]);
         $this->assertEquals("1501;1501;skateboard;\"skateboard short description\";300.00\n", $output[2]);
+    }
+
+    public function testShouldThrowExceptionAndInterruptExportWhenSomeErrorOccurAndProceedWhileErrorOptionIsDisabled()
+    {
+        // Expect
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Sample exception message');
+
+        // Given
+        $columns = array_merge($this->columns, ['DisplayError']);
+        $stream = new CsvVariant($this->tmpfile);
+        $stream->addEntity($columns);
+        $article = new Article([
+            'oxarticles__oxtitle' => new Field('bicycle'),
+            'oxarticles__oxvarname' => new Field('bicycle'),
+            'oxarticles__oxshortdesc' => new Field('bicycle short description'),
+            'oxarticles__oxartnum' => new Field('1500'),
+            'oxarticles__oxprice' => new Field('2000.00'),
+            'oxarticles__oxdisplayerror' => new Field('Sample exception message'),
+        ]);
+        $products = new ArticleCollectionVariant([$article]);
+        $dataProvider = new DataProvider($products, new DisplayError());
+
+        // When & Then
+        Registry::getConfig()->setConfigParam('ffIsProceedWhileError', false);
+        (new Exporter())->exportEntities($stream, $dataProvider, $columns);
     }
 }
