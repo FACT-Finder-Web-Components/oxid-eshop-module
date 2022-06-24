@@ -48,7 +48,7 @@ class ExportEntitiesTest extends TestCase
         $this->assertEquals('', stream_get_contents($this->tmpfile));
     }
 
-    public function testShouldReturnStringWithOneProductWhenExportingCollectionWithOneProduct()
+    public function testShouldReturnStreamWithOneProductWhenExportingCollectionWithOneProduct()
     {
         // Given
         $article = new Article([
@@ -65,9 +65,38 @@ class ExportEntitiesTest extends TestCase
         (new Exporter())->exportEntities($this->stream, $dataProvider, $this->columns);
         $output = $this->stream->getOutput();
 
+        // Then
+        $this->assertEquals("ProductNumber;Master;Name;Short;Price\n", $output[0]);
+        $this->assertEquals("1500;1500;bicycle;\"bicycle short description\";2000.00\n", $output[1]);
+    }
+
+    public function testShouldReturnStreamWithTwoProductsWhenExportingCollectionWithTwoProducts()
+    {
+        // Given
+        $articleOne = new Article([
+            'oxarticles__oxtitle' => new Field('bicycle'),
+            'oxarticles__oxvarname' => new Field('bicycle'),
+            'oxarticles__oxshortdesc' => new Field('bicycle short description'),
+            'oxarticles__oxartnum' => new Field('1500'),
+            'oxarticles__oxprice' => new Field('2000.00'),
+        ]);
+        $articleTwo = new Article([
+            'oxarticles__oxtitle' => new Field('skateboard'),
+            'oxarticles__oxvarname' => new Field('skateboard'),
+            'oxarticles__oxshortdesc' => new Field('skateboard short description'),
+            'oxarticles__oxartnum' => new Field('1501'),
+            'oxarticles__oxprice' => new Field('300.00'),
+        ]);
+        $products = new ArticleCollectionVariant([$articleOne, $articleTwo]);
+        $dataProvider = new DataProvider($products);
+
+        // When
+        (new Exporter())->exportEntities($this->stream, $dataProvider, $this->columns);
+        $output = $this->stream->getOutput();
 
         // Then
         $this->assertEquals("ProductNumber;Master;Name;Short;Price\n", $output[0]);
         $this->assertEquals("1500;1500;bicycle;\"bicycle short description\";2000.00\n", $output[1]);
+        $this->assertEquals("1501;1501;skateboard;\"skateboard short description\";300.00\n", $output[2]);
     }
 }
