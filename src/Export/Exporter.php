@@ -43,14 +43,14 @@ class Exporter implements ExporterInterface
         }
     }
 
-    private function handleError(\Throwable $e, ExportEntityInterface $entity): void
+    private function handleError(\Throwable $exception, ExportEntityInterface $entity): void
     {
         if ($this->proceedWhileError === false) {
-            throw $e;
+            throw $exception;
         }
 
-        $entity = array_filter($entity->toArray(), function ($v) {
-            return in_array($v, [
+        $entity = array_filter($entity->toArray(), function (string $field): bool {
+            return in_array($field, [
                 'ProductNumber',
                 'Name',
                 'Id',
@@ -59,7 +59,7 @@ class Exporter implements ExporterInterface
                 'RootId',
             ]);
         }, ARRAY_FILTER_USE_KEY);
-        $this->logger->error($e->getMessage(), ['entity' => $entity]);
+        $this->logger->error($exception->getMessage(), ['entity' => $entity]);
     }
 
     private function prepare(array $data): array
