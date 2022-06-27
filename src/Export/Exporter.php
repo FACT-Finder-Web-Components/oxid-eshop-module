@@ -24,9 +24,9 @@ class Exporter implements ExporterInterface
 
     public function __construct()
     {
-        $this->filter = oxNew(TextFilter::class);
+        $this->filter            = oxNew(TextFilter::class);
         $this->proceedWhileError = boolval(Registry::getConfig()->getConfigParam('ffIsProceedWhileError'));
-        $this->logger = new FfLogger('exporter');
+        $this->logger            = new FfLogger('exporter');
     }
 
     public function exportEntities(StreamInterface $stream, DataProviderInterface $dataProvider, array $columns): void
@@ -49,7 +49,7 @@ class Exporter implements ExporterInterface
             throw $e;
         }
 
-        $entity = array_filter($entity->toArray(), function($v) {
+        $entity = array_filter($entity->toArray(), function ($v) {
             return in_array($v, [
                 'ProductNumber',
                 'Name',
