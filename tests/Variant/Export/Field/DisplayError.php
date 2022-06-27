@@ -16,6 +16,8 @@ class DisplayError implements FieldInterface
 
     public function getValue(Article $article, Article $parent): string
     {
-        return $article->getFieldData('oxarticles__oxdisplayerror');
+        $value = $article->getFieldData('oxarticles__oxdisplayerror');
+
+        return is_string($value) ? $value : '';
     }
 }
