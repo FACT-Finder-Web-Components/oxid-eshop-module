@@ -17,7 +17,6 @@ class FfLogger extends Logger
 
         $logPath = strval(Registry::getConfig()->getConfigParam('ffLogPath'));
         $logPath = $logPath === '' ? sprintf('%slog', OX_BASE_PATH) : $logPath;
-        var_dump(sprintf('%s/fact-finder/%s.log', $logPath, $name));
         $this->pushHandler(new StreamHandler(sprintf('%s/fact-finder/%s.log', $logPath, $name)));
     }
 }

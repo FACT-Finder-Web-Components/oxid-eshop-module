@@ -134,7 +134,7 @@ class ExportEntitiesTest extends TestCase
         (new Exporter())->exportEntities($stream, $dataProvider, $columns);
     }
 
-    public function testShouldContiuneWithExportAndCreateLogWhenSomeErrorOccur()
+    public function testShouldContiuneWithExportAndCreateLogInDefaultPlaceWhenSomeErrorOccur()
     {
         // Expect & Given
         $logFilename = sprintf('%s/log/fact-finder/exporter.log', SHOP_SOURCE_PATH);
@@ -172,6 +172,55 @@ class ExportEntitiesTest extends TestCase
 
         // When
         Registry::getConfig()->setConfigParam('ffIsProceedWhileError', true);
+        (new Exporter())->exportEntities($stream, $dataProvider, $columns);
+        $output = $stream->getOutput();
+
+        // Then
+        $this->assertStringContainsString('exporter.ERROR: Sample exception message {"entity":{"ProductNumber":"1501","Name":"skateboard"}} []', file_get_contents($logFilename));
+        $this->assertEquals("1500;1500;bicycle;\"bicycle short description\";2000.00;\n", $output[0]);
+        $this->assertEquals("1502;1502;\"stand up paddle\";\"stand up paddle short description\";900.00;\n", $output[1]);
+    }
+
+    public function testShouldContiuneWithExportAndCreateLogInCustomPlaceWhenSomeErrorOccur()
+    {
+        // Expect & Given
+        $customLogPath = sprintf('%s/log/fact-finder-custom', SHOP_SOURCE_PATH);
+        $logFilename = sprintf('%s/fact-finder/exporter.log', $customLogPath);
+
+        if (file_exists($logFilename)) {
+            unlink($logFilename);
+        }
+
+        $columns = array_merge($this->columns, ['DisplayError']);
+        $stream = new CsvVariant($this->tmpfile);
+        $articleOne = new Article([
+            'oxarticles__oxtitle' => new Field('bicycle'),
+            'oxarticles__oxvarname' => new Field('bicycle'),
+            'oxarticles__oxshortdesc' => new Field('bicycle short description'),
+            'oxarticles__oxartnum' => new Field('1500'),
+            'oxarticles__oxprice' => new Field('2000.00'),
+        ]);
+        $articleTwo = new Article([
+            'oxarticles__oxtitle' => new Field('skateboard'),
+            'oxarticles__oxvarname' => new Field('skateboard'),
+            'oxarticles__oxshortdesc' => new Field('skateboard short description'),
+            'oxarticles__oxartnum' => new Field('1501'),
+            'oxarticles__oxprice' => new Field('300.00'),
+            'oxarticles__oxdisplayerror' => new Field('Sample exception message'),
+        ]);
+        $articleThree = new Article([
+            'oxarticles__oxtitle' => new Field('stand up paddle'),
+            'oxarticles__oxvarname' => new Field('stand-up-paddle'),
+            'oxarticles__oxshortdesc' => new Field('stand up paddle short description'),
+            'oxarticles__oxartnum' => new Field('1502'),
+            'oxarticles__oxprice' => new Field('900.00'),
+        ]);
+        $products = new ArticleCollectionVariant([$articleOne, $articleTwo, $articleThree]);
+        $dataProvider = new DataProvider($products, new DisplayError());
+
+        // When
+        Registry::getConfig()->setConfigParam('ffIsProceedWhileError', true);
+        Registry::getConfig()->setConfigParam('ffLogPath', $customLogPath);
         (new Exporter())->exportEntities($stream, $dataProvider, $columns);
         $output = $stream->getOutput();
 
