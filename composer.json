@@ -16,16 +16,23 @@
     "ext-json": "*",
     "omikron/factfinder-communication-sdk": "^0.9",
     "league/flysystem-sftp": "^2.2",
-    "league/flysystem-ftp": "^2.3"
+    "league/flysystem-ftp": "^2.3",
+    "monolog/monolog": "^1.23"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.4",
     "friendsofphp/php-cs-fixer": "3.1",
-    "phpmd/phpmd": "^2.9"
+    "phpmd/phpmd": "^2.9",
+    "phpunit/phpunit": "^8.5.14"
   },
   "autoload": {
     "psr-4": {
       "Omikron\\FactFinder\\Oxid\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
     }
   },
   "extra": {

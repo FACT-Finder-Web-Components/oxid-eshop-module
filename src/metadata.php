@@ -333,6 +333,20 @@ $aModule = [
             'value'    => 'basic_auth_password',
             'position' => $settingPosition++,
         ],
+        [
+            'group'    => 'ffExport',
+            'name'     => 'ffLogPath',
+            'type'     => 'str',
+            'value'    => '',
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffExport',
+            'name'     => 'ffIsProceedWhileError',
+            'type'     => 'bool',
+            'value'    => false,
+            'position' => $settingPosition++,
+        ],
     ],
 
     'smartyPluginDirectories' => ['views/smarty'],

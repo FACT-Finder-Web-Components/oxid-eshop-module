@@ -6,11 +6,11 @@ namespace Omikron\FactFinder\Oxid\Export\Stream;
 
 class Csv implements StreamInterface
 {
+    /** @var string */
+    protected $delimiter;
+
     /** @var resource */
     private $handle;
-
-    /** @var string */
-    private $delimiter;
 
     public function __construct($fileHandle, string $delimiter = ';')
     {
