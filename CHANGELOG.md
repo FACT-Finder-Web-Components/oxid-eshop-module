@@ -1,4 +1,8 @@
 # Changelog
+## [v4.3.0] - 2022.07.11
+### Add
+ - add "continue on export product failure" functionality. All errors thrown during the export will be logged to separate file.
+ 
 ## [v4.2.2] - 2022.05.30
 ### Fix
  - define $oConfig variable if missing in `src/views/frontend/blocks/scripts.tpl` 
@@ -153,6 +157,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.3.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.0
 [v4.2.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.2.2
 [v4.2.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.2.1
 [v4.2.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.2.0
