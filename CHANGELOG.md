@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Change
+ - increase api version from v4 to v5
+
 ## [v4.3.0] - 2022.07.11
 ### Add
  - add "continue on export product failure" functionality. All errors thrown during the export will be logged to separate file.
