@@ -187,6 +187,13 @@ $aModule = [
         ],
         [
             'group'    => 'ffAdvanced',
+            'name'     => 'ffAnonymizeUserId',
+            'type'     => 'bool',
+            'value'    => true,
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffAdvanced',
             'name'     => 'ffUseProxy',
             'type'     => 'bool',
             'value'    => false,
