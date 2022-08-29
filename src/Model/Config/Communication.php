@@ -36,7 +36,7 @@ class Communication implements ParametersSourceInterface
     public function getParameters(): array
     {
         $category = $this->view->getActiveCategory();
-        $params = [
+        $params   = [
             'url'                   => $this->getServerUrl(),
             'version'               => $this->getConfig('ffApiVersion'),
             'api'                   => $this->getConfig('ffApiVersion') ? 'v4' : '',
@@ -61,13 +61,14 @@ class Communication implements ParametersSourceInterface
 
     protected function getUserId(): string
     {
-        $session  = Registry::getSession();
+        $session = Registry::getSession();
 
-        return $session->getUser()
-            ? $this->getConfig('ffAnonymizeUserId')
-                ? md5((string) $session->getUser()->getFieldData('oxcustnr'))
-                : (string) $session->getUser()->getFieldData('oxcustnr')
-            : '';
+        if (!$session->getUser()) {
+            return '';
+        }
+        $userId = (string)$this->getConfig('ffAnonymizeUserId');
+
+        return $this->getConfig('ffAnonymizeUserId') ? md5($userId) : $userId;
     }
 
     protected function getLocale(string $abbr): string
