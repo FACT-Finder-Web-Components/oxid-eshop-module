@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+ - add anonymize functionality that anonymize `user-id` parameter in any tracking request sent to FACT-Finder  
+ 
 ## [v4.3.0] - 2022.07.11
 ### Add
  - add "continue on export product failure" functionality. All errors thrown during the export will be logged to separate file.

@@ -111,7 +111,8 @@ If you are about change one of the column name that serves as a role e.g. `Maste
 * `Use URL params?` - check this option if you want Web Components to push each used query parameter to the URL,
 * `Additional parameters` - here you can define extra parameters for each of these properties: `add-params`, `add-tracking-params`, `keep-url-params`, `parameter-whitelist`.
 Values will be passed to the Web Components and used in communication.
-You can find more information about mentioned properties purposes in Web Components [documentation](https://web-components.fact-finder.de/api/3.x/ff-communication#tab=api).  
+You can find more information about mentioned properties purposes in Web Components [documentation](https://web-components.fact-finder.de/api/3.x/ff-communication#tab=api).
+* `Anonymize User ID?` - check this option if you want to send user id with tracking requests in anonymized form. By default the regular id field from user table is sent.  
 * `Use Proxy` - check this option if you want each request sends by Web Components first reach the dedicated module controller which forwards it to the FACT-Finder.
 **Note:** If you plan to use proxy, consider reading below paragraph as it requires full instruction how to enable it properly. 
  

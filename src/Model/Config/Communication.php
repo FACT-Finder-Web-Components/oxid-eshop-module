@@ -36,14 +36,12 @@ class Communication implements ParametersSourceInterface
     public function getParameters(): array
     {
         $category = $this->view->getActiveCategory();
-        $session  = Registry::getSession();
-
-        $params = [
+        $params   = [
             'url'                   => $this->getServerUrl(),
             'version'               => $this->getConfig('ffApiVersion'),
             'api'                   => $this->getConfig('ffApiVersion') ? 'v4' : '',
             'channel'               => $this->getChannel($this->view->getActiveLangAbbr()),
-            'user-id'               => $session->getUser() ? $session->getUser()->getFieldData('oxcustnr') : '',
+            'user-id'               => $this->getUserId(),
             'use-url-parameters'    => $this->getConfig('ffUseUrlParams') ? 'true' : 'false',
             'currency-code'         => $this->view->getActCurrency()->name,
             'currency-fields'       => $this->getAdditionalCurrencyFields(),
@@ -59,6 +57,19 @@ class Communication implements ParametersSourceInterface
         ];
 
         return array_filter($this->mergeParameters($params, $this->getAdditionalParameters()));
+    }
+
+    protected function getUserId(): string
+    {
+        $session = Registry::getSession();
+
+        if (!$session->getUser()) {
+            return '';
+        }
+
+        $userId = $session->getUser()->getFieldData('oxcustnr');
+
+        return $this->getConfig('ffAnonymizeUserId') ? md5($userId) : $userId;
     }
 
     protected function getLocale(string $abbr): string
