@@ -51,3 +51,7 @@ document.addEventListener('ffReady', function (ff) {
 [{/if}]
 });
 </script>
+
+[{if $oView->getClassKey() eq "details"}]
+<script src="[{$oViewConf->getModuleUrl("ffwebcomponents", "out/js/tracking.js")|escape}]"></script>
+[{/if}]

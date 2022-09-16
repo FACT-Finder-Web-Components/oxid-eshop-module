@@ -1,7 +1,10 @@
 # Changelog
 ## Unreleased
 ### Add
- - add anonymize functionality that anonymize `user-id` parameter in any tracking request sent to FACT-Finder  
+ - add anonymize functionality that anonymize `user-id` parameter in any tracking request sent to FACT-Finder
+### Fix
+ - fixed tracking after variant change
+ - passing proper number of products in the basket after checkout
  
 ## [v4.3.0] - 2022.07.11
 ### Add
