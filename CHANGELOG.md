@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.3.1] - 2022.09.16
 ### Add
  - add anonymize functionality that anonymize `user-id` parameter in any tracking request sent to FACT-Finder
 ### Fix
@@ -164,6 +164,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.3.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.1
 [v4.3.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.0
 [v4.2.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.2.2
 [v4.2.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.2.1
