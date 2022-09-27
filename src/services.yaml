@@ -1,0 +1,8 @@
+services:
+    _defaults:
+        public: false
+        autowire: true
+
+    Omikron\FactFinder\Oxid\Subscriber\AfterRequestProcessedEventSubscriber:
+        class: Omikron\FactFinder\Oxid\Subscriber\AfterRequestProcessedEventSubscriber
+        tags: ['kernel.event_subscriber']
