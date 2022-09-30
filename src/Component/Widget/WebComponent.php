@@ -10,9 +10,25 @@ use OxidEsales\Eshop\Core\Registry;
 
 class WebComponent extends WidgetController
 {
+    /** @var CommunicationConfig */
+    private $config;
+
+    public function __construct()
+    {
+        $this->config = oxNew(CommunicationConfig::class, Registry::getConfig()->getTopActiveView());
+    }
+
     public function getCommunicationParams(): array
     {
-        $config = oxNew(CommunicationConfig::class, Registry::getConfig()->getTopActiveView());
-        return array_filter($config->getParameters());
+        $params = array_filter($this->config->getParameters(), function (string $name) {
+            return !in_array($name, ['user-id', 'search-immediate']);
+        }, ARRAY_FILTER_USE_KEY);
+
+        return $params;
+    }
+
+    public function getSearchImmediate(): bool
+    {
+        return (bool) $this->config->getParameters()['search-immediate'];
     }
 }
