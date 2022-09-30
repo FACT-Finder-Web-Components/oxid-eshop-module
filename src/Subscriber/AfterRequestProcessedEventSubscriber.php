@@ -4,75 +4,52 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Subscriber;
 
-use OxidEsales\Eshop\Application\Model\User;
-use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\Session;
 use OxidEsales\EshopCommunity\Internal\Framework\Event\AbstractShopAwareEventSubscriber;
 use OxidEsales\EshopCommunity\Internal\Transition\ShopEvents\AfterRequestProcessedEvent;
 use Symfony\Component\EventDispatcher\Event;
 
 class AfterRequestProcessedEventSubscriber extends AbstractShopAwareEventSubscriber
 {
-    const HAS_JUST_LOGGED_IN = 'ff_has_just_logged_in';
-    const HAS_JUST_LOGGED_OUT = 'ff_has_just_logged_out';
-    const USER_ID_COOKIE = 'ff_user_id';
-
-    /** @var Config */
-    private $config;
+    /** @var Session */
+    private $session;
 
     public function __construct()
     {
-        $this->config = Registry::getConfig();
+        $this->session = Registry::getSession();
     }
-
     public static function getSubscribedEvents()
     {
-        return [AfterRequestProcessedEvent::NAME => 'hasJustLoggedIn'];
+        return [
+            AfterRequestProcessedEvent::NAME => [
+                ['hasJustLoggedIn'],
+                ['hasJustLoggedOut'],
+            ],
+        ];
     }
 
-    public function hasJustLoggedIn(Event $event)
+    public function hasJustLoggedIn(Event $event): void
     {
-        $user = Registry::getSession()->getUser();
-
-        if ($user === null) {
-            $this->clearCookie(self::USER_ID_COOKIE);
-            $this->clearCookie(self::HAS_JUST_LOGGED_OUT);
-        }
-
-        if ((bool) $this->getCookie(self::HAS_JUST_LOGGED_IN, false) === true) {
-            $this->clearCookie(self::HAS_JUST_LOGGED_IN);
-
-            return;
-        }
+        $user = $this->session->getUser();
 
         if (
-            $this->config->getRequestParameter('fnc') === 'login_noredirect'
+            Registry::getConfig()->getRequestParameter('fnc') === 'login_noredirect'
             && $user !== null
         ) {
-            $this->setCookie(self::HAS_JUST_LOGGED_IN, '1');
-            $this->setCookie(self::USER_ID_COOKIE, $user->getId());
-            Registry::getSession()->setVariable(self::HAS_JUST_LOGGED_IN, false);
+            $this->session->setVariable(BeforeHeadersSendEventSubscriber::HAS_JUST_LOGGED_IN, true);
         }
     }
 
-    private function setCookie(string $name, string $value): void
+    public function hasJustLoggedOut(Event $event): void
     {
-        setcookie(
-            $name,
-            $value,
-            (new \DateTime())->modify('+1 hour')->getTimestamp(),
-            '/'
-        );
-    }
+        $user = $this->session->getUser();
 
-    private function clearCookie(string $name): void
-    {
-        unset($_COOKIE[$name]);
-        setcookie($name, null, -1, '/');
-    }
-
-    private function getCookie(string $name, $default = null): ?string
-    {
-        return $_COOKIE[$name] ?? $default;
+        if (
+            Registry::getConfig()->getRequestParameter('fnc') === 'logout'
+            && $user === null
+        ) {
+            $this->session->setVariable(BeforeHeadersSendEventSubscriber::HAS_JUST_LOGGED_OUT, true);
+        }
     }
 }

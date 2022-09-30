@@ -6,3 +6,7 @@ services:
     Omikron\FactFinder\Oxid\Subscriber\AfterRequestProcessedEventSubscriber:
         class: Omikron\FactFinder\Oxid\Subscriber\AfterRequestProcessedEventSubscriber
         tags: ['kernel.event_subscriber']
+
+    Omikron\FactFinder\Oxid\Subscriber\BeforeHeadersSendEventSubscriber:
+        class: Omikron\FactFinder\Oxid\Subscriber\BeforeHeadersSendEventSubscriber
+        tags: ['kernel.event_subscriber']
