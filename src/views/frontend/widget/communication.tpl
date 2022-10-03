@@ -16,16 +16,16 @@
         }, {});
 
         if (cookies['ff_user_id']) {
-            console.warn('wk login');
+            factfinder.communication.sessionManager.setLoginData(cookies['ff_user_id']);
 
             if (cookies['ff_has_just_logged_in']) {
-                console.warn('Logged in!');
+                factfinder.communication.Tracking.loginWithConfig();
             }
         } else {
-            console.warn('wk logout');
+            factfinder.communication.sessionManager.clearLoginData();
 
             if (cookies['ff_has_just_logged_out']) {
-                console.warn('Logged out!');
+                factfinder.communication.sessionManager.clearAllSessionData();
             }
         }
 

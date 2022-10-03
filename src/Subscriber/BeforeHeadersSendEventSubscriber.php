@@ -23,6 +23,9 @@ class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
     /** @var Session */
     private $session;
 
+    /** @var bool */
+    private $isTriggered = false;
+
     public function __construct()
     {
         $this->config = Registry::getConfig();
@@ -32,17 +35,19 @@ class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
     public static function getSubscribedEvents()
     {
         return [
-            BeforeHeadersSendEvent::class => [
+            BeforeHeadersSendEvent::NAME => [
                 ['hasJustLoggedIn'],
                 ['hasJustLoggedOut'],
+                ['setIsTriggered'],
             ],
         ];
     }
 
-    public function hasJustLoggedIn(Event $event)
+    public function hasJustLoggedIn(Event $event): void
     {
         if (
-            $_SERVER['HTTP_X_REQUESTED_WITH'] !== null
+            $this->isTriggered
+            || $_SERVER['HTTP_X_REQUESTED_WITH'] !== null
             || http_response_code() >= 300
         ) {
             return;
@@ -51,8 +56,8 @@ class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
         $user = $this->session->getUser();
 
         if (empty($user)) {
-            $this->clearCookie(self::USER_ID_COOKIE);
             $this->clearCookie(self::HAS_JUST_LOGGED_OUT);
+            $this->clearCookie(self::USER_ID_COOKIE);
         }
 
         if ($this->getCookie(self::HAS_JUST_LOGGED_IN) !== '') {
@@ -61,10 +66,7 @@ class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
             return;
         }
 
-        if (
-            (bool) $this->session->getVariable(self::HAS_JUST_LOGGED_IN) === true
-            && $user
-        ) {
+        if ((bool) $this->session->getVariable(self::HAS_JUST_LOGGED_IN) === true) {
             $this->setCookie(self::HAS_JUST_LOGGED_IN, '1');
             $this->setCookie(self::USER_ID_COOKIE, $user->getId());
             $this->session->setVariable(self::HAS_JUST_LOGGED_IN, false);
@@ -74,7 +76,8 @@ class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
     public function hasJustLoggedOut(Event $event): void
     {
         if (
-            $_SERVER['HTTP_X_REQUESTED_WITH'] !== null
+            $this->isTriggered
+            || $_SERVER['HTTP_X_REQUESTED_WITH'] !== null
             || http_response_code() >= 300
         ) {
             return;
@@ -85,6 +88,11 @@ class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
             $this->clearCookie(self::USER_ID_COOKIE);
             $this->session->setVariable(self::HAS_JUST_LOGGED_OUT, false);
         }
+    }
+
+    public function setIsTriggered(Event $event): void
+    {
+        $this->isTriggered = true;
     }
 
     private function setCookie(string $name, string $value): void
