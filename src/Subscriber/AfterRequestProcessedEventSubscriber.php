@@ -4,21 +4,28 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Subscriber;
 
+use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Session;
 use OxidEsales\EshopCommunity\Internal\Framework\Event\AbstractShopAwareEventSubscriber;
 use OxidEsales\EshopCommunity\Internal\Transition\ShopEvents\AfterRequestProcessedEvent;
-use Symfony\Component\EventDispatcher\Event;
 
 class AfterRequestProcessedEventSubscriber extends AbstractShopAwareEventSubscriber
 {
     /** @var Session */
     private $session;
 
-    public function __construct()
-    {
-        $this->session = Registry::getSession();
+    /** @var Config */
+    private $config;
+
+    public function __construct(
+        ?Session $session = null,
+        ?Config $config = null
+    ) {
+        $this->session = $session ?? Registry::getSession();
+        $this->config = $config ?? Registry::getConfig();
     }
+
     public static function getSubscribedEvents()
     {
         return [
@@ -29,24 +36,24 @@ class AfterRequestProcessedEventSubscriber extends AbstractShopAwareEventSubscri
         ];
     }
 
-    public function hasJustLoggedIn(Event $event): void
+    public function hasJustLoggedIn(): void
     {
         $user = $this->session->getUser();
 
         if (
-            Registry::getConfig()->getRequestParameter('fnc') === 'login_noredirect'
+            $this->config->getRequestParameter('fnc') === 'login_noredirect'
             && !empty($user)
         ) {
             $this->session->setVariable(BeforeHeadersSendEventSubscriber::HAS_JUST_LOGGED_IN, true);
         }
     }
 
-    public function hasJustLoggedOut(Event $event): void
+    public function hasJustLoggedOut(): void
     {
         $user = $this->session->getUser();
 
         if (
-            Registry::getConfig()->getRequestParameter('fnc') === 'logout'
+            $this->config->getRequestParameter('fnc') === 'logout'
             && empty($user)
         ) {
             $this->session->setVariable(BeforeHeadersSendEventSubscriber::HAS_JUST_LOGGED_OUT, true);
