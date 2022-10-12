@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Subscriber;
 
+use Exception;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Session;
@@ -13,9 +14,11 @@ use Symfony\Component\EventDispatcher\Event;
 
 class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
 {
-    const HAS_JUST_LOGGED_IN = 'ff_has_just_logged_in';
-    const HAS_JUST_LOGGED_OUT = 'ff_has_just_logged_out';
-    const USER_ID_COOKIE = 'ff_user_id';
+    public const HAS_JUST_LOGGED_IN  = 'ff_has_just_logged_in';
+
+    public const HAS_JUST_LOGGED_OUT = 'ff_has_just_logged_out';
+
+    public const USER_ID_COOKIE      = 'ff_user_id';
 
     /** @var Config */
     private $config;
@@ -26,10 +29,12 @@ class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
     /** @var bool */
     private $isTriggered = false;
 
-    public function __construct()
-    {
-        $this->config = Registry::getConfig();
-        $this->session = Registry::getSession();
+    public function __construct(
+        ?Session $session = null,
+        ?Config $config = null
+    ) {
+        $this->session = $session ?? Registry::getSession();
+        $this->config  = $config ?? Registry::getConfig();
     }
 
     public static function getSubscribedEvents()
@@ -43,13 +48,11 @@ class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
         ];
     }
 
-    public function hasJustLoggedIn(Event $event): void
+    public function hasJustLoggedIn(): void
     {
-        if (
-            $this->isTriggered
-            || $_SERVER['HTTP_X_REQUESTED_WITH'] !== null
-            || http_response_code() >= 300
-        ) {
+        try {
+            $this->validateRequest();
+        } catch (Exception $e) {
             return;
         }
 
@@ -73,13 +76,11 @@ class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
         }
     }
 
-    public function hasJustLoggedOut(Event $event): void
+    public function hasJustLoggedOut(): void
     {
-        if (
-            $this->isTriggered
-            || $_SERVER['HTTP_X_REQUESTED_WITH'] !== null
-            || http_response_code() >= 300
-        ) {
+        try {
+            $this->validateRequest();
+        } catch (Exception $e) {
             return;
         }
 
@@ -90,12 +91,12 @@ class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
         }
     }
 
-    public function setIsTriggered(Event $event): void
+    public function setIsTriggered(): void
     {
         $this->isTriggered = true;
     }
 
-    private function setCookie(string $name, string $value): void
+    protected function setCookie(string $name, string $value): void
     {
         setcookie(
             $name,
@@ -105,14 +106,28 @@ class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
         );
     }
 
-    private function clearCookie(string $name): void
+    protected function clearCookie(string $name): void
     {
         unset($_COOKIE[$name]);
         setcookie($name, '', -1, '/');
     }
 
-    private function getCookie(string $name): string
+    protected function getCookie(string $name): string
     {
         return $_COOKIE[$name] ?? '';
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function validateRequest(): void
+    {
+        if (
+            $this->isTriggered
+            || $_SERVER['HTTP_X_REQUESTED_WITH'] !== null
+            || http_response_code() >= 300
+        ) {
+            throw new Exception('Not supported request');
+        }
     }
 }

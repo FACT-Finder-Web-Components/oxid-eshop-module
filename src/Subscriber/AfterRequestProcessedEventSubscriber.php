@@ -23,7 +23,7 @@ class AfterRequestProcessedEventSubscriber extends AbstractShopAwareEventSubscri
         ?Config $config = null
     ) {
         $this->session = $session ?? Registry::getSession();
-        $this->config = $config ?? Registry::getConfig();
+        $this->config  = $config ?? Registry::getConfig();
     }
 
     public static function getSubscribedEvents()
