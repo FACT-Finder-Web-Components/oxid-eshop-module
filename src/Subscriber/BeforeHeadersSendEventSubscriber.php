@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Subscriber;
 
+use DateTime;
 use Exception;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
@@ -101,7 +102,7 @@ class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
         setcookie(
             $name,
             $value,
-            (new \DateTime())->modify('+1 hour')->getTimestamp(),
+            (new DateTime())->modify('+1 hour')->getTimestamp(),
             '/'
         );
     }
