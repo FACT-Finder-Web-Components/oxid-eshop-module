@@ -40,10 +40,7 @@ class AfterRequestProcessedEventSubscriber extends AbstractShopAwareEventSubscri
     {
         $user = $this->session->getUser();
 
-        if (
-            $this->config->getRequestParameter('fnc') === 'login_noredirect'
-            && !empty($user)
-        ) {
+        if (!empty($user)) {
             $this->session->setVariable(BeforeHeadersSendEventSubscriber::HAS_JUST_LOGGED_IN, true);
         }
     }
@@ -52,10 +49,7 @@ class AfterRequestProcessedEventSubscriber extends AbstractShopAwareEventSubscri
     {
         $user = $this->session->getUser();
 
-        if (
-            $this->config->getRequestParameter('fnc') === 'logout'
-            && empty($user)
-        ) {
+        if (empty($user)) {
             $this->session->setVariable(BeforeHeadersSendEventSubscriber::HAS_JUST_LOGGED_OUT, true);
         }
     }
