@@ -3,7 +3,7 @@
 ### Change
 - Upgrade Web Components version to v4.2.2
 ### Fix
-- fix for new way of user login tracking event - fixed problem with missing cookie when external login provider used
+- fix for new way of user login tracking event - fixed problem with missing cookie when external identity provider used
 
 ## [v4.3.2] - 2022.10.13
 ### Change
