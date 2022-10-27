@@ -11,7 +11,6 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Session;
 use OxidEsales\EshopCommunity\Internal\Framework\Event\AbstractShopAwareEventSubscriber;
 use OxidEsales\EshopCommunity\Internal\Transition\ShopEvents\BeforeHeadersSendEvent;
-use Symfony\Component\EventDispatcher\Event;
 
 class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
 {
