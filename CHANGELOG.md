@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.3.3] - 2022.10.27
 ### Change
 - Upgrade Web Components version to v4.2.2
 ### Fix
@@ -175,6 +175,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.3.3]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.3
 [v4.3.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.2
 [v4.3.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.1
 [v4.3.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.0
