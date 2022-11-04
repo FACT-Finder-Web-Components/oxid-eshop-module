@@ -51,9 +51,7 @@ class Communication implements ParametersSourceInterface
             'only-search-params'    => 'true',
             'use-browser-history'   => 'true',
             'category-page'         => $this->getConfig('ffApiVersion') === 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : null,
-            'add-params'            => $this->getConfig('ffApiVersion') === 'ng'
-                ? ($this->useForCategories() ? null : 'cl=search_result')
-                : ($this->useForCategories() ? $this->getCategoryPath($category) : 'cl=search_result'),
+            'add-params'            => $this->getConfig('ffApiVersion') !== 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : '',
         ];
 
         return array_filter($this->mergeParameters($params, $this->getAdditionalParameters()));
