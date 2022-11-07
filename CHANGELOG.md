@@ -1,4 +1,8 @@
 # Changelog
+## [v4.3.4] - 2022.11.07
+### Fix
+- removed `query` and `cl=search_result` parameters from pages different than search result
+
 ## [v4.3.3] - 2022.10.27
 ### Change
 - Upgrade Web Components version to v4.2.2
@@ -175,6 +179,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.3.4]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.4
 [v4.3.3]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.3
 [v4.3.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.2
 [v4.3.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.1
