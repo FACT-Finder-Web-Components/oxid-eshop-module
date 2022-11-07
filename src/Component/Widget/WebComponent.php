@@ -29,6 +29,6 @@ class WebComponent extends WidgetController
 
     public function getSearchImmediate(): bool
     {
-        return (bool) $this->config->getParameters()['search-immediate'];
+        return $this->config->getParameters()['search-immediate'] === 'true';
     }
 }
