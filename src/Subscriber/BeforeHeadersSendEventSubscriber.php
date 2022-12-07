@@ -69,7 +69,10 @@ class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
             return;
         }
 
-        if ((bool) $this->session->getVariable(self::HAS_JUST_LOGGED_IN) === true) {
+        if (
+            (bool) $this->session->getVariable(self::HAS_JUST_LOGGED_IN) === true
+            && $user
+        ) {
             $this->setCookie(self::HAS_JUST_LOGGED_IN, '1');
             $userId = $user->getId();
             $this->setCookie(self::USER_ID_COOKIE, $this->config->getConfig('ffAnonymizeUserId') ? md5($userId) : $userId);
