@@ -19,5 +19,7 @@
     [{include file="ff/similar.tpl" recordId=$recordId}]
 [{/if}]
 <script>
-    registerAddToCartListener('#toBasket',"[{$recordId}]");
+    document.addEventListener('ffCommunicationReady', function () {
+        registerAddToCartListener('.js-oxProductForm',"[{$recordId}]");
+    });
 </script>
