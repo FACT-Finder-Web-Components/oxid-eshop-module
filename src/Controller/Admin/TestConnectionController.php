@@ -30,7 +30,12 @@ class TestConnectionController extends AdminController
             $clientBuilder = oxNew(ClientBuilder::class)
                 ->withServerUrl($this->param('serverUrl'))
                 ->withCredentials($this->getCredentials());
-            $searchAdapter = (new AdapterFactory($clientBuilder, $this->param('version')))->getSearchAdapter();
+            $adapterFactory = new AdapterFactory(
+                $clientBuilder,
+                $this->param('version'),
+                $this->param('apiVersion')
+            );
+            $searchAdapter = $adapterFactory->getSearchAdapter();
             $searchAdapter->search($this->param('channel'), 'FACT-Finder version');
 
             $this->success = true;
