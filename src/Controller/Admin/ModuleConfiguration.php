@@ -58,12 +58,12 @@ class ModuleConfiguration extends ModuleConfiguration_parent
                 ->withServerUrl($this->getConfigParam('ffServerUrl'))
                 ->withCredentials($this->getCredentials());
 
-            $searchAdapter = (new AdapterFactory($clientBuilder, $this->getConfigParam('ffApiVersion')))->getSearchAdapter();
+            $searchAdapter = (new AdapterFactory($clientBuilder, $this->getConfigParam('ffVersion')))->getSearchAdapter();
             $response      = $searchAdapter->search($this->getConfigParam('ffChannel')[Registry::getLang()->getLanguageAbbr()], '*');
             $fieldRoles    = $response['fieldRoles'] ?? $response['searchResult']['fieldRoles'];
 
             $_POST['confstrs']['ffFieldRoles'] = json_encode(
-                $this->getConfigParam('ffApiVersion') === 'ng'
+                $this->getConfigParam('ffVersion') === 'ng'
                     ? oxNew(FieldRolesMapper::class)->map($fieldRoles)
                     : $fieldRoles
             );

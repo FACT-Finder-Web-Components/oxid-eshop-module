@@ -159,7 +159,7 @@ $aModule = [
         ],
         [
             'group'       => 'ffMain',
-            'name'        => 'ffApiVersion',
+            'name'        => 'ffVersion',
             'type'        => 'select',
             'value'       => '7.3',
             'constraints' => '6.9|6.10|6.11|7.0|7.1|7.2|7.3|ng',

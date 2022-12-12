@@ -98,7 +98,7 @@
                 postfix:    jQuery('[name="confstrs[ffAuthPostfix]"]').val(),
                 serverUrl:  jQuery('[name="confstrs[ffServerUrl]"]').val(),
                 channel:    jQuery('[name="confaarrs[ffChannel][de]"]').val(),
-                version:    jQuery('[name="confselects[ffApiVersion]"]').val(),
+                version:    jQuery('[name="confselects[ffVersion]"]').val(),
             }
         }
 

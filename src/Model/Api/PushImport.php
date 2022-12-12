@@ -27,7 +27,7 @@ class PushImport
             return false;
         }
 
-        $apiVersion = $this->config->getConfigParam('ffApiVersion');
+        $apiVersion = $this->config->getConfigParam('ffVersion');
 
         $clientBuilder = oxNew(ClientBuilder::class)
             ->withServerUrl($this->config->getConfigParam('ffServerUrl'))

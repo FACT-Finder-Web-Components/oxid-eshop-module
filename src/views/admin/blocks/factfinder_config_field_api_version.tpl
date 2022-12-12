@@ -1,4 +1,4 @@
-[{if $module_var === 'ffApiVersion'}]
+[{if $module_var === 'ffVersion'}]
     <select class="[{$var_type}]" name="confselects[[{$module_var}]]">
         [{foreach from=$var_constraints.$module_var item=value key=key}]
         <option value="[{$value}]" [{if ($confselects.$module_var==$value)}]selected[{/if}]>[{$value|upper}]</option>
