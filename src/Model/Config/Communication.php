@@ -140,6 +140,11 @@ class Communication implements ParametersSourceInterface
         return $channels[$langAbbr];
     }
 
+    protected function getApiVersion(): string
+    {
+        return (string) $this->getConfig('ffApiVersion') ?? 'v4';
+    }
+
     private function ngPath(array $categories, string $param): string
     {
         $categoryPath = array_map(function ($category) {
@@ -174,10 +179,5 @@ class Communication implements ParametersSourceInterface
     private function useProxy(): bool
     {
         return (bool) $this->getConfig('ffUseProxy');
-    }
-
-    protected function getApiVersion(): string
-    {
-        return (string) $this->getConfig('ffApiVersion') ?? 'v4';
     }
 }
