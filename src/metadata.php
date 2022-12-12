@@ -166,6 +166,14 @@ $aModule = [
             'position'    => $settingPosition++,
         ],
         [
+            'group'       => 'ffMain',
+            'name'        => 'ffApiVersion',
+            'type'        => 'select',
+            'value'       => 'v4',
+            'constraints' => 'v4|v5',
+            'position'    => $settingPosition++,
+        ],
+        [
             'name'     => 'ffFieldRoles',
             'type'     => 'str',
             'value'    => '{"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"Deeplink","description":"Description","displayProductNumber":"ProductNumber","imageUrl":"ImageUrl","masterArticleNumber":"ProductNumber","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"}',

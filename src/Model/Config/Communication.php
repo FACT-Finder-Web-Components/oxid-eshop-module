@@ -39,7 +39,7 @@ class Communication implements ParametersSourceInterface
         $params   = [
             'url'                   => $this->getServerUrl(),
             'version'               => $this->getConfig('ffVersion'),
-            'api'                   => $this->getConfig('ffVersion') ? 'v4' : '',
+            'api'                   => $this->getConfig('ffVersion') ? $this->getApiVersion() : '',
             'channel'               => $this->getChannel($this->view->getActiveLangAbbr()),
             'user-id'               => $this->getUserId(),
             'use-url-parameters'    => $this->getConfig('ffUseUrlParams') ? 'true' : 'false',
@@ -174,5 +174,10 @@ class Communication implements ParametersSourceInterface
     private function useProxy(): bool
     {
         return (bool) $this->getConfig('ffUseProxy');
+    }
+
+    protected function getApiVersion(): string
+    {
+        return (string) $this->getConfig('ffApiVersion') ?? 'v4';
     }
 }
