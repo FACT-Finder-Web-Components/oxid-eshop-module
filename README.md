@@ -82,8 +82,10 @@ Credentials you will be given should be placed here.
 * Authorization Prefix
 * Authorization Postfix   
   **Note:** FACT-Finder® NG does not require fields `Authorization Prefix` and `Authorization Postfix` to be set. Please omit these fields in this case. 
-* API Version - Used FACT-Finder® version   
+* Version - Used FACT-Finder® version   
   **Note:** Module supports FACT-Finder® from version 6.9 up to NG. by selecting the wrong version you may cause the Web Components to be unable to communicate with FACT-Finder® 
+* API Version - Used FACT-Finder® api version   
+  **Note:** Module supports FACT-Finder® api version `v4` and `v5`. By selecting the wrong api version you may cause the Web Components to be unable to communicate with FACT-Finder®
 
 ### Buttons
 

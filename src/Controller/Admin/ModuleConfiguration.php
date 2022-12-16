@@ -58,12 +58,17 @@ class ModuleConfiguration extends ModuleConfiguration_parent
                 ->withServerUrl($this->getConfigParam('ffServerUrl'))
                 ->withCredentials($this->getCredentials());
 
-            $searchAdapter = (new AdapterFactory($clientBuilder, $this->getConfigParam('ffApiVersion')))->getSearchAdapter();
+            $adapterFactory = new AdapterFactory(
+                $clientBuilder,
+                $this->getConfigParam('ffVersion'),
+                $this->getApiVersion()
+            );
+            $searchAdapter = $adapterFactory->getSearchAdapter();
             $response      = $searchAdapter->search($this->getConfigParam('ffChannel')[Registry::getLang()->getLanguageAbbr()], '*');
             $fieldRoles    = $response['fieldRoles'] ?? $response['searchResult']['fieldRoles'];
 
             $_POST['confstrs']['ffFieldRoles'] = json_encode(
-                $this->getConfigParam('ffApiVersion') === 'ng'
+                $this->getConfigParam('ffVersion') === 'ng'
                     ? oxNew(FieldRolesMapper::class)->map($fieldRoles)
                     : $fieldRoles
             );
@@ -144,5 +149,10 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     private function addTplErrorMessage(string $message): void
     {
         $this->addTplParam('postSubmitMessage', sprintf('<div class="text-error">%s</div>', $message));
+    }
+
+    private function getApiVersion(): string
+    {
+        return (string) $this->getConfigParam('ffApiVersion') ?? 'v4';
     }
 }

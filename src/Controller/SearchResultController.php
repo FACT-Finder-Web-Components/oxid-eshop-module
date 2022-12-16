@@ -30,7 +30,7 @@ class SearchResultController extends FrontendController
             $client = oxNew(ClientBuilder::class)
                 ->withServerUrl($this->getConfigParam('ffServerUrl'))
                 ->withCredentials($this->getCredentials())
-                ->withVersion($this->getConfigParam('ffApiVersion'))
+                ->withVersion($this->getConfigParam('ffVersion'))
                 ->build();
 
             switch ($httpMethod) {

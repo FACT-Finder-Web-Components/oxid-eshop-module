@@ -27,15 +27,16 @@ class PushImport
             return false;
         }
 
-        $apiVersion = $this->config->getConfigParam('ffApiVersion');
+        $version    = $this->config->getConfigParam('ffVersion');
+        $apiVersion = (string) $this->config->getConfigParam('ffApiVersion') ?? 'v4';
 
         $clientBuilder = oxNew(ClientBuilder::class)
             ->withServerUrl($this->config->getConfigParam('ffServerUrl'))
             ->withCredentials(oxNew(Credentials::class, ...oxNew(Authorization::class)->getParameters()));
 
-        $importAdapter = (new AdapterFactory($clientBuilder, $apiVersion))->getImportAdapter();
+        $importAdapter = (new AdapterFactory($clientBuilder, $version, $apiVersion))->getImportAdapter();
         $channel       = $this->getChannel(Registry::getLang()->getLanguageAbbr());
-        foreach ($this->getPushImportTypes($apiVersion) as $type) {
+        foreach ($this->getPushImportTypes($version) as $type) {
             $importAdapter->import($channel, $type, $params);
         }
 
@@ -47,10 +48,10 @@ class PushImport
         return (bool) $this->config->getConfigParam('ffAutomaticImport');
     }
 
-    protected function getPushImportTypes(string $apiVersion): array
+    protected function getPushImportTypes(string $version): array
     {
-        return array_map(function (string $type) use ($apiVersion): string {
-            return $apiVersion === 'ng' && $type === 'data' ? 'search' : $type;
+        return array_map(function (string $type) use ($version): string {
+            return $version === 'ng' && $type === 'data' ? 'search' : $type;
         }, array_filter(['data', 'suggest', 'recommendation'], function (string $type): bool {
             return (bool) $this->config->getConfigParam('ffAutomaticImport' . ucfirst($type));
         }));

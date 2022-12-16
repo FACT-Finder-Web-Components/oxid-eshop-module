@@ -38,8 +38,8 @@ class Communication implements ParametersSourceInterface
         $category = $this->view->getActiveCategory();
         $params   = [
             'url'                   => $this->getServerUrl(),
-            'version'               => $this->getConfig('ffApiVersion'),
-            'api'                   => $this->getConfig('ffApiVersion') ? 'v4' : '',
+            'version'               => $this->getConfig('ffVersion'),
+            'api'                   => $this->getConfig('ffVersion') ? $this->getApiVersion() : '',
             'channel'               => $this->getChannel($this->view->getActiveLangAbbr()),
             'user-id'               => $this->getUserId(),
             'use-url-parameters'    => $this->getConfig('ffUseUrlParams') ? 'true' : 'false',
@@ -50,8 +50,8 @@ class Communication implements ParametersSourceInterface
             'keep-url-params'       => 'true',
             'only-search-params'    => 'true',
             'use-browser-history'   => 'true',
-            'category-page'         => $this->getConfig('ffApiVersion') === 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : null,
-            'add-params'            => $this->getConfig('ffApiVersion') !== 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : '',
+            'category-page'         => $this->getConfig('ffVersion') === 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : null,
+            'add-params'            => $this->getConfig('ffVersion') !== 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : '',
         ];
 
         return array_filter($this->mergeParameters($params, $this->getAdditionalParameters()));
@@ -92,7 +92,7 @@ class Communication implements ParametersSourceInterface
             $category     = $parent;
         }
 
-        return $this->getConfig('ffApiVersion') === 'ng'
+        return $this->getConfig('ffVersion') === 'ng'
             ? $this->ngPath($categories, $param)
             : $this->standardPath($categories, $param);
     }
@@ -138,6 +138,11 @@ class Communication implements ParametersSourceInterface
         }
 
         return $channels[$langAbbr];
+    }
+
+    protected function getApiVersion(): string
+    {
+        return (string) $this->getConfig('ffApiVersion') ?? 'v4';
     }
 
     private function ngPath(array $categories, string $param): string
