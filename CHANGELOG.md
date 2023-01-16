@@ -1,9 +1,9 @@
 # Changelog
-## Unreleased
+## [v4.3.6] - 2022.01.16
 ### Add
 - Add option to switch between Api Version
 ### Fix
-- Fix problme with user login tracking event
+- Fix user login tracking event
 
 ## [v4.3.5] - 2022.12.12
 ### Fix
@@ -189,6 +189,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.3.6]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.6
 [v4.3.5]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.5
 [v4.3.4]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.4
 [v4.3.3]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.3
