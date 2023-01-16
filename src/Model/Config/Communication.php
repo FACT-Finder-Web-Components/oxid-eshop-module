@@ -65,7 +65,7 @@ class Communication implements ParametersSourceInterface
             return '';
         }
 
-        $userId = $session->getUser()->getFieldData('oxcustnr');
+        $userId = (string) $session->getUser()->getFieldData('oxcustnr');
 
         return $this->getConfig('ffAnonymizeUserId') ? md5($userId) : $userId;
     }
