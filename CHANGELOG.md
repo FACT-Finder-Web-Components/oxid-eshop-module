@@ -1,4 +1,10 @@
 # Changelog
+## Unreleased
+### Add
+- Add option to switch between Api Version
+### Fix
+- Fix problme with user login tracking event
+
 ## [v4.3.5] - 2022.12.12
 ### Fix
 - Fix cart tracking
