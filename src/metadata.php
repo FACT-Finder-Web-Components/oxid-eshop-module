@@ -113,6 +113,7 @@ $aModule = [
         'ff/campaign/pushed_products.tpl' => 'ff/ffwebcomponents/views/frontend/widget/campaign/pushed_products.tpl',
         'ff/campaign/search_advisor.tpl'  => 'ff/ffwebcomponents/views/frontend/widget/campaign/search_advisor.tpl',
         'ff/communication.tpl'            => 'ff/ffwebcomponents/views/frontend/widget/communication.tpl',
+        'ff/tracking.tpl'                 => 'ff/ffwebcomponents/views/frontend/widget/tracking.tpl',
         'ff/recommendation.tpl'           => 'ff/ffwebcomponents/views/frontend/widget/recommendation.tpl',
         'ff/record_list.tpl'              => 'ff/ffwebcomponents/views/frontend/widget/record_list.tpl',
         'ff/paging.tpl'                   => 'ff/ffwebcomponents/views/frontend/widget/paging.tpl',
@@ -211,6 +212,14 @@ $aModule = [
             'type'     => 'bool',
             'value'    => false,
             'position' => $settingPosition++,
+        ],
+        [
+            'group'       => 'ffAdvanced',
+            'name'        => 'ffTrackingAddToCartCount',
+            'type'        => 'select',
+            'value'       => 'count_as_one',
+            'constraints' => 'count_as_one|count_selected_amount',
+            'position'    => $settingPosition++,
         ],
         [
             'group'    => 'ffFeatures',
