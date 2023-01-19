@@ -18,8 +18,3 @@
 [{if $oConfig->getConfigParam("ffSimilarProducts")}]
     [{include file="ff/similar.tpl" recordId=$recordId}]
 [{/if}]
-<script>
-    document.addEventListener('ffCommunicationReady', function () {
-        registerAddToCartListener('.js-oxProductForm',"[{$recordId}]");
-    });
-</script>

@@ -81,6 +81,11 @@ $aModule = [
             'file'     => 'views/frontend/blocks/campaign/product.tpl',
         ],
         [
+            'template' => 'page/details/inc/productmain.tpl',
+            'block'    => 'details_productmain_social',
+            'file'     => 'views/frontend/blocks/page/details/inc/productmain.tpl',
+        ],
+        [
             'template' => 'page/list/list.tpl',
             'block'    => 'page_list_listbody',
             'file'     => 'views/frontend/blocks/category/list.tpl',
