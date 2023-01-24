@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.3.7] - 2022.01.24
 ### Fix
 - Fix add to cart tracking for configurable products
 ### Change
@@ -195,6 +195,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.3.7]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.7
 [v4.3.6]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.6
 [v4.3.5]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.5
 [v4.3.4]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.4
