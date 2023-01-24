@@ -1,6 +1,9 @@
 [{$smarty.block.parent}]
-[{assign var="recordId" value=$oView->getProduct()|record_id}]
+[{assign var="recordDataJson" value=$oView->getProduct()|record_data_json}]
 
 <script>
-    registerAddToCartListener('.js-oxProductForm',"[{$recordId}]");
+    registerAddToCartListener(
+        '.js-oxProductForm',
+        JSON.parse('[{ $recordDataJson }]')
+    );
 </script>

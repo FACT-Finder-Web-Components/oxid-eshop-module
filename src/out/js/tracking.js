@@ -1,14 +1,13 @@
-function registerAddToCartListener(selector, productId) {
+function registerAddToCartListener(selector, productData) {
     if (typeof factfinder === 'undefined') {
         document.addEventListener('ffCommunicationReady', function () {
-            init(selector, productId);
+            init(selector, productData);
         });
     } else {
-        init(selector, productId);
+        init(selector, productData);
     }
 
-    function init(selector, productId) {
-        let trackingSent = false;
+    function init(selector, productData) {
         const trackingHelper = factfinder.communication.Util.trackingHelper;
 
         function trackAddToCart(product) {
@@ -25,26 +24,7 @@ function registerAddToCartListener(selector, productId) {
 
         if (element) {
             element.addEventListener('submit', function (e) {
-                if (trackingSent === false) {
-                    e.preventDefault();
-                }
-
-                factfinder.communication.EventAggregator.addFFEvent({
-                    type: 'getRecords',
-                    recordId: productId,
-                    idType: 'productNumber',
-                    success: function (response) {
-                        if (response && response[0]) {
-                            const product = response[0];
-                            trackAddToCart(product);
-                        }
-
-                        if (trackingSent === false) {
-                            trackingSent = true;
-                            e.target.submit();
-                        }
-                    },
-                });
+                trackAddToCart(productData);
             });
         }
     }
