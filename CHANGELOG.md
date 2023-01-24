@@ -1,4 +1,10 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix add to cart tracking for configurable products
+### Change
+- Replace getRecords event with object served from backend
+
 ## [v4.3.6] - 2022.01.16
 ### Add
 - Add option to switch between Api Version
