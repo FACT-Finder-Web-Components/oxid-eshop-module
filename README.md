@@ -117,7 +117,8 @@ You can find more information about mentioned properties purposes in Web Compone
 * `Anonymize User ID?` - check this option if you want to send user id with tracking requests in anonymized form. By default the regular id field from user table is sent.  
 * `Use Proxy` - check this option if you want each request sends by Web Components first reach the dedicated module controller which forwards it to the FACT-Finder.
 **Note:** If you plan to use proxy, consider reading below paragraph as it requires full instruction how to enable it properly. 
- 
+* `How to count single click on "Add to cart" button?` - select how would you like to count single click on "Add to cart" button
+
 #### Proxy
 Proxy feature adds a oxid controller which serves as a middleware between Web Components and FACT-Finder®.
 The data flow with proxy enabled is illustrated by the graph below.
