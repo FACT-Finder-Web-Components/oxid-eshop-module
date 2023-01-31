@@ -57,6 +57,15 @@ class Communication implements ParametersSourceInterface
         return array_filter($this->mergeParameters($params, $this->getAdditionalParameters()));
     }
 
+    public function getTrackingSettings(): array
+    {
+        return [
+            'addToCart' => [
+                'count' => $this->getConfig('ffTrackingAddToCartCount') ?? 'count_as_one',
+            ],
+        ];
+    }
+
     protected function getUserId(): string
     {
         $session = Registry::getSession();

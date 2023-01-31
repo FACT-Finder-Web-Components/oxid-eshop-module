@@ -6,6 +6,12 @@
 
 
 <script>
+    [{if $oView->getTrackingSettings()}]
+        const ffTrackingSettings = JSON.parse('[{$oView->getTrackingSettings()|@json_encode}]');
+    [{else}]
+        const ffTrackingSettings = {};
+    [{/if}]
+
     document.addEventListener('ffCommunicationReady', ({ factfinder, searchImmediate }) => {
         const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
             const cookieData = cookie.split('=');
