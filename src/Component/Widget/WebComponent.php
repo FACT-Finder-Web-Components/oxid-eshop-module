@@ -31,4 +31,9 @@ class WebComponent extends WidgetController
     {
         return $this->config->getParameters()['search-immediate'] === 'true';
     }
+
+    public function getTrackingSettings(): array
+    {
+        return $this->config->getTrackingSettings();
+    }
 }

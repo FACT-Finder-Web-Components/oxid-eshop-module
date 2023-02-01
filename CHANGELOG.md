@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Add
+- Tracking
+    - Add option to select scenario when `Add To Cart button` has been clicked
+
 ## [v4.3.7] - 2022.01.24
 ### Fix
 - Fix add to cart tracking for configurable products

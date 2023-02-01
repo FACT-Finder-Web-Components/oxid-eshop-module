@@ -213,6 +213,14 @@ $aModule = [
             'position' => $settingPosition++,
         ],
         [
+            'group'       => 'ffAdvanced',
+            'name'        => 'ffTrackingAddToCartCount',
+            'type'        => 'select',
+            'value'       => 'count_as_one',
+            'constraints' => 'count_as_one|count_selected_amount',
+            'position'    => $settingPosition++,
+        ],
+        [
             'group'    => 'ffFeatures',
             'name'     => 'ffUseForCategories',
             'type'     => 'bool',
