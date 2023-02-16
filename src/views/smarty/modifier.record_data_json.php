@@ -13,10 +13,18 @@ function smarty_modifier_record_data_json(BaseModel $article): string
 {
     /** @var Config $config */
     $config = Registry::getConfig();
+    $username = $config->getConfigParam('ffPublicUsername');
+    $password = $config->getConfigParam('ffPublicPassword');
+
+    if ($username === '' || $password === '') {
+        $username = $config->getConfigParam('ffUsername');
+        $password = $config->getConfigParam('ffPassword');
+    }
+
     $recordId = (string) $article->getFieldData('oxartnum');
     $credentials = new Credentials(
-        $config->getConfigParam('ffUsername'),
-        $config->getConfigParam('ffPassword'),
+        $username,
+        $password,
         $config->getConfigParam('ffAuthPrefix'),
         $config->getConfigParam('ffAuthPostfix')
     );
