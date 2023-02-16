@@ -77,8 +77,10 @@ Credentials you will be given should be placed here.
   **Note:** Server URL should contain a used protocol: (e.g. `https://`) and should end with an endpoint specific for a given version (e.g. in version 7.3 its `FACT-Finder-7.3`, in NG `fact-finder` )
 * Channel - Channel you want to serve data from     
   **Note** The number of channel fields is adjusted to the number of active languages used in application. Please make sure you set a correct channel for a given language.
-* Username
-* Password
+* Username - for importing data to FF
+* Password - for importing data to FF
+* Username - for fetching data from FF
+* Password - for fetching data from FF
 * Authorization Prefix
 * Authorization Postfix   
   **Note:** FACT-Finder® NG does not require fields `Authorization Prefix` and `Authorization Postfix` to be set. Please omit these fields in this case. 

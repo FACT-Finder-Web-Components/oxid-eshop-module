@@ -150,6 +150,18 @@ $aModule = [
         ],
         [
             'group'    => 'ffMain',
+            'name'     => 'ffPublicUsername',
+            'type'     => 'str',
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffMain',
+            'name'     => 'ffPublicPassword',
+            'type'     => 'str',
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffMain',
             'name'     => 'ffAuthPrefix',
             'type'     => 'str',
             'value'    => 'FACT-FINDER',

@@ -3,6 +3,7 @@
 ### Add
 - Tracking
     - Add option to select scenario when `Add To Cart button` has been clicked
+- Add second credentials used for fetching data from FF
 
 ## [v4.3.7] - 2022.01.24
 ### Fix
