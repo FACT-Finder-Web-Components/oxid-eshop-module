@@ -1,17 +1,19 @@
 # Changelog
-## Unreleased
+## [v4.4.0] - 2023.02.20
 ### Add
 - Tracking
     - Add option to select scenario when `Add To Cart button` has been clicked
 - Add second credentials used for fetching data from FF
+### Change
+- upgrade Web Components to 4.2.4
 
-## [v4.3.7] - 2022.01.24
+## [v4.3.7] - 2023.01.24
 ### Fix
 - Fix add to cart tracking for configurable products
 ### Change
 - Replace getRecords event with object served from backend
 
-## [v4.3.6] - 2022.01.16
+## [v4.3.6] - 2023.01.16
 ### Add
 - Add option to switch between Api Version
 ### Fix
@@ -201,6 +203,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.4.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.4.0
 [v4.3.7]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.7
 [v4.3.6]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.6
 [v4.3.5]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.5
