@@ -1,4 +1,4 @@
-function registerAddToCartListener(selector, productData) {
+function registerAddToCartListener(selector, productData, userId) {
     if (typeof factfinder === 'undefined') {
         document.addEventListener('ffCommunicationReady', function () {
             init(selector, productData);
@@ -11,6 +11,13 @@ function registerAddToCartListener(selector, productData) {
         const trackingHelper = factfinder.communication.Util.trackingHelper;
         const element = document.querySelector(selector);
         const amountInput = element.querySelector('#amountToBasket');
+        const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+            const cookieData = cookie.split('=');
+            const [key, value] = cookieData;
+            acc[key] = value;
+
+            return acc;
+        }, {});
 
         function getQuantity()
         {
@@ -27,6 +34,7 @@ function registerAddToCartListener(selector, productData) {
 
         function trackAddToCart(product) {
             const quantity = getQuantity();
+            const userId = cookies['ff_user_id'];
 
             factfinder.communication.Tracking.cart({
                 id: trackingHelper.getTrackingProductId(product),
@@ -34,6 +42,7 @@ function registerAddToCartListener(selector, productData) {
                 price: trackingHelper.getPrice(product),
                 title: trackingHelper.getTitle(product),
                 count: quantity,
+                userId
             });
         }
 
