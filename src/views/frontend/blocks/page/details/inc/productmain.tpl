@@ -3,7 +3,6 @@
 [{assign var="useSidAsUserId" value=$oView->getProduct()|ff_use_sid_a_suser_id}]
 
 <script>
-
     registerAddToCartListener({
         selector: '.js-oxProductForm',
         productData: JSON.parse('[{ $recordDataJson }]'),

@@ -120,6 +120,7 @@ You can find more information about mentioned properties purposes in Web Compone
 * `Use Proxy` - check this option if you want each request sends by Web Components first reach the dedicated module controller which forwards it to the FACT-Finder.
 **Note:** If you plan to use proxy, consider reading below paragraph as it requires full instruction how to enable it properly. 
 * `How to count single click on "Add to cart" button?` - select how would you like to count single click on "Add to cart" button
+* `Send the SID as userId when user not logged in?`
 
 #### Proxy
 Proxy feature adds a oxid controller which serves as a middleware between Web Components and FACT-Finder®.

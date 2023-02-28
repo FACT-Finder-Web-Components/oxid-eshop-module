@@ -1,4 +1,10 @@
 # Changelog
+## Unreleased
+### Add
+- Add add option to send the SID as userId when user not logged in
+### Change
+- Send userId inside "add to cart" tracking
+
 ## [v4.4.0] - 2023.02.20
 ### Add
 - Tracking
