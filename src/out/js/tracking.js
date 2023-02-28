@@ -1,13 +1,13 @@
-function registerAddToCartListener(selector, productData, userId) {
+function registerAddToCartListener({selector, productData, useSidAsUserId}) {
     if (typeof factfinder === 'undefined') {
         document.addEventListener('ffCommunicationReady', function () {
-            init(selector, productData);
+            init(selector, productData, useSidAsUserId);
         });
     } else {
-        init(selector, productData);
+        init(selector, productData, useSidAsUserId);
     }
 
-    function init(selector, productData) {
+    function init(selector, productData, useSidAsUserId) {
         const trackingHelper = factfinder.communication.Util.trackingHelper;
         const element = document.querySelector(selector);
         const amountInput = element.querySelector('#amountToBasket');
@@ -32,17 +32,27 @@ function registerAddToCartListener(selector, productData, userId) {
             return parseInt(amountInput.value);
         }
 
-        function trackAddToCart(product) {
-            const quantity = getQuantity();
+        function getUserId()
+        {
             const userId = cookies['ff_user_id'];
 
+            if (userId) {
+                return userId;
+            }
+
+            if (useSidAsUserId) {
+                return localStorage.getItem('ff_sid');
+            }
+        }
+
+        function trackAddToCart(product) {
             factfinder.communication.Tracking.cart({
                 id: trackingHelper.getTrackingProductId(product),
                 masterId: trackingHelper.getMasterArticleNumber(product),
                 price: trackingHelper.getPrice(product),
                 title: trackingHelper.getTitle(product),
-                count: quantity,
-                userId
+                count: getQuantity(),
+                userId: getUserId()
             });
         }
 

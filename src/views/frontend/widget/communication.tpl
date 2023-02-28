@@ -33,6 +33,10 @@
             if (cookies['ff_has_just_logged_out']) {
                 factfinder.communication.sessionManager.clearAllSessionData();
             }
+
+            if ('[{$oView->useSidAsUserId()|escape:"javascript"}]') {
+                factfinder.communication.sessionManager.setLoginData(localStorage.getItem('ff_sid'));
+            }
         }
 
         if ('[{$oView->getSearchImmediate()|escape:"javascript"}]') {

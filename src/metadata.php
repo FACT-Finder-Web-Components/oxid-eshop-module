@@ -233,6 +233,13 @@ $aModule = [
             'position'    => $settingPosition++,
         ],
         [
+            'group'    => 'ffAdvanced',
+            'name'     => 'ffSidAsUserId',
+            'type'     => 'bool',
+            'value'    => false,
+            'position' => $settingPosition++,
+        ],
+        [
             'group'    => 'ffFeatures',
             'name'     => 'ffUseForCategories',
             'type'     => 'bool',
