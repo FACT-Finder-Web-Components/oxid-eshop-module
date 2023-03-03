@@ -66,6 +66,11 @@ class Communication implements ParametersSourceInterface
         ];
     }
 
+    public function useSidAsUserId(): bool
+    {
+        return $this->getConfig('ffSidAsUserId') ?? false;
+    }
+
     protected function getUserId(): string
     {
         $session = Registry::getSession();

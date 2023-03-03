@@ -32,6 +32,7 @@ $aLang = [
     'SHOP_MODULE_ffTrackingAddToCartCount_count_as_one'          => 'track single click as one',
     'SHOP_MODULE_ffTrackingAddToCartCount_count_selected_amount' => 'track single click with selected amount',
     'SHOP_MODULE_ffUseProxy'                                     => 'Proxy benutzen?',
+    'SHOP_MODULE_ffSidAsUserId'                                  => 'Die SID als userId senden, wenn der Benutzer nicht angemeldet ist?',
     'SHOP_MODULE_ffAddSearchParams'                              => 'Zusätzliche Parameter',
     'HELP_SHOP_MODULE_ffAddSearchParams'                         => 'Es gibt vier Parameter, die Sie einstellen können:`add-params`, `add-tracking-params`, `keep-url-params`, `parameter-whitelist`. Jede Parameterdefinition sollte in einer separaten Zeile stehen. Beispiel-Verwendung: add-params => customParam1 => value1, customParam2 => value2',
     'SHOP_MODULE_GROUP_ffFeatures'                               => 'Features Settings',

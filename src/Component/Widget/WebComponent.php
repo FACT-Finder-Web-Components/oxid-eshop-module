@@ -27,6 +27,11 @@ class WebComponent extends WidgetController
         return $params;
     }
 
+    public function useSidAsUserId(): bool
+    {
+        return $this->config->useSidAsUserId();
+    }
+
     public function getSearchImmediate(): bool
     {
         return $this->config->getParameters()['search-immediate'] === 'true';
