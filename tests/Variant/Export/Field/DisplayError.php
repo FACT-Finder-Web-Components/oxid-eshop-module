@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Variant\Export\Field;
 
-use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
+use Omikron\FactFinder\Oxid\Export\Field\Article\FieldInterface;
 use OxidEsales\Eshop\Application\Model\Article;
 
 class DisplayError implements FieldInterface

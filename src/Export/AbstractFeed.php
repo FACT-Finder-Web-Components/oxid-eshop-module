@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Export;
 
-use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 use OxidEsales\Eshop\Core\Registry;
 use ReflectionClass;
@@ -27,10 +26,5 @@ abstract class AbstractFeed
     protected function getChannel(string $lang): string
     {
         return Registry::getConfig()->getConfigParam('ffChannel')[$lang];
-    }
-
-    protected function getFieldName(FieldInterface $field): string
-    {
-        return $field->getName();
     }
 }

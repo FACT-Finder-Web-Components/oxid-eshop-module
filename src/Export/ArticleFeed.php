@@ -6,10 +6,10 @@ namespace Omikron\FactFinder\Oxid\Export;
 
 use Omikron\FactFinder\Oxid\Export\Data\ArticleCollection;
 use Omikron\FactFinder\Oxid\Export\Entity\DataProvider;
+use Omikron\FactFinder\Oxid\Export\Field\Article\FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Field\Attribute as AttributeField;
 use Omikron\FactFinder\Oxid\Export\Field\Brand;
 use Omikron\FactFinder\Oxid\Export\Field\CategoryPath;
-use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Field\FilterAttributes;
 use Omikron\FactFinder\Oxid\Export\Field\Keywords;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
@@ -61,5 +61,10 @@ class ArticleFeed extends AbstractFeed
         return array_map(function (string $attribute): FieldInterface {
             return oxNew(AttributeField::class, $attribute);
         }, array_values(oxNew(ExportConfig::class)->getSingleFields()));
+    }
+
+    protected function getFieldName(FieldInterface $field): string
+    {
+        return $field->getName();
     }
 }
