@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v4.4.1] - 2023.03.08
 ### Add
 - Add add option to send the SID as userId when user not logged in
 ### Change
@@ -210,6 +210,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.4.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.4.1
 [v4.4.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.4.0
 [v4.3.7]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.7
 [v4.3.6]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.6
