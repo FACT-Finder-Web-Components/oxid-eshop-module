@@ -4,6 +4,7 @@
 - Add add option to send the SID as userId when user not logged in
 ### Change
 - Send userId inside "add to cart" tracking
+- upgrade Web Components to 4.2.5
 
 ## [v4.4.0] - 2023.02.20
 ### Add
