@@ -1,3 +1,6 @@
+parameters:
+    factfinder.navigation.category_path_field_name: 'CategoryPath'
+
 services:
     _defaults:
         public: false
@@ -10,3 +13,9 @@ services:
     Omikron\FactFinder\Oxid\Subscriber\BeforeHeadersSendEventSubscriber:
         class: Omikron\FactFinder\Oxid\Subscriber\BeforeHeadersSendEventSubscriber
         tags: ['kernel.event_subscriber']
+
+    Omikron\FactFinder\Oxid\Export\Field\Category\SourceField:
+        class: Omikron\FactFinder\Oxid\Export\Field\Category\SourceField
+        public: true
+        arguments:
+            $categoryPathFieldName: '%factfinder.navigation.category_path_field_name%'
