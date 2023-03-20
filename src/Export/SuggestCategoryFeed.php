@@ -8,6 +8,7 @@ use Omikron\FactFinder\Oxid\Export\Data\CategoryCollection;
 use Omikron\FactFinder\Oxid\Export\Entity\DataProvider;
 use Omikron\FactFinder\Oxid\Export\Field\Category\CategoryPath;
 use Omikron\FactFinder\Oxid\Export\Field\Category\FieldInterface;
+use Omikron\FactFinder\Oxid\Export\Field\Category\ParentCategory;
 use Omikron\FactFinder\Oxid\Export\Field\Category\SourceField;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
@@ -43,11 +44,11 @@ class SuggestCategoryFeed extends AbstractFeed
 
     protected function getAdditionalFields(): array
     {
-//        'parentCategory',
 //        'Deeplink',
         return [
             oxNew(CategoryPath::class),
             $this->container->get(SourceField::class),
+            oxNew(ParentCategory::class),
         ];
     }
 
