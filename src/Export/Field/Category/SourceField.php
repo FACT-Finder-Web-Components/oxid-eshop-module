@@ -21,7 +21,7 @@ class SourceField implements FieldInterface
         return 'sourceField';
     }
 
-    public function getValue(Category $article, Category $parent): string
+    public function getValue(Category $category, Category $parent): string
     {
         return $this->categoryPathFieldName;
     }

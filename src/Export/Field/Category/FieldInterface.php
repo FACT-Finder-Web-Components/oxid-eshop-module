@@ -10,5 +10,5 @@ interface FieldInterface
 {
     public function getName(): string;
 
-    public function getValue(Category $article, Category $parent): string;
+    public function getValue(Category $category, Category $parent): string;
 }
