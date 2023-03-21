@@ -30,7 +30,7 @@ class SuggestCategoryFeed extends AbstractFeed
 
     public function __construct(FieldInterface ...$fields)
     {
-        $this->fields = $fields;
+        $this->fields    = $fields;
         $this->container = ContainerFactory::getInstance()->getContainer();
     }
 
