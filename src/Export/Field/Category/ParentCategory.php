@@ -20,7 +20,7 @@ class ParentCategory implements FieldInterface
 
     protected function getPath(Category $category, string $glue = '/'): string
     {
-        $path[] = $category->getTitle();
+        $path = [$category->getTitle()];
 
         while ($category->isTopCategory() === false) {
             $category = $category->getParentCategory();
