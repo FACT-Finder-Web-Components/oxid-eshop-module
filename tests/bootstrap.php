@@ -5,6 +5,7 @@ define('SHOP_SOURCE_PATH', dirname(__DIR__) . '/../oxid/source');
 require dirname(__DIR__) . '/tests/Variant/Export/Data/ArticleCollectionVariant.php';
 require dirname(__DIR__) . '/tests/Variant/Export/Field/DisplayError.php';
 require dirname(__DIR__) . '/tests/Variant/Export/Stream/CsvVariant.php';
+require dirname(__DIR__) . '/tests/Variant/Export/SuggestCategoryFeedVariant.php';
 require SHOP_SOURCE_PATH . '/bootstrap.php';
 
 define('ABSPATH', dirname(__DIR__));

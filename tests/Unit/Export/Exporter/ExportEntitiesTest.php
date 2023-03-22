@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Export\Exporter;
+namespace FactFinderTests\Unit\Export\Exporter;
 
 use Omikron\FactFinder\Oxid\Export\Data\ArticleCollection;
 use Omikron\FactFinder\Oxid\Export\Entity\DataProvider;
@@ -54,6 +54,7 @@ class ExportEntitiesTest extends TestCase
     {
         // Given
         $article = new Article([
+            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('bicycle'),
             'oxarticles__oxvarname' => new Field('bicycle'),
             'oxarticles__oxshortdesc' => new Field('bicycle short description'),
@@ -76,6 +77,7 @@ class ExportEntitiesTest extends TestCase
     {
         // Given
         $articleOne = new Article([
+            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('bicycle'),
             'oxarticles__oxvarname' => new Field('bicycle'),
             'oxarticles__oxshortdesc' => new Field('bicycle short description'),
@@ -83,6 +85,7 @@ class ExportEntitiesTest extends TestCase
             'oxarticles__oxprice' => new Field('2000.00'),
         ]);
         $articleTwo = new Article([
+            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('skateboard'),
             'oxarticles__oxvarname' => new Field('skateboard'),
             'oxarticles__oxshortdesc' => new Field('skateboard short description'),
@@ -112,6 +115,7 @@ class ExportEntitiesTest extends TestCase
         $columns = array_merge($this->columns, ['DisplayError']);
         $stream = new CsvVariant($this->tmpfile);
         $articleOne = new Article([
+            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('bicycle'),
             'oxarticles__oxvarname' => new Field('bicycle'),
             'oxarticles__oxshortdesc' => new Field('bicycle short description'),
@@ -120,6 +124,7 @@ class ExportEntitiesTest extends TestCase
             'oxarticles__oxdisplayerror' => new Field('Sample exception message'),
         ]);
         $articleTwo = new Article([
+            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('skateboard'),
             'oxarticles__oxvarname' => new Field('skateboard'),
             'oxarticles__oxshortdesc' => new Field('skateboard short description'),
@@ -146,6 +151,7 @@ class ExportEntitiesTest extends TestCase
         $columns = array_merge($this->columns, ['DisplayError']);
         $stream = new CsvVariant($this->tmpfile);
         $articleOne = new Article([
+            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('bicycle'),
             'oxarticles__oxvarname' => new Field('bicycle'),
             'oxarticles__oxshortdesc' => new Field('bicycle short description'),
@@ -153,6 +159,7 @@ class ExportEntitiesTest extends TestCase
             'oxarticles__oxprice' => new Field('2000.00'),
         ]);
         $articleTwo = new Article([
+            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('skateboard'),
             'oxarticles__oxvarname' => new Field('skateboard'),
             'oxarticles__oxshortdesc' => new Field('skateboard short description'),
@@ -161,6 +168,7 @@ class ExportEntitiesTest extends TestCase
             'oxarticles__oxdisplayerror' => new Field('Sample exception message'),
         ]);
         $articleThree = new Article([
+            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('stand up paddle'),
             'oxarticles__oxvarname' => new Field('stand-up-paddle'),
             'oxarticles__oxshortdesc' => new Field('stand up paddle short description'),
@@ -194,6 +202,7 @@ class ExportEntitiesTest extends TestCase
         $columns = array_merge($this->columns, ['DisplayError']);
         $stream = new CsvVariant($this->tmpfile);
         $articleOne = new Article([
+            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('bicycle'),
             'oxarticles__oxvarname' => new Field('bicycle'),
             'oxarticles__oxshortdesc' => new Field('bicycle short description'),
@@ -201,6 +210,7 @@ class ExportEntitiesTest extends TestCase
             'oxarticles__oxprice' => new Field('2000.00'),
         ]);
         $articleTwo = new Article([
+            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('skateboard'),
             'oxarticles__oxvarname' => new Field('skateboard'),
             'oxarticles__oxshortdesc' => new Field('skateboard short description'),
@@ -209,6 +219,7 @@ class ExportEntitiesTest extends TestCase
             'oxarticles__oxdisplayerror' => new Field('Sample exception message'),
         ]);
         $articleThree = new Article([
+            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('stand up paddle'),
             'oxarticles__oxvarname' => new Field('stand-up-paddle'),
             'oxarticles__oxshortdesc' => new Field('stand up paddle short description'),

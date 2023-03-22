@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Subscriber\AfterRequestProcessedEventSubscriber;
+namespace FactFinderTests\Unit\Subscriber\AfterRequestProcessedEventSubscriber;
 
 use Omikron\FactFinder\Oxid\Subscriber\AfterRequestProcessedEventSubscriber;
 use OxidEsales\Eshop\Core\Config;
