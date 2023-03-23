@@ -11,9 +11,9 @@ use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
-use Tests\Variant\Export\Data\ArticleCollectionVariant;
-use Tests\Variant\Export\Field\DisplayError;
-use Tests\Variant\Export\Stream\CsvVariant;
+use FactFinderTests\Variant\Export\Data\ArticleCollectionVariant;
+use FactFinderTests\Variant\Export\Field\DisplayError;
+use FactFinderTests\Variant\Export\Stream\CsvVariant;
 
 class ExportEntitiesTest extends TestCase
 {

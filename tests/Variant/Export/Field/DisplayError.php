@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Variant\Export\Field;
+namespace FactFinderTests\Variant\Export\Field;
 
 use Omikron\FactFinder\Oxid\Export\Field\Article\FieldInterface;
 use OxidEsales\Eshop\Application\Model\Article;
