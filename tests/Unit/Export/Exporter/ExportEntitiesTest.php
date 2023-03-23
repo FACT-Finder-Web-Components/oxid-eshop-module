@@ -164,10 +164,6 @@ class ExportEntitiesTest extends TestCase
         // Expect & Given
         $logFilename = sprintf('%s/log/fact-finder/exporter.log', SHOP_SOURCE_PATH);
 
-        if (file_exists($logFilename)) {
-            unlink($logFilename);
-        }
-
         $columns = array_merge($this->columns, ['DisplayError']);
         $stream = new CsvVariant($this->tmpfile);
         $articleOne = new Article([
