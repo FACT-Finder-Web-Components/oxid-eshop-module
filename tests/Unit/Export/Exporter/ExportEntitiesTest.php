@@ -54,12 +54,16 @@ class ExportEntitiesTest extends TestCase
     {
         // Given
         $article = new Article([
-            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('bicycle'),
             'oxarticles__oxvarname' => new Field('bicycle'),
             'oxarticles__oxshortdesc' => new Field('bicycle short description'),
             'oxarticles__oxartnum' => new Field('1500'),
             'oxarticles__oxprice' => new Field('2000.00'),
+            'oxarticles__oxparentid' => new Field(''),
+            'oxarticles__oxvarselect' => new Field(''),
+            'oxarticles__oxpic1' => new Field('bicycle_1.jpg'),
+            'oxarticles__oxskipdiscounts' => new Field('0'),
+            'oxarticles__oxvarcount' => new Field('10'),
         ]);
         $products = new ArticleCollectionVariant([$article]);
         $dataProvider = new DataProvider($products);
@@ -77,20 +81,28 @@ class ExportEntitiesTest extends TestCase
     {
         // Given
         $articleOne = new Article([
-            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('bicycle'),
             'oxarticles__oxvarname' => new Field('bicycle'),
             'oxarticles__oxshortdesc' => new Field('bicycle short description'),
             'oxarticles__oxartnum' => new Field('1500'),
             'oxarticles__oxprice' => new Field('2000.00'),
+            'oxarticles__oxparentid' => new Field(''),
+            'oxarticles__oxvarselect' => new Field(''),
+            'oxarticles__oxpic1' => new Field('bicycle_1.jpg'),
+            'oxarticles__oxskipdiscounts' => new Field('0'),
+            'oxarticles__oxvarcount' => new Field('10'),
         ]);
         $articleTwo = new Article([
-            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('skateboard'),
             'oxarticles__oxvarname' => new Field('skateboard'),
             'oxarticles__oxshortdesc' => new Field('skateboard short description'),
             'oxarticles__oxartnum' => new Field('1501'),
             'oxarticles__oxprice' => new Field('300.00'),
+            'oxarticles__oxparentid' => new Field(''),
+            'oxarticles__oxvarselect' => new Field(''),
+            'oxarticles__oxpic1' => new Field('skateboard_1.jpg'),
+            'oxarticles__oxskipdiscounts' => new Field('0'),
+            'oxarticles__oxvarcount' => new Field('10'),
         ]);
         $products = new ArticleCollectionVariant([$articleOne, $articleTwo]);
         $dataProvider = new DataProvider($products);
@@ -115,21 +127,29 @@ class ExportEntitiesTest extends TestCase
         $columns = array_merge($this->columns, ['DisplayError']);
         $stream = new CsvVariant($this->tmpfile);
         $articleOne = new Article([
-            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('bicycle'),
             'oxarticles__oxvarname' => new Field('bicycle'),
             'oxarticles__oxshortdesc' => new Field('bicycle short description'),
             'oxarticles__oxartnum' => new Field('1500'),
             'oxarticles__oxprice' => new Field('2000.00'),
             'oxarticles__oxdisplayerror' => new Field('Sample exception message'),
+            'oxarticles__oxparentid' => new Field(''),
+            'oxarticles__oxvarselect' => new Field(''),
+            'oxarticles__oxpic1' => new Field('bicycle_1.jpg'),
+            'oxarticles__oxskipdiscounts' => new Field('0'),
+            'oxarticles__oxvarcount' => new Field('10'),
         ]);
         $articleTwo = new Article([
-            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('skateboard'),
             'oxarticles__oxvarname' => new Field('skateboard'),
             'oxarticles__oxshortdesc' => new Field('skateboard short description'),
             'oxarticles__oxartnum' => new Field('1501'),
             'oxarticles__oxprice' => new Field('300.00'),
+            'oxarticles__oxparentid' => new Field(''),
+            'oxarticles__oxvarselect' => new Field(''),
+            'oxarticles__oxpic1' => new Field('skateboard_1.jpg'),
+            'oxarticles__oxskipdiscounts' => new Field('0'),
+            'oxarticles__oxvarcount' => new Field('10'),
         ]);
         $products = new ArticleCollectionVariant([$articleOne, $articleTwo]);
         $dataProvider = new DataProvider($products, new DisplayError());
@@ -151,29 +171,41 @@ class ExportEntitiesTest extends TestCase
         $columns = array_merge($this->columns, ['DisplayError']);
         $stream = new CsvVariant($this->tmpfile);
         $articleOne = new Article([
-            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('bicycle'),
             'oxarticles__oxvarname' => new Field('bicycle'),
             'oxarticles__oxshortdesc' => new Field('bicycle short description'),
             'oxarticles__oxartnum' => new Field('1500'),
             'oxarticles__oxprice' => new Field('2000.00'),
+            'oxarticles__oxparentid' => new Field(''),
+            'oxarticles__oxvarselect' => new Field(''),
+            'oxarticles__oxpic1' => new Field('bicycle_1.jpg'),
+            'oxarticles__oxskipdiscounts' => new Field('0'),
+            'oxarticles__oxvarcount' => new Field('10'),
         ]);
         $articleTwo = new Article([
-            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('skateboard'),
             'oxarticles__oxvarname' => new Field('skateboard'),
             'oxarticles__oxshortdesc' => new Field('skateboard short description'),
             'oxarticles__oxartnum' => new Field('1501'),
             'oxarticles__oxprice' => new Field('300.00'),
             'oxarticles__oxdisplayerror' => new Field('Sample exception message'),
+            'oxarticles__oxparentid' => new Field(''),
+            'oxarticles__oxvarselect' => new Field(''),
+            'oxarticles__oxpic1' => new Field('skateboard_1.jpg'),
+            'oxarticles__oxskipdiscounts' => new Field('0'),
+            'oxarticles__oxvarcount' => new Field('10'),
         ]);
         $articleThree = new Article([
-            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('stand up paddle'),
             'oxarticles__oxvarname' => new Field('stand-up-paddle'),
             'oxarticles__oxshortdesc' => new Field('stand up paddle short description'),
             'oxarticles__oxartnum' => new Field('1502'),
             'oxarticles__oxprice' => new Field('900.00'),
+            'oxarticles__oxparentid' => new Field(''),
+            'oxarticles__oxvarselect' => new Field(''),
+            'oxarticles__oxpic1' => new Field('stand-up-paddle_1.jpg'),
+            'oxarticles__oxskipdiscounts' => new Field('0'),
+            'oxarticles__oxvarcount' => new Field('10'),
         ]);
         $products = new ArticleCollectionVariant([$articleOne, $articleTwo, $articleThree]);
         $dataProvider = new DataProvider($products, new DisplayError());
@@ -202,29 +234,41 @@ class ExportEntitiesTest extends TestCase
         $columns = array_merge($this->columns, ['DisplayError']);
         $stream = new CsvVariant($this->tmpfile);
         $articleOne = new Article([
-            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('bicycle'),
             'oxarticles__oxvarname' => new Field('bicycle'),
             'oxarticles__oxshortdesc' => new Field('bicycle short description'),
             'oxarticles__oxartnum' => new Field('1500'),
             'oxarticles__oxprice' => new Field('2000.00'),
+            'oxarticles__oxparentid' => new Field(''),
+            'oxarticles__oxvarselect' => new Field(''),
+            'oxarticles__oxpic1' => new Field('bicycle_1.jpg'),
+            'oxarticles__oxskipdiscounts' => new Field('0'),
+            'oxarticles__oxvarcount' => new Field('10'),
         ]);
         $articleTwo = new Article([
-            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('skateboard'),
             'oxarticles__oxvarname' => new Field('skateboard'),
             'oxarticles__oxshortdesc' => new Field('skateboard short description'),
             'oxarticles__oxartnum' => new Field('1501'),
             'oxarticles__oxprice' => new Field('300.00'),
             'oxarticles__oxdisplayerror' => new Field('Sample exception message'),
+            'oxarticles__oxparentid' => new Field(''),
+            'oxarticles__oxvarselect' => new Field(''),
+            'oxarticles__oxpic1' => new Field('skateboard_1.jpg'),
+            'oxarticles__oxskipdiscounts' => new Field('0'),
+            'oxarticles__oxvarcount' => new Field('10'),
         ]);
         $articleThree = new Article([
-            'oxarticles__oxskipdiscounts' => new Field('0'),
             'oxarticles__oxtitle' => new Field('stand up paddle'),
             'oxarticles__oxvarname' => new Field('stand-up-paddle'),
             'oxarticles__oxshortdesc' => new Field('stand up paddle short description'),
             'oxarticles__oxartnum' => new Field('1502'),
             'oxarticles__oxprice' => new Field('900.00'),
+            'oxarticles__oxparentid' => new Field(''),
+            'oxarticles__oxvarselect' => new Field(''),
+            'oxarticles__oxpic1' => new Field('stand-up-paddle_1.jpg'),
+            'oxarticles__oxskipdiscounts' => new Field('0'),
+            'oxarticles__oxvarcount' => new Field('10'),
         ]);
         $products = new ArticleCollectionVariant([$articleOne, $articleTwo, $articleThree]);
         $dataProvider = new DataProvider($products, new DisplayError());
