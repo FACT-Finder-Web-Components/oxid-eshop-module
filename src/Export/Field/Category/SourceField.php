@@ -18,7 +18,7 @@ class SourceField implements FieldInterface
 
     public function getName(): string
     {
-        return 'sourceField';
+        return 'SourceField';
     }
 
     public function getValue(Category $category, Category $parent): string
