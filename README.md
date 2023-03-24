@@ -218,6 +218,10 @@ For category export:
 
     [YOUR_SHOP_URL]?cl=http_category_feed&fnc=export
 
+For suggest category export:
+
+    [YOUR_SHOP_URL]?cl=http_suggest_category_feed&fnc=export
+
 **Note:** Please keep in mind that the feed file is not directly available under the location. There is an export mechanism that does it on demand, so the whole process may take some time.
 
 #### Basic Authentication
