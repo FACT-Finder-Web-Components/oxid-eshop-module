@@ -6,29 +6,32 @@ namespace Omikron\FactFinder\Oxid\Export;
 
 use Omikron\FactFinder\Oxid\Export\Data\CategoryCollection;
 use Omikron\FactFinder\Oxid\Export\Entity\DataProvider;
-use Omikron\FactFinder\Oxid\Export\Field\Article\FieldInterface;
+use Omikron\FactFinder\Oxid\Export\Field\Category\CategoryPath;
+use Omikron\FactFinder\Oxid\Export\Field\Category\Deeplink;
+use Omikron\FactFinder\Oxid\Export\Field\Category\FieldInterface;
+use Omikron\FactFinder\Oxid\Export\Field\Category\ParentCategory;
+use Omikron\FactFinder\Oxid\Export\Field\Category\SourceField;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use Psr\Container\ContainerInterface;
 
-class CategoryFeed extends AbstractFeed
+class SuggestCategoryFeed extends AbstractFeed
 {
     /** @var FieldInterface[] */
     protected $fields;
 
+    /** @var ContainerInterface */
+    protected $container;
+
     protected $columns = [
         'Id',
-        'ShopId',
-        'ExternalLink',
-        'ParentId',
-        'RootId',
         'Name',
-        'ImageUrl',
-        'Description',
-        'LongDescription',
     ];
 
     public function __construct(FieldInterface ...$fields)
     {
-        $this->fields = $fields;
+        $this->fields    = $fields;
+        $this->container = ContainerFactory::getInstance()->getContainer();
     }
 
     public function generate(StreamInterface $stream): void
@@ -42,7 +45,12 @@ class CategoryFeed extends AbstractFeed
 
     protected function getAdditionalFields(): array
     {
-        return [];
+        return [
+            oxNew(CategoryPath::class),
+            $this->container->get(SourceField::class),
+            oxNew(ParentCategory::class),
+            oxNew(Deeplink::class),
+        ];
     }
 
     protected function getFieldName(FieldInterface $field): string

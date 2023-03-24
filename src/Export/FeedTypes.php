@@ -9,8 +9,9 @@ use InvalidArgumentException;
 class FeedTypes
 {
     protected static $feedTypes = [
-        'product'  => ArticleFeed::class,
-        'category' => CategoryFeed::class,
+        'product'         => ArticleFeed::class,
+        'category'        => CategoryFeed::class,
+        'suggestCategory' => SuggestCategoryFeed::class,
     ];
 
     public static function getFeedType($requestedType): string

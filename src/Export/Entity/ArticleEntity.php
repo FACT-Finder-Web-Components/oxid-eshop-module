@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Export\Entity;
 
-use Omikron\FactFinder\Oxid\Export\Field\FieldInterface;
+use Omikron\FactFinder\Oxid\Export\Field\Article\FieldInterface;
 use OxidEsales\Eshop\Application\Model\Article;
 
 class ArticleEntity implements ExportEntityInterface, DataProviderInterface

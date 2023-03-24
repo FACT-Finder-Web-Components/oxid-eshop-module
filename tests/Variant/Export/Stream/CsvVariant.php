@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Variant\Export\Stream;
+namespace FactFinderTests\Variant\Export\Stream;
 
 use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 

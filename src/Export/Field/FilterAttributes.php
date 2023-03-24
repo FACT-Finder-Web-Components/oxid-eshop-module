@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Export\Field;
 
+use Omikron\FactFinder\Oxid\Export\Field\Article\FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Filter\ExtendedTextFilter;
 use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
 use OxidEsales\Eshop\Application\Model\Article;

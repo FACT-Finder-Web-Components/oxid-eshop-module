@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Add
+- Export category for suggest
+
 ## [v4.4.1] - 2023.03.08
 ### Add
 - Add add option to send the SID as userId when user not logged in
