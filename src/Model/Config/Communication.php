@@ -66,6 +66,11 @@ class Communication implements ParametersSourceInterface
         ];
     }
 
+    public function useInfiniteScroll(): bool
+    {
+        return (bool) $this->getConfig('ffInfiniteScroll') ?? false;
+    }
+
     public function useSidAsUserId(): bool
     {
         return $this->getConfig('ffSidAsUserId') ?? false;

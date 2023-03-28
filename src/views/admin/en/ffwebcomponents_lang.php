@@ -41,6 +41,7 @@ $aLang = [
     'SHOP_MODULE_ffRecommendations'                              => 'Recommendations',
     'SHOP_MODULE_ffSimilarProducts'                              => 'Similar products',
     'SHOP_MODULE_ffPushedProducts'                               => 'Pushed products',
+    'SHOP_MODULE_ffInfiniteScroll'                               => 'Use infinite scroll for search results',
     'SHOP_MODULE_GROUP_ffFeed'                                   => 'Feed settings',
     'SHOP_MODULE_ffExportAttributes'                             => 'Exported Attributes',
     'HELP_SHOP_MODULE_ffExportAttributes'                        => 'Select attributes which you want to export. Multi-Attribute set to `No` means that specific attribute will be exported in separate column.',

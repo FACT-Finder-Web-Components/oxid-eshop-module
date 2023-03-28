@@ -20,7 +20,11 @@
         <div class="clearfix"></div>
     </div>
     <div class="list-container">
-        [{include file="ff/record_list.tpl"}]
+        [{if $oConfig->getConfigParam("ffInfiniteScroll")}]
+            [{include file="ff/infinite_scroll_record_list.tpl"}]
+        [{else}]
+            [{include file="ff/record_list.tpl"}]
+        [{/if}]
     </div>
 
     <div class="toolbar toolbar-bottom">

@@ -40,7 +40,17 @@
         }
 
         if ('[{$oView->getSearchImmediate()|escape:"javascript"}]') {
-            searchImmediate();
+            [{if $oView->useInfiniteScroll()}]
+                if (!!history.state?.scrollInfo) {
+                    history.scrollRestoration = `manual`;
+                    searchImmediate(history.state.scrollInfo.searchParams);
+                    factfinder.elements.InfiniteScrolling.restoreScrollPosition(history.state.scrollInfo);
+                } else {
+                    searchImmediate();
+                }
+            [{else}]
+                searchImmediate();
+            [{/if}]
         }
     });
 </script>
