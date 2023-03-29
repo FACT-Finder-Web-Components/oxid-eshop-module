@@ -27,11 +27,14 @@
         [{/if}]
     </div>
 
-    <div class="toolbar toolbar-bottom">
-        <div class="refineParams row clear bottomParams">
-            [{include file="ff/paging.tpl"}]
+    [{if $oConfig->getConfigParam("ffInfiniteScroll") === false}]
+        <div class="toolbar toolbar-bottom">
+            <div class="refineParams row clear bottomParams">
+                [{include file="ff/paging.tpl"}]
+            </div>
         </div>
-    </div>
+    [{/if}]
+
     [{if $oConfig->getConfigParam("ffCampaigns")}]
         [{block name="ff_campaign_feedback_bottom"}]
             [{include file="ff/campaign/feedbacktext.tpl" label="below search result"}]
