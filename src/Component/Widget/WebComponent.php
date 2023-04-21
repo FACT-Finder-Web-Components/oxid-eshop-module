@@ -37,6 +37,11 @@ class WebComponent extends WidgetController
         return $this->config->getParameters()['search-immediate'] === 'true';
     }
 
+    public function useInfiniteScroll(): bool
+    {
+        return $this->config->useInfiniteScroll();
+    }
+
     public function getTrackingSettings(): array
     {
         return $this->config->getTrackingSettings();

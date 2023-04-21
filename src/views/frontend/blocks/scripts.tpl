@@ -14,6 +14,12 @@ document.addEventListener('ffReady', function (ff) {
     factfinder.sdk = 'oe-v4.4.1';
     factfinder.communication.fieldRoles = [{$oConfig->getConfigParam('ffFieldRoles')}];
 
+    [{if $oConfig->getConfigParam("ffInfiniteScroll")}]
+        factfinder.communication.EventAggregator.addBeforeDispatchingCallback(event => {
+            event.usePersonalization = false;
+        });
+    [{/if}]
+
     [{if $oConfig->getConfigParam('ffUseProxy')}]
         factfinder.__experimental.sandboxMode.enable = true;
 
