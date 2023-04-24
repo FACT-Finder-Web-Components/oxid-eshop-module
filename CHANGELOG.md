@@ -2,6 +2,7 @@
 ## Unreleased
 ### Add
 - Export category for suggest
+- Disable-cache param in shop configuration and ff-communication
 
 ## [v4.4.1] - 2023.03.08
 ### Add
