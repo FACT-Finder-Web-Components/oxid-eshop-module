@@ -41,6 +41,7 @@ $aLang = [
     'SHOP_MODULE_ffRecommendations'                              => 'Empfehlungen',
     'SHOP_MODULE_ffSimilarProducts'                              => 'Ähnliche Produkte',
     'SHOP_MODULE_ffPushedProducts'                               => 'Pushed products',
+    'SHOP_MODULE_ffDisableCache'                                 => 'Disable cache',
     'SHOP_MODULE_GROUP_ffFeed'                                   => 'Feed-Einstellungen',
     'SHOP_MODULE_ffExportAttributes'                             => 'Exportierte Attribute',
     'HELP_SHOP_MODULE_ffExportAttributes'                        => 'Wähle die Attribute aus, die du exportieren möchtest. Multi-Attribute werden in einer Spalte gruppiert, und stellen typischerweise Filter dar.',

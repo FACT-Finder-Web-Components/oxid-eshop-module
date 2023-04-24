@@ -28,6 +28,6 @@ class GenerateTest extends TestCase
         $feed->generate($this->stream);
 
         // Then
-        $this->assertEquals("Id;Name;CategoryPath;sourceField;ParentCategory;Deeplink\n", $this->stream->getOutput()[0]);
+        $this->assertEquals("Id;Name;CategoryPath;SourceField;ParentCategory;Deeplink\n", $this->stream->getOutput()[0]);
     }
 }
