@@ -52,6 +52,7 @@ class Communication implements ParametersSourceInterface
             'use-browser-history'   => 'true',
             'category-page'         => $this->getConfig('ffVersion') === 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : null,
             'add-params'            => $this->getConfig('ffVersion') !== 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : '',
+            'disable-cache'         => $this->getConfig('ffDisableCache') ? 'true' : 'false',
         ];
 
         return array_filter($this->mergeParameters($params, $this->getAdditionalParameters()));
