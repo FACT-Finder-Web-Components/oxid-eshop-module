@@ -3,10 +3,11 @@
 ### Add
 - Export category for suggest
 - Disable-cache param in shop configuration and ff-communication
+- upgrade Web Components to 4.2.6
 
 ## [v4.4.1] - 2023.03.08
 ### Add
-- Add add option to send the SID as userId when user not logged in
+- Add option to send the SID as userId when user not logged in
 ### Change
 - Send userId inside "add to cart" tracking
 - upgrade Web Components to 4.2.5
