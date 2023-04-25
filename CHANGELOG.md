@@ -1,8 +1,9 @@
 # Changelog
-## Unreleased
+## [v4.4.2] - 2023.04.25
 ### Add
 - Export category for suggest
-- Disable-cache param in shop configuration and ff-communication
+- `disable-cache` param in shop configuration and ff-communication
+### Change
 - upgrade Web Components to 4.2.6
 
 ## [v4.4.1] - 2023.03.08
@@ -216,6 +217,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v4.4.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.4.2
 [v4.4.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.4.1
 [v4.4.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.4.0
 [v4.3.7]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.3.7
