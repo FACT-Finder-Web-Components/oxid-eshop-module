@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Change
+- Upgrade Web Components to 4.2.8
+
 ## [v4.4.2] - 2023.04.25
 ### Add
 - Export category for suggest
