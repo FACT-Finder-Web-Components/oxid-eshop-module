@@ -12,6 +12,7 @@ class UploadFactory
     {
         $params = oxNew(FtpParams::class);
         $params->setOverrides($overrides);
+
         return $params->getType() === 'ftp' ? oxNew(FtpClient::class, $params) : oxNew(SftpClient::class, $params);
     }
 }

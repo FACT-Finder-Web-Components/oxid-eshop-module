@@ -40,8 +40,8 @@ customise them.
 - [License](#license)
 
 ## Requirements
-- OXID eShop 6.x
-- PHP version 7.2 or higher
+- OXID eShop 7.x
+- PHP version 8.0 or higher
 
 ## Installation
 

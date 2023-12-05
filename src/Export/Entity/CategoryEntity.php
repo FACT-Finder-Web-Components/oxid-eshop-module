@@ -9,27 +9,11 @@ use OxidEsales\Eshop\Application\Model\Category;
 
 class CategoryEntity implements DataProviderInterface, ExportEntityInterface
 {
-    /** @var Category */
-    protected $category;
-
-    /** @var Category */
-    protected $parent;
-
-    /** @var FieldInterface[] */
-    protected $fields;
-
-    /**
-     * CategoryEntity constructor.
-     *
-     * @param Category         $article
-     * @param Category         $parent
-     * @param FieldInterface[] $fields
-     */
-    public function __construct(Category $article, Category $parent, array $fields)
-    {
-        $this->category = $article;
-        $this->parent   = $parent;
-        $this->fields   = $fields;
+    public function __construct(
+        protected readonly Category $category,
+        protected readonly Category $parent,
+        protected readonly array $fields
+    ) {
     }
 
     public function getEntities(): iterable

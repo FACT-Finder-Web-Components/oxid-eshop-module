@@ -13,18 +13,12 @@ use RuntimeException;
 
 class Communication implements ParametersSourceInterface
 {
-    /** @var FrontendController */
-    protected $view;
+    protected array $mergeableParams = ['add-params', 'add-tracking-params', 'keep-url-params', 'parameter-whitelist'];
 
-    /** @var string[] */
-    protected $mergeableParams = ['add-params', 'add-tracking-params', 'keep-url-params', 'parameter-whitelist'];
+    private TextFilter $filter;
 
-    /** @var TextFilter */
-    private $filter;
-
-    public function __construct(FrontendController $view)
+    public function __construct(protected readonly FrontendController $view)
     {
-        $this->view   = $view;
         $this->filter = oxNew(TextFilter::class);
     }
 
@@ -88,6 +82,7 @@ class Communication implements ParametersSourceInterface
     protected function getLocale(string $abbr): string
     {
         $locales = ['de' => 'de-DE', 'en' => 'en-US'];
+
         return $locales[$abbr] ?? $locales['en'];
     }
 
@@ -102,6 +97,7 @@ class Communication implements ParametersSourceInterface
     protected function getCategoryPath(Category $category, string $param = 'CategoryPath'): string
     {
         $categories = [$this->filter->filterValue($category->getTitle())];
+
         while ($parent = $category->getParentCategory()) {
             $categories[] = $this->filter->filterValue($parent->getTitle());
             $category     = $parent;
@@ -173,6 +169,7 @@ class Communication implements ParametersSourceInterface
     {
         $path  = 'ROOT';
         $value = ['navigation=true'];
+
         foreach (array_reverse($categories) as $category) {
             $value[] = sprintf("filter{$param}%s=%s", $path, urlencode(trim($category)));
             $path .= urlencode('/' . $this->encodeCategoryName(trim($category)));

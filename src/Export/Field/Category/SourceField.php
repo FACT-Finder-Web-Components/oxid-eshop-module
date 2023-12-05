@@ -8,12 +8,8 @@ use OxidEsales\Eshop\Application\Model\Category;
 
 class SourceField implements FieldInterface
 {
-    /** @var string */
-    private $categoryPathFieldName;
-
-    public function __construct(string $categoryPathFieldName)
+    public function __construct(private readonly string $categoryPathFieldName)
     {
-        $this->categoryPathFieldName = $categoryPathFieldName;
     }
 
     public function getName(): string
