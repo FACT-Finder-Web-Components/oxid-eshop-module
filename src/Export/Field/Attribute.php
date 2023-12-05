@@ -10,12 +10,8 @@ use OxidEsales\Eshop\Core\DatabaseProvider;
 
 class Attribute implements FieldInterface
 {
-    /** @var string */
-    private $name;
-
-    public function __construct(string $name)
+    public function __construct(private readonly string $name)
     {
-        $this->name = $name;
     }
 
     public function getName(): string

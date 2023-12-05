@@ -13,26 +13,18 @@ use OxidEsales\EshopCommunity\Internal\Transition\ShopEvents\AfterRequestProcess
 
 class AfterRequestProcessedEventSubscriber extends AbstractShopAwareEventSubscriber
 {
-    /** @var Request */
-    private $request;
-
-    /** @var Session */
-    private $session;
-
-    /** @var Config */
-    private $config;
 
     public function __construct(
-        ?Request $request = null,
-        ?Session $session = null,
-        ?Config $config = null
+        private ?Request $request = null,
+        private ?Session $session = null,
+        private ?Config $config = null
     ) {
         $this->request = $request ?? Registry::getRequest();
         $this->session = $session ?? Registry::getSession();
         $this->config  = $config ?? Registry::getConfig();
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             AfterRequestProcessedEvent::NAME => [

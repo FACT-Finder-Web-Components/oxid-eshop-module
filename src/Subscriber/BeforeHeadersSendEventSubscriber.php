@@ -15,29 +15,20 @@ use OxidEsales\EshopCommunity\Internal\Transition\ShopEvents\BeforeHeadersSendEv
 class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
 {
     public const HAS_JUST_LOGGED_IN  = 'ff_has_just_logged_in';
-
     public const HAS_JUST_LOGGED_OUT = 'ff_has_just_logged_out';
-
     public const USER_ID_COOKIE      = 'ff_user_id';
 
-    /** @var Config */
-    private $config;
-
-    /** @var Session */
-    private $session;
-
-    /** @var bool */
-    private $isTriggered = false;
+    private bool $isTriggered = false;
 
     public function __construct(
-        ?Session $session = null,
-        ?Config $config = null
+        private ?Session $session = null,
+        private ?Config $config = null
     ) {
         $this->session = $session ?? Registry::getSession();
         $this->config  = $config ?? Registry::getConfig();
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             BeforeHeadersSendEvent::NAME => [

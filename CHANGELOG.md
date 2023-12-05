@@ -1,4 +1,9 @@
 # Changelog
+## Unreleased
+### Breaking
+- Drop PHP 7.4 version support
+- Update PHP version from 7.x to 8.x
+
 ## [v4.4.3] - 2023.10.10
 ### Change
 - Upgrade Web Components to 4.2.8

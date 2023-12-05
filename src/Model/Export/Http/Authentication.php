@@ -12,17 +12,13 @@ use OxidEsales\Eshop\Core\UtilsServer;
 
 class Authentication
 {
-    /** @var Request */
-    private $request;
+    private Request $request;
 
-    /** @var Utils */
-    private $utils;
+    private Utils $utils;
 
-    /** @var UtilsServer */
-    private $utilsServer;
+    private UtilsServer $utilsServer;
 
-    /** @var Config */
-    private $config;
+    private Config $config;
 
     public function __construct()
     {

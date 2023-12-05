@@ -11,15 +11,10 @@ use Omikron\FactFinder\Oxid\Model\Config\FtpParams;
 
 class FtpClient implements UploadInterface
 {
-    /** @var FtpParams */
-    private $params;
+    private Filesystem $connection;
 
-    /** @var Filesystem */
-    private $connection;
-
-    public function __construct(FtpParams $params)
+    public function __construct(private readonly FtpParams $params)
     {
-        $this->params = $params;
     }
 
     public function upload($handle, string $filename)

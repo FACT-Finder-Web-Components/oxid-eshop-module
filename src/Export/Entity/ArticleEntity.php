@@ -9,20 +9,11 @@ use OxidEsales\Eshop\Application\Model\Article;
 
 class ArticleEntity implements ExportEntityInterface, DataProviderInterface
 {
-    /** @var Article */
-    protected $article;
-
-    /** @var Article */
-    protected $parent;
-
-    /** @var FieldInterface[] */
-    protected $fields;
-
-    public function __construct(Article $article, Article $parent, array $fields = [])
-    {
-        $this->article = $article;
-        $this->parent  = $parent;
-        $this->fields  = $fields;
+    public function __construct(
+        protected readonly Article $article,
+        protected readonly Article $parent,
+        protected readonly array $fields = []
+    ) {
     }
 
     public function toArray(): array
@@ -46,6 +37,7 @@ class ArticleEntity implements ExportEntityInterface, DataProviderInterface
     public function getEntities(): iterable
     {
         yield $this;
+
         foreach ($this->article->getSimpleVariants() ?? [] as $variant) {
             yield new static($variant, $this->article, $this->fields);
         }

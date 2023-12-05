@@ -9,10 +9,9 @@ use OxidEsales\Eshop\Core\Registry;
 
 class FtpParams
 {
-    /** @var Config */
-    private $config;
+    private Config $config;
 
-    private $overrides = [];
+    private array $overrides = [];
 
     public function __construct()
     {

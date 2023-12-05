@@ -36,6 +36,7 @@ class PushImport
 
         $importAdapter = (new AdapterFactory($clientBuilder, $version, $apiVersion))->getImportAdapter();
         $channel       = $this->getChannel(Registry::getLang()->getLanguageAbbr());
+
         foreach ($this->getPushImportTypes($version) as $type) {
             $importAdapter->import($channel, $type, $params);
         }

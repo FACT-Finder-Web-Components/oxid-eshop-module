@@ -11,12 +11,8 @@ use OxidEsales\Eshop\Core\Model\ListModel;
 
 class ArticleCollection implements \IteratorAggregate, CollectionInterface
 {
-    /** @var int */
-    private $batchSize;
-
-    public function __construct(int $batchSize = 100)
+    public function __construct(private readonly int $batchSize = 100)
     {
-        $this->batchSize = $batchSize;
     }
 
     public function getEntity(): string
