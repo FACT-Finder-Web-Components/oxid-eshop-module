@@ -27,7 +27,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Omikron\\FactFinder\\Oxid\\": "src"
+      "Omikron\\FactFinder\\Oxid\\": "src/"
     }
   },
   "autoload-dev": {

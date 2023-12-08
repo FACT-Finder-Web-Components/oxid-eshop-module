@@ -32,7 +32,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
             $this->addTplParam('shopLanguages', Registry::getLang()->getActiveShopLanguageIds());
             $this->addTplParam('localizedFields', array_reduce($this->localizedFields, function (array $result, string $field): array {
                 $value = html_entity_decode($this->getViewDataElement('confaarrs')[$field] ?? '');
-                return $result + [$field => $this->_multilineToAarray($value)];
+                return $result + [$field => $this->multilineToAarray($value)];
             }, []));
             $this->addTplParam('availableAttributes', json_encode($allAttributes, JSON_HEX_QUOT | JSON_HEX_APOS));
             $this->addTplParam('selectedAttributes', json_encode($this->getSelectedAttributes($allAttributes), JSON_HEX_QUOT | JSON_HEX_APOS));
@@ -100,11 +100,14 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     {
         if ($this->isFactFinder()) {
             $_POST['confaarrs'] = array_reduce($this->localizedFields, function (array $result, string $field): array {
-                return [$field => $this->_aarrayToMultiline($result[$field] ?? [])] + $result;
+                return [$field => $this->aarrayToMultiline($result[$field] ?? [])] + $result;
             }, $_POST['confaarrs'] ?? []);
 
-            $_POST['confaarrs']['ffExportAttributes'] = $this->_aarrayToMultiline(
-                $this->flatMap($this->prepareAttributes(), $_POST['confaarrs']['ffExportAttributes'] ?? [])
+            $_POST['confaarrs']['ffExportAttributes'] = $this->aarrayToMultiline(
+                $this->flatMap(
+                    $this->prepareAttributes(),
+                    !empty($_POST['confaarrs']['ffExportAttributes']) ? $_POST['confaarrs']['ffExportAttributes'] : []
+                )
             );
         }
     }
