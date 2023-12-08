@@ -19,10 +19,10 @@ class TestConnectionController extends AdminController
     protected $_sThisTemplate = 'admin/page/ajax_result.tpl';
 
     /** @var string */
-    protected $result = '';
+    protected string $result = '';
 
     /** @var bool */
-    protected $success = false;
+    protected bool $success = false;
 
     public function testConnection(): void
     {

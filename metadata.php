@@ -7,7 +7,7 @@ namespace Omikron\FactFinder\Oxid;
 use OxidEsales\Eshop\Application\Controller\Admin\ModuleConfiguration;
 
 $moduleId        = 'ffwebcomponents';
-$moduleName      = 'FACT-Finder<sup>&reg;</sup> Web Components';
+$moduleName      = 'FACT-Finder Web Components';
 $companyName     = 'Omikron Data Quality GmbH';
 $settingPosition = 0;
 
@@ -19,8 +19,8 @@ $aModule = [
     'author'      => "{$moduleName} Team",
     'url'         => 'https://web-components.fact-finder.de',
     'description' => "{$moduleName} integration for OXID eShop by {$companyName}",
-    'version'     => '4.4.3',
-    'thumbnail'   => 'out/pictures/logo.png',
+    'version'     => '5.0.0',
+    'thumbnail'   => 'pictures/logo.png',
     'controllers' => [
         'ffWebComponent'             => Component\Widget\WebComponent::class,
         'search_result'              => Controller\SearchResultController::class,
@@ -34,22 +34,22 @@ $aModule = [
         [
             'template' => 'module_config.tpl',
             'block'    => 'admin_module_config_form',
-            'file'     => 'views/admin/blocks/factfinder_module_config.tpl',
+            'file'     => 'views/smarty/admin/blocks/factfinder_module_config.tpl',
         ],
         [
             'template' => 'module_config.tpl',
             'block'    => 'admin_module_config_var_type_aarr',
-            'file'     => 'views/admin/blocks/factfinder_config_field_channel.tpl',
+            'file'     => 'views/smarty/admin/blocks/factfinder_config_field_channel.tpl',
         ],
         [
             'template' => 'module_config.tpl',
             'block'    => 'admin_module_config_var_type_aarr',
-            'file'     => 'views/admin/blocks/factfinder_config_field_attributes.tpl',
+            'file'     => 'views/smarty/admin/blocks/factfinder_config_field_attributes.tpl',
         ],
         [
             'template' => 'module_config.tpl',
             'block'    => 'admin_module_config_var_type_select',
-            'file'     => 'views/admin/blocks/factfinder_config_field_api_version.tpl',
+            'file'     => 'views/smarty/admin/blocks/factfinder_config_field_api_version.tpl',
         ],
         [
             'template' => 'layout/base.tpl',
@@ -99,14 +99,14 @@ $aModule = [
         [
             'template' => 'module_config.tpl',
             'block'    => 'admin_module_config_var_type_str',
-            'file'     => 'views/admin/blocks/factfinder_config_field_ftp_key.tpl',
+            'file'     => 'views/smarty/admin/blocks/factfinder_config_field_ftp_key.tpl',
         ],
     ],
     'extend'      => [
         ModuleConfiguration::class => \Omikron\FactFinder\Oxid\Controller\Admin\ModuleConfiguration::class,
     ],
     'templates'   => [
-        'admin/page/ajax_result.tpl'      => 'ff/ffwebcomponents/views/admin/ajax_result.tpl',
+        'admin/page/ajax_result.tpl'      => 'views/smarty/admin/ajax_result.tpl',
         'page/factfinder/result.tpl'      => 'ff/ffwebcomponents/views/frontend/page/result.tpl',
         'ff/asn.tpl'                      => 'ff/ffwebcomponents/views/frontend/widget/asn.tpl',
         'ff/breadcrumbs.tpl'              => 'ff/ffwebcomponents/views/frontend/widget/breadcrumbs.tpl',
@@ -134,7 +134,8 @@ $aModule = [
         [
             'group'    => 'ffMain',
             'name'     => 'ffChannel',
-            'type'     => 'aarr',
+            'type'     => 'arr',
+            'value'    => ['1' => 'de', '2' => 'en'],
             'position' => $settingPosition++,
         ],
         [

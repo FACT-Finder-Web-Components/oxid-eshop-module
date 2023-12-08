@@ -11,8 +11,9 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Session;
 use OxidEsales\EshopCommunity\Internal\Framework\Event\AbstractShopAwareEventSubscriber;
 use OxidEsales\EshopCommunity\Internal\Transition\ShopEvents\BeforeHeadersSendEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
+class BeforeHeadersSendEventSubscriber implements EventSubscriberInterface
 {
     public const HAS_JUST_LOGGED_IN  = 'ff_has_just_logged_in';
     public const HAS_JUST_LOGGED_OUT = 'ff_has_just_logged_out';
@@ -31,7 +32,7 @@ class BeforeHeadersSendEventSubscriber extends AbstractShopAwareEventSubscriber
     public static function getSubscribedEvents(): array
     {
         return [
-            BeforeHeadersSendEvent::NAME => [
+            'BeforeHeadersSendEvent' => [
                 ['hasJustLoggedIn'],
                 ['hasJustLoggedOut'],
                 ['setIsTriggered'],
