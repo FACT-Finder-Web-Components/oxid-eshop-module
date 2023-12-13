@@ -39,7 +39,7 @@
 input[type="button"].row-remove {
     width:12px;
     height: 11px;
-    background: url(../../../../../../out/admin/img/delete_button.gif) no-repeat;
+    background: url(../../../../../out/admin_twig/img/delete_button.gif) no-repeat;
     background-size: cover;
     padding: 0;
     margin: 0;

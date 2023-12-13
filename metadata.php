@@ -134,7 +134,7 @@ $aModule = [
         [
             'group'    => 'ffMain',
             'name'     => 'ffChannel',
-            'type'     => 'arr',
+            'type'     => 'aarr',
             'value'    => ['1' => 'de', '2' => 'en'],
             'position' => $settingPosition++,
         ],
