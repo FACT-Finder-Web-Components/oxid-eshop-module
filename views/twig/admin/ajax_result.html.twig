@@ -1,0 +1,15 @@
+{% if result is iterable %}
+    {% for el in result %}
+        {% if success %}
+            <div class="text-success">{{ el }}</div>
+        {% else %}
+            <div class="text-error">{{ el }}</div>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    {% if success %}
+        <div class="text-success">{{ result }}</div>
+    {% else %}
+        <div class="text-error">{{ result }}</div>
+    {% endif %}
+{% endif %}

@@ -1,0 +1,151 @@
+{% extends 'module_config.html.twig' %}
+
+{% block admin_module_config_group %}
+    {{ parent() }}
+{#    {{ style({ include: oViewConf.getModuleUrl('ffwebcomponents', '/admin/css/styles.css') }) }}#}
+    {{ style({ include: oViewConf.getModuleUrl('ffwebcomponents', '/admin/css/styles.css') }) }}
+    <link rel="stylesheet" href="{{ oViewConf.getModuleUrl('ffwebcomponents', '/admin/css/styles.css') }}" />
+
+
+    {% if var_group is same as('ffExport') %}
+        <input type="submit"
+               id="ffFieldRoles"
+               class="confinput"
+               name="ffGetFieldRoles"
+               value="Update Field Roles"
+               onclick="Javascript:document.module_configuration.fnc.value='updateFieldRoles'"/>
+        <input type="button"
+               id="ffExportFeed"
+               class="confinput"
+               name="ffExportFeed"
+               value="Export feed"
+               onclick="exportFeed()"/>
+        <input type="button"
+               id="ffTestConnection"
+               class="confinput"
+               name="ffTestConnection"
+               value="Test Connection"
+               onclick="testConnection()"/>
+
+        <input type="button"
+               id="ffTestFtpConnection"
+               class="confinput"
+               name="ffTestFtpConnection"
+               value="Test FTP Connection"
+               onclick="testFtpConnection()"/>
+        <div id="spinner">
+        </div>
+        <div id="result">
+            {{ postSubmitMessage }}
+        </div>
+        <script>
+            function testConnection() {
+                jQuery.ajax({
+                    url:      'index.php?cl=test_connection&fnc=testConnection&stoken=' + jQuery('input[name="stoken"]').val(),
+                    type:     'POST',
+                    dataType: 'json',
+                    data: getTestConnectionParams(),
+                    beforeSend: function() {
+                        jQuery('#spinner').addClass('loading');
+                    },
+                    complete: function (response) {
+                        setTimeout(
+                            function () {
+                                jQuery('#spinner').removeClass('loading');
+                                jQuery('#result').html(response.responseText);
+                            }, 1000
+                        )
+                    }
+                });
+            }
+
+            function testFtpConnection() {
+                jQuery.ajax({
+                    url: 'index.php?cl=test_connection&fnc=testFtpConnection&stoken=' + jQuery('input[name="stoken"]').val(),
+                    type: 'POST',
+                    dataType: 'json',
+                    data: getTestFtpConnectionParams(),
+                    beforeSend: function () {
+                        jQuery('#spinner').addClass('loading');
+                    },
+                    complete: function (response) {
+                        setTimeout(
+                            function () {
+                                jQuery('#spinner').removeClass('loading');
+                                jQuery('#result').html(response.responseText);
+                            }, 1000
+                        )
+                    }
+                });
+            }
+
+            function exportFeed() {
+                jQuery.ajax({
+                    url:  'index.php?cl=article_feed&fnc=export&stoken=' + jQuery('input[name="stoken"]').val(),
+                    type: 'POST',
+                    beforeSend: function() {
+                        jQuery('#spinner').addClass('loading');
+                    },
+                    complete: function (response) {
+                        setTimeout(
+                            function () {
+                                jQuery('#spinner').removeClass('loading');
+                                jQuery('#result').html(response.responseText);
+                            }, 1000
+                        )
+                    }
+                });
+            }
+
+            function getTestConnectionParams() {
+                return {
+                    username:   jQuery('[name="confstrs[ffUsername]"]').val(),
+                    password:   jQuery('[name="confstrs[ffPassword]"]').val(),
+                    prefix:     jQuery('[name="confstrs[ffAuthPrefix]"]').val(),
+                    postfix:    jQuery('[name="confstrs[ffAuthPostfix]"]').val(),
+                    serverUrl:  jQuery('[name="confstrs[ffServerUrl]"]').val(),
+                    channel:    jQuery('[name="confaarrs[ffChannel][de]"]').val(),
+                    version:    jQuery('[name="confselects[ffVersion]"]').val(),
+                    apiVersion: jQuery('[name="confselects[ffApiVersion]"]').val(),
+                }
+            }
+
+            function getTestFtpConnectionParams() {
+                return {
+                    type:       jQuery('[name="confselects[ffFtpType]"]').val(),
+                    host:       jQuery('[name="confstrs[ffFtpHost]"]').val(),
+                    port:       jQuery('[name="confstrs[ffFtpPort]"]').val(),
+                    username:   jQuery('[name="confstrs[ffFtpUser]"]').val(),
+                    root:       jQuery('[name="confstrs[ffFtpRoot]"]').val(),
+                    password:   jQuery('[name="confstrs[ffFtpPassword]"]').val(),
+                    privateKey: jQuery('[name="confstrs[ffFtpKey]"]').val(),
+                    passphrase: jQuery('[name="confstrs[ffFtpKeyPassphrase]"]').val(),
+                    ssl:        jQuery('[name="confbools[ffSSLEnabled]"]').val(),
+                }
+            }
+        </script>
+
+    {% endif %}
+{% endblock %}
+
+{% block admin_module_config_var_types %}
+
+
+{#     config channels#}
+    {% if module_var is same as('ffChannel') %}
+        {% for shopLanguage in shopLanguages %}
+            <div style="width:262px; display: flex; flex-direction: row; justify-content: space-between; align-items: baseline;{% if not loop.last %}margin-bottom:5px{% endif %}">
+                <span style="font-weight: normal;margin-right: 5px;">{{ shopLanguage }}</span>
+                <input type=text class="txt" style="flex: 1 0 auto" name="confaarrs[{{ module_var }}][{{ shopLanguage }}]"
+                       value="{{ localizedFields[module_var][shopLanguage]|raw }}" />
+            </div>
+        {% endfor %}
+    {% elseif module_var is same as('ffExportAttributes')%}
+        {{ script({ include: oViewConf.getModuleUrl('ffwebcomponents', '/js/ff-web-components/vendor/custom-elements-es5-adapter.js'), priority: 1, dynamic: __oxid_include_dynamic }) }}
+        {{ script({ include: oViewConf.getModuleUrl('ffwebcomponents', '/js/ff-web-components/vendor/webcomponents-loader.js'), priority: 2, dynamic: __oxid_include_dynamic }) }}
+        {{ script({ include: oViewConf.getModuleUrl('ffwebcomponents', '/admin/js/attribute-rows.js'), priority: 3, dynamic: __oxid_include_dynamic }) }}
+        <attribute-rows headers='Name, Multi-Attribute' selected-attributes='{{ selectedAttributes }}' available-attributes='{{ availableAttributes }}'></attribute-rows>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
