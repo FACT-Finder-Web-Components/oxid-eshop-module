@@ -57,7 +57,6 @@ class TestConnectionController extends AdminController
 
             $ftpUploader = UploadFactory::create($params);
             $ftpUploader->upload(tmpfile(), 'testconnection');
-
             $this->success = true;
             $this->result  = Registry::getLang()->translateString('FF_TEST_CONNECTION_SUCCESS', null, true);
         } catch (\Exception $e) {

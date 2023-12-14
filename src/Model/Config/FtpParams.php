@@ -6,61 +6,65 @@ namespace Omikron\FactFinder\Oxid\Model\Config;
 
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingService;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 
 class FtpParams
 {
-    private Config $config;
-
     private array $overrides = [];
+    private ModuleSettingService $moduleSettingService;
 
     public function __construct()
     {
-        $this->config = Registry::getConfig();
+        $this->moduleSettingService = ContainerFactory::getInstance()
+            ->getContainer()
+            ->get(ModuleSettingServiceInterface::class);
     }
 
     public function getType(): string
     {
-        return (string) ($this->overrides['type'] ?? $this->config->getConfigParam('ffFtpType'));
+        return (string) ($this->overrides['type'] ?? $this->moduleSettingService->getString('ffFtpType', 'ffwebcomponents'));
     }
 
     public function getHost(): string
     {
-        return (string) ($this->overrides['host'] ?? $this->config->getConfigParam('ffFtpHost'));
+        return (string) ($this->overrides['host'] ?? $this->moduleSettingService->getString('ffFtpHost', 'ffwebcomponents'));
     }
 
     public function getPort(): int
     {
-        return (int) ($this->overrides['port'] ?? $this->config->getConfigParam('ffFtpPort'));
+        return (int) ($this->overrides['port'] ?? $this->moduleSettingService->getInteger('ffFtpPort', 'ffwebcomponents'));
     }
 
     public function getUser(): string
     {
-        return (string) ($this->overrides['username'] ?? $this->config->getConfigParam('ffFtpUser'));
+        return (string) ($this->overrides['username'] ?? $this->moduleSettingService->getString('ffFtpUser', 'ffwebcomponents'));
     }
 
     public function getPassword(): string
     {
-        return (string) ($this->overrides['password'] ?? $this->config->getConfigParam('ffFtpPassword'));
+        return (string) ($this->overrides['password'] ?? $this->moduleSettingService->getString('ffFtpPassword', 'ffwebcomponents'));
     }
 
     public function useSsl(): bool
     {
-        return boolval($this->overrides['ssl'] ?? $this->config->getConfigParam('ffSSLEnabled'));
+        return boolval($this->overrides['ssl'] ?? $this->moduleSettingService->getBoolean('ffSSLEnabled', 'ffwebcomponents'));
     }
 
     public function getPrivateKey(): string
     {
-        return trim((string) ($this->overrides['privateKey'] ?? $this->config->getConfigParam('ffFtpKey')));
+        return trim((string) ($this->overrides['privateKey'] ?? $this->moduleSettingService->getString('ffFtpKey', 'ffwebcomponents')));
     }
 
     public function getRoot(): string
     {
-        return (string) ($this->overrides['root'] ?? $this->config->getConfigParam('ffFtpRoot'));
+        return (string) ($this->overrides['root'] ?? $this->moduleSettingService->getString('ffFtpRoot', 'ffwebcomponents'));
     }
 
     public function getKeyPassphrase(): string
     {
-        return (string) ($this->overrides['passphrase'] ?? $this->config->getConfigParam('ffFtpKeyPassphrase'));
+        return (string) ($this->overrides['passphrase'] ?? $this->moduleSettingService->getString('ffFtpKeyPassphrase', 'ffwebcomponents'));
     }
 
     public function toArray(): array

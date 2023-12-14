@@ -131,7 +131,7 @@
 {% block admin_module_config_var_types %}
 
 
-{#     config channels#}
+{#     config specific admin settings (channels, export attributes and ftp key) #}
     {% if module_var is same as('ffChannel') %}
         {% for shopLanguage in shopLanguages %}
             <div style="width:262px; display: flex; flex-direction: row; justify-content: space-between; align-items: baseline;{% if not loop.last %}margin-bottom:5px{% endif %}">
@@ -145,6 +145,10 @@
         {{ script({ include: oViewConf.getModuleUrl('ffwebcomponents', '/js/ff-web-components/vendor/webcomponents-loader.js'), priority: 2, dynamic: __oxid_include_dynamic }) }}
         {{ script({ include: oViewConf.getModuleUrl('ffwebcomponents', '/admin/js/attribute-rows.js'), priority: 3, dynamic: __oxid_include_dynamic }) }}
         <attribute-rows headers='Name, Multi-Attribute' selected-attributes='{{ selectedAttributes }}' available-attributes='{{ availableAttributes }}'></attribute-rows>
+    {% elseif module_var is same as('ffFtpKey')%}
+        <textarea class="txtfield" style="width: 430px;" name="confstrs[{{ module_var }}]" wrap="off" cols="50" id="ftp_key">
+        {{ confstrs[module_var]|raw }}
+        </textarea>
     {% else %}
         {{ parent() }}
     {% endif %}
