@@ -13,20 +13,15 @@ class FtpClient implements UploadInterface
 {
     private Filesystem $connection;
 
-    public function __construct(private readonly FtpParams $params)
+    public function __construct(FtpParams $params)
     {
+        $this->connection = new Filesystem(
+            new FtpAdapter(FtpConnectionOptions::fromArray($params->toArray()))
+        );
     }
 
-    public function upload($handle, string $filename)
+    public function upload($handle, string $filename): void
     {
-        if (!$this->connection) {
-            $this->connect($this->params);
-        }
         $this->connection->writeStream($filename, $handle);
-    }
-
-    private function connect(FtpParams $params)
-    {
-        $this->connection = new Filesystem(new FtpAdapter(FtpConnectionOptions::fromArray($params->toArray())));
     }
 }

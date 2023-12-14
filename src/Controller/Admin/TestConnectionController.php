@@ -15,14 +15,15 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class TestConnectionController extends AdminController
 {
-    /** @var string */
-    protected $_sThisTemplate = 'admin/page/ajax_result.tpl';
-
-    /** @var string */
     protected string $result = '';
-
-    /** @var bool */
     protected bool $success = false;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->_sThisTemplate = '@ffwebcomponents/admin/ajax_result.html.twig';
+    }
 
     public function testConnection(): void
     {
@@ -50,6 +51,7 @@ class TestConnectionController extends AdminController
         try {
             $params = array_reduce(array_keys($_POST), function (array $acc, string $key): array {
                 $request = Registry::get(Request::class);
+
                 return $acc + [$key => (string) $request->getRequestEscapedParameter($key)];
             }, []);
 
@@ -68,6 +70,7 @@ class TestConnectionController extends AdminController
         $ret = parent::render();
         $this->addTplParam('result', $this->result);
         $this->addTplParam('success', $this->success);
+
         return $ret;
     }
 
@@ -80,6 +83,7 @@ class TestConnectionController extends AdminController
     {
         /** @var Request $request */
         $request = Registry::get(Request::class);
+
         return (string) $request->getRequestEscapedParameter($key);
     }
 }
