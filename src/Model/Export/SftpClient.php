@@ -13,20 +13,15 @@ class SftpClient implements UploadInterface
 {
     private Filesystem $connection;
 
-    public function __construct(private readonly FtpParams $ftpParams)
+    public function __construct(FtpParams $ftpParams)
     {
+        $this->connection = new Filesystem(
+            new SftpAdapter(SftpConnectionProvider::fromArray($ftpParams->toArray()), $ftpParams->getRoot())
+        );
     }
 
     public function upload($handle, string $filename)
     {
-        if (!$this->connection) {
-            $this->connect($this->ftpParams);
-        }
         $this->connection->writeStream($filename, $handle);
-    }
-
-    private function connect(FtpParams $params)
-    {
-        $this->connection = new Filesystem(new SftpAdapter(SftpConnectionProvider::fromArray($params->toArray()), $params->getRoot()));
     }
 }
