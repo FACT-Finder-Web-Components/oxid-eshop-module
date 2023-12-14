@@ -7,6 +7,7 @@ namespace Omikron\FactFinder\Oxid\Export\Field;
 use Omikron\FactFinder\Oxid\Export\Field\Article\FieldInterface;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\DatabaseProvider;
+use OxidEsales\Eshop\Core\TableViewNameGenerator;
 
 class Attribute implements FieldInterface
 {
@@ -36,8 +37,9 @@ class Attribute implements FieldInterface
     protected function getAttributes($articleId, $parentId): array
     {
         $connection         = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC);
-        $oxAttribute        = getViewName('oxattribute');
-        $oxobject2Attribute = getViewName('oxobject2attribute');
+        $tableViewNameGenerator = new TableViewNameGenerator();
+        $oxAttribute        = $tableViewNameGenerator->getViewName('oxattribute');
+        $oxobject2Attribute = $tableViewNameGenerator->getViewName('oxobject2attribute');
 
         $select = "select {$oxAttribute}.`oxid`, {$oxAttribute}.`oxtitle`, o2a.`oxvalue` from {$oxobject2Attribute} as o2a "
             . "left join {$oxAttribute} on {$oxAttribute}.oxid = o2a.oxattrid "

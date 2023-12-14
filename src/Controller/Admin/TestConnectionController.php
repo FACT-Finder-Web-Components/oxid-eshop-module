@@ -55,6 +55,8 @@ class TestConnectionController extends AdminController
                 return $acc + [$key => (string) $request->getRequestEscapedParameter($key)];
             }, []);
 
+//            dump($params); die();
+
             $ftpUploader = UploadFactory::create($params);
             $ftpUploader->upload(tmpfile(), 'testconnection');
 

@@ -38,9 +38,9 @@ class FilterAttributes extends Attribute implements FieldInterface
         $oxvarname   = $parent->getFieldData('oxvarname');
         $oxvarselect = $article->getFieldData('oxvarselect');
 
-        return implode('', array_map(function (string $key, string $value): string {
+        return implode('', array_map(function (string $key, ?string $value): string {
             return $this->filter->filterValue($key) . '=' . $this->filter->filterValue($value) . '|';
-        }, ...array_map(function (string $value): array {
+        }, ...array_map(function (?string $value): array {
             return explode(' | ', $value);
         }, [$this->validateValueForExport($oxvarname), $this->validateValueForExport($oxvarselect)])));
     }

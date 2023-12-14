@@ -306,7 +306,7 @@ $aModule = [
         [
             'group'    => 'ffExport',
             'name'     => 'ffFtpPort',
-            'type'     => 'str',
+            'type'     => 'num',
             'position' => $settingPosition++,
         ],
         [

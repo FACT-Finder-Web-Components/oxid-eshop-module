@@ -13,9 +13,12 @@ use OxidEsales\Eshop\Core\Registry;
 
 class ArticleFeedController extends AdminController
 {
-    /** @var string */
-    protected $_sThisTemplate = 'admin/page/ajax_result.tpl';
+    public function __construct()
+    {
+        parent::__construct();
 
+        $this->_sThisTemplate = '@ffwebcomponents/admin/ajax_result.html.twig';
+    }
     public function export(): void
     {
         $handle    = tmpfile();

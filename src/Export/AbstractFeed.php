@@ -6,6 +6,8 @@ namespace Omikron\FactFinder\Oxid\Export;
 
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use ReflectionClass;
 
 abstract class AbstractFeed
@@ -18,6 +20,7 @@ abstract class AbstractFeed
     public function getFileName(): string
     {
         $slug = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', (new ReflectionClass($this))->getShortName()));
+
         return sprintf('export.%s.%s.csv', $slug, $this->getChannel(Registry::getLang()->getLanguageAbbr()));
     }
 
@@ -25,6 +28,10 @@ abstract class AbstractFeed
 
     protected function getChannel(string $lang): string
     {
-        return Registry::getConfig()->getConfigParam('ffChannel')[$lang];
+        $moduleSettingService = ContainerFactory::getInstance()
+            ->getContainer()
+            ->get(ModuleSettingServiceInterface::class);
+
+        return $moduleSettingService->getCollection('ffChannel', 'ffwebcomponents')[$lang];
     }
 }
