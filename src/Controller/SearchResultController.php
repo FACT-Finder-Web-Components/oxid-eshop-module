@@ -13,8 +13,12 @@ use Psr\Http\Message\ResponseInterface;
 
 class SearchResultController extends FrontendController
 {
-    /** @var string */
-    protected $_sThisTemplate = 'page/factfinder/result.tpl';
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->_sThisTemplate = '@ffwebcomponents/webcomponents/blocks/page/result.html.twig';
+    }
 
     public function proxy(): void
     {

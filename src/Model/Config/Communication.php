@@ -9,6 +9,8 @@ use Omikron\FactFinder\Oxid\Export\Filter\TextFilter;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Application\Model\Category;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use RuntimeException;
 
 class Communication implements ParametersSourceInterface
@@ -16,10 +18,14 @@ class Communication implements ParametersSourceInterface
     protected array $mergeableParams = ['add-params', 'add-tracking-params', 'keep-url-params', 'parameter-whitelist'];
 
     private TextFilter $filter;
+    private ModuleSettingServiceInterface $moduleSettingService;
 
     public function __construct(protected readonly FrontendController $view)
     {
         $this->filter = oxNew(TextFilter::class);
+        $this->moduleSettingService = ContainerFactory::getInstance()
+            ->getContainer()
+            ->get(ModuleSettingServiceInterface::class);
     }
 
     /**
@@ -32,11 +38,11 @@ class Communication implements ParametersSourceInterface
         $category = $this->view->getActiveCategory();
         $params   = [
             'url'                   => $this->getServerUrl(),
-            'version'               => $this->getConfig('ffVersion'),
-            'api'                   => $this->getConfig('ffVersion') ? $this->getApiVersion() : '',
+            'version'               => $this->moduleSettingService->getString('ffVersion', 'ffwebcomponents'),
+            'api'                   => $this->moduleSettingService->getString('ffVersion', 'ffwebcomponents') ? $this->getApiVersion() : '',
             'channel'               => $this->getChannel($this->view->getActiveLangAbbr()),
             'user-id'               => $this->getUserId(),
-            'use-url-parameters'    => $this->getConfig('ffUseUrlParams') ? 'true' : 'false',
+            'use-url-parameters'    => $this->moduleSettingService->getBoolean('ffUseUrlParams', 'ffwebcomponents') ? 'true' : 'false',
             'currency-code'         => $this->view->getActCurrency()->name,
             'currency-fields'       => $this->getAdditionalCurrencyFields(),
             'currency-country-code' => $this->getLocale($this->view->getActiveLangAbbr()),
@@ -44,9 +50,9 @@ class Communication implements ParametersSourceInterface
             'keep-url-params'       => 'true',
             'only-search-params'    => 'true',
             'use-browser-history'   => 'true',
-            'category-page'         => $this->getConfig('ffVersion') === 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : null,
-            'add-params'            => $this->getConfig('ffVersion') !== 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : '',
-            'disable-cache'         => $this->getConfig('ffDisableCache') ? 'true' : 'false',
+            'category-page'         => $this->moduleSettingService->getString('ffVersion', 'ffwebcomponents') === 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : null,
+            'add-params'            => $this->moduleSettingService->getString('ffVersion', 'ffwebcomponents') !== 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : '',
+            'disable-cache'         => $this->moduleSettingService->getBoolean('ffDisableCache', 'ffwebcomponents') ? 'true' : 'false',
         ];
 
         return array_filter($this->mergeParameters($params, $this->getAdditionalParameters()));
@@ -56,14 +62,14 @@ class Communication implements ParametersSourceInterface
     {
         return [
             'addToCart' => [
-                'count' => $this->getConfig('ffTrackingAddToCartCount') ?? 'count_as_one',
+                'count' => $this->moduleSettingService->getBoolean('ffDisableCache', 'ffwebcomponents') ?? 'count_as_one',
             ],
         ];
     }
 
     public function useSidAsUserId(): bool
     {
-        return $this->getConfig('ffSidAsUserId') ?? false;
+        return $this->moduleSettingService->getBoolean('ffSidAsUserId', 'ffwebcomponents') ?? false;
     }
 
     protected function getUserId(): string
@@ -76,7 +82,7 @@ class Communication implements ParametersSourceInterface
 
         $userId = (string) $session->getUser()->getFieldData('oxcustnr');
 
-        return $this->getConfig('ffAnonymizeUserId') ? md5($userId) : $userId;
+        return $this->moduleSettingService->getBoolean('ffAnonymizeUserId', 'ffwebcomponents') ? md5($userId) : $userId;
     }
 
     protected function getLocale(string $abbr): string
@@ -88,7 +94,9 @@ class Communication implements ParametersSourceInterface
 
     protected function getServerUrl(): string
     {
-        return (string) $this->getConfig('ffUseProxy') ? 'index.php' : $this->getConfig('ffServerUrl');
+        return (string) $this->moduleSettingService->getBoolean('ffUseProxy', 'ffwebcomponents') ?
+            'index.php' :
+            (string) $this->moduleSettingService->getString('ffServerUrl', 'ffwebcomponents');
     }
 
     /**
@@ -103,14 +111,9 @@ class Communication implements ParametersSourceInterface
             $category     = $parent;
         }
 
-        return $this->getConfig('ffVersion') === 'ng'
+        return (string) $this->moduleSettingService->getString('ffVersion', 'ffwebcomponents') === 'ng'
             ? $this->ngPath($categories, $param)
             : $this->standardPath($categories, $param);
-    }
-
-    protected function getConfig(string $name)
-    {
-        return $this->view->getConfig()->getConfigParam($name);
     }
 
     protected function isSearch(): bool
@@ -120,7 +123,7 @@ class Communication implements ParametersSourceInterface
 
     protected function useForCategories(): bool
     {
-        return $this->getConfig('ffUseForCategories') && $this->view->getActionClassName() === 'alist';
+        return $this->moduleSettingService->getBoolean('ffUseForCategories', 'ffwebcomponents') && $this->view->getActionClassName() === 'alist';
     }
 
     protected function getAdditionalCurrencyFields(): string
@@ -130,7 +133,7 @@ class Communication implements ParametersSourceInterface
 
     protected function getAdditionalParameters(): array
     {
-        return (array) $this->getConfig('ffAddSearchParams');
+        return (array) $this->moduleSettingService->getCollection('ffAddSearchParams', 'ffwebcomponents');
     }
 
     protected function mergeParameters(array $baseParams, array $additionalParams): array
@@ -142,7 +145,7 @@ class Communication implements ParametersSourceInterface
 
     protected function getChannel(string $langAbbr): string
     {
-        $channels = $this->getConfig('ffChannel');
+        $channels = $this->moduleSettingService->getCollection('ffChannel', 'ffwebcomponents');
 
         if (!isset($channels[$langAbbr])) {
             throw new RuntimeException("No channel for used language: $langAbbr");
@@ -153,7 +156,7 @@ class Communication implements ParametersSourceInterface
 
     protected function getApiVersion(): string
     {
-        return (string) $this->getConfig('ffApiVersion') ?? 'v4';
+        return (string) $this->moduleSettingService->getString('ffApiVersion', 'ffwebcomponents') ?? 'v4';
     }
 
     private function ngPath(array $categories, string $param): string
@@ -190,6 +193,6 @@ class Communication implements ParametersSourceInterface
 
     private function useProxy(): bool
     {
-        return (bool) $this->getConfig('ffUseProxy');
+        return (bool) $this->moduleSettingService->getBoolean('ffUseProxy', 'ffwebcomponents');
     }
 }

@@ -12,7 +12,7 @@ if (!$shopId && $shopId !== 0) {
 
 $languageId = $options['l'] ?? 0;
 
-require_once dirname(__FILE__) . '/../../../../bootstrap.php';
+require_once dirname(__FILE__) . '/../../../../../bootstrap.php';
 
 define('OX_IS_ADMIN', true);
 

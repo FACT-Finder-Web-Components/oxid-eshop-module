@@ -1,0 +1,60 @@
+{% extends "layout/base.html.twig" %}
+
+{% block head_css %}
+    {{ parent() }}
+    {{ style({ include: oViewConf.getModuleUrl("ffwebcomponents", "/css/styles.css") }) }}
+
+    <script src="{{ oViewConf.getModuleUrl('ffwebcomponents', '/js/ff-web-components/vendor/custom-elements-es5-adapter.js')|escape }}"></script>
+    <script src="{{ oViewConf.getModuleUrl('ffwebcomponents', '/js/ff-web-components/vendor/webcomponents-loader.js')|escape }}"></script>
+    <script src="{{ oViewConf.getModuleUrl('ffwebcomponents', '/js/ff-web-components/bundle.js')|escape }}" defer></script>
+    <script src="{{ oViewConf.getModuleUrl("ffwebcomponents", "/js/utils.js")|escape }}"></script>
+    <style>[unresolved]{opacity:0;display:none}</style>
+
+    <script>
+        document.addEventListener('ffReady', function (ff) {
+            factfinder.sdk = 'oe-v5.0.0';
+            factfinder.communication.fieldRoles = {{ oViewConf.getFFStringConfigParam('ffFieldRoles')|raw }};
+
+            {% if oViewConf.getFFBoolConfigParam('ffUseProxy') %}
+                factfinder.__experimental.sandboxMode.enable = true;
+
+                ff.eventAggregator.addBeforeDispatchingCallback(function (event) {
+                    event.cl = 'search_result';
+                    event.fnc = 'proxy';
+                });
+
+                document.addEventListener('ffUrlWrite', function (event, historyState) {
+                    let url = event.url.replace(/([?&]?)fnc=proxy/, '');
+                    {% if oView.getClassKey() == "alist" %}
+                    url = url.replace(/[?&]?cl=search_result/, '');
+                    {% endif %}
+                    history.replaceState(historyState, "", url);
+                });
+            {% endif %}
+
+            {% if oView.getClassKey() != "search_result"  %}
+                document.addEventListener('before-search', function (event) {
+                    if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {
+                        event.preventDefault();
+                        const baseUrl =  '{{ oViewConf.getHomeLink()|escape("js") }}';
+                        const params = ff.factfinder.common.dictToParameterString(factfinder.common.encodeDict(event.detail));
+                        window.location = baseUrl + (baseUrl.indexOf('?') > -1 ?  params.substr(1) : params) + '&cl=search_result'
+                    }
+                });
+            {% endif %}
+
+            {% if oView.getClassKey() == "alist" %}
+                ff.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {
+                    url = url.replace(/filter=CategoryPath[^&]+&?/, '').replace(/filterCategoryPathROOT[^&]+&?/g, '');
+                    ff.factfinder.communication.Util.pushParameterToHistory(res, url, event);
+                    return false;
+                });
+            {% endif %}
+        });
+    </script>
+
+    {% if oView.getClassKey() == "details" %}
+        <script src="{{ oViewConf.getModuleUrl("ffwebcomponents", "/js/tracking.js")|escape }}"></script>
+    {% endif %}
+
+{% endblock %}
