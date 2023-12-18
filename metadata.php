@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid;
 
+use Omikron\FactFinder\Oxid\Core\ViewConfig;
 use OxidEsales\Eshop\Application\Controller\Admin\ModuleConfiguration;
+use OxidEsales\Eshop\Core\ViewConfig as CoreViewConfig;
 
 $moduleId        = 'ffwebcomponents';
 $moduleName      = 'FACT-Finder Web Components';
@@ -104,6 +106,7 @@ $aModule = [
     ],
     'extend'      => [
         ModuleConfiguration::class => \Omikron\FactFinder\Oxid\Controller\Admin\ModuleConfiguration::class,
+        CoreViewConfig::class => ViewConfig::class,
     ],
     'templates'   => [
         'admin/page/ajax_result.tpl'      => 'views/smarty/admin/ajax_result.tpl',

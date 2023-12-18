@@ -1,0 +1,20 @@
+{% extends "widget/header/search.html.twig" %}
+
+{% block widget_header_search_form %}
+    <div class="form search" role="form">
+        <ff-searchbox class="input-group" suggest-onfocus="true" use-suggest="true" select-onclick="true">
+            <input type="text" class="form-control" placeholder="{{ translate({ ident: "SEARCH" }) }}" aria-label="{{ translate({ ident: "SEARCH" }) }}"/>
+            <ff-searchbutton class="input-group-btn">
+                <button type="button" class="btn btn-primary" title="{{ translate({ ident: "SEARCH_SUBMIT" }) }}">
+                    {% include "icons/search.svg" %}
+                </button>
+            </ff-searchbutton>
+        </ff-searchbox>
+    </div>
+
+
+    {% block ff_suggest %}
+        {% include '@ffwebcomponents/webcomponents/widget/suggest' %}
+    {% endblock %}
+{% endblock %}
+

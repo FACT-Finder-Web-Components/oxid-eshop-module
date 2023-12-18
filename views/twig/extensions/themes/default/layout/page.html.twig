@@ -1,0 +1,12 @@
+{% extends "layout/page.html.twig" %}
+
+{% block layout_header %}
+    {% include '@ffwebcomponents/webcomponents/widget/communication' %}
+
+    {% block ff_campaign_redirect %}
+        <ff-campaign-redirect></ff-campaign-redirect>
+    {% endblock %}
+
+    {{ parent() }}
+{% endblock %}
+
