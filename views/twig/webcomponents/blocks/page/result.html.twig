@@ -1,12 +1,10 @@
-{#{% capture append = "oxidBlock_content" %}#}
-{#    {% include "ff/breadcrumbs.html.twig" %}#}
-{#    {% include "ff/search/result.html.twig" %}#}
-{#{% endcapture %}#}
+{% capture append = "oxidBlock_content" %}
+    {% include '@ffwebcomponents/webcomponents/widget/breadcrumbs' %}
+    {% include '@ffwebcomponents/webcomponents/blocks/search/result' %}
+{% endcapture %}
 
-{#{% capture append = "oxidBlock_sidebar" %}#}
-{#    {% include "ff/asn.html.twig" %}#}
-{#{% endcapture %}#}
+{% capture append = "oxidBlock_sidebar" %}
+    {% include '@ffwebcomponents/webcomponents/widget/asn' %}
+{% endcapture %}
 
-{#{% include "layout/page.html.twig" with {sidebar: "Left"} %}#}
-
-Result !!! elo
+{% include "layout/page.html.twig" with {sidebar: "Left"} %}

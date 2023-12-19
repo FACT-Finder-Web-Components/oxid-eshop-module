@@ -1,0 +1,6 @@
+<ff-campaign-pushed-products {{ flag|default("is-product - campaign") }} unresolved>
+    <div class="page-header">
+        <h2>{{ translate({ ident: "FF_PRODUCT_CAMPAIGN" }) }}</h2>
+    </div>
+    {% include '@ffwebcomponents/webcomponents/widget/record_list' with {subscribe: "false"} %}
+</ff-campaign-pushed-products>
