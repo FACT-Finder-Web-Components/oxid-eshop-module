@@ -1,0 +1,39 @@
+<div class="boxwrapper">
+
+    {% if oViewConf.getFFBoolConfigParam("ffCampaigns") %}
+        {% block ff_campaign_feedback_top %}
+            {% include '@ffwebcomponents/webcomponents/widget/campaign/feedbacktext'  with {label: "above search result"} %}
+        {% endblock %}
+    {% endif %}
+
+    {% include '@ffwebcomponents/webcomponents/widget/campaign/search_advisor' %}
+
+    <div class="toolbar toolbar-top">
+        <div class="pull-left">
+            {% include '@ffwebcomponents/webcomponents/widget/result_count' %}
+        </div>
+        <div class="pull-right options">
+            <div class="btn-group">
+                {% include '@ffwebcomponents/webcomponents/widget/sortbox' %}
+            </div>
+            <div class="btn-group">
+                {% include '@ffwebcomponents/webcomponents/widget/ppp' %}
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="list-container">
+        {% include '@ffwebcomponents/webcomponents/widget/record_list' %}
+    </div>
+
+    <div class="toolbar toolbar-bottom">
+        <div class="refineParams row clear bottomParams">
+            {% include '@ffwebcomponents/webcomponents/widget/paging' %}
+        </div>
+    </div>
+    {% if oViewConf.getFFBoolConfigParam("ffCampaigns") %}
+        {% block ff_campaign_feedback_bottom %}
+            {% include '@ffwebcomponents/webcomponents/widget/campaign/feedbacktext' with {label: "below search result"} %}
+        {% endblock %}
+    {% endif %}
+</div>

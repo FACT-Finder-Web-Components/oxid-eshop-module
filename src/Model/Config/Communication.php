@@ -8,6 +8,7 @@ use Omikron\FactFinder\Oxid\Contract\Config\ParametersSourceInterface;
 use Omikron\FactFinder\Oxid\Export\Filter\TextFilter;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Application\Model\Category;
+use OxidEsales\Eshop\Core\Controller\BaseController;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
@@ -20,7 +21,7 @@ class Communication implements ParametersSourceInterface
     private TextFilter $filter;
     private ModuleSettingServiceInterface $moduleSettingService;
 
-    public function __construct(protected readonly FrontendController $view)
+    public function __construct(protected readonly BaseController $view)
     {
         $this->filter = oxNew(TextFilter::class);
         $this->moduleSettingService = ContainerFactory::getInstance()

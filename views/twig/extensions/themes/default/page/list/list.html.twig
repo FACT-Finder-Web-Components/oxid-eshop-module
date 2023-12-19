@@ -1,0 +1,10 @@
+{% extends "page/list/list.html.twig" %}
+
+{% block page_list_listbody %}
+    {% if (oViewConf.getFFBoolConfigParam("ffUseForCategories") or isSearchResult) and oView.getArticleCount() %}
+        {% set sidebar = "Left" %}
+        {% include '@ffwebcomponents/webcomponents/blocks/page/result' %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
