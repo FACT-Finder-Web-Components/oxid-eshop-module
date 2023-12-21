@@ -4,20 +4,20 @@
 
         <ff-asn-group for-group="CategoryPathROOT"   {% if oView.getClassKey() == "alist" %} class="hidden" {% endif %}>
             <div slot="groupCaption" class="groupCaption">
-                <p class="h4 facet-title hidden-sm-down">{{group.name}}</p>
+                <p class="h4 facet-title hidden-sm-down">{{ '{{ group.name }}' }}</p>
             </div>
 
             <ff-asn-group-element>
                 <div slot="selected">
                     <span class="custom-checkbox">
-                        <input type="checkbox" checked />
-                        <span class="filterName">{{element.name}}</span>
+{#                        <input type="checkbox" checked />#}
+                        <span class="filterName">{{ '{{ element.name }}' }}</span>
                     </span>
                 </div>
                 <div slot="unselected">
                     <span class="custom-checkbox">
-                        <input type="checkbox" />
-                        <span class="filterName">{{element.name}}</span>
+{#                        <input type="checkbox" />#}
+                        <span class="filterName">{{ '{{ element.name }}' }}</span>
                     </span>
                 </div>
 
@@ -29,20 +29,20 @@
 
         <ff-asn-group class="facet clearfix">
             <div slot="groupCaption" class="groupCaption">
-                <p class="h4 facet-title hidden-sm-down">{{group.name}}</p>
+                <p class="h4 facet-title hidden-sm-down">{{ '{{ group.name }}' }}</p>
             </div>
 
             <ff-asn-group-element>
                 <div slot="selected">
                     <span class="custom-checkbox">
                         <input type="checkbox" checked />
-                        <span class="filterName">{{element.name}}</span>
+                        <span class="filterName">{{ '{{ element.name }}' }}</span>
                     </span>
                 </div>
                 <div slot="unselected">
                     <span class="custom-checkbox">
                         <input type="checkbox" />
-                        <span class="filterName">{{element.name}}</span>
+                        <span class="filterName">{{ '{{ element.name }}' }}</span>
                     </span>
                 </div>
 
@@ -54,7 +54,7 @@
 
         <ff-asn-group-slider class="facet clearfix">
             <div slot="groupCaption" class="groupCaption">
-                <p class="h4 facet-title hidden-sm-down">{{group.name}}</p>
+                <p class="h4 facet-title hidden-sm-down">{{ '{{ group.name }}' }}</p>
             </div>
 
             <div data-container="removeFilter">{{ translate({ ident: "FF_REMOVE_FILTER" }) }}</div>
