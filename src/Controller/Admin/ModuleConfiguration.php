@@ -12,6 +12,8 @@ use Omikron\FactFinder\Oxid\Model\Config\FieldRolesMapper;
 use OxidEsales\Eshop\Application\Model\Attribute;
 use OxidEsales\Eshop\Application\Model\AttributeList;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 
 /**
  * Module Configuration.
@@ -53,7 +55,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
         }
     }
 
-    public function updateFieldRoles()
+    public function updateFieldRoles(): void
     {
         try {
             $clientBuilder = oxNew(ClientBuilder::class)
@@ -66,7 +68,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
                 $this->getApiVersion()
             );
             $searchAdapter = $adapterFactory->getSearchAdapter();
-            $response      = $searchAdapter->search($this->getConfigParam('ffChannel')[Registry::getLang()->getLanguageAbbr()], '*');
+            $response      = $searchAdapter->search($this->getConfigArrayParam('ffChannel')[Registry::getLang()->getLanguageAbbr()], '*');
             $fieldRoles    = $response['fieldRoles'] ?? $response['searchResult']['fieldRoles'];
 
             $_POST['confstrs']['ffFieldRoles'] = json_encode(
@@ -93,9 +95,22 @@ class ModuleConfiguration extends ModuleConfiguration_parent
         return new Credentials(...array_map([$this, 'getConfigParam'], ['ffUsername', 'ffPassword', 'ffAuthPrefix', 'ffAuthPostfix']));
     }
 
-    protected function getConfigParam(string $key)
+    protected function getConfigParam(string $key): string
     {
-        return Registry::getConfig()->getConfigParam($key);
+        $this->moduleSettingService = ContainerFactory::getInstance()
+            ->getContainer()
+            ->get(ModuleSettingServiceInterface::class);
+
+        return (string) $this->moduleSettingService->getString($key, 'ffwebcomponents');
+    }
+
+    protected function getConfigArrayParam(string $key): array
+    {
+        $this->moduleSettingService = ContainerFactory::getInstance()
+            ->getContainer()
+            ->get(ModuleSettingServiceInterface::class);
+
+        return $this->moduleSettingService->getCollection($key, 'ffwebcomponents');
     }
 
     private function preparePostData(): void
