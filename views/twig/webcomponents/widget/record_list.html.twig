@@ -3,7 +3,6 @@
         <form action="{{ oViewConf.getSelfActionLink()|escape }}" method="post">
             <input type="hidden" name="cl" value="{{ oViewConf.getActiveClassName()|escape }}" />
             <input type="hidden" name="fnc" value="tobasket" />
-
             <div class="card product-card">
                 <div class="product-img-wrapper">
                     <a data-anchor="{{ '{{ record.Deeplink }}' }}" data-redirect="{{ '{{ record.Deeplink }}' }}" data-redirect-target="_self" title="{{ '{{ record.Name }}' }}">
