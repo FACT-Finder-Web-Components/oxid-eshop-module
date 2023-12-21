@@ -2,7 +2,6 @@
 
 {% block admin_module_config_group %}
     {{ parent() }}
-{#    {{ style({ include: oViewConf.getModuleUrl('ffwebcomponents', '/admin/css/styles.css') }) }}#}
     {{ style({ include: oViewConf.getModuleUrl('ffwebcomponents', '/admin/css/styles.css') }) }}
     <link rel="stylesheet" href="{{ oViewConf.getModuleUrl('ffwebcomponents', '/admin/css/styles.css') }}" />
 
@@ -36,7 +35,7 @@
         <div id="spinner">
         </div>
         <div id="result">
-            {{ postSubmitMessage }}
+            {{ postSubmitMessage|raw }}
         </div>
         <script>
             function testConnection() {
