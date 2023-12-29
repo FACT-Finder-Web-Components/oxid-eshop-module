@@ -3,7 +3,7 @@
 {% block page_list_listbody %}
     {% if (oViewConf.getFFBoolConfigParam("ffUseForCategories") or isSearchResult) and oView.getArticleCount() %}
         {% set sidebar = "Left" %}
-        {% include '@ffwebcomponents/webcomponents/blocks/page/result' %}
+        {% include '@ffwebcomponents/webcomponents/blocks/search/result' %}
     {% else %}
         {{ parent() }}
     {% endif %}
