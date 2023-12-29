@@ -9,6 +9,8 @@ use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Credentials;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class SearchResultController extends FrontendController
@@ -78,9 +80,13 @@ class SearchResultController extends FrontendController
         return new Credentials(...array_map([$this, 'getConfigParam'], ['ffUsername', 'ffPassword', 'ffAuthPrefix', 'ffAuthPostfix']));
     }
 
-    protected function getConfigParam(string $key)
+    protected function getConfigParam(string $key): string
     {
-        return Registry::getConfig()->getConfigParam($key);
+        $moduleSettingService = ContainerFactory::getInstance()
+            ->getContainer()
+            ->get(ModuleSettingServiceInterface::class);
+
+        return (string) $moduleSettingService->getString($key, 'ffwebcomponents');
     }
 
     private function getEndpoint(string $currentUrl): string

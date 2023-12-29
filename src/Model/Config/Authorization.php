@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Model\Config;
 
 use Omikron\FactFinder\Oxid\Contract\Config\ParametersSourceInterface;
-use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 
 class Authorization implements ParametersSourceInterface
 {
-    private $config;
+    private ModuleSettingServiceInterface $moduleSettingService;
 
     public function __construct()
     {
-        $this->config = Registry::getConfig();
+//        $this->config = Registry::getConfig();
+        $this->moduleSettingService = ContainerFactory::getInstance()
+            ->getContainer()
+            ->get(ModuleSettingServiceInterface::class);
     }
 
     /**
@@ -22,10 +26,10 @@ class Authorization implements ParametersSourceInterface
     public function getParameters(): array
     {
         return [
-             $this->config->getConfigParam('ffUsername'),
-             $this->config->getConfigParam('ffPassword'),
-             $this->config->getConfigParam('ffAuthPrefix'),
-             $this->config->getConfigParam('ffAuthPostfix'),
+            (string) $this->moduleSettingService->getString('ffUsername', 'ffwebcomponents'),
+            (string) $this->moduleSettingService->getString('ffPassword', 'ffwebcomponents'),
+            (string) $this->moduleSettingService->getString('ffAuthPrefix', 'ffwebcomponents'),
+            (string) $this->moduleSettingService->getString('ffAuthPostfix', 'ffwebcomponents'),
         ];
     }
 }
