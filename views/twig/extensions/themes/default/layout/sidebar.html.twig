@@ -1,0 +1,11 @@
+{% extends "layout/sidebar.html.twig" %}
+
+{% block sidebar_categoriestree %}
+
+    {% if oViewConf.getFFBoolConfigParam("ffUseForCategories") and oView.getClassKey() == 'alist' %}
+        {% include '@ffwebcomponents/webcomponents/widget/asn' %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+
+{% endblock %}
