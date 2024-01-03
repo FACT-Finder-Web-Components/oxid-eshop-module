@@ -333,7 +333,7 @@ $aModule = [
         [
             'group'    => 'ffExport',
             'name'     => 'ffFtpKeyPassphrase',
-            'type'     => 'str',
+            'type'     => 'password',
             'position' => $settingPosition++,
         ],
         [

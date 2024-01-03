@@ -1,0 +1,6 @@
+<ff-similar-products record-id="{{ recordId|escape }}" id-type="productNumber" unresolved>
+    <div class="page-header">
+        <h2>{{ translate({ ident: "FF_SIMILAR_PRODUCTS" }) }}</h2>
+    </div>
+    {% include '@ffwebcomponents/webcomponents/widget/record_list' with {subscribe: "false"} %}
+</ff-similar-products>

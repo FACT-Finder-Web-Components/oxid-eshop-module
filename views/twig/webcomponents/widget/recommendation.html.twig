@@ -1,0 +1,6 @@
+<ff-recommendation record-id="{{ recordId|escape }}" unresolved>
+    <div class="page-header">
+        <h2>{{ translate({ ident: "FF_RECOMMENDATION" }) }}</h2>
+    </div>
+    {% include '@ffwebcomponents/webcomponents/widget/record_list' with {subscribe: "false"} %}
+</ff-recommendation>
