@@ -1,0 +1,17 @@
+{% extends "page/checkout/thankyou.html.twig" %}
+
+{% block checkout_thankyou_main %}
+    {{ parent() }}
+    {% set order = oView.getOrder() %}
+
+<ff-checkout-tracking>
+    {% for oArticle in order.getOrderArticles() %}
+        {% set aPrice = oArticle.getPrice() %}
+        <ff-checkout-tracking-item
+            record-id="{{ oArticle.oxorderarticles__oxartnum.value|escape }}"
+            count="{{ oArticle.oxorderarticles__oxamount }}"
+            price="{{ aPrice.getNettoPrice()|number_format(2, ".", "") }}">
+        </ff-checkout-tracking-item>
+    {% endfor %}
+</ff-checkout-tracking>
+{% endblock %}
