@@ -7,14 +7,13 @@
     {% endif %}
 
     {{ parent() }}
+    {% set basketitemlist = oView.getBasketArticles() %}
 
     {% if oView.getBasketArticles()|length %}
-
-{#        TODO Implement ff-campaign-shopping-cart #}
-{#        {% set recordId = oView.getBasketArticles()|record_id %}#}
-{#        {% if oViewConf.getFFBoolConfigParam("ffCampaigns") %}#}
-{#            <ff-campaign-shopping-cart record-id="{{ ','|implode("recordId")|escape }}"></ff-campaign-shopping-cart>#}
-{#        {% endif %}#}
+        {% if oViewConf.getFFBoolConfigParam("ffCampaigns") %}
+            <ff-campaign-shopping-cart record-id="{{ basketitemlist|map((record) => record.oxarticles__oxartnum)|join(',') }}">
+            </ff-campaign-shopping-cart>
+        {% endif %}
 
         {% if oViewConf.getFFBoolConfigParam("ffPushedProducts") %}
             {% include '@ffwebcomponents/webcomponents/widget/campaign/pushed_products.html.twig' with {flag: "is-shopping-cart-campaign"} %}

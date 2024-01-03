@@ -1,0 +1,25 @@
+{% extends "page/details/inc/related_products.html.twig" %}
+
+{% block details_relatedproducts_crossselling %}
+    {{ parent() }}
+
+    {% set recordId = oDetailsProduct.oxarticles__oxartnum.value %}
+
+    {% if oViewConf.getFFBoolConfigParam("ffCampaigns") %}
+        {% include '@ffwebcomponents/webcomponents/widget/campaign/feedbacktext' with {flag: "is-product-campaign"} %}
+        <ff-campaign-product record-id="{{ recordId|escape }}" id-type="productNumber"></ff-campaign-product>
+    {% endif %}
+
+    {% if oViewConf.getFFBoolConfigParam("ffPushedProducts") %}
+        {% include '@ffwebcomponents/webcomponents/widget/campaign/pushed_products' with {flag: "is-product-campaign"} %}
+    {% endif %}
+
+    {% if oViewConf.getFFBoolConfigParam("ffRecommendations") %}
+        {% include "@ffwebcomponents/webcomponents/widget/recommendation.html.twig" with {recordId: recordId} %}
+    {% endif %}
+
+    {% if oViewConf.getFFBoolConfigParam("ffSimilarProducts") %}
+        {% include "@ffwebcomponents/webcomponents/widget/similar.html.twig" with {recordId: recordId} %}
+    {% endif %}
+{% endblock %}
+
