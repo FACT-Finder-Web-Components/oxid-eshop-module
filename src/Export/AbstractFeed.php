@@ -21,6 +21,10 @@ abstract class AbstractFeed
     {
         $slug = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', (new ReflectionClass($this))->getShortName()));
 
+        if ($slug === 'article_feed') {
+            $slug = 'productData';
+        }
+
         return sprintf('export.%s.%s.csv', $slug, $this->getChannel(Registry::getLang()->getLanguageAbbr()));
     }
 
