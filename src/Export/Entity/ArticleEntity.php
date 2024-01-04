@@ -26,7 +26,7 @@ class ArticleEntity implements ExportEntityInterface, DataProviderInterface
             'Description'   => $this->parent->getLongDescription(),
             'Price'         => $this->formatNumber((float) $this->article->getBasePrice()),
             'Deeplink'      => $this->parent->getLink(),
-            'ImageUrl'      => $this->article->getPictureUrl(),
+            'ImageUrl'      => $this->getPictureUrl(),
         ];
 
         return array_reduce($this->fields, function (array $result, FieldInterface $field): array {
@@ -46,5 +46,16 @@ class ArticleEntity implements ExportEntityInterface, DataProviderInterface
     protected function formatNumber(float $price): string
     {
         return sprintf('%.02f', $price);
+    }
+
+    private function getPictureUrl(): string
+    {
+        $pictureUrl = $this->article->getPictureUrl();
+
+        if (str_contains($pictureUrl, 'nopic')) {
+            $pictureUrl = $this->parent->getPictureUrl();
+        }
+
+        return $pictureUrl;
     }
 }

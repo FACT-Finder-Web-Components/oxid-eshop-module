@@ -140,6 +140,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     private function getSelectedAttributes(array $allAttributes): array
     {
         $selectedConfig = oxNew(ExportConfig::class)->getConfigValue();
+
         return array_map(function (string $attributeId) use ($selectedConfig, $allAttributes): array {
             return [
                 'id'    => $attributeId,
