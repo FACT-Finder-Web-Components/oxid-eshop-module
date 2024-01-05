@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Omikron\FactFinder\Oxid\Twig\Extensions\Filters;
 
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
