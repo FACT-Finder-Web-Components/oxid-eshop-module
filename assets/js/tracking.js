@@ -56,7 +56,6 @@ function registerAddToCartListener({selector, productData, useSidAsUserId}) {
             });
         }
 
-
         if (element) {
             element.addEventListener('submit', function (e) {
                 trackAddToCart(productData);
