@@ -1,0 +1,19 @@
+{% extends "page/details/inc/productmain.html.twig" %}
+
+{% block details_productmain_social %}
+    {{ parent() }}
+
+    {% set recordDataJson = oView.getProduct()|record_data_json %}
+{#    {% set useSidAsUserId = oView.getProduct()|ff_use_sid_a_suser_id %}#}
+
+    <script>
+        registerAddToCartListener({
+            selector: '.js-oxProductForm',
+            productData: JSON.parse('{{ recordDataJson|raw }}'),
+            useSidAsUserId: false
+        });
+    </script>
+{% endblock %}
+
+
+

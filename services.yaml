@@ -19,3 +19,7 @@ services:
         public: true
         arguments:
             $categoryPathFieldName: '%factfinder.navigation.category_path_field_name%'
+
+    # Twig Extensions
+    Omikron\FactFinder\Oxid\Twig\Extensions\Filters\RecordDataJson:
+        tags: [ 'twig.extension' ]
