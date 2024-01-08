@@ -51,8 +51,8 @@ class Communication implements ParametersSourceInterface
             'keep-url-params'       => 'true',
             'only-search-params'    => 'true',
             'use-browser-history'   => 'true',
-            'category-page'         => $this->moduleSettingService->getString('ffVersion', 'ffwebcomponents') === 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : null,
-            'add-params'            => $this->moduleSettingService->getString('ffVersion', 'ffwebcomponents') !== 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : '',
+            'category-page'         => (string) $this->moduleSettingService->getString('ffVersion', 'ffwebcomponents') === 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : null,
+            'add-params'            => (string) $this->moduleSettingService->getString('ffVersion', 'ffwebcomponents') !== 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : '',
             'disable-cache'         => $this->moduleSettingService->getBoolean('ffDisableCache', 'ffwebcomponents') ? 'true' : 'false',
         ];
 
@@ -63,7 +63,7 @@ class Communication implements ParametersSourceInterface
     {
         return [
             'addToCart' => [
-                'count' => $this->moduleSettingService->getBoolean('ffDisableCache', 'ffwebcomponents') ?? 'count_as_one',
+                'count' => (string) $this->moduleSettingService->getString('ffTrackingAddToCartCount', 'ffwebcomponents') ?? 'count_as_one',
             ],
         ];
     }
