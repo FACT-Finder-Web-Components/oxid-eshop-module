@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid;
@@ -32,100 +31,9 @@ $aModule = [
         'http_category_feed'         => Controller\CategoryFeedController::class,
         'http_suggest_category_feed' => Controller\SuggestCategoryFeedController::class,
     ],
-    'blocks'      => [
-        [
-            'template' => 'module_config.tpl',
-            'block'    => 'admin_module_config_form',
-            'file'     => 'views/smarty/admin/blocks/factfinder_module_config.tpl',
-        ],
-        [
-            'template' => 'module_config.tpl',
-            'block'    => 'admin_module_config_var_type_aarr',
-            'file'     => 'views/smarty/admin/blocks/factfinder_config_field_channel.tpl',
-        ],
-        [
-            'template' => 'module_config.tpl',
-            'block'    => 'admin_module_config_var_type_aarr',
-            'file'     => 'views/smarty/admin/blocks/factfinder_config_field_attributes.tpl',
-        ],
-        [
-            'template' => 'module_config.tpl',
-            'block'    => 'admin_module_config_var_type_select',
-            'file'     => 'views/smarty/admin/blocks/factfinder_config_field_api_version.tpl',
-        ],
-        [
-            'template' => 'layout/base.tpl',
-            'block'    => 'head_css',
-            'file'     => 'views/frontend/blocks/scripts.tpl',
-        ],
-        [
-            'template' => 'layout/page.tpl',
-            'block'    => 'layout_header',
-            'file'     => 'views/frontend/blocks/init.tpl',
-        ],
-        [
-            'template' => 'layout/sidebar.tpl',
-            'block'    => 'sidebar_categoriestree',
-            'file'     => 'views/frontend/blocks/category/sidebar.tpl',
-        ],
-        [
-            'template' => 'page/checkout/basket.tpl',
-            'block'    => 'checkout_basket_main',
-            'file'     => 'views/frontend/blocks/campaign/cart.tpl',
-        ],
-        [
-            'template' => 'page/checkout/thankyou.tpl',
-            'block'    => 'checkout_thankyou_main',
-            'file'     => 'views/frontend/blocks/order/tracking.tpl',
-        ],
-        [
-            'template' => 'page/details/inc/related_products.tpl',
-            'block'    => 'details_relatedproducts_crossselling',
-            'file'     => 'views/frontend/blocks/campaign/product.tpl',
-        ],
-        [
-            'template' => 'page/details/inc/productmain.tpl',
-            'block'    => 'details_productmain_social',
-            'file'     => 'views/frontend/blocks/page/details/inc/productmain.tpl',
-        ],
-        [
-            'template' => 'page/list/list.tpl',
-            'block'    => 'page_list_listbody',
-            'file'     => 'views/frontend/blocks/category/list.tpl',
-        ],
-        [
-            'template' => 'widget/header/search.tpl',
-            'block'    => 'widget_header_search_form',
-            'file'     => 'views/frontend/widget/search.tpl',
-        ],
-        [
-            'template' => 'module_config.tpl',
-            'block'    => 'admin_module_config_var_type_str',
-            'file'     => 'views/smarty/admin/blocks/factfinder_config_field_ftp_key.tpl',
-        ],
-    ],
     'extend'      => [
         ModuleConfiguration::class => \Omikron\FactFinder\Oxid\Controller\Admin\ModuleConfiguration::class,
         CoreViewConfig::class => ViewConfig::class,
-    ],
-    'templates'   => [
-        'admin/page/ajax_result.tpl'      => 'views/smarty/admin/ajax_result.tpl',
-        'page/factfinder/result.tpl'      => 'ff/ffwebcomponents/views/frontend/page/result.tpl',
-        'ff/asn.tpl'                      => 'ff/ffwebcomponents/views/frontend/widget/asn.tpl',
-        'ff/breadcrumbs.tpl'              => 'ff/ffwebcomponents/views/frontend/widget/breadcrumbs.tpl',
-        'ff/campaign/feedbacktext.tpl'    => 'ff/ffwebcomponents/views/frontend/widget/campaign/feedbacktext.tpl',
-        'ff/campaign/pushed_products.tpl' => 'ff/ffwebcomponents/views/frontend/widget/campaign/pushed_products.tpl',
-        'ff/campaign/search_advisor.tpl'  => 'ff/ffwebcomponents/views/frontend/widget/campaign/search_advisor.tpl',
-        'ff/communication.tpl'            => 'ff/ffwebcomponents/views/frontend/widget/communication.tpl',
-        'ff/recommendation.tpl'           => 'ff/ffwebcomponents/views/frontend/widget/recommendation.tpl',
-        'ff/record_list.tpl'              => 'ff/ffwebcomponents/views/frontend/widget/record_list.tpl',
-        'ff/paging.tpl'                   => 'ff/ffwebcomponents/views/frontend/widget/paging.tpl',
-        'ff/ppp.tpl'                      => 'ff/ffwebcomponents/views/frontend/widget/ppp.tpl',
-        'ff/search/result.tpl'            => 'ff/ffwebcomponents/views/frontend/blocks/search/result.tpl',
-        'ff/similar.tpl'                  => 'ff/ffwebcomponents/views/frontend/widget/similar.tpl',
-        'ff/result_count.tpl'             => 'ff/ffwebcomponents/views/frontend/widget/result_count.tpl',
-        'ff/sortbox.tpl'                  => 'ff/ffwebcomponents/views/frontend/widget/sortbox.tpl',
-        'ff/suggest.tpl'                  => 'ff/ffwebcomponents/views/frontend/widget/suggest.tpl',
     ],
     'settings'    => [
         [
@@ -290,6 +198,7 @@ $aModule = [
             'group'    => 'ffFeed',
             'name'     => 'ffExportAttributes',
             'type'     => 'aarr',
+            'value'    => [],
             'position' => $settingPosition++,
         ],
         [
@@ -407,6 +316,4 @@ $aModule = [
             'position' => $settingPosition++,
         ],
     ],
-
-    'smartyPluginDirectories' => ['views/smarty'],
 ];
