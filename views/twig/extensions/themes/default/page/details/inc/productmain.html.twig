@@ -4,13 +4,13 @@
     {{ parent() }}
 
     {% set recordDataJson = oView.getProduct()|record_data_json %}
-{#    {% set useSidAsUserId = oView.getProduct()|ff_use_sid_a_suser_id %}#}
+    {% set useSidAsUserId = oViewConf.useSidAsUserId() %}
 
     <script>
         registerAddToCartListener({
             selector: '.js-oxProductForm',
             productData: JSON.parse('{{ recordDataJson|raw }}'),
-            useSidAsUserId: false
+            useSidAsUserId: {{ useSidAsUserId | json_encode() }}
         });
     </script>
 {% endblock %}
