@@ -1,8 +1,13 @@
 # Changelog
 ## Unreleased
-### Breaking
-- Drop PHP 7.4 version support
-- Update PHP version from 7.x to 8.x
+### BREAKING
+- IMPORTANT! Drop Oxid 6.x compatibility
+- IMPORTANT! Drop PHP 7.4 version support
+- IMPORTANT! Update PHP version from 7.x to 8.1
+- IMPORTANT! Drop Smarty template engine support
+- IMPORTANT! Add Twig template engine support
+- Upgrade libraries as required Oxid 7.0
+- Fix deprecations for Oxid 7.0
 
 ## [v4.4.3] - 2023.10.10
 ### Change

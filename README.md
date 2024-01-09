@@ -43,11 +43,13 @@ customise them.
 - OXID eShop 7.x
 - PHP version 8.0 or higher
 
+**Note:** For Oxid eShop 6.x and PHP 7, please use SDK version 4.x
+
 ## Installation
 
 To install the module, open your terminal and run the command:
 
-    composer require omikron/oxid-factfinder
+    composer require omikron/oxid-factfinder^5.0
 
 ## Activating the Module
 
@@ -55,9 +57,15 @@ From the root of your Oxid installation, clear the cache with:
 
     rm -rf source/tmp/*
     
-Check in the Oxid 2 backend "Stores → Configuration → Advanced → Advanced" if the module output is activated.
+Check in the Oxid backend "Extensions -> Modules" if the module output is activated.
     
 ![Module Enabled](docs/assets/module-enabled.png "Module enabled")
+
+**Note:** Sometimes you need also install module from command line. Please execute from project root:
+
+    vendor/bin/oe-console oe:module:install vendor/omikron/oxid-factfinder
+
+**Note:** If after installation process you have problems with permissions, you have to set correct permissions for you project (`chown` and `chmod` command ). [Check official docs](https://docs.oxid-esales.com/eshop/en/latest/installation/new-installation/preparing-for-installation.html#schritt-customising-file-and-directory-permissions)
 
 ## Backend Configuration
 
