@@ -14,7 +14,6 @@ class Authorization implements ParametersSourceInterface
 
     public function __construct()
     {
-        //        $this->config = Registry::getConfig();
         $this->moduleSettingService = ContainerFactory::getInstance()
             ->getContainer()
             ->get(ModuleSettingServiceInterface::class);

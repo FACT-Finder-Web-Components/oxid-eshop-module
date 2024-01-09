@@ -60,13 +60,4 @@ class ViewConfig extends ViewConfig_parent
     {
         return $this->webcomponent->getSearchImmediate();
     }
-
-    //
-    //    /**
-    //     * Note added because of missing method error in article templates
-    //     */
-    //    public function getConfig()
-    //    {
-    //        return Registry::getConfig();
-    //    }
 }
