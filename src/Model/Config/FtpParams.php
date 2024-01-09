@@ -13,6 +13,7 @@ use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServ
 class FtpParams
 {
     private array $overrides = [];
+
     private ModuleSettingService $moduleSettingService;
 
     public function __construct()

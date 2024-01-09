@@ -16,7 +16,8 @@ use Psr\Http\Client\ClientExceptionInterface;
 class TestConnectionController extends AdminController
 {
     protected string $result = '';
-    protected bool $success = false;
+
+    protected bool $success  = false;
 
     public function __construct()
     {
@@ -31,6 +32,7 @@ class TestConnectionController extends AdminController
             $clientBuilder = oxNew(ClientBuilder::class)
                 ->withServerUrl($this->param('serverUrl'))
                 ->withCredentials($this->getCredentials());
+
             $adapterFactory = new AdapterFactory(
                 $clientBuilder,
                 $this->param('version'),

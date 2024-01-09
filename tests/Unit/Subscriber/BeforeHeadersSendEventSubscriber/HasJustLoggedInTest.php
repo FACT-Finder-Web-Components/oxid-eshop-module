@@ -13,6 +13,17 @@ use PHPUnit\Framework\TestCase;
 
 class HasJustLoggedInTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        $this->session = $this->getMockBuilder(Session::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['setVariable', 'getUser', 'getVariable'])
+            ->getMock();
+        $this->config = $this->getMockBuilder(Config::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
     public function testShouldNotPassRequestValidationWhenAjaxRequest()
     {
         // Expect
@@ -94,7 +105,7 @@ class HasJustLoggedInTest extends TestCase
             ->onlyMethods(['clearCookie', 'getCookie', 'setCookie'])
             ->getMock();
         $userId = md5('some_user_id');
-        $user = $this->createMock(User::class);
+        $user   = $this->createMock(User::class);
         $user->method('getId')->willReturn($userId);
         $this->session->method('getUser')->willReturn($user);
         $this->session->method('getVariable')->with('ff_has_just_logged_in')->willReturn('1');
@@ -110,16 +121,5 @@ class HasJustLoggedInTest extends TestCase
 
         // When & Then
         $subscriber->hasJustLoggedIn();
-    }
-
-    protected function setUp(): void
-    {
-        $this->session = $this->getMockBuilder(Session::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['setVariable', 'getUser', 'getVariable'])
-            ->getMock();
-        $this->config = $this->getMockBuilder(Config::class)
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 }

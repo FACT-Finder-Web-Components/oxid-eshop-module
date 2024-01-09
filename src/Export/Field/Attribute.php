@@ -36,10 +36,10 @@ class Attribute implements FieldInterface
 
     protected function getAttributes($articleId, $parentId): array
     {
-        $connection         = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC);
+        $connection             = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC);
         $tableViewNameGenerator = new TableViewNameGenerator();
-        $oxAttribute        = $tableViewNameGenerator->getViewName('oxattribute');
-        $oxobject2Attribute = $tableViewNameGenerator->getViewName('oxobject2attribute');
+        $oxAttribute            = $tableViewNameGenerator->getViewName('oxattribute');
+        $oxobject2Attribute     = $tableViewNameGenerator->getViewName('oxobject2attribute');
 
         $select = "select {$oxAttribute}.`oxid`, {$oxAttribute}.`oxtitle`, o2a.`oxvalue` from {$oxobject2Attribute} as o2a "
             . "left join {$oxAttribute} on {$oxAttribute}.oxid = o2a.oxattrid "

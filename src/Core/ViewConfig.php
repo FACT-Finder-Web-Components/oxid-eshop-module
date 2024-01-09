@@ -15,15 +15,17 @@ use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServ
 class ViewConfig extends ViewConfig_parent
 {
     private readonly WebComponent $webcomponent;
+
     private readonly ModuleSettingServiceInterface $moduleSettingService;
 
     public function __construct()
     {
-        $this->webcomponent = oxNew(WebComponent::class);
+        $this->webcomponent         = oxNew(WebComponent::class);
         $this->moduleSettingService = ContainerFactory::getInstance()
             ->getContainer()
             ->get(ModuleSettingServiceInterface::class);
     }
+
     public function getFFStringConfigParam(string $paramName): string
     {
         return (string) $this->moduleSettingService->getString($paramName, 'ffwebcomponents');
@@ -58,13 +60,4 @@ class ViewConfig extends ViewConfig_parent
     {
         return $this->webcomponent->getSearchImmediate();
     }
-
-//
-//    /**
-//     * Note added because of missing method error in article templates
-//     */
-//    public function getConfig()
-//    {
-//        return Registry::getConfig();
-//    }
 }

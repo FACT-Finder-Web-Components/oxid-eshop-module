@@ -33,7 +33,7 @@ class RecordDataJson extends AbstractExtension
         $username = (string) $moduleSettingService->getString('ffPublicUsername', 'ffwebcomponents');
         $password = (string) $moduleSettingService->getString('ffPublicPassword', 'ffwebcomponents');
 
-        $recordId = (string) $article->getFieldData('oxartnum');
+        $recordId    = (string) $article->getFieldData('oxartnum');
         $credentials = new Credentials(
             $username,
             $password,
@@ -50,13 +50,13 @@ class RecordDataJson extends AbstractExtension
             (string) $moduleSettingService->getString('ffApiVersion', 'ffwebcomponents')
         );
         $searchAdapter = $adapterFactory->getSearchAdapter();
-        $response = $searchAdapter->records(
+        $response      = $searchAdapter->records(
             $moduleSettingService->getCollection('ffChannel', 'ffwebcomponents')[Registry::getLang()->getLanguageAbbr()],
             '',
             [
-                'idType' => 'productNumber',
+                'idType'        => 'productNumber',
                 'productNumber' => $recordId,
-                'format' => 'json'
+                'format'        => 'json'
             ]
         );
 
@@ -68,7 +68,7 @@ class RecordDataJson extends AbstractExtension
         }
 
         $jsonData = json_encode([
-            'id' => $recordId,
+            'id'     => $recordId,
             'record' => $record,
         ]);
 

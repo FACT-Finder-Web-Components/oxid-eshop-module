@@ -6,12 +6,12 @@ namespace FactFinderTests\Unit\Subscriber\AfterRequestProcessedEventSubscriber;
 
 use Omikron\FactFinder\Oxid\Subscriber\AfterRequestProcessedEventSubscriber;
 use Omikron\FactFinder\Oxid\Subscriber\BeforeHeadersSendEventSubscriber;
+use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Request;
+use OxidEsales\Eshop\Core\Session;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use OxidEsales\Eshop\Core\Session;
-use OxidEsales\Eshop\Application\Model\User;
 
 class hasJustLoggedInTest extends TestCase
 {
@@ -23,6 +23,18 @@ class hasJustLoggedInTest extends TestCase
 
     /** @var Config|MockObject  */
     private $config;
+
+    protected function setUp(): void
+    {
+        $this->request    = $this->createMock(Request::class);
+        $this->session    = $this->createMock(Session::class);
+        $this->config     = $this->createMock(Config::class);
+        $this->subscriber = new AfterRequestProcessedEventSubscriber(
+            $this->request,
+            $this->session,
+            $this->config
+        );
+    }
 
     public function testShouldSetSessionVariableWhenUserIsSetAndActionLoginNoRedirect()
     {
@@ -55,17 +67,5 @@ class hasJustLoggedInTest extends TestCase
 
         // When & Then
         $this->subscriber->hasJustLoggedIn();
-    }
-
-    protected function setUp(): void
-    {
-        $this->request = $this->createMock(Request::class);
-        $this->session = $this->createMock(Session::class);
-        $this->config = $this->createMock(Config::class);
-        $this->subscriber = new AfterRequestProcessedEventSubscriber(
-            $this->request,
-            $this->session,
-            $this->config
-        );
     }
 }

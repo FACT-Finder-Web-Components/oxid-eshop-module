@@ -19,11 +19,12 @@ class Communication implements ParametersSourceInterface
     protected array $mergeableParams = ['add-params', 'add-tracking-params', 'keep-url-params', 'parameter-whitelist'];
 
     private TextFilter $filter;
+
     private ModuleSettingServiceInterface $moduleSettingService;
 
     public function __construct(protected readonly BaseController $view)
     {
-        $this->filter = oxNew(TextFilter::class);
+        $this->filter               = oxNew(TextFilter::class);
         $this->moduleSettingService = ContainerFactory::getInstance()
             ->getContainer()
             ->get(ModuleSettingServiceInterface::class);
