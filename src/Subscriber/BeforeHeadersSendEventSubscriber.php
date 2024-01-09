@@ -16,14 +16,16 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class BeforeHeadersSendEventSubscriber implements EventSubscriberInterface
 {
     public const HAS_JUST_LOGGED_IN  = 'ff_has_just_logged_in';
+
     public const HAS_JUST_LOGGED_OUT = 'ff_has_just_logged_out';
+
     public const USER_ID_COOKIE      = 'ff_user_id';
 
     private bool $isTriggered = false;
 
     public function __construct(
         private ?Session $session = null,
-        private ?Config $config = null
+        private ?Config $config   = null
     ) {
         $this->session = $session ?? Registry::getSession();
         $this->config  = $config ?? Registry::getConfig();
@@ -67,6 +69,7 @@ class BeforeHeadersSendEventSubscriber implements EventSubscriberInterface
         ) {
             $this->setCookie(self::HAS_JUST_LOGGED_IN, '1');
             $userId = $user->getId();
+
             $this->setCookie(self::USER_ID_COOKIE, $this->config->getConfig('ffAnonymizeUserId') ? md5($userId) : $userId);
             $this->session->setVariable(self::HAS_JUST_LOGGED_IN, false);
         }

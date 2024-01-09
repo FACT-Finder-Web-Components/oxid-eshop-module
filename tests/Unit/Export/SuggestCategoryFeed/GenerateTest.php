@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace FactFinderTests\Unit\Export\SuggestCategoryFeed;
 
+use FactFinderTests\Variant\Export\Stream\CsvVariant;
 use Omikron\FactFinder\Oxid\Export\SuggestCategoryFeed;
 use PHPUnit\Framework\TestCase;
-use FactFinderTests\Variant\Export\Stream\CsvVariant;
 
 class GenerateTest extends TestCase
 {
@@ -16,7 +16,7 @@ class GenerateTest extends TestCase
     protected function setUp(): void
     {
         $this->tmpfile = tmpfile();
-        $this->stream = new CsvVariant($this->tmpfile);
+        $this->stream  = new CsvVariant($this->tmpfile);
     }
 
     public function testShouldReturnStreamWithDefaultColumns()

@@ -18,7 +18,7 @@ class CsvVariant extends Csv
         }
 
         $filename = TEST_DATA_DIRECTORY . '/tmp.csv';
-        $file = fopen($filename, 'w');
+        $file     = fopen($filename, 'w');
         fputcsv($file, $entity, $this->delimiter);
         fclose($file);
 

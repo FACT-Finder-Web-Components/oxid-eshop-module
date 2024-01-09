@@ -19,6 +19,7 @@ class ArticleFeedController extends AdminController
 
         $this->_sThisTemplate = '@ffwebcomponents/admin/ajax_result.html.twig';
     }
+
     public function export(): void
     {
         $handle    = tmpfile();
@@ -28,15 +29,12 @@ class ArticleFeedController extends AdminController
             $articleFeed = oxNew(ArticleFeed::class);
             $articleFeed->generate(oxNew(Csv::class, $handle));
             $result[] = $this->translate('FF_ARTICLE_FEED_EXPORT_SUCCESS');
-
             $uploader = UploadFactory::create();
             $uploader->upload($handle, $articleFeed->getFileName());
-            $result[] = $this->translate('FF_ARTICLE_FEED_UPLOAD_SUCCESS');
-
+            $result[]   = $this->translate('FF_ARTICLE_FEED_UPLOAD_SUCCESS');
             $pushImport = oxNew(PushImport::class);
             $pushImport->execute();
             $result[] = $this->translate('FF_ARTICLE_FEED_IMPORT_TRIGGERED');
-
             $this->addTplParam('success', true);
         } catch (\Exception $e) {
             $result[] = $e->getMessage();

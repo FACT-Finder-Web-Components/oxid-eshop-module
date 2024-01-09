@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid;
@@ -33,7 +34,7 @@ $aModule = [
     ],
     'extend'      => [
         ModuleConfiguration::class => \Omikron\FactFinder\Oxid\Controller\Admin\ModuleConfiguration::class,
-        CoreViewConfig::class => ViewConfig::class,
+        CoreViewConfig::class      => ViewConfig::class,
     ],
     'settings'    => [
         [

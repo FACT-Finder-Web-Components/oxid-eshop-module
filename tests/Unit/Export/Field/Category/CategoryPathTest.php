@@ -21,7 +21,7 @@ class CategoryPathTest extends TestCase
     {
         // Given
         $category = new CategoryVariant([
-            'oxcategories__oxtitle' => new Field('Gear'),
+            'oxcategories__oxtitle'    => new Field('Gear'),
             'oxcategories__oxparentid' => new Field('oxrootid'),
         ]);
 
@@ -36,11 +36,11 @@ class CategoryPathTest extends TestCase
     {
         // Given
         $category = new CategoryVariant([
-            'oxcategories__oxtitle' => new Field('Gear'),
+            'oxcategories__oxtitle'    => new Field('Gear'),
             'oxcategories__oxparentid' => new Field('oxrootid'),
         ]);
         $category2 = new CategoryVariant([
-            'oxcategories__oxtitle' => new Field('Fashion'),
+            'oxcategories__oxtitle'    => new Field('Fashion'),
             'oxcategories__oxparentid' => new Field('30e44ab83fdee7564.23264141'),
         ]);
         $category2->setParentCategory($category);
@@ -56,21 +56,21 @@ class CategoryPathTest extends TestCase
     {
         // Given
         $category = new CategoryVariant([
-            'oxcategories__oxtitle' => new Field('Gear'),
+            'oxcategories__oxtitle'    => new Field('Gear'),
             'oxcategories__oxparentid' => new Field('oxrootid'),
         ]);
         $category2 = new CategoryVariant([
-            'oxcategories__oxtitle' => new Field('Fashion'),
+            'oxcategories__oxtitle'    => new Field('Fashion'),
             'oxcategories__oxparentid' => new Field('30e44ab83fdee7564.23264141'),
         ]);
         $category2->setParentCategory($category);
         $category3 = new CategoryVariant([
-            'oxcategories__oxtitle' => new Field('For Him'),
+            'oxcategories__oxtitle'    => new Field('For Him'),
             'oxcategories__oxparentid' => new Field('fad181ad64642b955becd0759345161e'),
         ]);
         $category3->setParentCategory($category2);
         $category4 = new CategoryVariant([
-            'oxcategories__oxtitle' => new Field('Shirts & Co.'),
+            'oxcategories__oxtitle'    => new Field('Shirts & Co.'),
             'oxcategories__oxparentid' => new Field('fad7facadcb7d4297f033d242aa0d310'),
         ]);
         $category4->setParentCategory($category3);
