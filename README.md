@@ -41,13 +41,15 @@ customise them.
 
 ## Requirements
 - OXID eShop 6.x
-- PHP version 7.2 or higher
+- PHP version: 7.2,  7.3, 7.4
+
+**Note:** If you use OXID eShop 7.x, please use [SDK version 5.x](https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/tree/release/5.x)
 
 ## Installation
 
 To install the module, open your terminal and run the command:
 
-    composer require omikron/oxid-factfinder
+    composer require omikron/oxid-factfinder:^4.0
 
 ## Activating the Module
 
