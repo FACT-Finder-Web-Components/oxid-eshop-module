@@ -45,7 +45,7 @@ class BeforeHeadersSendEventSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function hasJustLoggedIn(BeforeHeadersSendEvent $event): void
+    public function hasJustLoggedIn(): void
     {
         try {
             $this->validateRequest();
@@ -80,7 +80,7 @@ class BeforeHeadersSendEventSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function hasJustLoggedOut(BeforeHeadersSendEvent $event): void
+    public function hasJustLoggedOut(): void
     {
         try {
             $this->validateRequest();

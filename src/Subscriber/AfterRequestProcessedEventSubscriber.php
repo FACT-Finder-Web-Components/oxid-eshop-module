@@ -31,7 +31,7 @@ class AfterRequestProcessedEventSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function hasJustLoggedIn(AfterRequestProcessedEvent $event): void
+    public function hasJustLoggedIn(): void
     {
         $user = $this->session->getUser();
 
@@ -40,7 +40,7 @@ class AfterRequestProcessedEventSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function hasJustLoggedOut(AfterRequestProcessedEvent $event): void
+    public function hasJustLoggedOut(): void
     {
         $user = $this->session->getUser();
 
