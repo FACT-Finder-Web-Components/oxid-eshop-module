@@ -8,33 +8,23 @@ use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Request;
 use OxidEsales\Eshop\Core\Session;
+use OxidEsales\EshopCommunity\Internal\Transition\ShopEvents\AfterRequestProcessedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AfterRequestProcessedEventSubscriber implements EventSubscriberInterface
 {
-    /** @var Request */
-    private $request;
-
-    /** @var Session */
-    private $session;
-
-    /** @var Config */
-    private $config;
-
     public function __construct(
-        ?Request $request = null,
-        ?Session $session = null,
-        ?Config $config = null
+        private ?Request $request = null,
+        private ?Session $session = null,
     ) {
         $this->request = $request ?? Registry::getRequest();
         $this->session = $session ?? Registry::getSession();
-        $this->config  = $config ?? Registry::getConfig();
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
-            'AfterRequestProcessedEvent' => [
+            AfterRequestProcessedEvent::class => [
                 ['hasJustLoggedIn'],
                 ['hasJustLoggedOut'],
             ],
