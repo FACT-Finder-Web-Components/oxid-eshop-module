@@ -9,7 +9,8 @@ use Exception;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Session;
-use OxidEsales\EshopCommunity\Internal\Framework\Event\AbstractShopAwareEventSubscriber;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\EshopCommunity\Internal\Transition\ShopEvents\BeforeHeadersSendEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -23,18 +24,20 @@ class BeforeHeadersSendEventSubscriber implements EventSubscriberInterface
 
     private bool $isTriggered = false;
 
-    public function __construct(
-        private ?Session $session = null,
-        private ?Config $config   = null
-    ) {
-        $this->session = $session ?? Registry::getSession();
-        $this->config  = $config ?? Registry::getConfig();
+    private ModuleSettingServiceInterface $moduleSettingService;
+
+    public function __construct(private ?Session $session = null)
+    {
+        $this->session              = $session ?? Registry::getSession();
+        $this->moduleSettingService = ContainerFactory::getInstance()
+            ->getContainer()
+            ->get(ModuleSettingServiceInterface::class);
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
-            'BeforeHeadersSendEvent' => [
+            BeforeHeadersSendEvent::class => [
                 ['hasJustLoggedIn'],
                 ['hasJustLoggedOut'],
                 ['setIsTriggered'],
@@ -42,7 +45,7 @@ class BeforeHeadersSendEventSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function hasJustLoggedIn(): void
+    public function hasJustLoggedIn(BeforeHeadersSendEvent $event): void
     {
         try {
             $this->validateRequest();
@@ -69,13 +72,15 @@ class BeforeHeadersSendEventSubscriber implements EventSubscriberInterface
         ) {
             $this->setCookie(self::HAS_JUST_LOGGED_IN, '1');
             $userId = $user->getId();
-
-            $this->setCookie(self::USER_ID_COOKIE, $this->config->getConfig('ffAnonymizeUserId') ? md5($userId) : $userId);
+            $this->setCookie(
+                self::USER_ID_COOKIE,
+                $this->moduleSettingService->getBoolean('ffAnonymizeUserId', 'ffwebcomponents') ? md5($userId) : $userId
+            );
             $this->session->setVariable(self::HAS_JUST_LOGGED_IN, false);
         }
     }
 
-    public function hasJustLoggedOut(): void
+    public function hasJustLoggedOut(BeforeHeadersSendEvent $event): void
     {
         try {
             $this->validateRequest();
