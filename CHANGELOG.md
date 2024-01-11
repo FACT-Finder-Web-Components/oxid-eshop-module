@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v5.0.0] - 2024.01.11
 ### BREAKING
 - IMPORTANT! Drop Oxid 6.x compatibility
 - IMPORTANT! Drop PHP 7.4 version support
@@ -231,6 +231,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v5.0.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v5.0.0
 [v4.4.3]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.4.3
 [v4.4.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.4.2
 [v4.4.1]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.4.1
