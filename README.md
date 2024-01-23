@@ -49,7 +49,7 @@ customise them.
 
 To install the module, open your terminal and run the command:
 
-    composer require omikron/oxid-factfinder^5.0
+    composer require omikron/oxid-factfinder
 
 ## Activating the Module
 
@@ -99,7 +99,7 @@ Credentials you will be given should be placed here.
 
 ### Buttons
 
-![Buttons](docs/assets/configuration-buttons.png "Configuration Buttons")
+![Buttons](docs/assets/configuration-buttons2.png "Configuration Buttons")
 
 #### Test Connection Button
 By clicking the `Test Connection` button you can check if your credentials are correct.
@@ -182,6 +182,7 @@ RewriteRule /rest/v[0-9] /$1 [L]
 * Recommendations - enables `ff-recommendation` on product page
 * Similar products - enables `ff-similar-products` on product page
 * Pushed products - enables `ff-campaign-pushed-products>` on cart page     
+* Disable cache - controls the usage of search result caches
 
 ### Using FACT-Finder® on category pages
 Module in order to preserve categories URLs and hence SEO get use of standard Oxid routing with the combination of FACT-Finder® availability to pass custom parameters to search request.
@@ -213,6 +214,8 @@ Additional:
 * Basic Auth user for HTTP export
 * Basic Auth password for HTTP export   
   **Note:** Basic Auth is used to secure HTTP based export, you can read more about in the next section.
+* Log path - path to log file where export log will be saved
+* Proceed with export when error occurred
 
 ## Export Methods
 
