@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Change
+- Update SDK documentation
+
 ## [v5.0.0] - 2024.01.11
 ### BREAKING
 - IMPORTANT! Drop Oxid 6.x compatibility
