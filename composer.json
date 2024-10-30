@@ -17,7 +17,7 @@
     "omikron/factfinder-communication-sdk": "^0.9.9",
     "league/flysystem-sftp": "^3.0",
     "league/flysystem-ftp": "^3.0",
-    "monolog/monolog": "^3.0"
+    "monolog/monolog": "^1.23"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.4",
