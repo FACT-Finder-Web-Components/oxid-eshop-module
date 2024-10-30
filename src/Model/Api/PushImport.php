@@ -53,11 +53,7 @@ class PushImport
 
     protected function getPushImportTypes(string $version): array
     {
-        return array_map(function (string $type) use ($version): string {
-            return $version === 'ng' && $type === 'data' ? 'search' : $type;
-        }, array_filter(['data', 'suggest', 'recommendation'], function (string $type): bool {
-            return (bool) $this->moduleSettingService->getBoolean(sprintf('ffAutomaticImport%s', ucfirst($type)), 'ffwebcomponents');
-        }));
+        return array_map(fn (string $type): string => $version === 'ng' && $type === 'data' ? 'search' : $type, array_filter(['data', 'suggest', 'recommendation'], fn (string $type): bool => (bool) $this->moduleSettingService->getBoolean(sprintf('ffAutomaticImport%s', ucfirst($type)), 'ffwebcomponents')));
     }
 
     protected function getChannel(string $lang): string

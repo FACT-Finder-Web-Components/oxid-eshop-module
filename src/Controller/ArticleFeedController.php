@@ -14,7 +14,7 @@ class ArticleFeedController extends FrontendController
 {
     protected $exportedType = ArticleFeed::class;
 
-    public function init()
+    public function init(): void
     {
         /** @var Authentication $auth */
         $auth = oxNew(Authentication::class);

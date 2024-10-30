@@ -20,9 +20,7 @@ class WebComponent extends WidgetController
 
     public function getCommunicationParams(): array
     {
-        $params = array_filter($this->config->getParameters(), function (string $name) {
-            return !in_array($name, ['user-id', 'search-immediate']);
-        }, ARRAY_FILTER_USE_KEY);
+        $params = array_filter($this->config->getParameters(), fn (string $name) => !in_array($name, ['user-id', 'search-immediate']), ARRAY_FILTER_USE_KEY);
 
         return $params;
     }

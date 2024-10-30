@@ -12,7 +12,7 @@ class CategoryEntity implements DataProviderInterface, ExportEntityInterface
     public function __construct(
         protected readonly Category $category,
         protected readonly Category $parent,
-        protected readonly array $fields
+        protected readonly array $fields,
     ) {
     }
 
@@ -38,8 +38,6 @@ class CategoryEntity implements DataProviderInterface, ExportEntityInterface
             'LongDescription' => $this->category->getFieldData('oxlongdesc'),
         ];
 
-        return array_reduce($this->fields, function (array $result, FieldInterface $field): array {
-            return [$field->getName() => $field->getValue($this->category, $this->parent)] + $result;
-        }, $data);
+        return array_reduce($this->fields, fn (array $result, FieldInterface $field): array => [$field->getName() => $field->getValue($this->category, $this->parent)] + $result, $data);
     }
 }

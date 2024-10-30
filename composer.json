@@ -14,15 +14,15 @@
     "php": "^8.1",
     "ext-ftp": "*",
     "ext-json": "*",
-    "omikron/factfinder-communication-sdk": "^0.9.7",
-    "league/flysystem-sftp": "^2.2",
-    "league/flysystem-ftp": "^2.3",
-    "monolog/monolog": "^1.23"
+    "omikron/factfinder-communication-sdk": "^0.9.9",
+    "league/flysystem-sftp": "^3.0",
+    "league/flysystem-ftp": "^3.0",
+    "monolog/monolog": "^3.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.4",
     "friendsofphp/php-cs-fixer": "^3.22",
-    "phpmd/phpmd": "^2.9",
+    "phpmd/phpmd": "^2.15",
     "phpunit/phpunit": "^9.5"
   },
   "autoload": {

@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Export\Data;
 
+use IteratorAggregate;
 use Omikron\FactFinder\Oxid\Export\Entity\CategoryEntity;
 use OxidEsales\Eshop\Application\Model\Category;
 use OxidEsales\Eshop\Application\Model\CategoryList;
 use OxidEsales\Eshop\Core\Model\ListModel;
 
-class CategoryCollection implements \IteratorAggregate, CollectionInterface
+class CategoryCollection implements IteratorAggregate, CollectionInterface
 {
     public function __construct(private readonly int $batchSize = 100)
     {

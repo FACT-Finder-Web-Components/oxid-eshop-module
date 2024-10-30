@@ -2,6 +2,10 @@
 ## Unreleased
 ### Change
 - Update SDK documentation
+- Add support for Oxid 7.1
+- Add support for PHP 8.2
+- Update composer libraries
+- Improve code style
 
 ## [v5.0.0] - 2024.01.11
 ### BREAKING

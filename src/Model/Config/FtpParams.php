@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Model\Config;
 
-use OxidEsales\Eshop\Core\Config;
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingService;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;

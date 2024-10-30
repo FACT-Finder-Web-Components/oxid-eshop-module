@@ -27,7 +27,7 @@ class CategoryPath implements FieldInterface
     protected function getPath(Category $category, string $glue = '/'): string
     {
         $path = [
-            rawurlencode($this->filter->filterValue($category->getTitle()))
+            rawurlencode($this->filter->filterValue($category->getTitle())),
         ];
 
         while ($category->isTopCategory() === false) {

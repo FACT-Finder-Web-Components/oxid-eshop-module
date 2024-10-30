@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
+use Exception;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
@@ -44,13 +45,13 @@ class ModuleConfiguration extends ModuleConfiguration_parent
         return $template;
     }
 
-    public function saveConfVars()
+    public function saveConfVars(): void
     {
         try {
             $this->preparePostData();
             parent::saveConfVars();
             $this->addTplSuccessMessage('Module configuration was saved successfully');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->addTplErrorMessage($exception->getMessage());
         }
     }
@@ -80,7 +81,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
             $this->preparePostData();
             parent::saveConfVars();
             $this->addTplSuccessMessage('Field roles was updated successfully');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->addTplErrorMessage($exception->getMessage());
         }
     }
@@ -116,9 +117,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     private function preparePostData(): void
     {
         if ($this->isFactFinder()) {
-            $_POST['confaarrs'] = array_reduce($this->localizedFields, function (array $result, string $field): array {
-                return [$field => $this->aarrayToMultiline($result[$field] ?? [])] + $result;
-            }, $_POST['confaarrs'] ?? []);
+            $_POST['confaarrs'] = array_reduce($this->localizedFields, fn (array $result, string $field): array => [$field => $this->aarrayToMultiline($result[$field] ?? [])] + $result, $_POST['confaarrs'] ?? []);
 
             $_POST['confaarrs']['ffExportAttributes'] = $this->aarrayToMultiline(
                 $this->flatMap(
@@ -132,9 +131,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     private function getAvailableAttributes(): array
     {
         $attributeList = oxNew(AttributeList::class)->getList()->getArray();
-        return array_reduce($attributeList, function (array $attributes, Attribute $attribute): array {
-            return $attributes + [$attribute->getFieldData('oxid') => $attribute->oxattribute__oxtitle->rawValue];
-        }, []);
+        return array_reduce($attributeList, fn (array $attributes, Attribute $attribute): array => $attributes + [$attribute->getFieldData('oxid') => $attribute->oxattribute__oxtitle->rawValue], []);
     }
 
     private function getSelectedAttributes(array $allAttributes): array
@@ -152,9 +149,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
 
     private function prepareAttributes(): callable
     {
-        return function (array $attributeData): array {
-            return [$attributeData['id'] => $attributeData['multi']];
-        };
+        return fn (array $attributeData): array => [$attributeData['id'] => $attributeData['multi']];
     }
 
     private function flatMap(callable $fnc, array $arr): array
