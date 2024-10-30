@@ -6,7 +6,6 @@ namespace Omikron\FactFinder\Oxid\Subscriber;
 
 use DateTime;
 use Exception;
-use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Session;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;

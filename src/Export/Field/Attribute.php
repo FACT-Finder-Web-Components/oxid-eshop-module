@@ -29,9 +29,7 @@ class Attribute implements FieldInterface
     {
         $attributes = $this->getAttributes($article->getId(), $article->getParentId());
 
-        return array_reduce($attributes, function (array $result, array $attribute) {
-            return $result + [$attribute['OXTITLE'] => $attribute['OXVALUE']];
-        }, []);
+        return array_reduce($attributes, fn (array $result, array $attribute) => $result + [$attribute['OXTITLE'] => $attribute['OXVALUE']], []);
     }
 
     protected function getAttributes($articleId, $parentId): array
@@ -62,8 +60,6 @@ class Attribute implements FieldInterface
             return $articleAttributes;
         }
 
-        return array_values(array_reduce($articleAttributes + $parentAttributes, function (array $added, array $attribute): array {
-            return in_array($attribute['OXID'], $added) ? $added : $added + [$attribute['OXID'] => $attribute];
-        }, []));
+        return array_values(array_reduce($articleAttributes + $parentAttributes, fn (array $added, array $attribute): array => in_array($attribute['OXID'], $added) ? $added : $added + [$attribute['OXID'] => $attribute], []));
     }
 }

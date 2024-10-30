@@ -71,7 +71,7 @@ class SearchResultController extends FrontendController
 
     protected function fallback(): void
     {
-        //this function could be used to implement fallback logic in case of any communication error.
+        // this function could be used to implement fallback logic in case of any communication error.
         $this->showJsonAndExit('');
     }
 

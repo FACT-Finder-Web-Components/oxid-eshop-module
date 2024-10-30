@@ -27,8 +27,6 @@ class FieldRolesMapper
 
     private function getOrEmptyString(array $fieldRoles): callable
     {
-        return function (string $key) use ($fieldRoles) {
-            return $fieldRoles[$key] ?? '';
-        };
+        return fn (string $key) => $fieldRoles[$key] ?? '';
     }
 }

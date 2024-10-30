@@ -38,20 +38,14 @@ class FilterAttributes extends Attribute implements FieldInterface
         $oxvarname   = $parent->getFieldData('oxvarname');
         $oxvarselect = $article->getFieldData('oxvarselect');
 
-        return implode('', array_map(function (string $key, ?string $value): string {
-            return $this->filter->filterValue($key) . '=' . $this->filter->filterValue($value) . '|';
-        }, ...array_map(function (?string $value): array {
-            return explode(' | ', $value);
-        }, [$this->validateValueForExport($oxvarname), $this->validateValueForExport($oxvarselect)])));
+        return implode('', array_map(fn (string $key, ?string $value): string => $this->filter->filterValue($key) . '=' . $this->filter->filterValue($value) . '|', ...array_map(fn (?string $value): array => explode(' | ', $value), [$this->validateValueForExport($oxvarname), $this->validateValueForExport($oxvarselect)])));
     }
 
     protected function getAllValues(Article $article): string
     {
         $variants = $article->getVariantSelections()['selections'] ?? [];
         return array_reduce($variants, function (string $result, VariantSelectList $variant): string {
-            $values = array_map(function (Selection $selection): string {
-                return $this->filter->filterValue($selection->getName());
-            }, $variant->getSelections());
+            $values = array_map(fn (Selection $selection): string => $this->filter->filterValue($selection->getName()), $variant->getSelections());
             return $result . $this->filter->filterValue($variant->getLabel()) . '=' . implode('#', $values) . '|';
         }, '');
     }

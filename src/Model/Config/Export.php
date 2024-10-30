@@ -6,7 +6,6 @@ namespace Omikron\FactFinder\Oxid\Model\Config;
 
 use OxidEsales\Eshop\Application\Model\AttributeList;
 use OxidEsales\Eshop\Core\Model\BaseModel;
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 
@@ -24,9 +23,7 @@ class Export
 
     public function getSingleFields(): array
     {
-        return array_intersect_key($this->getAttributes(), array_filter($this->getConfigValue(), function ($value) {
-            return !$value;
-        }));
+        return array_intersect_key($this->getAttributes(), array_filter($this->getConfigValue(), fn ($value) => !$value));
     }
 
     public function getConfigValue(): array
@@ -42,8 +39,6 @@ class Export
     {
         $this->attributes = $this->attributes ?? oxNew(AttributeList::class)->getList()->getArray();
 
-        return array_map(function (BaseModel $attribute): string {
-            return $attribute->oxattribute__oxtitle->rawValue;
-        }, $this->attributes);
+        return array_map(fn (BaseModel $attribute): string => $attribute->oxattribute__oxtitle->rawValue, $this->attributes);
     }
 }

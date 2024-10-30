@@ -58,9 +58,7 @@ class ArticleFeed extends AbstractFeed
 
     protected function getConfigFields(): array
     {
-        return array_map(function (string $attribute): FieldInterface {
-            return oxNew(AttributeField::class, $attribute);
-        }, array_values(oxNew(ExportConfig::class)->getSingleFields()));
+        return array_map(fn (string $attribute): FieldInterface => oxNew(AttributeField::class, $attribute), array_values(oxNew(ExportConfig::class)->getSingleFields()));
     }
 
     protected function getFieldName(FieldInterface $field): string

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
+use Exception;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
@@ -61,7 +62,7 @@ class TestConnectionController extends AdminController
             $ftpUploader->upload(tmpfile(), 'testconnection');
             $this->success = true;
             $this->result  = Registry::getLang()->translateString('FF_TEST_CONNECTION_SUCCESS', null, true);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->result = $e->getMessage();
         }
     }

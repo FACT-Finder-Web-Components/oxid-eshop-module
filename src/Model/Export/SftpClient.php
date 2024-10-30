@@ -20,7 +20,7 @@ class SftpClient implements UploadInterface
         );
     }
 
-    public function upload($handle, string $filename)
+    public function upload($handle, string $filename): void
     {
         $this->connection->writeStream($filename, $handle);
     }

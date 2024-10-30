@@ -69,7 +69,7 @@ class Authentication
     /**
      * Set "auth failed" headers and returns to browser.
      */
-    public function setAuthenticationFailed(string $realm = 'FACT-Finder')
+    public function setAuthenticationFailed(string $realm = 'FACT-Finder'): void
     {
         $this->utils->setHeader('HTTP/1.1 401 Unauthorized');
         $this->utils->setHeader('WWW-Authenticate: Basic realm="' . $realm . '"');

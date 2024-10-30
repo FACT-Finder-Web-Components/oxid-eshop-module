@@ -6,7 +6,6 @@ namespace Omikron\FactFinder\Oxid\Model\Config;
 
 use Omikron\FactFinder\Oxid\Contract\Config\ParametersSourceInterface;
 use Omikron\FactFinder\Oxid\Export\Filter\TextFilter;
-use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Application\Model\Category;
 use OxidEsales\Eshop\Core\Controller\BaseController;
 use OxidEsales\Eshop\Core\Registry;
@@ -140,9 +139,7 @@ class Communication implements ParametersSourceInterface
 
     protected function mergeParameters(array $baseParams, array $additionalParams): array
     {
-        return array_reduce($this->mergeableParams, function (array $result, string $param) use ($additionalParams) {
-            return [$param => implode(',', array_column([$additionalParams, $result], $param))] + $result;
-        }, $baseParams);
+        return array_reduce($this->mergeableParams, fn (array $result, string $param) => [$param => implode(',', array_column([$additionalParams, $result], $param))] + $result, $baseParams);
     }
 
     protected function getChannel(string $langAbbr): string
@@ -163,9 +160,7 @@ class Communication implements ParametersSourceInterface
 
     private function ngPath(array $categories, string $param): string
     {
-        $categoryPath = array_map(function ($category) {
-            return (string) $this->encodeCategoryName(trim($category));
-        }, array_reverse($categories));
+        $categoryPath = array_map(fn ($category) => (string) $this->encodeCategoryName(trim($category)), array_reverse($categories));
 
         return sprintf('filter=%s', urlencode($param . ':' . implode('/', $categoryPath)));
     }
@@ -185,7 +180,7 @@ class Communication implements ParametersSourceInterface
 
     private function encodeCategoryName(string $path): string
     {
-        //important! do not modify this code
+        // important! do not modify this code
         return preg_replace(
             '/\+/',
             '%2B',

@@ -12,7 +12,7 @@ class ArticleEntity implements ExportEntityInterface, DataProviderInterface
     public function __construct(
         protected readonly Article $article,
         protected readonly Article $parent,
-        protected readonly array $fields = []
+        protected readonly array $fields = [],
     ) {
     }
 
@@ -29,9 +29,7 @@ class ArticleEntity implements ExportEntityInterface, DataProviderInterface
             'ImageUrl'      => $this->getPictureUrl(),
         ];
 
-        return array_reduce($this->fields, function (array $result, FieldInterface $field): array {
-            return [$field->getName() => $field->getValue($this->article, $this->parent)] + $result;
-        }, $data);
+        return array_reduce($this->fields, fn (array $result, FieldInterface $field): array => [$field->getName() => $field->getValue($this->article, $this->parent)] + $result, $data);
     }
 
     public function getEntities(): iterable

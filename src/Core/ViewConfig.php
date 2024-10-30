@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Core;
 
 use Omikron\FactFinder\Oxid\Component\Widget\WebComponent;
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 

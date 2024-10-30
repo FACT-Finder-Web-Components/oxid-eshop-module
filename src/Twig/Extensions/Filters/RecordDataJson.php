@@ -56,7 +56,7 @@ class RecordDataJson extends AbstractExtension
             [
                 'idType'        => 'productNumber',
                 'productNumber' => $recordId,
-                'format'        => 'json'
+                'format'        => 'json',
             ]
         );
 

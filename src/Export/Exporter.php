@@ -10,6 +10,7 @@ use Omikron\FactFinder\Oxid\Export\Filter\TextFilter;
 use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 use Omikron\FactFinder\Oxid\Utilities\FfLogger;
 use OxidEsales\Eshop\Core\Registry;
+use Throwable;
 
 class Exporter implements ExporterInterface
 {
@@ -37,13 +38,13 @@ class Exporter implements ExporterInterface
             try {
                 $entityData = array_merge($emptyRecord, array_intersect_key($entity->toArray(), $emptyRecord)); // phpcs:ignore
                 $stream->addEntity($this->prepare($entityData));
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 $this->handleError($e, $entity);
             }
         }
     }
 
-    private function handleError(\Throwable $exception, ExportEntityInterface $entity): void
+    private function handleError(Throwable $exception, ExportEntityInterface $entity): void
     {
         if ($this->proceedWhileError === false) {
             throw $exception;

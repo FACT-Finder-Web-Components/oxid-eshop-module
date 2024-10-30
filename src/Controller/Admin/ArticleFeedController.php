@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
+use Exception;
 use Omikron\FactFinder\Oxid\Export\ArticleFeed;
 use Omikron\FactFinder\Oxid\Export\Stream\Csv;
 use Omikron\FactFinder\Oxid\Model\Api\PushImport;
@@ -36,7 +37,7 @@ class ArticleFeedController extends AdminController
             $pushImport->execute();
             $result[] = $this->translate('FF_ARTICLE_FEED_IMPORT_TRIGGERED');
             $this->addTplParam('success', true);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $result[] = $e->getMessage();
         }
 

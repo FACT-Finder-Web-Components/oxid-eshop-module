@@ -4,3 +4,4 @@
 composer.lock
 /vendor
 /tmp_data
+/views/converted_frontend/
