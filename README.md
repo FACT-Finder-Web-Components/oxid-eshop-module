@@ -9,6 +9,8 @@ process. The second chapter *Backend Configuration* explains the customisation o
 final chapter *Web Component Integration* describes how the web components interact with the shop system and how to
 customise them. 
 
+Our Oxid module offers a basic working integration for default Oxid APEX theme. Most projects may require modifications in order to fit their needs. For more advanced features please check our official [WebComponnents documentation](https://web-components.fact-finder.de/documentation/4.x/install-dist).
+
 ## Table of contents
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -40,7 +42,7 @@ customise them.
 - [License](#license)
 
 ## Requirements
-- OXID eShop 7.0
+- OXID eShop 7.0 or higher
 - PHP version 8.0 or higher
 
 **Note:** For Oxid eShop 6.x and PHP 7, please use SDK version 4.x

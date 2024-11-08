@@ -1,11 +1,14 @@
 # Changelog
 ## Unreleased
-### Change
-- Update SDK documentation
+### Add
 - Add support for Oxid 7.1
 - Add support for PHP 8.2
+
+### Change
+- Update SDK documentation
 - Update composer libraries
 - Improve code style
+- Upgrade Web Components to v4.3.0
 
 ## [v5.0.0] - 2024.01.11
 ### BREAKING
