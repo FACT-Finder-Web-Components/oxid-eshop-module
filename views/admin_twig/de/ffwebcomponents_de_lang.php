@@ -11,6 +11,7 @@ $aLang = [
     'SHOP_MODULE_ffPassword'                                     => 'Passwort for the FACT-Finder Import User',
     'SHOP_MODULE_ffPublicUsername'                               => 'Username for fetching data from FACT-Finder',
     'SHOP_MODULE_ffPublicPassword'                               => 'Password for fetching data from FACT-Finder',
+    'SHOP_MODULE_ffApiKey'                                       => 'FACT-Finder API key',
     'SHOP_MODULE_ffAuthPrefix'                                   => 'Authorisierungs-Präfix',
     'SHOP_MODULE_ffAuthPostfix'                                  => 'Authorisierungs-Postfix',
     'SHOP_MODULE_GROUP_ffAdvanced'                               => 'Erweiterte Einstellungen',
