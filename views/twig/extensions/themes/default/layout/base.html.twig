@@ -10,7 +10,78 @@
     <script src="{{ oViewConf.getModuleUrl("ffwebcomponents", "/js/utils.js")|escape }}"></script>
     <style>[unresolved]{opacity:0;display:none}</style>
 
+    {{ dump(oViewConf.getCommunicationParams()) }}
+
+    <!--Main FF Web-components Initialisation -->
     <script>
+
+        document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) => {
+
+            init({
+                ff: {
+                    url: `{{oViewConf.getFFStringConfigParam('ffServerUrl')}}`,
+                    channel: `{{oViewConf.getFFStringConfigParam('ffServerUrl').en}}`,
+                    apiKey: `{{oViewConf.getFFStringConfigParam('ffApiKey')}}`,
+                },
+                appConfig: {
+                    debug: true,
+                    fieldRoles: {{ oViewConf.getFFStringConfigParam('ffFieldRoles')|json_encode|raw }},
+                    {#formatting: {#}
+                    {#    locale: `{{page.extensions.factfinder.communication.currencyCountryCode}}`,#}
+                    {#    formatOptions: {#}
+                    {#        style: `currency`,#}
+                    {#        currency: `{{page.extensions.factfinder.communication.currencyCode}}`,#}
+                    {#    },#}
+                    {#},#}
+                },
+            });
+
+            //   <?php if(!empty($parameters['add-params'])) : ?>
+            //   factfinder.routing.setUrlParamOptionsListener(() => ({
+            //     postStringifier: pairs => {
+            //       <?php foreach ($parameters['add-params'] as $name => $value) {
+            //         /* @noEscape */ echo "pairs.push({ key: `{$name}`, value:  `{$value}` });";
+            //       } ?>
+            //
+            //       return pairs;
+            //     },
+            //   }));
+            //   <?php endif; ?>
+            //
+            // <?php if(!empty($parameters['parameter-whitelist'])) : ?>
+            //   factfinder.routing.setUrlParamOptionsListener(() => ({
+            //     allow: [<?= /* @noEscape */ $parameters['parameter-whitelist']; ?>],
+            // }));
+            //   <?php endif; ?>
+            //
+            factfinder.request.before.search(({ searchParams, searchOptions }) => {
+                if (searchOptions?.requestOptions?.origin?.tagName === `FF-SEARCHBOX`) {
+                    // <?php if(!empty($parameters['add-params'])) : ?>
+                    // window.location.href =  `/factfinder/result?query=${searchParams.query}&<?= /* @noEscape */ http_build_query($parameters['add-params']) ?>`;
+                    // <?php else : ?>
+                    // window.location.href =  `/factfinder/result?query=${searchParams.query}`;
+                    // <?php endif; ?>
+
+                    window.location.href =  `/factfinder/result?query=${searchParams.query}`;
+
+                    // Cancel the pipeline to avoid sending a search request to FactFinder before the redirect is complete.
+                    return false;
+                }
+            });
+
+            if ('{{ oViewConf.getSearchImmediate()|escape("js") }}') {
+                const searchParams = factfinder.utils.env.searchParamsFromUrl();
+                initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });
+            }
+
+
+
+        });
+    </script>
+
+{#    /#}
+
+        <script>
         document.addEventListener('ffReady', function (ff) {
             factfinder.sdk = 'oe-v5.0.0';
             factfinder.communication.fieldRoles = {{ oViewConf.getFFStringConfigParam('ffFieldRoles')|raw }};
@@ -31,6 +102,12 @@
                     history.replaceState(historyState, "", url);
                 });
             {% endif %}
+
+{#            {% if oView.getTrackingSettings() %}#}
+{#            const ffTrackingSettings = JSON.parse('{{ oView.getTrackingSettings()|json_encode }}');#}
+{#            {% else %}#}
+{#            const ffTrackingSettings = {};#}
+{#            {% endif %}#}
 
             {% if oView.getClassKey() != "search_result"  %}
                 document.addEventListener('before-search', function (event) {
