@@ -10,30 +10,29 @@
     <script src="{{ oViewConf.getModuleUrl("ffwebcomponents", "/js/utils.js")|escape }}"></script>
     <style>[unresolved]{opacity:0;display:none}</style>
 
-{#    {{ dump() }}#}
-
-{#        {% dump(oViewConf.getCommunicationParams()) %}#}
+    {{ dump(oViewConf.getCommunicationParams()) }}
 
     <!--Main FF Web-components Initialisation -->
     <script>
+
         document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) => {
 
             init({
                 ff: {
-                    url: `{{page.extensions.factfinder.communication.url}}`,
-                    channel: `{{page.extensions.factfinder.communication.channel}}`,
-                    apiKey: `ffng-kwU8a6Sv.aCt0sDZbBLqTerkuuHLG8fhstllFXF`,
+                    url: `{{oViewConf.getFFStringConfigParam('ffServerUrl')}}`,
+                    channel: `{{oViewConf.getFFStringConfigParam('ffServerUrl').en}}`,
+                    apiKey: `{{oViewConf.getFFStringConfigParam('ffApiKey')}}`,
                 },
                 appConfig: {
                     debug: true,
-                    fieldRoles: {{ page.extensions.factfinder.field_roles|json_encode|raw }},
-                    formatting: {
-                        locale: `{{page.extensions.factfinder.communication.currencyCountryCode}}`,
-                        formatOptions: {
-                            style: `currency`,
-                            currency: `{{page.extensions.factfinder.communication.currencyCode}}`,
-                        },
-                    },
+                    fieldRoles: {{ oViewConf.getFFStringConfigParam('ffFieldRoles')|json_encode|raw }},
+                    {#formatting: {#}
+                    {#    locale: `{{page.extensions.factfinder.communication.currencyCountryCode}}`,#}
+                    {#    formatOptions: {#}
+                    {#        style: `currency`,#}
+                    {#        currency: `{{page.extensions.factfinder.communication.currencyCode}}`,#}
+                    {#    },#}
+                    {#},#}
                 },
             });
 
@@ -69,9 +68,8 @@
                     return false;
                 }
             });
-            //
 
-            if ({{ page.extensions.factfinder.searchImmediate }}) {
+            if ('{{ oViewConf.getSearchImmediate()|escape("js") }}') {
                 const searchParams = factfinder.utils.env.searchParamsFromUrl();
                 initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });
             }
@@ -104,6 +102,12 @@
                     history.replaceState(historyState, "", url);
                 });
             {% endif %}
+
+{#            {% if oView.getTrackingSettings() %}#}
+{#            const ffTrackingSettings = JSON.parse('{{ oView.getTrackingSettings()|json_encode }}');#}
+{#            {% else %}#}
+{#            const ffTrackingSettings = {};#}
+{#            {% endif %}#}
 
             {% if oView.getClassKey() != "search_result"  %}
                 document.addEventListener('before-search', function (event) {
