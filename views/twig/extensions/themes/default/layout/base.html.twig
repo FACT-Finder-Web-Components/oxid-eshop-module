@@ -10,7 +10,7 @@
     <script src="{{ oViewConf.getModuleUrl("ffwebcomponents", "/js/utils.js")|escape }}"></script>
     <style>[unresolved]{opacity:0;display:none}</style>
 
-    {{ dump(oViewConf.getCommunicationParams()) }}
+{#    {{ dump(oViewConf.getFFArrayConfigParam('ffChannel').en) }}#}
 
     <!--Main FF Web-components Initialisation -->
     <script>
@@ -20,12 +20,12 @@
             init({
                 ff: {
                     url: `{{oViewConf.getFFStringConfigParam('ffServerUrl')}}`,
-                    channel: `{{oViewConf.getFFStringConfigParam('ffServerUrl').en}}`,
+                    channel: `{{oViewConf.getFFArrayConfigParam('ffChannel').en}}`,
                     apiKey: `{{oViewConf.getFFStringConfigParam('ffApiKey')}}`,
                 },
                 appConfig: {
                     debug: true,
-                    fieldRoles: {{ oViewConf.getFFStringConfigParam('ffFieldRoles')|json_encode|raw }},
+                    fieldRoles: {{ oViewConf.getFFStringConfigParam('ffFieldRoles')|raw }},
                     {#formatting: {#}
                     {#    locale: `{{page.extensions.factfinder.communication.currencyCountryCode}}`,#}
                     {#    formatOptions: {#}
@@ -62,17 +62,23 @@
                     // window.location.href =  `/factfinder/result?query=${searchParams.query}`;
                     // <?php endif; ?>
 
-                    window.location.href =  `/factfinder/result?query=${searchParams.query}`;
+                    window.location.href =  `?query=${searchParams.query}&cl=search_result`;
 
                     // Cancel the pipeline to avoid sending a search request to FactFinder before the redirect is complete.
                     return false;
                 }
             });
 
+
             if ('{{ oViewConf.getSearchImmediate()|escape("js") }}') {
                 const searchParams = factfinder.utils.env.searchParamsFromUrl();
                 initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });
             }
+
+{#            {% if page.extensions.factfinder.searchImmediate and not page.extensions.factfinder.ssr %}#}
+{#            const searchParams = factfinder.utils.env.searchParamsFromUrl();#}
+{#            initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });#}
+{#            {% endif %}#}
 
 
 
@@ -82,26 +88,26 @@
 {#    /#}
 
         <script>
-        document.addEventListener('ffReady', function (ff) {
-            factfinder.sdk = 'oe-v5.0.0';
-            factfinder.communication.fieldRoles = {{ oViewConf.getFFStringConfigParam('ffFieldRoles')|raw }};
+        document.addEventListener('ffCoreReady', function (ff) {
+            factfinder.sdk = 'oe-v6.0.0';
 
-            {% if oViewConf.getFFBoolConfigParam('ffUseProxy') %}
-                factfinder.__experimental.sandboxMode.enable = true;
+//             TODO Proxy
+{#            {% if oViewConf.getFFBoolConfigParam('ffUseProxy') %}#}
+{#                factfinder.__experimental.sandboxMode.enable = true;#}
 
-                ff.eventAggregator.addBeforeDispatchingCallback(function (event) {
-                    event.cl = 'search_result';
-                    event.fnc = 'proxy';
-                });
+{#                ff.eventAggregator.addBeforeDispatchingCallback(function (event) {#}
+{#                    event.cl = 'search_result';#}
+{#                    event.fnc = 'proxy';#}
+{#                });#}
 
-                document.addEventListener('ffUrlWrite', function (event, historyState) {
-                    let url = event.url.replace(/([?&]?)fnc=proxy/, '');
-                    {% if oView.getClassKey() == "alist" %}
-                    url = url.replace(/[?&]?cl=search_result/, '');
-                    {% endif %}
-                    history.replaceState(historyState, "", url);
-                });
-            {% endif %}
+{#                document.addEventListener('ffUrlWrite', function (event, historyState) {#}
+{#                    let url = event.url.replace(/([?&]?)fnc=proxy/, '');#}
+{#                    {% if oView.getClassKey() == "alist" %}#}
+{#                    url = url.replace(/[?&]?cl=search_result/, '');#}
+{#                    {% endif %}#}
+{#                    history.replaceState(historyState, "", url);#}
+{#                });#}
+{#            {% endif %}#}
 
 {#            {% if oView.getTrackingSettings() %}#}
 {#            const ffTrackingSettings = JSON.parse('{{ oView.getTrackingSettings()|json_encode }}');#}
@@ -109,16 +115,16 @@
 {#            const ffTrackingSettings = {};#}
 {#            {% endif %}#}
 
-            {% if oView.getClassKey() != "search_result"  %}
-                document.addEventListener('before-search', function (event) {
-                    if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {
-                        event.preventDefault();
-                        const baseUrl =  '{{ oViewConf.getHomeLink()|escape("js") }}';
-                        const params = ff.factfinder.common.dictToParameterString(factfinder.common.encodeDict(event.detail));
-                        window.location = baseUrl + (baseUrl.indexOf('?') > -1 ?  params.substr(1) : params) + '&cl=search_result'
-                    }
-                });
-            {% endif %}
+{#            {% if oView.getClassKey() != "search_result"  %}#}
+{#                document.addEventListener('before-search', function (event) {#}
+{#                    if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {#}
+{#                        event.preventDefault();#}
+{#                        const baseUrl =  '{{ oViewConf.getHomeLink()|escape("js") }}';#}
+{#                        const params = ff.factfinder.common.dictToParameterString(factfinder.common.encodeDict(event.detail));#}
+{#                        window.location = baseUrl + (baseUrl.indexOf('?') > -1 ?  params.substr(1) : params) + '&cl=search_result'#}
+{#                    }#}
+{#                });#}
+{#            {% endif %}#}
 
             {% if oView.getClassKey() == "alist" %}
                 ff.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {

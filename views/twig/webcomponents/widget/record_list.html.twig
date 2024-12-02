@@ -1,24 +1,25 @@
 <ff-record-list unresolved class="row gridView list-container" subscribe="{{ subscribe|default("true") }}">
-    <ff-record class="productData col-xs-12 col-sm-6 col-md-4 productBox">
+    <template data-role="record">
+        <ff-record class="productData col-xs-12 col-sm-6 col-md-4 productBox">
         <form action="{{ oViewConf.getSelfActionLink()|escape }}" method="post">
             <input type="hidden" name="cl" value="{{ oViewConf.getActiveClassName()|escape }}" />
             <input type="hidden" name="fnc" value="tobasket" />
             <div class="card product-card">
                 <div class="product-img-wrapper">
-                    <a data-anchor="{{ '{{ record.Deeplink }}' }}" data-redirect="{{ '{{ record.Deeplink }}' }}" data-redirect-target="_self" title="{{ '{{ record.Name }}' }}">
-                        <img width="350" height="220" data-image="{{ '{{ record.ImageName }}' }}" alt="{{ '{{ record.Name }}' }}" class="product-img" />
+                    <a data-anchor="{{ '{{ masterValues.Deeplink }}' }}" data-redirect="{{ '{{ masterValues.Deeplink }}' }}" data-redirect-target="_self" title="{{ '{{ masterValues.Name }}' }}">
+                        <img width="350" height="220" data-image="{{ '{{ masterValues.ImageName }}' }}" alt="{{ '{{ masterValues.Name }}' }}" class="product-img" />
                     </a>
                 </div>
 
                 <div class="card-body">
                     <div class="h5 card-title text-center">
-                        <a data-redirect="{{ '{{ record.Deeplink }}' }}" data-redirect-target="_self" data-anchor="{{ '{{ record.Deeplink }}' }}" title="{{ '{{ record.Name }}' }}">
-                            <span>{{ '{{ record.Name }}' }}</span>
+                        <a data-redirect="{{ '{{ masterValues.Deeplink }}' }}" data-redirect-target="_self" data-anchor="{{ '{{ masterValues.Deeplink }}' }}" title="{{ '{{ masterValues.Name }}' }}">
+                            <span>{{ '{{ masterValues.Name }}' }}</span>
                         </a>
                     </div>
 
                     <div class="d-flex flex-column price">
-                        <span class="lead text-nowrap">{{ '{{ record.Price }}' }} *</span>
+                        <span class="lead text-nowrap">{{ '{{ $ masterValues.Price }}' }} *</span>
                     </div>
 
                     <div class="listDetails text-center">
@@ -33,7 +34,7 @@
 {#                                        <use xlink:href="#bag"></use>#}
 {#                                    </svg>#}
 {#                                </button>#}
-                                <a class="btn btn-primary" data-redirect="{{ '{{ record.Deeplink }}' }}" data-redirect-target="_self" data-anchor="{{ '{{ record.Deeplink }}' }}">{{ translate({ ident: "MORE_INFO" }) }}</a>
+                                <a class="btn btn-primary" data-redirect="{{ '{{ masterValues.Deeplink }}' }}" data-redirect-target="_self" data-anchor="{{ '{{ masterValues.Deeplink }}' }}">{{ translate({ ident: "MORE_INFO" }) }}</a>
                             </div>
                         </div>
                     </div>
@@ -41,16 +42,19 @@
             </div>
         </form>
     </ff-record>
+    </template>
 </ff-record-list>
 
 
-<script>
-    document.addEventListener('ffReady', function (ff) {
-        ff.eventAggregator.addBeforeDispatchingCallback(function (event) {
-            if ((event.type === ('search' && !event.searchImmediate) || event.type === 'paging')) {
-                const scrollCallback = scroll();
-                event.success = factfinder.common.concatFunctions(event.success, scrollCallback);
-            }
-        });
-    });
-</script>
+
+{#Scrolling ?? #}
+{#<script>#}
+{#    document.addEventListener('ffCoreReady', function (ff) {#}
+{#        ff.eventAggregator.addBeforeDispatchingCallback(function (event) {#}
+{#            if ((event.type === ('search' && !event.searchImmediate) || event.type === 'paging')) {#}
+{#                const scrollCallback = scroll();#}
+{#                event.success = factfinder.common.concatFunctions(event.success, scrollCallback);#}
+{#            }#}
+{#        });#}
+{#    });#}
+{#</script>#}
