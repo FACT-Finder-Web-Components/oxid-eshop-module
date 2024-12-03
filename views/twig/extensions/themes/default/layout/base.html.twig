@@ -10,13 +10,13 @@
     <script src="{{ oViewConf.getModuleUrl("ffwebcomponents", "/js/utils.js")|escape }}"></script>
     <style>[unresolved]{opacity:0;display:none}</style>
 
-{#    {{ dump(oViewConf.getFFArrayConfigParam('ffChannel').en) }}#}
+{#    {{ dump(oViewConf.getCommunicationParams()['currency-country-code']) }}#}
 
     <!--Main FF Web-components Initialisation -->
+    {% set communicationParams = oViewConf.getCommunicationParams() %}
     <script>
 
         document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) => {
-
             init({
                 ff: {
                     url: `{{oViewConf.getFFStringConfigParam('ffServerUrl')}}`,
@@ -26,13 +26,13 @@
                 appConfig: {
                     debug: true,
                     fieldRoles: {{ oViewConf.getFFStringConfigParam('ffFieldRoles')|raw }},
-                    {#formatting: {#}
-                    {#    locale: `{{page.extensions.factfinder.communication.currencyCountryCode}}`,#}
-                    {#    formatOptions: {#}
-                    {#        style: `currency`,#}
-                    {#        currency: `{{page.extensions.factfinder.communication.currencyCode}}`,#}
-                    {#    },#}
-                    {#},#}
+                    formatting: {
+                        locale: `{{communicationParams['currency-country-code']}}`,
+                        formatOptions: {
+                            style: `currency`,
+                            currency: `{{communicationParams['currency-code']}}`,
+                        },
+                    },
                 },
             });
 
@@ -69,11 +69,20 @@
                 }
             });
 
-
-            if ('{{ oViewConf.getSearchImmediate()|escape("js") }}') {
+            {% if oViewConf.getSearchImmediate()|escape("js") %}
                 const searchParams = factfinder.utils.env.searchParamsFromUrl();
                 initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });
-            }
+            {% endif %}
+
+            {#if ('{{ oViewConf.getSearchImmediate()|escape("js") }}') {#}
+            {#    const searchParams = factfinder.utils.env.searchParamsFromUrl();#}
+            {#    initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });#}
+            {#}#}
+
+{#            {% if page.extensions.factfinder.searchImmediate and not page.extensions.factfinder.ssr %}#}
+{#            const searchParams = factfinder.utils.env.searchParamsFromUrl();#}
+{#            initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });#}
+{#            {% endif %}#}
 
 {#            {% if page.extensions.factfinder.searchImmediate and not page.extensions.factfinder.ssr %}#}
 {#            const searchParams = factfinder.utils.env.searchParamsFromUrl();#}
