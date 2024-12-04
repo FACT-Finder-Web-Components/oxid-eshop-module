@@ -1,8 +1,7 @@
 <div class="ff-asn">
     <p class="text-uppercase h6 hidden-sm-down">{{ translate({ ident: "FF_FILTER_BY" }) }}</p>
-    <ff-asn align="vertical" unresolved>
-
-        <ff-asn-group for-group="CategoryPathROOT"   {% if oView.getClassKey() == "alist" %} class="hidden" {% endif %}>
+    <ff-asn align="vertical" unresolved subscribe="true">
+        <ff-asn-group for-group="CategoryPath">
             <div slot="groupCaption" class="groupCaption">
                 <p class="h4 facet-title hidden-sm-down">{{ '{{ group.name }}' }}</p>
             </div>
@@ -10,12 +9,12 @@
             <ff-asn-group-element>
                 <div slot="selected">
                     <span class="custom-checkbox">
-                        <span class="filterName">{{ '{{ element.name }}' }}</span>
+                        <span class="filterName">{{ '{{$facetElement}}' }}</span>
                     </span>
                 </div>
                 <div slot="unselected">
                     <span class="custom-checkbox">
-                        <span class="filterName">{{ '{{ element.name }}' }}</span>
+                        <span class="filterName">{{ '{{$facetElement}}' }}</span>
                     </span>
                 </div>
 
@@ -34,13 +33,13 @@
                 <div slot="selected">
                     <span class="custom-checkbox">
                         <input type="checkbox" checked />
-                        <span class="filterName">{{ '{{ element.name }}' }}</span>
+                        <span class="filterName">{{ '{{$facetElement}}' }}</span>
                     </span>
                 </div>
                 <div slot="unselected">
                     <span class="custom-checkbox">
                         <input type="checkbox" />
-                        <span class="filterName">{{ '{{ element.name }}' }}</span>
+                        <span class="filterName">{{ '{{$facetElement}}' }}</span>
                     </span>
                 </div>
 
