@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Model\Api;
 
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
+use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\FactFinder\Communication\Version;
+use Omikron\FactFinder\Oxid\Model\Config\Authorization;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
@@ -33,7 +35,7 @@ class PushImport
 
         $clientBuilder = oxNew(ClientBuilder::class)
             ->withServerUrl((string) $this->moduleSettingService->getString('ffServerUrl', 'ffwebcomponents'))
-            ->withApiKey((string) $this->moduleSettingService->getString('ffApiKey', 'ffwebcomponents'));
+            ->withCredentials(oxNew(Credentials::class, ...oxNew(Authorization::class)->getParameters()));
 
         $importAdapter = (new AdapterFactory($clientBuilder, $version, $apiVersion))->getImportAdapter();
         $channel       = $this->getChannel(Registry::getLang()->getLanguageAbbr());

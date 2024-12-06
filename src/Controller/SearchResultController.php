@@ -76,11 +76,6 @@ class SearchResultController extends FrontendController
         $this->showJsonAndExit('');
     }
 
-    protected function getCredentials(): Credentials
-    {
-        return new Credentials(...array_map([$this, 'getConfigParam'], ['ffUsername', 'ffPassword', 'ffAuthPrefix', 'ffAuthPostfix']));
-    }
-
     protected function getConfigParam(string $key): string
     {
         $moduleSettingService = ContainerFactory::getInstance()
