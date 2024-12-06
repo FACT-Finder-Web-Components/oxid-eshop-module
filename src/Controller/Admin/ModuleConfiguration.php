@@ -6,8 +6,8 @@ namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
 use Exception;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
-use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
+use Omikron\FactFinder\Communication\Version;
 use Omikron\FactFinder\Oxid\Model\Config\Export as ExportConfig;
 use Omikron\FactFinder\Oxid\Model\Config\FieldRolesMapper;
 use OxidEsales\Eshop\Application\Model\Attribute;
@@ -61,23 +61,18 @@ class ModuleConfiguration extends ModuleConfiguration_parent
         try {
             $clientBuilder = oxNew(ClientBuilder::class)
                 ->withServerUrl($this->getConfigParam('ffServerUrl'))
-                ->withCredentials($this->getCredentials());
+                ->withApiKey($this->getConfigParam('ffApiKey'));
 
             $adapterFactory = new AdapterFactory(
                 $clientBuilder,
-                $this->getConfigParam('ffVersion'),
+                Version::NG,
                 $this->getApiVersion()
             );
             $searchAdapter = $adapterFactory->getSearchAdapter();
             $response      = $searchAdapter->search($this->getConfigArrayParam('ffChannel')[Registry::getLang()->getLanguageAbbr()], '*');
             $fieldRoles    = $response['fieldRoles'] ?? $response['searchResult']['fieldRoles'];
 
-            $_POST['confstrs']['ffFieldRoles'] = json_encode(
-                $this->getConfigParam('ffVersion') === 'ng'
-                    ? oxNew(FieldRolesMapper::class)->map($fieldRoles)
-                    : $fieldRoles
-            );
-
+            $_POST['confstrs']['ffFieldRoles'] = json_encode(oxNew(FieldRolesMapper::class)->map($fieldRoles));
             $this->preparePostData();
             parent::saveConfVars();
             $this->addTplSuccessMessage('Field roles was updated successfully');
@@ -89,11 +84,6 @@ class ModuleConfiguration extends ModuleConfiguration_parent
     protected function isFactFinder(): bool
     {
         return Registry::getRequest()->getRequestEscapedParameter('oxid') === 'ffwebcomponents';
-    }
-
-    protected function getCredentials(): Credentials
-    {
-        return new Credentials(...array_map([$this, 'getConfigParam'], ['ffUsername', 'ffPassword', 'ffAuthPrefix', 'ffAuthPostfix']));
     }
 
     protected function getConfigParam(string $key): string
@@ -169,6 +159,6 @@ class ModuleConfiguration extends ModuleConfiguration_parent
 
     private function getApiVersion(): string
     {
-        return (string) $this->getConfigParam('ffApiVersion') ?? 'v4';
+        return 'v5';
     }
 }
