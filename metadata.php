@@ -64,35 +64,9 @@ $aModule = [
         ],
         [
             'group'    => 'ffMain',
-            'name'     => 'ffPublicUsername',
-            'type'     => 'str',
-            'position' => $settingPosition++,
-        ],
-        [
-            'group'    => 'ffMain',
-            'name'     => 'ffPublicPassword',
-            'type'     => 'str',
-            'position' => $settingPosition++,
-        ],
-        [
-            'group'    => 'ffMain',
             'name'     => 'ffApiKey',
             'type'     => 'str',
             'value'    => 'YOUR_API_KEY',
-            'position' => $settingPosition++,
-        ],
-        [
-            'group'    => 'ffMain',
-            'name'     => 'ffAuthPrefix',
-            'type'     => 'str',
-            'value'    => 'FACT-FINDER',
-            'position' => $settingPosition++,
-        ],
-        [
-            'group'    => 'ffMain',
-            'name'     => 'ffAuthPostfix',
-            'type'     => 'str',
-            'value'    => 'FACT-FINDER',
             'position' => $settingPosition++,
         ],
         [

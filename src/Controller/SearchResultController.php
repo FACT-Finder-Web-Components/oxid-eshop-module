@@ -6,7 +6,6 @@ namespace Omikron\FactFinder\Oxid\Controller;
 
 use Exception;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
-use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Version;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Core\Registry;
@@ -74,11 +73,6 @@ class SearchResultController extends FrontendController
     {
         // this function could be used to implement fallback logic in case of any communication error.
         $this->showJsonAndExit('');
-    }
-
-    protected function getCredentials(): Credentials
-    {
-        return new Credentials(...array_map([$this, 'getConfigParam'], ['ffUsername', 'ffPassword', 'ffAuthPrefix', 'ffAuthPostfix']));
     }
 
     protected function getConfigParam(string $key): string

@@ -27,8 +27,6 @@ class Authorization implements ParametersSourceInterface
         return [
             (string) $this->moduleSettingService->getString('ffUsername', 'ffwebcomponents'),
             (string) $this->moduleSettingService->getString('ffPassword', 'ffwebcomponents'),
-            (string) $this->moduleSettingService->getString('ffAuthPrefix', 'ffwebcomponents'),
-            (string) $this->moduleSettingService->getString('ffAuthPostfix', 'ffwebcomponents'),
         ];
     }
 }
