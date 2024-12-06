@@ -39,8 +39,8 @@ class Communication implements ParametersSourceInterface
         $category = $this->view->getActiveCategory();
         $params   = [
             'url'                   => $this->getServerUrl(),
-            'version'               => $this->moduleSettingService->getString('ffVersion', 'ffwebcomponents'),
-            'api'                   => $this->moduleSettingService->getString('ffVersion', 'ffwebcomponents') ? $this->getApiVersion() : '',
+            'version'               => 'ng',
+            'api'                   => $this->getApiVersion(),
             'channel'               => $this->getChannel($this->view->getActiveLangAbbr()),
             'user-id'               => $this->getUserId(),
             'use-url-parameters'    => $this->moduleSettingService->getBoolean('ffUseUrlParams', 'ffwebcomponents') ? 'true' : 'false',
@@ -51,8 +51,8 @@ class Communication implements ParametersSourceInterface
             'keep-url-params'       => 'true',
             'only-search-params'    => 'true',
             'use-browser-history'   => 'true',
-            'category-page'         => (string) $this->moduleSettingService->getString('ffVersion', 'ffwebcomponents') === 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : null,
-            'add-params'            => (string) $this->moduleSettingService->getString('ffVersion', 'ffwebcomponents') !== 'ng' && $this->useForCategories() ? $this->getCategoryPath($category) : '',
+            'category-page'         => $this->useForCategories() ? $this->getCategoryPath($category) : null,
+            'add-params'            => $this->useForCategories() ? $this->getCategoryPath($category) : '',
             'disable-cache'         => $this->moduleSettingService->getBoolean('ffDisableCache', 'ffwebcomponents') ? 'true' : 'false',
         ];
 
@@ -112,9 +112,7 @@ class Communication implements ParametersSourceInterface
             $category     = $parent;
         }
 
-        return (string) $this->moduleSettingService->getString('ffVersion', 'ffwebcomponents') === 'ng'
-            ? $this->ngPath($categories, $param)
-            : $this->standardPath($categories, $param);
+        return $this->ngPath($categories, $param);
     }
 
     protected function isSearch(): bool
@@ -155,7 +153,7 @@ class Communication implements ParametersSourceInterface
 
     protected function getApiVersion(): string
     {
-        return (string) $this->moduleSettingService->getString('ffApiVersion', 'ffwebcomponents') ?? 'v4';
+        return 'v5';
     }
 
     private function ngPath(array $categories, string $param): string
@@ -163,19 +161,6 @@ class Communication implements ParametersSourceInterface
         $categoryPath = array_map(fn ($category) => (string) $this->encodeCategoryName(trim($category)), array_reverse($categories));
 
         return sprintf('filter=%s', urlencode($param . ':' . implode('/', $categoryPath)));
-    }
-
-    private function standardPath(array $categories, string $param): string
-    {
-        $path  = 'ROOT';
-        $value = ['navigation=true'];
-
-        foreach (array_reverse($categories) as $category) {
-            $value[] = sprintf("filter{$param}%s=%s", $path, urlencode(trim($category)));
-            $path .= urlencode('/' . $this->encodeCategoryName(trim($category)));
-        }
-
-        return implode(',', $value);
     }
 
     private function encodeCategoryName(string $path): string

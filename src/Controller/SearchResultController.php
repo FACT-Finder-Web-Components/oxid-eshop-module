@@ -7,6 +7,7 @@ namespace Omikron\FactFinder\Oxid\Controller;
 use Exception;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Credentials;
+use Omikron\FactFinder\Communication\Version;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
@@ -35,8 +36,8 @@ class SearchResultController extends FrontendController
 
             $client = oxNew(ClientBuilder::class)
                 ->withServerUrl($this->getConfigParam('ffServerUrl'))
-                ->withCredentials($this->getCredentials())
-                ->withVersion($this->getConfigParam('ffVersion'))
+                ->withApiKey($this->getConfigParam('ffApiKey'))
+                ->withVersion(Version::NG)
                 ->build();
 
             switch ($httpMethod) {

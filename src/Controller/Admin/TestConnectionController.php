@@ -32,7 +32,7 @@ class TestConnectionController extends AdminController
         try {
             $clientBuilder = oxNew(ClientBuilder::class)
                 ->withServerUrl($this->param('serverUrl'))
-                ->withCredentials($this->getCredentials());
+                ->withApiKey($this->getConfigParam('ffApiKey'));
 
             $adapterFactory = new AdapterFactory(
                 $clientBuilder,

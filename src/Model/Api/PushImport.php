@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Model\Api;
 
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
-use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
-use Omikron\FactFinder\Oxid\Model\Config\Authorization;
+use Omikron\FactFinder\Communication\Version;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
@@ -29,12 +28,12 @@ class PushImport
             return false;
         }
 
-        $version    = (string) $this->moduleSettingService->getString('ffVersion', 'ffwebcomponents');
-        $apiVersion = (string) $this->moduleSettingService->getString('ffApiVersion', 'ffwebcomponents') ?? 'v4';
+        $version    = Version::NG;
+        $apiVersion = 'v5';
 
         $clientBuilder = oxNew(ClientBuilder::class)
             ->withServerUrl((string) $this->moduleSettingService->getString('ffServerUrl', 'ffwebcomponents'))
-            ->withCredentials(oxNew(Credentials::class, ...oxNew(Authorization::class)->getParameters()));
+            ->withApiKey((string) $this->moduleSettingService->getString('ffApiKey', 'ffwebcomponents'));
 
         $importAdapter = (new AdapterFactory($clientBuilder, $version, $apiVersion))->getImportAdapter();
         $channel       = $this->getChannel(Registry::getLang()->getLanguageAbbr());

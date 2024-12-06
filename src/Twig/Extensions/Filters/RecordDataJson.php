@@ -7,6 +7,7 @@ namespace Omikron\FactFinder\Oxid\Twig\Extensions\Filters;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
+use Omikron\FactFinder\Communication\Version;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
@@ -30,24 +31,16 @@ class RecordDataJson extends AbstractExtension
             ->getContainer()
             ->get(ModuleSettingServiceInterface::class);
 
-        $username = (string) $moduleSettingService->getString('ffPublicUsername', 'ffwebcomponents');
-        $password = (string) $moduleSettingService->getString('ffPublicPassword', 'ffwebcomponents');
-
         $recordId    = (string) $article->getFieldData('oxartnum');
-        $credentials = new Credentials(
-            $username,
-            $password,
-            (string) $moduleSettingService->getString('ffAuthPrefix', 'ffwebcomponents'),
-            (string) $moduleSettingService->getString('ffAuthPostfix', 'ffwebcomponents')
-        );
+
         $clientBuilder = oxNew(ClientBuilder::class)
             ->withServerUrl((string) $moduleSettingService->getString('ffServerUrl', 'ffwebcomponents'))
-            ->withCredentials($credentials)
-            ->withVersion((string) $moduleSettingService->getString('ffApiVersion', 'ffwebcomponents'));
+            ->withApiKey((string) $moduleSettingService->getString('ffApiKey', 'ffwebcomponents'),)
+            ->withVersion(Version::NG);
         $adapterFactory = new AdapterFactory(
             $clientBuilder,
-            (string) $moduleSettingService->getString('ffVersion', 'ffwebcomponents'),
-            (string) $moduleSettingService->getString('ffApiVersion', 'ffwebcomponents')
+            Version::NG,
+            'v5'
         );
         $searchAdapter = $adapterFactory->getSearchAdapter();
         $response      = $searchAdapter->records(
