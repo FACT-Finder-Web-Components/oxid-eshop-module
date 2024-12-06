@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Twig\Extensions\Filters;
 
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
-use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\FactFinder\Communication\Version;
 use OxidEsales\Eshop\Core\Model\BaseModel;
@@ -35,7 +34,7 @@ class RecordDataJson extends AbstractExtension
 
         $clientBuilder = oxNew(ClientBuilder::class)
             ->withServerUrl((string) $moduleSettingService->getString('ffServerUrl', 'ffwebcomponents'))
-            ->withApiKey((string) $moduleSettingService->getString('ffApiKey', 'ffwebcomponents'),)
+            ->withApiKey((string) $moduleSettingService->getString('ffApiKey', 'ffwebcomponents'))
             ->withVersion(Version::NG);
         $adapterFactory = new AdapterFactory(
             $clientBuilder,
