@@ -32,6 +32,13 @@
                name="ffTestFtpConnection"
                value="Test FTP Connection"
                onclick="testFtpConnection()"/>
+
+        <input type="button"
+               id="ffTestPushImport"
+               class="confinput"
+               name="ffTestPushImport"
+               value="Test Push Import"
+               onclick="testPushImport()"/>
         <div id="spinner">
         </div>
         <div id="result">
@@ -44,6 +51,26 @@
                     type:     'POST',
                     dataType: 'json',
                     data: getTestConnectionParams(),
+                    beforeSend: function() {
+                        jQuery('#spinner').addClass('loading');
+                    },
+                    complete: function (response) {
+                        setTimeout(
+                            function () {
+                                jQuery('#spinner').removeClass('loading');
+                                jQuery('#result').html(response.responseText);
+                            }, 1000
+                        )
+                    }
+                });
+            }
+
+            function testPushImport() {
+                jQuery.ajax({
+                    url:      'index.php?cl=test_connection&fnc=testPushImport&stoken=' + jQuery('input[name="stoken"]').val(),
+                    type:     'POST',
+                    dataType: 'json',
+                    data: getTestPushImportParams(),
                     beforeSend: function() {
                         jQuery('#spinner').addClass('loading');
                     },
@@ -98,10 +125,16 @@
 
             function getTestConnectionParams() {
                 return {
+                    apiKey:     jQuery('[name="confstrs[ffApiKey]"]').val(),
+                    serverUrl:  jQuery('[name="confstrs[ffServerUrl]"]').val(),
+                    channel:    jQuery('[name="confaarrs[ffChannel][de]"]').val(),
+                }
+            }
+
+            function getTestPushImportParams() {
+                return {
                     username:   jQuery('[name="confstrs[ffUsername]"]').val(),
                     password:   jQuery('[name="confstrs[ffPassword]"]').val(),
-                    prefix:     jQuery('[name="confstrs[ffAuthPrefix]"]').val(),
-                    postfix:    jQuery('[name="confstrs[ffAuthPostfix]"]').val(),
                     serverUrl:  jQuery('[name="confstrs[ffServerUrl]"]').val(),
                     channel:    jQuery('[name="confaarrs[ffChannel][de]"]').val(),
                 }
