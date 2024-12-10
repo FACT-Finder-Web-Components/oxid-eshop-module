@@ -8,6 +8,7 @@ use Exception;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Credentials;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
+use Omikron\FactFinder\Communication\Version;
 use Omikron\FactFinder\Oxid\Model\Export\UploadFactory;
 use OxidEsales\Eshop\Application\Controller\Admin\AdminController;
 use OxidEsales\Eshop\Core\Registry;
@@ -32,12 +33,34 @@ class TestConnectionController extends AdminController
         try {
             $clientBuilder = oxNew(ClientBuilder::class)
                 ->withServerUrl($this->param('serverUrl'))
-                ->withApiKey($this->getConfigParam('ffApiKey'));
+                ->withApiKey($this->param('apiKey'));
 
             $adapterFactory = new AdapterFactory(
                 $clientBuilder,
-                $this->param('version'),
-                $this->param('apiVersion')
+                Version::NG,
+                'v5'
+            );
+            $searchAdapter = $adapterFactory->getSearchAdapter();
+            $searchAdapter->search($this->param('channel'), 'FACT-Finder version');
+
+            $this->success = true;
+            $this->result  = Registry::getLang()->translateString('FF_TEST_CONNECTION_SUCCESS', null, true);
+        } catch (ClientExceptionInterface $e) {
+            $this->result = $e->getMessage();
+        }
+    }
+
+    public function testPushImport(): void
+    {
+        try {
+            $clientBuilder = oxNew(ClientBuilder::class)
+                ->withServerUrl($this->param('serverUrl'))
+                ->withCredentials($this->getCredentials());
+
+            $adapterFactory = new AdapterFactory(
+                $clientBuilder,
+                Version::NG,
+                'v5'
             );
             $searchAdapter = $adapterFactory->getSearchAdapter();
             $searchAdapter->search($this->param('channel'), 'FACT-Finder version');
@@ -78,7 +101,7 @@ class TestConnectionController extends AdminController
 
     protected function getCredentials(): Credentials
     {
-        return new Credentials(...array_map([$this, 'param'], ['username', 'password', 'prefix', 'postfix']));
+        return new Credentials(...array_map([$this, 'param'], ['username', 'password']));
     }
 
     protected function param(string $key): string
