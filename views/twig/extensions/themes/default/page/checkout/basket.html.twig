@@ -11,7 +11,7 @@
 
     {% if oView.getBasketArticles()|length %}
         {% if oViewConf.getFFBoolConfigParam("ffCampaigns") %}
-            <ff-campaign-shopping-cart record-id="{{ basketitemlist|map((record) => record.oxarticles__oxartnum)|join(',') }}">
+            <ff-campaign-shopping-cart product-id="{{ basketitemlist|map((record) => record.oxarticles__oxartnum)|join(',') }}">
             </ff-campaign-shopping-cart>
         {% endif %}
 
