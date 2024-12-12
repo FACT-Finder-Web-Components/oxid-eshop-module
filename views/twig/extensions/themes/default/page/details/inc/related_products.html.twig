@@ -7,7 +7,7 @@
 
     {% if oViewConf.getFFBoolConfigParam("ffCampaigns") %}
         {% include '@ffwebcomponents/webcomponents/widget/campaign/feedbacktext' with {flag: "is-product-campaign"} %}
-        <ff-campaign-product record-id="{{ recordId|escape }}" id-type="productNumber"></ff-campaign-product>
+        <ff-campaign-product product-id="{{ recordId|escape }}" id-type="productNumber"></ff-campaign-product>
     {% endif %}
 
     {% if oViewConf.getFFBoolConfigParam("ffPushedProducts") %}
