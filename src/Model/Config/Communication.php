@@ -63,7 +63,7 @@ class Communication implements ParametersSourceInterface
     {
         return [
             'addToCart' => [
-                'count' => (string) $this->moduleSettingService->getString('ffTrackingAddToCartCount', 'ffwebcomponents') ?? 'count_as_one',
+                'count' => (string) $this->moduleSettingService->getString('ffTrackingAddToCartCount', 'ffwebcomponents') ?? 'count_selected_amount',
             ],
         ];
     }
@@ -100,10 +100,7 @@ class Communication implements ParametersSourceInterface
             (string) $this->moduleSettingService->getString('ffServerUrl', 'ffwebcomponents');
     }
 
-    /**
-     * @deprecated will be removed in v5
-     */
-    protected function getCategoryPath(Category $category, string $param = 'CategoryPath'): string
+    protected function getCategoryPath(Category $category): string
     {
         $categories = [$this->filter->filterValue($category->getTitle())];
 
@@ -112,7 +109,7 @@ class Communication implements ParametersSourceInterface
             $category     = $parent;
         }
 
-        return $this->ngPath($categories, $param);
+        return implode(',', array_reverse($categories));
     }
 
     protected function isSearch(): bool
@@ -154,23 +151,6 @@ class Communication implements ParametersSourceInterface
     protected function getApiVersion(): string
     {
         return 'v5';
-    }
-
-    private function ngPath(array $categories, string $param): string
-    {
-        $categoryPath = array_map(fn ($category) => (string) $this->encodeCategoryName(trim($category)), array_reverse($categories));
-
-        return sprintf('filter=%s', urlencode($param . ':' . implode('/', $categoryPath)));
-    }
-
-    private function encodeCategoryName(string $path): string
-    {
-        // important! do not modify this code
-        return preg_replace(
-            '/\+/',
-            '%2B',
-            preg_replace('/\//', '%2F', preg_replace('/%/', '%25', $path))
-        );
     }
 
     private function useProxy(): bool

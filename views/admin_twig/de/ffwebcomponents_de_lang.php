@@ -22,6 +22,8 @@ $aLang = [
     'HELP_SHOP_MODULE_ffAddSearchParams'                         => 'Es gibt vier Parameter, die Sie einstellen können:`add-params`, `add-tracking-params`, `keep-url-params`, `parameter-whitelist`. Jede Parameterdefinition sollte in einer separaten Zeile stehen. Beispiel-Verwendung: add-params => customParam1 => value1, customParam2 => value2',
     'SHOP_MODULE_GROUP_ffFeatures'                               => 'Features Settings',
     'SHOP_MODULE_ffUseForCategories'                             => 'Kategorieseiten mit FACT-Finder® rendern?',
+    'SHOP_MODULE_ffCategoryPathFieldName'                        => 'Kategoriepfad-Feldname',
+    'HELP_SHOP_MODULE_ffCategoryPathFieldName'                   => 'Standardmäßig verwendet das Modul ein Feld mit dem Namen CategoryPath (Standardkategoriefeldname für die FactFinder-Instanz). Wenn Sie in Ihrer FactFinder-Instanzkonfiguration einen anderen Feldnamen für das Kategoriefeld haben, müssen Sie diesen Namen hier festlegen.',
     'SHOP_MODULE_ffCampaigns'                                    => 'Kampagnen',
     'SHOP_MODULE_ffRecommendations'                              => 'Empfehlungen',
     'SHOP_MODULE_ffSimilarProducts'                              => 'Ähnliche Produkte',

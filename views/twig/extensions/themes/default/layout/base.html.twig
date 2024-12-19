@@ -14,8 +14,8 @@
 
     <!--Main FF Web-components Initialisation -->
     {% set communicationParams = oViewConf.getCommunicationParams() %}
-    <script>
 
+    <script>
         document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) => {
             init({
                 ff: {
@@ -69,7 +69,7 @@
                 }
             });
 
-            {% if oViewConf.getSearchImmediate()|escape("js") %}
+            {% if oViewConf.getSearchImmediate()|escape("js") and oView.getClassKey() == "search_result" %}
                 const searchParams = factfinder.utils.env.searchParamsFromUrl();
                 initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });
             {% endif %}
@@ -90,11 +90,18 @@
 {#            {% endif %}#}
 
 
+            {#Category Pages#}
+            {% if oView.getClassKey() == "alist" %}
+                factfinder.config.setAppConfig({
+                    categoryPage: [
+                        factfinder.utils.filterBuilders.categoryFilter(`{{oViewConf.getFFStringConfigParam('ffCategoryPathFieldName')}}`, {{ (communicationParams['category-page']|split(',')|json_encode())|raw }} )
+                    ],
+                });
+                factfinder.request.navigation({'filters': factfinder.config.get().appConfig.categoryPage}, { requestOptions: { origin: `searchImmediately` } });
+            {% endif %}
 
         });
     </script>
-
-{#    /#}
 
         <script>
         document.addEventListener('ffCoreReady', function (ff) {
@@ -135,13 +142,13 @@
 {#                });#}
 {#            {% endif %}#}
 
-            {% if oView.getClassKey() == "alist" %}
-                ff.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {
-                    url = url.replace(/filter=CategoryPath[^&]+&?/, '').replace(/filterCategoryPathROOT[^&]+&?/g, '');
-                    ff.factfinder.communication.Util.pushParameterToHistory(res, url, event);
-                    return false;
-                });
-            {% endif %}
+{#            {% if oView.getClassKey() == "alist" %}#}
+{#                ff.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {#}
+{#                    url = url.replace(/filter=CategoryPath[^&]+&?/, '').replace(/filterCategoryPathROOT[^&]+&?/g, '');#}
+{#                    ff.factfinder.communication.Util.pushParameterToHistory(res, url, event);#}
+{#                    return false;#}
+{#                });#}
+{#            {% endif %}#}
         });
     </script>
 
