@@ -1,6 +1,6 @@
 function registerAddToCartListener({selector, productData, useSidAsUserId}) {
     if (typeof factfinder === 'undefined') {
-        document.addEventListener('ffCommunicationReady', function () {
+        document.addEventListener('ffCoreReady', function () {
             init(selector, productData, useSidAsUserId);
         });
     } else {
@@ -8,7 +8,6 @@ function registerAddToCartListener({selector, productData, useSidAsUserId}) {
     }
 
     function init(selector, productData, useSidAsUserId) {
-        const trackingHelper = factfinder.communication.Util.trackingHelper;
         const element = document.querySelector(selector);
         const amountInput = element.querySelector('#amountToBasket');
         const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
@@ -41,19 +40,26 @@ function registerAddToCartListener({selector, productData, useSidAsUserId}) {
             }
 
             if (useSidAsUserId) {
-                return localStorage.getItem('ff_sid');
+                return JSON.parse(localStorage.ffwebco).sid;
             }
+
+            return false;
         }
 
         function trackAddToCart(product) {
-            factfinder.communication.Tracking.cart({
-                id: trackingHelper.getTrackingProductId(product),
-                masterId: trackingHelper.getMasterArticleNumber(product),
-                price: trackingHelper.getPrice(product),
-                title: trackingHelper.getTitle(product),
+            let cartObj = {
+                id: product.record.ProductNumber,
+                masterId: product.record.Master,
+                price: product.record.Price,
+                title: product.record.Name,
                 count: getQuantity(),
-                userId: getUserId()
-            });
+                sid: JSON.parse(localStorage.ffwebco).sid,
+            }
+
+            // if (getUserId) {
+            //     cartObj.userId = getUserId;
+            // }
+            factfinder.tracking.cart([cartObj]);
         }
 
         if (element) {

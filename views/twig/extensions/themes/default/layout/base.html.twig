@@ -11,6 +11,7 @@
     <style>[unresolved]{opacity:0;display:none}</style>
 
 {#    {{ dump(oViewConf.getCommunicationParams()['currency-country-code']) }}#}
+    {{ dump(oViewConf.getTrackingSettings()|json_encode ) }}
 
     <!--Main FF Web-components Initialisation -->
     {% set communicationParams = oViewConf.getCommunicationParams() %}
@@ -104,14 +105,21 @@
     </script>
 
         <script>
-        document.addEventListener('ffCoreReady', function (ff) {
-            factfinder.sdk = 'oe-v6.0.0';
+
+            document.addEventListener(`_ffSdkVersion`, ({ setSdkVersion }) => {
+                setSdkVersion(`sw6-v6.0.0`);
+            });
+            const ffTrackingSettings = JSON.parse('{{ oViewConf.getTrackingSettings()|json_encode|raw }}');
+
+
+        // document.addEventListener('ffCoreReady', function (factfinder) {
+
 
 //             TODO Proxy
 {#            {% if oViewConf.getFFBoolConfigParam('ffUseProxy') %}#}
 {#                factfinder.__experimental.sandboxMode.enable = true;#}
 
-{#                ff.eventAggregator.addBeforeDispatchingCallback(function (event) {#}
+{#                factfinder.eventAggregator.addBeforeDispatchingCallback(function (event) {#}
 {#                    event.cl = 'search_result';#}
 {#                    event.fnc = 'proxy';#}
 {#                });#}
@@ -125,11 +133,8 @@
 {#                });#}
 {#            {% endif %}#}
 
-{#            {% if oView.getTrackingSettings() %}#}
-{#            const ffTrackingSettings = JSON.parse('{{ oView.getTrackingSettings()|json_encode }}');#}
-{#            {% else %}#}
-{#            const ffTrackingSettings = {};#}
-{#            {% endif %}#}
+            // let ffRedirectMapping = {}
+
 
 {#            {% if oView.getClassKey() != "search_result"  %}#}
 {#                document.addEventListener('before-search', function (event) {#}
@@ -145,11 +150,12 @@
 {#            {% if oView.getClassKey() == "alist" %}#}
 {#                ff.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {#}
 {#                    url = url.replace(/filter=CategoryPath[^&]+&?/, '').replace(/filterCategoryPathROOT[^&]+&?/g, '');#}
-{#                    ff.factfinder.communication.Util.pushParameterToHistory(res, url, event);#}
+{#                    factfinder.factfinder.communication.Util.pushParameterToHistory(res, url, event);#}
 {#                    return false;#}
 {#                });#}
 {#            {% endif %}#}
-        });
+//         });
+
     </script>
 
     {% if oView.getClassKey() == "details" %}
