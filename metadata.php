@@ -72,7 +72,7 @@ $aModule = [
         [
             'name'     => 'ffFieldRoles',
             'type'     => 'str',
-            'value'    => '{"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"Deeplink","description":"Description","displayProductNumber":"ProductNumber","imageUrl":"ImageUrl","masterArticleNumber":"ProductNumber","price":"Price","productName":"Name","trackingProductNumber":"ProductNumber"}',
+            'value'    => '{"brand":"Brand","campaignProductNumber":"ProductNumber","deeplink":"Deeplink","description":"Description","displayProductNumber":"ProductNumber","imageUrl":"ImageUrl","masterArticleNumber":"Master","price":"Price","productName":"Name","productNumber":"ProductNumber"}',
             'position' => $settingPosition++,
         ],
         [
