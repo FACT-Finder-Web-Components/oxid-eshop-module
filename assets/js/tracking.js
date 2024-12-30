@@ -31,21 +31,6 @@ function registerAddToCartListener({selector, productData, useSidAsUserId}) {
             return parseInt(amountInput.value);
         }
 
-        function getUserId()
-        {
-            const userId = cookies['ff_user_id'];
-
-            if (userId) {
-                return userId;
-            }
-
-            if (useSidAsUserId) {
-                return JSON.parse(localStorage.ffwebco).sid;
-            }
-
-            return false;
-        }
-
         function trackAddToCart(product) {
             let cartObj = {
                 id: product.record.ProductNumber,
@@ -56,9 +41,6 @@ function registerAddToCartListener({selector, productData, useSidAsUserId}) {
                 sid: JSON.parse(localStorage.ffwebco).sid,
             }
 
-            // if (getUserId) {
-            //     cartObj.userId = getUserId;
-            // }
             factfinder.tracking.cart([cartObj]);
         }
 
