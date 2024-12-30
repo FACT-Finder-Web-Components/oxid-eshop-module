@@ -34,7 +34,7 @@ class AfterRequestProcessedEventSubscriber implements EventSubscriberInterface
     {
         $user = $this->session->getUser();
 
-        if (!empty($user)) {
+        if (!empty($user) && str_contains($this->request->getRequestParameter('fnc'), 'login')) {
             $this->session->setVariable(BeforeHeadersSendEventSubscriber::HAS_JUST_LOGGED_IN, true);
         }
     }
