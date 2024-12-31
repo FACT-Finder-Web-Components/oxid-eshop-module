@@ -8,7 +8,6 @@ use Omikron\FactFinder\Oxid\Contract\Config\ParametersSourceInterface;
 use Omikron\FactFinder\Oxid\Export\Filter\TextFilter;
 use OxidEsales\Eshop\Application\Model\Category;
 use OxidEsales\Eshop\Core\Controller\BaseController;
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use RuntimeException;
