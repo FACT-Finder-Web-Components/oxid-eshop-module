@@ -8,7 +8,6 @@ use Omikron\FactFinder\Oxid\Contract\Config\ParametersSourceInterface;
 use Omikron\FactFinder\Oxid\Export\Filter\TextFilter;
 use OxidEsales\Eshop\Application\Model\Category;
 use OxidEsales\Eshop\Core\Controller\BaseController;
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use RuntimeException;
@@ -42,7 +41,6 @@ class Communication implements ParametersSourceInterface
             'version'               => 'ng',
             'api'                   => $this->getApiVersion(),
             'channel'               => $this->getChannel($this->view->getActiveLangAbbr()),
-            'user-id'               => $this->getUserId(),
             'use-url-parameters'    => $this->moduleSettingService->getBoolean('ffUseUrlParams', 'ffwebcomponents') ? 'true' : 'false',
             'currency-code'         => $this->view->getActCurrency()->name,
             'currency-fields'       => $this->getAdditionalCurrencyFields(),
@@ -71,19 +69,6 @@ class Communication implements ParametersSourceInterface
     public function useSidAsUserId(): bool
     {
         return $this->moduleSettingService->getBoolean('ffSidAsUserId', 'ffwebcomponents') ?? false;
-    }
-
-    protected function getUserId(): string
-    {
-        $session = Registry::getSession();
-
-        if (!$session->getUser()) {
-            return '';
-        }
-
-        $userId = (string) $session->getUser()->getFieldData('oxcustnr');
-
-        return $this->moduleSettingService->getBoolean('ffAnonymizeUserId', 'ffwebcomponents') ? md5($userId) : $userId;
     }
 
     protected function getLocale(string $abbr): string
