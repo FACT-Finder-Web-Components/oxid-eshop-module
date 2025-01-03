@@ -68,6 +68,14 @@
                     // Cancel the pipeline to avoid sending a search request to FactFinder before the redirect is complete.
                     return false;
                 }
+
+                {% if oViewConf.getFFBoolConfigParam("ffDisableCache") %}
+                    searchOptions: {
+                        searchControlParams: {
+                            useCache: false
+                        }
+                    };
+                {% endif %}
             });
 
             {% if oViewConf.getSearchImmediate()|escape("js") and oView.getClassKey() == "search_result" %}
