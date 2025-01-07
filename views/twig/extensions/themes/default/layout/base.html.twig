@@ -12,9 +12,12 @@
 
 {#    {{ dump(oViewConf.getCommunicationParams()['currency-country-code']) }}#}
 {#    {{ dump(oViewConf.getTrackingSettings()|json_encode ) }}#}
+    {{ dump(oViewConf.getFFStringConfigParam('ffParameterWhitelist')) }}
 
     <!--Main FF Web-components Initialisation -->
-    {% set communicationParams = oViewConf.getCommunicationParams() %}
+{#    {% set communicationParams = oViewConf.getCommunicationParams() %}#}
+
+{#    {{ dump(communicationParams['add-params']) }}#}
 
     <script>
         document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) => {
@@ -37,17 +40,21 @@
                 },
             });
 
-            //   <?php if(!empty($parameters['add-params'])) : ?>
-            //   factfinder.routing.setUrlParamOptionsListener(() => ({
-            //     postStringifier: pairs => {
-            //       <?php foreach ($parameters['add-params'] as $name => $value) {
-            //         /* @noEscape */ echo "pairs.push({ key: `{$name}`, value:  `{$value}` });";
-            //       } ?>
-            //
-            //       return pairs;
-            //     },
-            //   }));
-            //   <?php endif; ?>
+            {% if oViewConf.getFFStringConfigParam('ffParameterWhitelist') is not empty %}
+              factfinder.routing.setUrlParamOptionsListener(() => ({
+                allow:
+                  [
+                      {% for param in oViewConf.getFFStringConfigParam('ffParameterWhitelist')|split(',') %}
+                          {% if not loop.last %}
+                            `{{ param }}`,
+                          {% else %}
+                            `{{ param }}`
+                          {% endif %}
+                      {% endfor %}
+                  ]
+              }));
+            {% endif %}
+
             //
             // <?php if(!empty($parameters['parameter-whitelist'])) : ?>
             //   factfinder.routing.setUrlParamOptionsListener(() => ({

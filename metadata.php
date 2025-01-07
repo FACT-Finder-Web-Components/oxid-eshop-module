@@ -91,6 +91,12 @@ $aModule = [
         ],
         [
             'group'    => 'ffAdvanced',
+            'name'     => 'ffParameterWhitelist',
+            'type'     => 'str',
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffAdvanced',
             'name'     => 'ffAnonymizeUserId',
             'type'     => 'bool',
             'value'    => true,
