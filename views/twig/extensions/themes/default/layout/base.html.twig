@@ -12,10 +12,10 @@
 
 {#    {{ dump(oViewConf.getCommunicationParams()['currency-country-code']) }}#}
 {#    {{ dump(oViewConf.getTrackingSettings()|json_encode ) }}#}
-    {{ dump(oViewConf.getFFStringConfigParam('ffParameterWhitelist')) }}
+{#    {{ dump(oViewConf.getFFStringConfigParam('ffParameterWhitelist')) }}#}
 
     <!--Main FF Web-components Initialisation -->
-{#    {% set communicationParams = oViewConf.getCommunicationParams() %}#}
+    {% set communicationParams = oViewConf.getCommunicationParams() %}
 
 {#    {{ dump(communicationParams['add-params']) }}#}
 
