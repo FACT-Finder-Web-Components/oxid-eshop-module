@@ -97,6 +97,12 @@ $aModule = [
         ],
         [
             'group'    => 'ffAdvanced',
+            'name'     => 'ffUrlParams',
+            'type'     => 'str',
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffAdvanced',
             'name'     => 'ffAnonymizeUserId',
             'type'     => 'bool',
             'value'    => true,

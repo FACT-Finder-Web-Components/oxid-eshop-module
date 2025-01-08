@@ -70,6 +70,11 @@ class Communication implements ParametersSourceInterface
         return $this->moduleSettingService->getBoolean('ffSidAsUserId', 'ffwebcomponents') ?? false;
     }
 
+    public function getUrlParameters(): string
+    {
+        return (string) $this->moduleSettingService->getString('ffUrlParams', 'ffwebcomponents') ?? '';
+    }
+
     protected function getLocale(string $abbr): string
     {
         $locales = ['de' => 'de-DE', 'en' => 'en-US'];

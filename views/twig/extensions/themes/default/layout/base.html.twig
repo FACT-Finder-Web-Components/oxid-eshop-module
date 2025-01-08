@@ -12,12 +12,9 @@
 
 {#    {{ dump(oViewConf.getCommunicationParams()['currency-country-code']) }}#}
 {#    {{ dump(oViewConf.getTrackingSettings()|json_encode ) }}#}
-{#    {{ dump(oViewConf.getFFStringConfigParam('ffParameterWhitelist')) }}#}
 
     <!--Main FF Web-components Initialisation -->
     {% set communicationParams = oViewConf.getCommunicationParams() %}
-
-{#    {{ dump(communicationParams['add-params']) }}#}
 
     <script>
         document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) => {
@@ -55,22 +52,27 @@
               }));
             {% endif %}
 
-            //
-            // <?php if(!empty($parameters['parameter-whitelist'])) : ?>
-            //   factfinder.routing.setUrlParamOptionsListener(() => ({
-            //     allow: [<?= /* @noEscape */ $parameters['parameter-whitelist']; ?>],
-            // }));
-            //   <?php endif; ?>
-            //
+            {% if oViewConf.getUrlParameters() is not empty %}
+                factfinder.routing.setUrlParamOptionsListener(() => ({
+                    postStringifier: pairs => {
+                        {% for param, value in oViewConf.getUrlParameters() %}
+                            {{ "pairs.push({ key: `#{param}`, value:  `#{value}` });" }}
+                        {% endfor %}
+
+                        return pairs;
+                    },
+                }));
+            {% endif %}
+
+
             factfinder.request.before.search(({ searchParams, searchOptions }) => {
                 if (searchOptions?.requestOptions?.origin?.tagName === `FF-SEARCHBOX`) {
-                    // <?php if(!empty($parameters['add-params'])) : ?>
-                    // window.location.href =  `/factfinder/result?query=${searchParams.query}&<?= /* @noEscape */ http_build_query($parameters['add-params']) ?>`;
-                    // <?php else : ?>
-                    // window.location.href =  `/factfinder/result?query=${searchParams.query}`;
-                    // <?php endif; ?>
-
-                    window.location.href =  `?query=${searchParams.query}&cl=search_result`;
+                    {% if oViewConf.getUrlParameters() is not empty %}
+                        {% set urlParams = oViewConf.getUrlParameters() | url_encode %}
+                        window.location.href = `{{ "?query=${searchParams.query}&cl=search_result&#{urlParams}" |raw }}` ;
+                    {% else %}
+                        window.location.href =  `?query=${searchParams.query}&cl=search_result`;
+                    {% endif %}
 
                     // Cancel the pipeline to avoid sending a search request to FactFinder before the redirect is complete.
                     return false;

@@ -22,6 +22,8 @@ $aLang = [
     'HELP_SHOP_MODULE_ffAddSearchParams'                         => 'There are four parameters you can set: `add-params`, `add-tracking-params`, `keep-url-params`, `parameter-whitelist`. Each parameter definition should be placed in separate row. Example usage : add-params => param1=abcd,param2=xyz',
     'SHOP_MODULE_ffParameterWhitelist'                           => 'Parameter Whitelist',
     'HELP_SHOP_MODULE_ffParameterWhitelist'                      => 'Specifies a list of search parameter names (as they appear on the _SearchParams_ object used for the current request pipeline) that shall be considered for stringification. Search parameters that are not listed are discarded and will not appear in the URL. Separate each parameter with a comma. Example usage: param1,param2,my-param',
+    'SHOP_MODULE_ffUrlParams'                                    => 'Url Parameters',
+    'HELP_SHOP_MODULE_ffUrlParams'                               => 'Add URL parameters to search request. Separate each parameter with a comma. Example usage: param1=value1,param2=value2,my-param=my-value',
     'SHOP_MODULE_GROUP_ffFeatures'                               => 'Features Settings',
     'SHOP_MODULE_ffUseForCategories'                             => 'Use FACT-Finder® for category pages?',
     'SHOP_MODULE_ffCategoryPathFieldName'                        => 'Category Path field name',
