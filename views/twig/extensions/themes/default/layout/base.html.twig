@@ -11,7 +11,7 @@
     <style>[unresolved]{opacity:0;display:none}</style>
 
 {#    {{ dump(oViewConf.getCommunicationParams()['currency-country-code']) }}#}
-{#    {{ dump(oViewConf.getTrackingSettings()|json_encode ) }}#}
+{#    {{ dump(oViewConf.getUrlParameters() ) }}#}
 
     <!--Main FF Web-components Initialisation -->
     {% set communicationParams = oViewConf.getCommunicationParams() %}
@@ -52,7 +52,7 @@
               }));
             {% endif %}
 
-            {% if oViewConf.getUrlParameters() is not empty %}
+            {% if oViewConf.getUrlParameters() is not null %}
                 factfinder.routing.setUrlParamOptionsListener(() => ({
                     postStringifier: pairs => {
                         {% for param, value in oViewConf.getUrlParameters() %}
@@ -67,7 +67,7 @@
 
             factfinder.request.before.search(({ searchParams, searchOptions }) => {
                 if (searchOptions?.requestOptions?.origin?.tagName === `FF-SEARCHBOX`) {
-                    {% if oViewConf.getUrlParameters() is not empty %}
+                    {% if oViewConf.getUrlParameters() is not null %}
                         {% set urlParams = oViewConf.getUrlParameters() | url_encode %}
                         window.location.href = `{{ "?query=${searchParams.query}&cl=search_result&#{urlParams}" |raw }}` ;
                     {% else %}
