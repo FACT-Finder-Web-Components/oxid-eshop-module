@@ -51,7 +51,7 @@ class WebComponent extends WidgetController
         $urlParams = [];
 
         foreach (explode(',', $params) as $item) {
-            $parts = explode('=', $item);
+            $parts                      = explode('=', $item);
             $urlParams[trim($parts[0])] = $parts[1];
         }
 
