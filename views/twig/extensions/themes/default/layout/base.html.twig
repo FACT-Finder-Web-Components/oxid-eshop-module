@@ -88,25 +88,9 @@
             });
 
             {% if oViewConf.getSearchImmediate()|escape("js") and oView.getClassKey() == "search_result" %}
-                const searchParams = factfinder.utils.env.searchParamsFromUrl();
+                const searchParams = factfinder.utils.env.searchParamsFromUrl({ categoryFieldName: `{{oViewConf.getFFStringConfigParam('ffCategoryPathFieldName')}}` });
                 initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });
             {% endif %}
-
-            {#if ('{{ oViewConf.getSearchImmediate()|escape("js") }}') {#}
-            {#    const searchParams = factfinder.utils.env.searchParamsFromUrl();#}
-            {#    initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });#}
-            {#}#}
-
-{#            {% if page.extensions.factfinder.searchImmediate and not page.extensions.factfinder.ssr %}#}
-{#            const searchParams = factfinder.utils.env.searchParamsFromUrl();#}
-{#            initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });#}
-{#            {% endif %}#}
-
-{#            {% if page.extensions.factfinder.searchImmediate and not page.extensions.factfinder.ssr %}#}
-{#            const searchParams = factfinder.utils.env.searchParamsFromUrl();#}
-{#            initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });#}
-{#            {% endif %}#}
-
 
             {#Category Pages#}
             {% if oView.getClassKey() == "alist" %}
