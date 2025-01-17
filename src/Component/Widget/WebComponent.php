@@ -39,22 +39,4 @@ class WebComponent extends WidgetController
     {
         return $this->config->getTrackingSettings();
     }
-
-    public function getUrlParameters(): ?array
-    {
-        $params = $this->config->getUrlParameters();
-
-        if (empty($params)) {
-            return null;
-        }
-
-        $urlParams = [];
-
-        foreach (explode(',', $params) as $item) {
-            $parts                      = explode('=', $item);
-            $urlParams[trim($parts[0])] = $parts[1];
-        }
-
-        return $urlParams;
-    }
 }

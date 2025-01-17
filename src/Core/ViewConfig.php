@@ -59,9 +59,4 @@ class ViewConfig extends ViewConfig_parent
     {
         return $this->webcomponent->getSearchImmediate();
     }
-
-    public function getUrlParameters(): ?array
-    {
-        return !empty($this->webcomponent->getUrlParameters()) ? $this->webcomponent->getUrlParameters() : null;
-    }
 }

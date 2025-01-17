@@ -48,54 +48,13 @@
                 },
             }));
 
-            {% if oViewConf.getFFStringConfigParam('ffParameterWhitelist') is not empty %}
-              factfinder.routing.setUrlParamOptionsListener(() => ({
-                allow:
-                  [
-                      {% for param in oViewConf.getFFStringConfigParam('ffParameterWhitelist')|split(',') %}
-                          {% if not loop.last %}
-                            `{{ param }}`,
-                          {% else %}
-                            `{{ param }}`
-                          {% endif %}
-                      {% endfor %}
-                  ]
-              }));
-            {% endif %}
-
-            {% if oViewConf.getUrlParameters() is not null %}
-                factfinder.routing.setUrlParamOptionsListener(() => ({
-                    postStringifier: pairs => {
-                        {% for param, value in oViewConf.getUrlParameters() %}
-                            {{ "pairs.push({ key: `#{param}`, value:  `#{value}` });" }}
-                        {% endfor %}
-
-                        return pairs;
-                    },
-                }));
-            {% endif %}
-
-
             factfinder.request.before.search(({ searchParams, searchOptions }) => {
                 if (searchOptions?.requestOptions?.origin?.tagName === `FF-SEARCHBOX`) {
-                    {% if oViewConf.getUrlParameters() is not null %}
-                        {% set urlParams = oViewConf.getUrlParameters() | url_encode %}
-                        window.location.href = `{{ "?query=${searchParams.query}&cl=search_result&#{urlParams}" |raw }}` ;
-                    {% else %}
-                        window.location.href =  `?query=${searchParams.query}&cl=search_result`;
-                    {% endif %}
+                    window.location.href =  `?query=${searchParams.query}&cl=search_result`;
 
                     // Cancel the pipeline to avoid sending a search request to FactFinder before the redirect is complete.
                     return false;
                 }
-
-                {% if oViewConf.getFFBoolConfigParam("ffDisableCache") %}
-                    searchOptions: {
-                        searchControlParams: {
-                            useCache: false
-                        }
-                    };
-                {% endif %}
             });
 
             {% if oViewConf.getSearchImmediate()|escape("js") and oView.getClassKey() == "search_result" %}
@@ -189,15 +148,6 @@
 {#                    }#}
 {#                });#}
 {#            {% endif %}#}
-
-{#            {% if oView.getClassKey() == "alist" %}#}
-{#                ff.eventAggregator.addBeforeHistoryPushCallback(function (res, event, url) {#}
-{#                    url = url.replace(/filter=CategoryPath[^&]+&?/, '').replace(/filterCategoryPathROOT[^&]+&?/g, '');#}
-{#                    factfinder.factfinder.communication.Util.pushParameterToHistory(res, url, event);#}
-{#                    return false;#}
-{#                });#}
-{#            {% endif %}#}
-//         });
 
     </script>
 

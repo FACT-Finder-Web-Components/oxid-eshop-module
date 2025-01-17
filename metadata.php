@@ -77,32 +77,6 @@ $aModule = [
         ],
         [
             'group'    => 'ffAdvanced',
-            'name'     => 'ffUseUrlParams',
-            'type'     => 'bool',
-            'value'    => true,
-            'position' => $settingPosition++,
-        ],
-        [
-            'group'    => 'ffAdvanced',
-            'name'     => 'ffAddSearchParams',
-            'type'     => 'aarr',
-            'value'    => ['add-params' => '', 'add-tracking-params' => ''],
-            'position' => $settingPosition++,
-        ],
-        [
-            'group'    => 'ffAdvanced',
-            'name'     => 'ffParameterWhitelist',
-            'type'     => 'str',
-            'position' => $settingPosition++,
-        ],
-        [
-            'group'    => 'ffAdvanced',
-            'name'     => 'ffUrlParams',
-            'type'     => 'str',
-            'position' => $settingPosition++,
-        ],
-        [
-            'group'    => 'ffAdvanced',
             'name'     => 'ffAnonymizeUserId',
             'type'     => 'bool',
             'value'    => true,
@@ -168,13 +142,6 @@ $aModule = [
         [
             'group'    => 'ffFeatures',
             'name'     => 'ffPushedProducts',
-            'type'     => 'bool',
-            'value'    => false,
-            'position' => $settingPosition++,
-        ],
-        [
-            'group'    => 'ffFeatures',
-            'name'     => 'ffDisableCache',
             'type'     => 'bool',
             'value'    => false,
             'position' => $settingPosition++,
