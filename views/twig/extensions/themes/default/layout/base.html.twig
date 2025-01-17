@@ -37,6 +37,17 @@
                 },
             });
 
+            factfinder.routing.setUrlParamOptionsListener(() => ({
+                postStringifier: pairs => {
+                    new URLSearchParams(window.location.search).entries().forEach(([key, value]) => {
+                        if (!pairs.find(p => p.key === key)) {
+                            pairs.push({ key, value });
+                        }
+                    });
+                    return pairs;
+                },
+            }));
+
             {% if oViewConf.getFFStringConfigParam('ffParameterWhitelist') is not empty %}
               factfinder.routing.setUrlParamOptionsListener(() => ({
                 allow:
