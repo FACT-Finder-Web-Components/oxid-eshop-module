@@ -14,8 +14,6 @@ use RuntimeException;
 
 class Communication implements ParametersSourceInterface
 {
-    protected array $mergeableParams = ['add-params', 'add-tracking-params', 'keep-url-params', 'parameter-whitelist'];
-
     private TextFilter $filter;
 
     private ModuleSettingServiceInterface $moduleSettingService;
@@ -41,19 +39,13 @@ class Communication implements ParametersSourceInterface
             'version'               => 'ng',
             'api'                   => $this->getApiVersion(),
             'channel'               => $this->getChannel($this->view->getActiveLangAbbr()),
-            'use-url-parameters'    => $this->moduleSettingService->getBoolean('ffUseUrlParams', 'ffwebcomponents') ? 'true' : 'false',
             'currency-code'         => $this->view->getActCurrency()->name,
-            'currency-fields'       => $this->getAdditionalCurrencyFields(),
             'currency-country-code' => $this->getLocale($this->view->getActiveLangAbbr()),
             'search-immediate'      => $this->isSearch() || $this->useForCategories() || $this->useProxy() ? 'true' : 'false',
-            'keep-url-params'       => 'true',
-            'only-search-params'    => 'true',
-            'use-browser-history'   => 'true',
             'category-page'         => $this->useForCategories() ? $this->getCategoryPath($category) : null,
-            'add-params'            => $this->useForCategories() ? $this->getCategoryPath($category) : '',
         ];
 
-        return array_filter($this->mergeParameters($params, $this->getAdditionalParameters()));
+        return $params;
     }
 
     public function getTrackingSettings(): array
@@ -68,11 +60,6 @@ class Communication implements ParametersSourceInterface
     public function useSidAsUserId(): bool
     {
         return $this->moduleSettingService->getBoolean('ffSidAsUserId', 'ffwebcomponents') ?? false;
-    }
-
-    public function getUrlParameters(): string
-    {
-        return (string) $this->moduleSettingService->getString('ffUrlParams', 'ffwebcomponents') ?? '';
     }
 
     protected function getLocale(string $abbr): string
@@ -109,21 +96,6 @@ class Communication implements ParametersSourceInterface
     protected function useForCategories(): bool
     {
         return $this->moduleSettingService->getBoolean('ffUseForCategories', 'ffwebcomponents') && $this->view->getActionClassName() === 'alist';
-    }
-
-    protected function getAdditionalCurrencyFields(): string
-    {
-        return '';
-    }
-
-    protected function getAdditionalParameters(): array
-    {
-        return (array) $this->moduleSettingService->getCollection('ffAddSearchParams', 'ffwebcomponents');
-    }
-
-    protected function mergeParameters(array $baseParams, array $additionalParams): array
-    {
-        return array_reduce($this->mergeableParams, fn (array $result, string $param) => [$param => implode(',', array_column([$additionalParams, $result], $param))] + $result, $baseParams);
     }
 
     protected function getChannel(string $langAbbr): string
