@@ -10,7 +10,6 @@ use OxidEsales\Eshop\Application\Model\Category;
 use OxidEsales\Eshop\Core\Controller\BaseController;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
-use RuntimeException;
 
 class Communication implements ParametersSourceInterface
 {
@@ -103,7 +102,7 @@ class Communication implements ParametersSourceInterface
         $channels = $this->moduleSettingService->getCollection('ffChannel', 'ffwebcomponents');
 
         if (!isset($channels[$langAbbr])) {
-            throw new RuntimeException("No channel for used language: $langAbbr");
+            throw new \RuntimeException("No channel for used language: $langAbbr");
         }
 
         return $channels[$langAbbr];

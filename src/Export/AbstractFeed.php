@@ -8,7 +8,6 @@ use Omikron\FactFinder\Oxid\Export\Stream\StreamInterface;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
-use ReflectionClass;
 
 abstract class AbstractFeed
 {
@@ -19,7 +18,7 @@ abstract class AbstractFeed
 
     public function getFileName(): string
     {
-        $slug = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', (new ReflectionClass($this))->getShortName()));
+        $slug = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', (new \ReflectionClass($this))->getShortName()));
 
         if ($slug === 'article_feed') {
             $slug = 'productData';

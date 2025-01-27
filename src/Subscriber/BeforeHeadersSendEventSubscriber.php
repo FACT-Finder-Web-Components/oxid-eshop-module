@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Subscriber;
 
-use DateTime;
-use Exception;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Session;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
@@ -48,7 +46,7 @@ class BeforeHeadersSendEventSubscriber implements EventSubscriberInterface
     {
         try {
             $this->validateRequest();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return;
         }
 
@@ -83,7 +81,7 @@ class BeforeHeadersSendEventSubscriber implements EventSubscriberInterface
     {
         try {
             $this->validateRequest();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return;
         }
 
@@ -104,7 +102,7 @@ class BeforeHeadersSendEventSubscriber implements EventSubscriberInterface
         setcookie(
             $name,
             $value,
-            (new DateTime())->modify('+1 hour')->getTimestamp(),
+            (new \DateTime())->modify('+1 hour')->getTimestamp(),
             '/'
         );
     }
@@ -121,7 +119,7 @@ class BeforeHeadersSendEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     protected function validateRequest(): void
     {
@@ -130,7 +128,7 @@ class BeforeHeadersSendEventSubscriber implements EventSubscriberInterface
             || $_SERVER['HTTP_X_REQUESTED_WITH'] !== null
             || http_response_code() >= 300
         ) {
-            throw new Exception('Not supported request');
+            throw new \Exception('Not supported request');
         }
     }
 }

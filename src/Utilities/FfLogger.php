@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Utilities;
 
-use DateTimeZone;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use OxidEsales\Eshop\Core\Registry;
 
 class FfLogger extends Logger
 {
-    public function __construct(string $name, array $handlers = [], array $processors = [], ?DateTimeZone $timezone = null)
+    public function __construct(string $name, array $handlers = [], array $processors = [], ?\DateTimeZone $timezone = null)
     {
         parent::__construct($name, $handlers, $processors, $timezone);
 
