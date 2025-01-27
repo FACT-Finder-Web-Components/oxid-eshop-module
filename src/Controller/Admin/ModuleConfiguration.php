@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller\Admin;
 
-use Exception;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Resource\AdapterFactory;
 use Omikron\FactFinder\Communication\Version;
@@ -51,7 +50,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
             $this->preparePostData();
             parent::saveConfVars();
             $this->addTplSuccessMessage('Module configuration was saved successfully');
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             $this->addTplErrorMessage($exception->getMessage());
         }
     }
@@ -76,7 +75,7 @@ class ModuleConfiguration extends ModuleConfiguration_parent
             $this->preparePostData();
             parent::saveConfVars();
             $this->addTplSuccessMessage('Field roles was updated successfully');
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             $this->addTplErrorMessage($exception->getMessage());
         }
     }

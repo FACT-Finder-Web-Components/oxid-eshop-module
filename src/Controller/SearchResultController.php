@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Controller;
 
-use Exception;
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Version;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
@@ -30,7 +29,7 @@ class SearchResultController extends FrontendController
 
         try {
             if (!$endpoint) {
-                throw new Exception('Endpoint missing');
+                throw new \Exception('Endpoint missing');
             }
 
             $client = oxNew(ClientBuilder::class)
@@ -53,9 +52,9 @@ class SearchResultController extends FrontendController
 
                     break;
                 default:
-                    throw new Exception(sprintf('HTTP Method %s is not supported', $httpMethod));
+                    throw new \Exception(sprintf('HTTP Method %s is not supported', $httpMethod));
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fallback();
             echo json_encode(['error' => $e->getMessage()]);
         }

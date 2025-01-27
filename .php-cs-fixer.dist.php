@@ -39,10 +39,9 @@ return $config
         'no_useless_return'                                => true,
         'ordered_class_elements'                           => true,
         'ordered_imports'                                  => ['imports_order' => ['class', 'function', 'const']],
-        'global_namespace_import'                          => ['import_classes' => true, 'import_constants' => true, 'import_functions' => true],
         'strict_comparison'                                => true,
         'yoda_style'                                       => ['equal' => false, 'identical' => false, 'less_and_greater' => false],
         'nullable_type_declaration_for_default_null_value' => false,
+        'use_arrow_functions'                              => false,
     ])
     ->setFinder($finder);
-
