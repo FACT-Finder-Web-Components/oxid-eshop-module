@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 use Omikron\FactFinder\Oxid\Export\FeedTypes;
+use Omikron\FactFinder\Oxid\Export\Stream\Csv;
+use OxidEsales\Eshop\Core\Config;
+use OxidEsales\Eshop\Core\Registry;
 
 $options    = getopt('s:t:l:');
 $shopId     = $options['s'] ?? 0;
@@ -14,14 +17,9 @@ if (!$shopId && $shopId !== 0) {
 
 $languageId = $options['l'] ?? 0;
 
-require_once dirname(__FILE__) . '/../../../../../bootstrap.php';
+require_once dirname(__FILE__) . '/../../../../../source/bootstrap.php';
 
 define('OX_IS_ADMIN', true);
-
-use Omikron\FactFinder\Oxid\Controller\ArticleFeedController;
-use Omikron\FactFinder\Oxid\Export\Stream\Csv;
-use OxidEsales\Eshop\Core\Config;
-use OxidEsales\Eshop\Core\Registry;
 
 Registry::getConfig()->setShopId($shopId);
 Registry::set(Config::class, null);
