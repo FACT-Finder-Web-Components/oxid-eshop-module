@@ -10,7 +10,7 @@
     <script src="{{ oViewConf.getModuleUrl("ffwebcomponents", "/js/utils.js")|escape }}"></script>
     <style>[unresolved]{opacity:0;display:none}</style>
 
-{#    {{ dump(oViewConf.getCommunicationParams()['currency-country-code']) }}#}
+{#    {{ dump(oViewConf.getCommunicationParams()['channel']) }}#}
 {#    {{ dump(oViewConf.getUrlParameters() ) }}#}
 
     <!--Main FF Web-components Initialisation -->
@@ -21,7 +21,7 @@
             init({
                 ff: {
                     url: `{{oViewConf.getFFStringConfigParam('ffServerUrl')}}`,
-                    channel: `{{oViewConf.getFFArrayConfigParam('ffChannel').en}}`,
+                    channel: `{{communicationParams['channel']}}`,
                     apiKey: `{{oViewConf.getFFStringConfigParam('ffApiKey')}}`,
                 },
                 appConfig: {
