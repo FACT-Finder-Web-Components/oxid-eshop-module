@@ -10,9 +10,6 @@
     <script src="{{ oViewConf.getModuleUrl("ffwebcomponents", "/js/utils.js")|escape }}"></script>
     <style>[unresolved]{opacity:0;display:none}</style>
 
-{#    {{ dump(oViewConf.getCommunicationParams()['channel']) }}#}
-{#    {{ dump(oViewConf.getUrlParameters() ) }}#}
-
     <!--Main FF Web-components Initialisation -->
     {% set communicationParams = oViewConf.getCommunicationParams() %}
 
@@ -69,55 +66,58 @@
                         factfinder.utils.filterBuilders.categoryFilter(`{{oViewConf.getFFStringConfigParam('ffCategoryPathFieldName')}}`, {{ (communicationParams['category-page']|split(',')|json_encode())|raw }} )
                     ],
                 });
-                factfinder.request.navigation({'filters': factfinder.config.get().appConfig.categoryPage}, { requestOptions: { origin: `searchImmediately` } });
+
+                factfinder.routing.setUrlParamOptionsListener(() => ({
+                    blockFilters: [`{{oViewConf.getFFStringConfigParam('ffCategoryPathFieldName')}}`],
+                }));
+
+                const initOptions = factfinder.config.get();
+                initialSearch({
+                    filters: initOptions.appConfig.categoryPage,
+                });
             {% endif %}
 
         });
     </script>
 
-        <script>
+    <script>
+        document.addEventListener(`_ffSdkVersion`, ({ setSdkVersion }) => {
+            setSdkVersion(`oe-v6.0.0`);
+        });
+        const ffTrackingSettings = JSON.parse('{{ oViewConf.getTrackingSettings()|json_encode|raw }}');
 
-            document.addEventListener(`_ffSdkVersion`, ({ setSdkVersion }) => {
-                setSdkVersion(`sw6-v6.0.0`);
-            });
-            const ffTrackingSettings = JSON.parse('{{ oViewConf.getTrackingSettings()|json_encode|raw }}');
+        document.addEventListener('ffCoreReady', ({ factfinder }) => {
+            const ffCookies = document.cookie.split('; ').reduce((acc, cookie) => {
+                const cookieData = cookie.split('=');
+                const [key, value] = cookieData;
+                acc[key] = value;
 
-            document.addEventListener('ffCoreReady', ({ factfinder }) => {
-                const ffCookies = document.cookie.split('; ').reduce((acc, cookie) => {
-                    const cookieData = cookie.split('=');
-                    const [key, value] = cookieData;
-                    acc[key] = value;
+                return acc;
+            }, {});
 
-                    return acc;
-                }, {});
+            const clearCookie = (name) => {
+                document.cookie = name+'=; Max-Age=-1;';
+            }
 
-                const clearCookie = (name) => {
-                    document.cookie = name+'=; Max-Age=-1;';
+            if (ffCookies['ff_user_id']) {
+                factfinder.config.setFFParams({userId: ffCookies['ff_user_id']});
+
+                if (ffCookies['ff_has_just_logged_in']) {
+                    clearCookie('ff_has_just_logged_in');
+                    factfinder.tracking.login([{
+                        sid: JSON.parse(localStorage.ffwebco).sid,
+                        userId: factfinder.config.get().ffParams.userId
+                    }]);
                 }
-
-                if (ffCookies['ff_user_id']) {
-                    factfinder.config.setFFParams({userId: ffCookies['ff_user_id']});
-
-                    if (ffCookies['ff_has_just_logged_in']) {
-                        clearCookie('ff_has_just_logged_in');
-                        factfinder.tracking.login([{
-                            sid: JSON.parse(localStorage.ffwebco).sid,
-                            userId: factfinder.config.get().ffParams.userId
-                        }]);
-                    }
-                } else {
-                    if (ffCookies['ff_has_just_logged_out']) {
-                        clearCookie('ff_has_just_logged_out');
-                        factfinder.config.setFFParams({userId: undefined});
-                    }
+            } else {
+                if (ffCookies['ff_has_just_logged_out']) {
+                    clearCookie('ff_has_just_logged_out');
+                    factfinder.config.setFFParams({userId: undefined});
                 }
-            });
+            }
+        });
 
-
-        // document.addEventListener('ffCoreReady', function (factfinder) {
-
-
-//             TODO Proxy
+{#           TODO Implement proxy #}
 {#            {% if oViewConf.getFFBoolConfigParam('ffUseProxy') %}#}
 {#                factfinder.__experimental.sandboxMode.enable = true;#}
 
@@ -132,20 +132,6 @@
 {#                    url = url.replace(/[?&]?cl=search_result/, '');#}
 {#                    {% endif %}#}
 {#                    history.replaceState(historyState, "", url);#}
-{#                });#}
-{#            {% endif %}#}
-
-            // let ffRedirectMapping = {}
-
-
-{#            {% if oView.getClassKey() != "search_result"  %}#}
-{#                document.addEventListener('before-search', function (event) {#}
-{#                    if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {#}
-{#                        event.preventDefault();#}
-{#                        const baseUrl =  '{{ oViewConf.getHomeLink()|escape("js") }}';#}
-{#                        const params = ff.factfinder.common.dictToParameterString(factfinder.common.encodeDict(event.detail));#}
-{#                        window.location = baseUrl + (baseUrl.indexOf('?') > -1 ?  params.substr(1) : params) + '&cl=search_result'#}
-{#                    }#}
 {#                });#}
 {#            {% endif %}#}
 
