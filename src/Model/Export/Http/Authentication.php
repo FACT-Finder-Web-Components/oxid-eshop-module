@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Model\Export\Http;
 
-use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Request;
 use OxidEsales\Eshop\Core\Utils;
 use OxidEsales\Eshop\Core\UtilsServer;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 
 class Authentication
 {
@@ -17,15 +18,16 @@ class Authentication
     private Utils $utils;
 
     private UtilsServer $utilsServer;
-
-    private Config $config;
+    private ModuleSettingServiceInterface $moduleSettingService;
 
     public function __construct()
     {
         $this->request     = Registry::getRequest();
         $this->utils       = Registry::getUtils();
         $this->utilsServer = Registry::getUtilsServer();
-        $this->config      = Registry::getConfig();
+        $this->moduleSettingService = ContainerFactory::getInstance()
+            ->getContainer()
+            ->get(ModuleSettingServiceInterface::class);
     }
 
     /**
@@ -78,11 +80,11 @@ class Authentication
 
     private function getUsername(): string
     {
-        return (string) $this->config->getConfigParam('ffHTTPExportUser');
+        return (string) $this->moduleSettingService->getString('ffHTTPExportUser', 'ffwebcomponents');
     }
 
     private function getPassword(): string
     {
-        return (string) $this->config->getConfigParam('ffHTTPExportPassword');
+        return (string) $this->moduleSettingService->getString('ffHTTPExportPassword', 'ffwebcomponents');
     }
 }
