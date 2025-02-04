@@ -22,9 +22,9 @@ class Authentication
 
     public function __construct()
     {
-        $this->request     = Registry::getRequest();
-        $this->utils       = Registry::getUtils();
-        $this->utilsServer = Registry::getUtilsServer();
+        $this->request              = Registry::getRequest();
+        $this->utils                = Registry::getUtils();
+        $this->utilsServer          = Registry::getUtilsServer();
         $this->moduleSettingService = ContainerFactory::getInstance()
             ->getContainer()
             ->get(ModuleSettingServiceInterface::class);
