@@ -72,10 +72,10 @@ class Communication implements ParametersSourceInterface
     {
         return (string) $this->moduleSettingService->getString('ffServerUrl', 'ffwebcomponents');
 
-//        TODO Refactor proxy
-//        return (string) $this->moduleSettingService->getBoolean('ffUseProxy', 'ffwebcomponents') ?
-//            'index.php' :
-//            (string) $this->moduleSettingService->getString('ffServerUrl', 'ffwebcomponents');
+        //        TODO Refactor proxy
+        //        return (string) $this->moduleSettingService->getBoolean('ffUseProxy', 'ffwebcomponents') ?
+        //            'index.php' :
+        //            (string) $this->moduleSettingService->getString('ffServerUrl', 'ffwebcomponents');
     }
 
     protected function getCategoryPath(Category $category): string
@@ -119,7 +119,7 @@ class Communication implements ParametersSourceInterface
     private function useProxy(): bool
     {
         return false;
-//        TODO Refactor proxy
-//        return (bool) $this->moduleSettingService->getBoolean('ffUseProxy', 'ffwebcomponents');
+        //        TODO Refactor proxy
+        //        return (bool) $this->moduleSettingService->getBoolean('ffUseProxy', 'ffwebcomponents');
     }
 }
