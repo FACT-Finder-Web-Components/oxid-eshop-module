@@ -9,6 +9,10 @@ process. The second chapter *Backend Configuration* explains the customisation o
 final chapter *Web Component Integration* describes how the web components interact with the shop system and how to
 customise them. 
 
+Our Oxid plugin offers a basic working integration for default Oxid Apex theme. 
+Most projects may require modifications in order to fit their needs. 
+For more advanced features please check our official [WebComponnents documentation](https://web-components.fact-finder.de/documentation/5.x/install-dist).
+
 ## Table of contents
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -21,7 +25,6 @@ customise them.
             - [Test FTP Connection Button](#test-ftp-connection)
             - [Update Field Roles Button](#update-field-roles)
     - [Advanced Settings](#advanced-settings)
-        - [Proxy](#proxy)
     - [Features Settings](#features-settings)
         - [Using FACT-Finder® on category pages](#using-fact-finder-on-category-pages)
     - [Feed Settings](#feed-settings)
@@ -40,8 +43,8 @@ customise them.
 - [License](#license)
 
 ## Requirements
-- OXID eShop 7.0
-- PHP version 8.0 or higher
+- OXID eShop 7.0 or higher
+- PHP version 8.1 or higher
 
 **Note:** For Oxid eShop 6.x and PHP 7, please use SDK version 4.x
 
@@ -82,111 +85,59 @@ Configuration set here is used by both Web Components and during the server side
 Credentials you will be given should be placed here.
 
 * Server URL - FACT-Finder® instance url   
-  **Note:** Server URL should contain a used protocol: (e.g. `https://`) and should end with an endpoint specific for a given version (e.g. in version 7.3 its `FACT-Finder-7.3`, in NG `fact-finder` )
+  **Note:** Server URL should contain a used protocol: (e.g. `https://`) and should end with `fact-finder` (e.g. `https://my-domain.fact-finder.de/fact-finder`)
 * Channel - Channel you want to serve data from     
   **Note** The number of channel fields is adjusted to the number of active languages used in application. Please make sure you set a correct channel for a given language.
-* Username - for importing data to FF
-* Password - for importing data to FF
-* Username - for fetching data from FF
-* Password - for fetching data from FF
-* Authorization Prefix
-* Authorization Postfix   
-  **Note:** FACT-Finder® NG does not require fields `Authorization Prefix` and `Authorization Postfix` to be set. Please omit these fields in this case. 
-* Version - Used FACT-Finder® version   
-  **Note:** Module supports FACT-Finder® from version 6.9 up to NG. by selecting the wrong version you may cause the Web Components to be unable to communicate with FACT-Finder® 
-* API Version - Used FACT-Finder® api version   
-  **Note:** Module supports FACT-Finder® api version `v4` and `v5`. By selecting the wrong api version you may cause the Web Components to be unable to communicate with FACT-Finder®
+* Username for the FACT-Finder Import - your username in FACT-Finder account (necessary if you want to automatically execute import data in FACT-Finder).
+* Password for the FACT-Finder Import - your password in FACT-Finder account
+* FACT-Finder API key - for fetching data from FF (necessary to use Web Components integration)
 
 ### Buttons
 
-![Buttons](docs/assets/configuration-buttons2.png "Configuration Buttons")
-
-#### Test Connection Button
-By clicking the `Test Connection` button you can check if your credentials are correct.
-This functionality uses form data, so there is no need to save first.
-**Note:** This functionality uses `de` channel input value. 
-
-#### Export Feed Button
-It is a one of possible ways of exporting feed. You can find more details in section [Admin Panel Export](#admin-panel-export)  
-
-#### Test FTP Connection Button
-This functionality allows you to test if your shop can successfully connect to configured FTP/SFTP server.
-It uses parameters passed down with the request so there is no need to save the configuration before.
+![Buttons](docs/assets/configuration-buttons.png "Configuration Buttons")
 
 #### Update Field Roles Button
 This functionality allows you to update field roles if you have changed them in FACT-Finder.
 The field roles are by default configured accordingly to the columns exported by the module.
 If you are about change one of the column name that serves as a role e.g. `Master` or `ProductNumber`, that holds the `Master article number` and `Product number` roles respectively, please remember to update the field roles with that functionality
 
+#### Export Feed Button
+It is a one of possible ways of exporting feed. You can find more details in section [Admin Panel Export](#admin-panel-export)
+
+#### Test Connection Button
+By clicking the `Test Connection` button you can check if your FACT-Finder API key is correct and SDK could connect with FACT-Finder API successfully.
+This functionality uses form data, so there is no need to save first.
+**Note:** This functionality uses `de` channel input value.
+
+#### Test FTP Connection Button
+This functionality allows you to test if your shop can successfully connect to configured FTP/SFTP server.
+It uses parameters passed down with the request so there is no need to save the configuration before.
+
+#### Test Push Import Button
+By clicking the `Test Push Import` button you can check if your FACT-Finder username and password is correct.
+This functionality uses form data, so there is no need to save first.
+**Note:** This functionality uses `de` channel input value.
+
+
 ### Advanced Settings
 ![Advanced Settings](docs/assets/advanced-settings.png "Advanced settings")
-* `Use URL params?` - check this option if you want Web Components to push each used query parameter to the URL,
-* `Additional parameters` - here you can define extra parameters for each of these properties: `add-params`, `add-tracking-params`, `keep-url-params`, `parameter-whitelist`.
-Values will be passed to the Web Components and used in communication.
-You can find more information about mentioned properties purposes in Web Components [documentation](https://web-components.fact-finder.de/api/3.x/ff-communication#tab=api).
-* `Anonymize User ID?` - check this option if you want to send user id with tracking requests in anonymized form. By default the regular id field from user table is sent.  
-* `Use Proxy` - check this option if you want each request sends by Web Components first reach the dedicated module controller which forwards it to the FACT-Finder.
-**Note:** If you plan to use proxy, consider reading below paragraph as it requires full instruction how to enable it properly. 
+* `Anonymize User ID?` - check this option if you want to send user id with tracking requests in anonymized form. By default the regular id field from user table is sent.
 * `How to count single click on "Add to cart" button?` - select how would you like to count single click on "Add to cart" button
 * `Send the SID as userId when user not logged in?`
-
-#### Proxy
-Proxy feature adds a oxid controller which serves as a middleware between Web Components and FACT-Finder®.
-The data flow with proxy enabled is illustrated by the graph below.
-![Communication Overview](docs/assets/communication-overview.png "Communication Overview")
-Having a middleware controller brings many possibilities to customize the request and the response.
-In addition, if forwarded request does not result with a correct response, you can implement fallback strategy, starting from this point.
-
-```php
-   //src/Controller/SearchResultController.php:65
-   protected function fallback(): void
-    {
-        //this function could be used to implement fallback logic in case of any communication error.
-        $this->showJsonAndExit('');
-    }
-```
-
-To enable proxy you need to change your HTTP server configuration by adding two rewrite rules.
-This is necessary because Web Components appends a URL parts to the base URL making it unreadable by the Oxid.
-This is because Oxid use query parameters `cl` and `fnc` to instantiate specific controller and execute its function.
-There is no routing that use url parts, hence any AJAX requests must target index.php file with the aforementioned parameters.
-Without this rules any request will lead to 404.
-
-NGINX
-
-```nginx
-  location ~ \.ff  {
-      rewrite [a-zA-Z].ff /$1 break;
-  }
-
-  # the the version might need to be adjusted, depends on the API version you use
-  location ~ /rest/v  {
-      rewrite rest/v[0-9]/[a-zA-Z]*/ /$1 break;
-   }
-```
-
-APACHE
-
-```apache
-RewriteRule (.*\.ff)$ /$1 [L]
-
-# the the version might need to be adjusted, depends on the API version you use
-RewriteRule /rest/v[0-9] /$1 [L]
-```
 
 ### Features Settings
 ![Features Settings](docs/assets/features-settings.png "Features settings")
 
 * `Use FACT-Finder® for category pages?` - check this option to use Web Components in category pages. More information in separate paragraph.
+* `Category Path field name` - by default, the module uses a field named `CategoryPath` (default category field name for FactFinder instance). If in your FactFinder instance configuration you have a different field name for Category field then you must set this name here.
 * Campaigns - enables `ff-campaign-product` on product page and `ff-campaign-feedbacktext`, `ff-campaign-shopping-cart`on cart page
 * Recommendations - enables `ff-recommendation` on product page
 * Similar products - enables `ff-similar-products` on product page
-* Pushed products - enables `ff-campaign-pushed-products>` on cart page     
-* Disable cache - controls the usage of search result caches
+* Pushed products - enables `ff-campaign-pushed-products>` on cart page
 
 ### Using FACT-Finder® on category pages
 Module in order to preserve categories URLs and hence SEO get use of standard Oxid routing with the combination of FACT-Finder® availability to pass custom parameters to search request.
-Once user lands on category page search event is emitted immediately (thanks to `search-immediate` communication parameter usage).
+Once user lands on category page search event is emitted immediately.
 
 ### Feed Settings
 ![Feed Settings](docs/assets/feed-settings.png "Feed settings")
@@ -283,13 +234,13 @@ Here you can find a full [Tracking Guide](https://web-components.fact-finder.de/
 This module follows that guide in order to provide tracking of following events:
 
  ### Login
-This event is tracked automatically by the `ff-communication` element upon receiving `uid` attribute.
+This event is tracked automatically by SDK.
 
 ### Click on Product
 This event is tracked automatically by the `ff-record` element bindings. **Note:** for this to work a directive `data-redirect` has to be added
 
 ### Add Product to Cart
-We offer a `registerAddToCartListener` function which helps to register `click` events on form submit buttons. **Note:** Example usage can be found in `src/views/frontend/blocks/campaign/product.tpl`
+We offer a `registerAddToCartListener` function which helps to register `click` events on form submit buttons. **Note:** Example usage can be found in `views/twig/extensions/themes/default/page/details/inc/productmain.html.twig`
 
 ### Place an Order 
 This event is tracked by the `ff-checkout-tracking` element which is implemented on order confirmation page

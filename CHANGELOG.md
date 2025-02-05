@@ -1,11 +1,20 @@
 # Changelog
 ## Unreleased
+### BREAKING
+- IMPORTANT! Update Fact-Finder Web Components library from v4 to v5
+
 ### Change
-- Update SDK documentation
-- Add support for Oxid 7.1
-- Add support for PHP 8.2
-- Update composer libraries
+- Add support for Oxid 7.1 and 7.2
+- Add support for PHP 8.2 and 8.3
+- Upgrade libraries
 - Improve code style
+- Remove proxy feature as it needs refactoring (new version of this feature will be implemented in future release)
+- Upgrade Web Components to v5.0.1
+- Update SDK documentation
+
+### Fix
+- Fix deprecations for Oxid 7.2
+- Fix basic auth for HTTP export
 
 ## [v5.0.0] - 2024.01.11
 ### BREAKING
