@@ -11,6 +11,7 @@
 - Remove proxy feature as it needs refactoring (new version of this feature will be implemented in future release)
 - Upgrade Web Components to v5.0.1
 - Update SDK documentation
+- Update plugin logo
 
 ### Fix
 - Fix deprecations for Oxid 7.2
