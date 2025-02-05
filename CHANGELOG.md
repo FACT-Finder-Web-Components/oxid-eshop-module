@@ -1,5 +1,5 @@
 # Changelog
-## Unreleased
+## [v6.0.0] - 2025.02.05
 ### BREAKING
 - IMPORTANT! Update Fact-Finder Web Components library from v4 to v5
 
@@ -249,6 +249,7 @@
 ## [v1.0.0] - 2020.09.14
 Initial module release. Includes Web Components v3.15.6
 
+[v6.0.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v6.0.0
 [v5.0.0]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v5.0.0
 [v4.4.3]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.4.3
 [v4.4.2]:  https://github.com/FACT-Finder-Web-Components/oxid-eshop-module/releases/tag/v4.4.2
