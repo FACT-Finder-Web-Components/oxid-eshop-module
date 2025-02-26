@@ -18,4 +18,5 @@ $aLang = [
     'FF_YOUR_SEARCH_FOR'      => 'Your search for:',
     'FF_RECOMMENDATION'       => 'Recommended Products',
     'FF_SIMILAR_PRODUCTS'     => 'Similar Products',
+    'FF_POPULAR_SEARCHES'     => 'Popular Searches',
 ];

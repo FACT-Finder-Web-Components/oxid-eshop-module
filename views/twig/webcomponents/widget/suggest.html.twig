@@ -1,5 +1,12 @@
 <ff-suggest layout="block" unresolved>
     <section id="searchContainer" class="searchTermContainer">
+        <template data-role="popularSearches">
+            <div class="ff-popular-searches">
+                <h3>{{ translate({ ident: "FF_POPULAR_SEARCHES" }) }}</h3>
+                <div data-template>{{ '{{name}}' }} </div>
+            </div>
+        </template>
+
         <div data-container="searchTerm">
             <p class="containerCaption">{{ translate({ ident: "FF_SEARCH_SUGGESTIONS" }) }}</p>
             <ff-suggest-item type="searchTerm">

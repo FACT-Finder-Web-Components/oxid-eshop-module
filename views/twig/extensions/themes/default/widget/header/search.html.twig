@@ -2,7 +2,13 @@
 
 {% block widget_header_search_form %}
     <div class="form search" role="form">
-        <ff-searchbox class="input-group" suggest-onfocus="true" use-suggest="true" select-onclick="true">
+        <ff-searchbox
+            class="input-group"
+            suggest-onfocus="true"
+            use-suggest="true"
+            select-onclick="true"
+            {% if oViewConf.getFFBoolConfigParam("ffPopularSearches") %} popular-searches {% endif %}
+        >
             <input type="text" class="form-control" placeholder="{{ translate({ ident: "SEARCH" }) }}" aria-label="{{ translate({ ident: "SEARCH" }) }}"/>
             <ff-searchbutton class="input-group-btn">
                 <button type="button" class="btn btn-primary" title="{{ translate({ ident: "SEARCH_SUBMIT" }) }}">

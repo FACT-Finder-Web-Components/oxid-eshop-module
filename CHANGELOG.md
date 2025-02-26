@@ -1,4 +1,15 @@
 # Changelog
+## Unreleased
+### Add
+- Add Popular Searches
+
+### Change
+- Upgrade Web Components default styles
+- Upgrade Web Components version to v5.1.0
+
+### Fix
+- Implement redirection to search result page for searchTerm and brand suggests
+
 ## [v6.0.0] - 2025.02.05
 ### BREAKING
 - IMPORTANT! Update Fact-Finder Web Components library from v4 to v5
