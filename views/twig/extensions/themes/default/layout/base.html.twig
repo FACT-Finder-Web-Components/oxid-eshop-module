@@ -54,6 +54,23 @@
                 }
             });
 
+            {% if oView.getClassKey() != "search_result" %}
+                factfinder.notifications.addSuggestClickListener(origin => {
+                    if (origin.suggestion.type === `searchTerm` || origin.suggestion.type === `brand`) {
+                        window.location.href =  `?query=${origin.suggestion.searchParams.query}&cl=search_result`;
+
+                        return false;
+                    }
+                });
+
+                factfinder.notifications.addPopularSearchClickListener(({ origin, popularSearch }) => {
+                    window.location = `?query=${popularSearch.name}&cl=search_result`;
+
+                    return false;
+                });
+
+            {% endif %}
+
             {% if oViewConf.getSearchImmediate()|escape("js") and oView.getClassKey() == "search_result" %}
                 const searchParams = factfinder.utils.env.searchParamsFromUrl({ categoryFieldName: `{{oViewConf.getFFStringConfigParam('ffCategoryPathFieldName')}}` });
                 initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });

@@ -148,6 +148,13 @@ $aModule = [
             'position' => $settingPosition++,
         ],
         [
+            'group'    => 'ffFeatures',
+            'name'     => 'ffPopularSearches',
+            'type'     => 'bool',
+            'value'    => false,
+            'position' => $settingPosition++,
+        ],
+        [
             'group'    => 'ffFeed',
             'name'     => 'ffExportAttributes',
             'type'     => 'aarr',
