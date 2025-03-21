@@ -5,10 +5,11 @@
 
 ### Change
 - Upgrade Web Components default styles
-- Upgrade Web Components version to v5.1.0
+- Upgrade Web Components version to v5.1.1
 
 ### Fix
 - Implement redirection to search result page for searchTerm and brand suggests
+- Fix filter cloud issue on category pages
 
 ## [v6.0.0] - 2025.02.05
 ### BREAKING

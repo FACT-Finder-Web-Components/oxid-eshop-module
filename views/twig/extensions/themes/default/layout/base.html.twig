@@ -72,7 +72,7 @@
             {% endif %}
 
             {% if oViewConf.getSearchImmediate()|escape("js") and oView.getClassKey() == "search_result" %}
-                const searchParams = factfinder.utils.env.searchParamsFromUrl({ categoryFieldName: `{{oViewConf.getFFStringConfigParam('ffCategoryPathFieldName')}}` });
+                let searchParams = factfinder.utils.env.searchParamsFromUrl({ categoryFieldName: `{{oViewConf.getFFStringConfigParam('ffCategoryPathFieldName')}}` });
                 initialSearch(searchParams, { requestOptions: { origin: `initialSearch` } });
             {% endif %}
 
@@ -89,9 +89,13 @@
                 }));
 
                 const initOptions = factfinder.config.get();
-                initialSearch({
-                    filters: initOptions.appConfig.categoryPage,
-                });
+                searchParams = factfinder.utils.env.searchParamsFromUrl(
+                    { categoryFieldName: `{{oViewConf.getFFStringConfigParam('ffCategoryPathFieldName')}}` }
+                );
+
+                searchParams.filters = searchParams.filters ?? [];
+                searchParams.filters.push(initOptions.appConfig.categoryPage[0]);
+                initialSearch(searchParams);
             {% endif %}
 
         });
