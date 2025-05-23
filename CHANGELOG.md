@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Fix
+- Fix category suggest redirection for before-search event
+
 ## [v4.4.3] - 2023.10.10
 ### Change
 - Upgrade Web Components to 4.2.8

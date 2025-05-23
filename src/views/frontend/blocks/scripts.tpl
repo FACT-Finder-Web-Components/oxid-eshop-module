@@ -33,9 +33,21 @@ document.addEventListener('ffReady', function (ff) {
 
 [{if $oView->getClassKey() neq "search_result" }]
     document.addEventListener('before-search', function (event) {
+        function cleanBaseUrl(url) {
+            try {
+                const urlObj = new URL(url);
+                return `${urlObj.protocol}//${urlObj.host}/`;
+            } catch (e) {
+                console.error('Invalid URL:', e);
+                return url
+            }
+        }
+
         if (['productDetail', 'getRecords'].lastIndexOf(event.detail.type) === -1) {
             event.preventDefault();
-            const baseUrl =  '[{$oViewConf->getHomeLink()|escape:"javascript"}]';
+            let baseUrl =  '[{$oViewConf->getHomeLink()|escape:"javascript"}]';
+            baseUrl = cleanBaseUrl(baseUrl);
+
             const params = ff.factfinder.common.dictToParameterString(factfinder.common.encodeDict(event.detail));
             window.location = baseUrl + (baseUrl.indexOf('?') > -1 ?  params.substr(1) : params) + '&cl=search_result'
         }
