@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Change
+- Upgrade Web Components version to v5.1.5
+
 ## [v6.1.0] - 2025.03.24
 ### Add
 - Add Popular Searches
