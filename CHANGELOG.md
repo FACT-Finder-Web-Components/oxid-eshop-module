@@ -1,5 +1,8 @@
 # Changelog
 ## Unreleased
+### Add
+- Add cart button for product list
+
 ### Change
 - Support tab navigation for search, suggest and paging components
 - Upgrade Web Components version to v5.1.5
