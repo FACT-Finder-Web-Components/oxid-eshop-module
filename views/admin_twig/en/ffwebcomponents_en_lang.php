@@ -17,6 +17,7 @@ $aLang = [
     'SHOP_MODULE_ffTrackingAddToCartCount_count_selected_amount' => 'track single click with selected amount',
     'SHOP_MODULE_ffUseProxy'                                     => 'Use Proxy?',
     'SHOP_MODULE_ffSidAsUserId'                                  => 'Send the SID as userId when user not logged in?',
+    'SHOP_MODULE_ffCartBtn'                                      => 'Add cart button for product list',
     'SHOP_MODULE_GROUP_ffFeatures'                               => 'Features Settings',
     'SHOP_MODULE_ffUseForCategories'                             => 'Use FACT-Finder® for category pages?',
     'SHOP_MODULE_ffCategoryPathFieldName'                        => 'Category Path field name',

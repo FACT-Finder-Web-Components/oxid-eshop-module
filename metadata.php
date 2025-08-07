@@ -31,6 +31,7 @@ $aModule = [
         'http_article_feed'          => Controller\ArticleFeedController::class,
         'http_category_feed'         => Controller\CategoryFeedController::class,
         'http_suggest_category_feed' => Controller\SuggestCategoryFeedController::class,
+        'addtocart'                  => Controller\AddToCartController::class,
     ],
     'extend'      => [
         ModuleConfiguration::class => \Omikron\FactFinder\Oxid\Controller\Admin\ModuleConfiguration::class,
@@ -91,19 +92,26 @@ $aModule = [
 //            'position' => $settingPosition++,
 //        ],
         [
+            'group'    => 'ffAdvanced',
+            'name'     => 'ffSidAsUserId',
+            'type'     => 'bool',
+            'value'    => false,
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffAdvanced',
+            'name'     => 'ffCartBtn',
+            'type'     => 'bool',
+            'value'    => false,
+            'position' => $settingPosition++,
+        ],
+        [
             'group'       => 'ffAdvanced',
             'name'        => 'ffTrackingAddToCartCount',
             'type'        => 'select',
             'value'       => 'count_selected_amount',
             'constraints' => 'count_as_one|count_selected_amount',
             'position'    => $settingPosition++,
-        ],
-        [
-            'group'    => 'ffAdvanced',
-            'name'     => 'ffSidAsUserId',
-            'type'     => 'bool',
-            'value'    => false,
-            'position' => $settingPosition++,
         ],
         [
             'group'    => 'ffFeatures',

@@ -17,6 +17,7 @@ $aLang = [
     'SHOP_MODULE_ffTrackingAddToCartCount_count_selected_amount' => 'track single click with selected amount',
     'SHOP_MODULE_ffUseProxy'                                     => 'Proxy benutzen?',
     'SHOP_MODULE_ffSidAsUserId'                                  => 'Die SID als userId senden, wenn der Benutzer nicht angemeldet ist?',
+    'SHOP_MODULE_ffCartBtn'                                      => 'Schaltfläche Warenkorb hinzufügen für die Produktliste',
     'SHOP_MODULE_GROUP_ffFeatures'                               => 'Features Settings',
     'SHOP_MODULE_ffUseForCategories'                             => 'Kategorieseiten mit FACT-Finder® rendern?',
     'SHOP_MODULE_ffCategoryPathFieldName'                        => 'Kategoriepfad-Feldname',
