@@ -83,14 +83,13 @@ $aModule = [
             'value'    => true,
             'position' => $settingPosition++,
         ],
-//        TODO Refactor proxy
-//        [
-//            'group'    => 'ffAdvanced',
-//            'name'     => 'ffUseProxy',
-//            'type'     => 'bool',
-//            'value'    => false,
-//            'position' => $settingPosition++,
-//        ],
+        [
+            'group'    => 'ffAdvanced',
+            'name'     => 'ffUseProxy',
+            'type'     => 'bool',
+            'value'    => false,
+            'position' => $settingPosition++,
+        ],
         [
             'group'    => 'ffAdvanced',
             'name'     => 'ffSidAsUserId',

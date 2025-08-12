@@ -25,6 +25,7 @@ For more advanced features please check our official [WebComponnents documentati
             - [Test FTP Connection Button](#test-ftp-connection)
             - [Update Field Roles Button](#update-field-roles)
     - [Advanced Settings](#advanced-settings)
+        - [Proxy](#proxy)
     - [Features Settings](#features-settings)
         - [Using FACT-Finder® on category pages](#using-fact-finder-on-category-pages)
     - [Feed Settings](#feed-settings)
@@ -39,6 +40,8 @@ For more advanced features please check our official [WebComponnents documentati
   - [Click on Product](#click-on-product)
   - [Add Product to Cart](#add-product-to-cart)
   - [Place an Order](#place-an-order)
+- [Modification Examples](#modifications-examples)
+  - [Enrich data received from FACT-Finder](#enrich-data-received-from-fact-finder)
 - [Contribute](#contribute)
 - [License](#license)
 
@@ -121,9 +124,43 @@ This functionality uses form data, so there is no need to save first.
 
 ### Advanced Settings
 ![Advanced Settings](docs/assets/advanced-settings.png "Advanced settings")
-* `Anonymize User ID?` - check this option if you want to send user id with tracking requests in anonymized form. By default the regular id field from user table is sent.
+* `Anonymize User ID?` - check this option if you want to send user id with tracking requests in anonymized form. By default, the regular id field from user table is sent.
+* `Use Proxy` - check this option if you want each request sends by Web Components first reach the dedicated module controller which forwards it to the FACT-Finder.
+    **Note:** If you plan to use proxy, consider reading below paragraph as it requires full instruction how to enable it properly.
 * `How to count single click on "Add to cart" button?` - select how would you like to count single click on "Add to cart" button
 * `Send the SID as userId when user not logged in?`
+
+#### Proxy
+Proxy feature adds a oxid controller which serves as a middleware between Web Components and FACT-Finder®.
+The data flow with proxy enabled is illustrated by the graph below.
+![Communication Overview](docs/assets/communication-overview.png "Communication Overview")
+Having a middleware controller brings many possibilities to customize the request and the response. You can use `EnrichProxyDataEvent` to enrich data received from FACT-Finder. You can find more
+details about implementation [here](#enrich-data-received-from-fact-finder-in-proxycontroller).
+In addition, if forwarded request does not result with a correct response, you can implement fallback strategy, starting from this point.
+
+```php
+   //src/Controller/SearchResultController.php:84
+   protected function fallback(): void
+    {
+        //this function could be used to implement fallback logic in case of any communication error.
+        $this->showJsonAndExit('Error: Unable to process the request.');
+    }
+```
+
+To enable proxy you need to change your HTTP server configuration by adding rewrite rules.
+This is necessary because Web Components appends a URL parts to the base URL making it unreadable by the Oxid.
+This is because Oxid use query parameters `cl` and `fnc` to instantiate specific controller and execute its function.
+There is no routing that use url parts, hence any AJAX requests must target index.php file with the aforementioned parameters.
+Without these rules any request will lead to 404.
+
+APACHE
+
+```apache
+    RewriteRule ^rest/v5/(.*)$ index.php?cl=search_result&fnc=proxy&$1 [L]
+```
+
+**Note:** Sending each request to FACT-Finder instance trough Shopware, you lose on performance as each request need to be handled first by HTTP server and then, by Shopware itself. This additional traffic could be easily avoided by not activating this feature if there's no clear reason to use it.
+
 
 ### Features Settings
 ![Features Settings](docs/assets/features-settings.png "Features settings")
@@ -244,6 +281,35 @@ We offer a `registerAddToCartListener` function which helps to register `click` 
 
 ### Place an Order 
 This event is tracked by the `ff-checkout-tracking` element which is implemented on order confirmation page
+
+## Modifications Examples
+
+### Enrich data received from FACT-Finder
+
+```php
+
+use Omikron\FactFinder\Oxid\Event\EnrichProxyDataEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+class EnrichProxyDataEventSubscriber implements EventSubscriberInterface
+{
+    public static function getSubscribedEvents(): array
+    {
+        return [EnrichProxyDataEvent::class => 'enrichData'];
+    }
+
+    public function enrichData(EnrichProxyDataEvent $event): void
+    {
+        $data                 = $event->getData();
+        $data['example_data'] = [
+            'some_data'  => 'data_1',
+            'next_data' => 'data_2',
+        ];
+        $event->setData($data);
+    }
+}
+
+```
 
 ## Contribute
 For more information, click [here](.github/CONTRIBUTING.md)
