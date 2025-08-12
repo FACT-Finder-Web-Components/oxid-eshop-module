@@ -17,7 +17,7 @@
         document.addEventListener(`ffCoreReady`, ({ factfinder, init, initialSearch }) => {
             init({
                 ff: {
-                    url: `{{oViewConf.getFFStringConfigParam('ffServerUrl')}}`,
+                    url: `{{communicationParams['url']}}`,
                     channel: `{{communicationParams['channel']}}`,
                     apiKey: `{{oViewConf.getFFStringConfigParam('ffApiKey')}}`,
                 },
@@ -137,25 +137,6 @@
                 }
             }
         });
-
-{#           TODO Implement proxy #}
-{#            {% if oViewConf.getFFBoolConfigParam('ffUseProxy') %}#}
-{#                factfinder.__experimental.sandboxMode.enable = true;#}
-
-{#                factfinder.eventAggregator.addBeforeDispatchingCallback(function (event) {#}
-{#                    event.cl = 'search_result';#}
-{#                    event.fnc = 'proxy';#}
-{#                });#}
-
-{#                document.addEventListener('ffUrlWrite', function (event, historyState) {#}
-{#                    let url = event.url.replace(/([?&]?)fnc=proxy/, '');#}
-{#                    {% if oView.getClassKey() == "alist" %}#}
-{#                    url = url.replace(/[?&]?cl=search_result/, '');#}
-{#                    {% endif %}#}
-{#                    history.replaceState(historyState, "", url);#}
-{#                });#}
-{#            {% endif %}#}
-
     </script>
 
     {% if oView.getClassKey() == "details" %}

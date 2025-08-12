@@ -6,11 +6,13 @@ namespace Omikron\FactFinder\Oxid\Controller;
 
 use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Version;
+use Omikron\FactFinder\Oxid\Event\EnrichProxyDataEvent;
+use Omikron\FactFinder\Oxid\Subscriber\EnrichProxyDataEventSubscriber;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
-use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class SearchResultController extends FrontendController
 {
@@ -41,19 +43,30 @@ class SearchResultController extends FrontendController
             switch ($httpMethod) {
                 case 'GET':
                     $query = (string) $this->removeOxidParams(parse_url($currentUrl, PHP_URL_QUERY));
-                    $this->showJsonAndExit($this->unwrapResponse($client->request('GET', $endpoint . '?' . $query)));
-
+                    $response = $client->request('GET', $endpoint . '?' . $query);
                     break;
                 case 'POST':
-                    $this->showJsonAndExit($this->unwrapResponse($client->request('POST', $endpoint, [
-                        'body'    => $this->getRequest()->getContent(),
+                    $rawBody = file_get_contents('php://input');
+                    $body = json_decode($rawBody, true) ?: [];
+
+                    if (json_last_error() !== JSON_ERROR_NONE) {
+                        throw new \Exception('Invalid JSON in request body');
+                    }
+
+                    $response = $client->request('POST', $endpoint, [
+                        'body' => json_encode($body),
                         'headers' => ['Content-Type' => 'application/json'],
-                    ])));
+                    ]);
 
                     break;
                 default:
                     throw new \Exception(sprintf('HTTP Method %s is not supported', $httpMethod));
             }
+            $eventDispatcher = new EventDispatcher();
+            $eventDispatcher->addSubscriber(new EnrichProxyDataEventSubscriber());
+            $event = new EnrichProxyDataEvent(json_decode($response->getBody()->getContents(), true) ?? []);
+            $eventDispatcher->dispatch($event, EnrichProxyDataEvent::class);
+            $this->showJsonAndExit(json_encode($event->getData()));
         } catch (\Exception $e) {
             $this->fallback();
             echo json_encode(['error' => $e->getMessage()]);
@@ -71,7 +84,7 @@ class SearchResultController extends FrontendController
     protected function fallback(): void
     {
         // this function could be used to implement fallback logic in case of any communication error.
-        $this->showJsonAndExit('');
+        $this->showJsonAndExit('Error: Unable to process the request.');
     }
 
     protected function getConfigParam(string $key): string
@@ -89,13 +102,12 @@ class SearchResultController extends FrontendController
         return $match[1] ?? '';
     }
 
-    private function removeOxidParams(string $queryString): string
+    private function removeOxidParams(?string $queryString): string
     {
-        return preg_replace('/(fnc|cl)=[A-Za-z0-9_]*&?/', '', $queryString);
-    }
+        if ($queryString === null) {
+            return '';
+        }
 
-    private function unwrapResponse(ResponseInterface $response): string
-    {
-        return $response->getBody()->getContents();
+        return preg_replace('/(fnc|cl)=[A-Za-z0-9_]*&?/', '', $queryString);
     }
 }

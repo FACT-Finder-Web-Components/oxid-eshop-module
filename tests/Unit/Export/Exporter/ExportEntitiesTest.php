@@ -23,6 +23,9 @@ class ExportEntitiesTest extends TestCase
     /** @var CsvVariant */
     private $stream;
 
+    /** @var string[] */
+    private array $columns;
+
     protected function setUp(): void
     {
         $this->columns = [
