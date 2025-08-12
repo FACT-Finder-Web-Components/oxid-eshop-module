@@ -156,7 +156,7 @@ Without these rules any request will lead to 404.
 APACHE
 
 ```apache
-    RewriteRule ^(rest/v[0-9].*)$ index.php [L]
+    RewriteRule ^rest/v5/(.*)$ index.php?cl=search_result&fnc=proxy&$1 [L]
 ```
 
 **Note:** Sending each request to FACT-Finder instance trough Shopware, you lose on performance as each request need to be handled first by HTTP server and then, by Shopware itself. This additional traffic could be easily avoided by not activating this feature if there's no clear reason to use it.
