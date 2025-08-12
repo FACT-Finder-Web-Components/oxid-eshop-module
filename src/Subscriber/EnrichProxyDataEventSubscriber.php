@@ -1,7 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Omikron\FactFinder\Oxid\Subscriber;
+
 use Omikron\FactFinder\Oxid\Event\EnrichProxyDataEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

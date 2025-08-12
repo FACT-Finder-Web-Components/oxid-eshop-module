@@ -42,19 +42,20 @@ class SearchResultController extends FrontendController
 
             switch ($httpMethod) {
                 case 'GET':
-                    $query = (string) $this->removeOxidParams(parse_url($currentUrl, PHP_URL_QUERY));
+                    $query    = (string) $this->removeOxidParams(parse_url($currentUrl, PHP_URL_QUERY));
                     $response = $client->request('GET', $endpoint . '?' . $query);
+
                     break;
                 case 'POST':
                     $rawBody = file_get_contents('php://input');
-                    $body = json_decode($rawBody, true) ?: [];
+                    $body    = json_decode($rawBody, true) ?: [];
 
                     if (json_last_error() !== JSON_ERROR_NONE) {
                         throw new \Exception('Invalid JSON in request body');
                     }
 
                     $response = $client->request('POST', $endpoint, [
-                        'body' => json_encode($body),
+                        'body'    => json_encode($body),
                         'headers' => ['Content-Type' => 'application/json'],
                     ]);
 
@@ -99,6 +100,7 @@ class SearchResultController extends FrontendController
     private function getEndpoint(string $currentUrl): string
     {
         preg_match('#/([A-Za-z]+\.ff|rest/v[^?]*)#', $currentUrl, $match);
+
         return $match[1] ?? '';
     }
 
