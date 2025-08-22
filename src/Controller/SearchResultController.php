@@ -27,10 +27,10 @@ class SearchResultController extends FrontendController
 
     public function ssr(): void
     {
-        $request = Registry::getRequest();
-        $searchAdapter = ContainerFacade::get(SearchAdapter::class);
-        $query = $this->removeOxidParams(parse_url($request->getRequestUrl(), PHP_URL_QUERY));
-        $this->_aViewData['ssr_ff_response'] = $searchAdapter->search($query, false);;
+        $request                             = Registry::getRequest();
+        $searchAdapter                       = ContainerFacade::get(SearchAdapter::class);
+        $query                               = $this->removeOxidParams(parse_url($request->getRequestUrl(), PHP_URL_QUERY));
+        $this->_aViewData['ssr_ff_response'] = $searchAdapter->search($query, false);
     }
 
     public function proxy(): void

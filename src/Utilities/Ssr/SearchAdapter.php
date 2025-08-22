@@ -30,7 +30,7 @@ class SearchAdapter
         return $response->getBody()->getContents();
     }
 
-    private function createEndpoint(string $paramString, bool $navigationRequest = false): string
+    private function createEndpoint(string $paramString, bool $navigationRequest): string
     {
         $channel    = (string) $this->moduleSettingService->getCollection('ffChannel', 'ffwebcomponents')['en'];
         $endpoint   = $navigationRequest ? 'navigation' : 'search';
