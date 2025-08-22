@@ -8,8 +8,10 @@ use Omikron\FactFinder\Communication\Client\ClientBuilder;
 use Omikron\FactFinder\Communication\Version;
 use Omikron\FactFinder\Oxid\Event\EnrichProxyDataEvent;
 use Omikron\FactFinder\Oxid\Subscriber\EnrichProxyDataEventSubscriber;
+use Omikron\FactFinder\Oxid\Utilities\Ssr\SearchAdapter;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -21,6 +23,14 @@ class SearchResultController extends FrontendController
         parent::__construct();
 
         $this->_sThisTemplate = '@ffwebcomponents/webcomponents/blocks/page/result.html.twig';
+    }
+
+    public function ssr(): void
+    {
+        $request = Registry::getRequest();
+        $searchAdapter = ContainerFacade::get(SearchAdapter::class);
+        $query = $this->removeOxidParams(parse_url($request->getRequestUrl(), PHP_URL_QUERY));
+        $this->_aViewData['ssr_ff_response'] = $searchAdapter->search($query, false);;
     }
 
     public function proxy(): void

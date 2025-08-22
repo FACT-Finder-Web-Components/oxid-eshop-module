@@ -92,6 +92,13 @@ $aModule = [
         ],
         [
             'group'    => 'ffAdvanced',
+            'name'     => 'ffUseSsr',
+            'type'     => 'bool',
+            'value'    => false,
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffAdvanced',
             'name'     => 'ffSidAsUserId',
             'type'     => 'bool',
             'value'    => false,

@@ -42,6 +42,7 @@ class Communication implements ParametersSourceInterface
             'currency-country-code' => $this->getLocale($this->view->getActiveLangAbbr()),
             'search-immediate'      => $this->isSearch() || $this->useForCategories() || $this->useProxy() ? 'true' : 'false',
             'category-page'         => $this->useForCategories() ? $this->getCategoryPath($category) : null,
+            'useSsr'                => $this->useSsr(),
         ];
 
         return $params;
@@ -116,5 +117,10 @@ class Communication implements ParametersSourceInterface
     private function useProxy(): bool
     {
         return (bool) $this->moduleSettingService->getBoolean('ffUseProxy', 'ffwebcomponents');
+    }
+
+    private function useSsr(): bool
+    {
+        return (bool) $this->moduleSettingService->getBoolean('ffUseSsr', 'ffwebcomponents');
     }
 }

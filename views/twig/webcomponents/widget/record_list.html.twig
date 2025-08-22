@@ -1,4 +1,4 @@
-<ff-record-list unresolved class="row gridView list-container" subscribe="{{ subscribe|default("true") }}">
+<ff-record-list {% if oViewConf.getFFBoolConfigParam("ffUseSsr") %} ssr {% endif%} unresolved class="row gridView list-container" subscribe="{{ subscribe|default("true") }}">
     <template data-role="record">
         <ff-record class="productData col-xs-12 col-sm-6 col-md-4 productBox">
             <div class="card product-card">
@@ -42,6 +42,13 @@
     </template>
 </ff-record-list>
 
+{% if oViewConf.getFFBoolConfigParam("ffUseSsr") and ssr_ff_response is defined and ssr_ff_response is not empty  %}
+    <script type="text/javascript">
+        document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
+            factfinder.response.dispatch.ssrSearch({{ ssr_ff_response|raw }});
+        });
+    </script>
+{% endif %}
 
 
 {#Scrolling ?? #}

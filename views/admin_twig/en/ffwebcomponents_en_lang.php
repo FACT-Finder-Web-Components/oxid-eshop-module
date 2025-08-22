@@ -16,6 +16,7 @@ $aLang = [
     'SHOP_MODULE_ffTrackingAddToCartCount_count_as_one'          => 'track single click as one',
     'SHOP_MODULE_ffTrackingAddToCartCount_count_selected_amount' => 'track single click with selected amount',
     'SHOP_MODULE_ffUseProxy'                                     => 'Use Proxy?',
+    'SHOP_MODULE_ffUseSsr'                                       => 'Use Server Side Rendering?',
     'SHOP_MODULE_ffSidAsUserId'                                  => 'Send the SID as userId when user not logged in?',
     'SHOP_MODULE_ffCartBtn'                                      => 'Add cart button for product list',
     'SHOP_MODULE_GROUP_ffFeatures'                               => 'Features Settings',
