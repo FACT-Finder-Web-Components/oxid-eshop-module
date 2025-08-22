@@ -21,3 +21,11 @@ services:
     # Twig Extensions
     Omikron\FactFinder\Oxid\Twig\Extensions\Filters\RecordDataJson:
         tags: [ 'twig.extension' ]
+
+    Omikron\FactFinder\Oxid\Utilities\Ssr\SearchAdapter:
+        class: Omikron\FactFinder\Oxid\Utilities\Ssr\SearchAdapter
+        public: true
+
+    Omikron\FactFinder\Communication\Client\ClientBuilder:
+        class: Omikron\FactFinder\Communication\Client\ClientBuilder
+        public: true

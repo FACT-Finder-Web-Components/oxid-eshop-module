@@ -3,6 +3,7 @@
 ### Add
 - Add cart button for product list
 - Implement proxy - more information in README file
+- Support for WebComponents SSR
 
 ### Change
 - Support tab navigation for search, suggest and paging components
