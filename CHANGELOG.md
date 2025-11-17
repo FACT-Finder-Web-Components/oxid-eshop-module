@@ -1,4 +1,8 @@
 # Changelog
+## Unreleased
+### Change
+- Update WebComponents library to version 5.1.7
+
 ## [v6.2.0] - 2025.08.26
 ### Add
 - Add cart button for product list
