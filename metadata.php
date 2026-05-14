@@ -169,6 +169,13 @@ $aModule = [
             'position' => $settingPosition++,
         ],
         [
+            'group'    => 'ffFeatures',
+            'name'     => 'ffRecentlyViewed',
+            'type'     => 'bool',
+            'value'    => false,
+            'position' => $settingPosition++,
+        ],
+        [
             'group'    => 'ffFeed',
             'name'     => 'ffExportAttributes',
             'type'     => 'aarr',

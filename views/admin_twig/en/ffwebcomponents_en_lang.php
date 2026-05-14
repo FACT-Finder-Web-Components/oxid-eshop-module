@@ -28,6 +28,7 @@ $aLang = [
     'SHOP_MODULE_ffSimilarProducts'                              => 'Similar products',
     'SHOP_MODULE_ffPushedProducts'                               => 'Pushed products',
     'SHOP_MODULE_ffPopularSearches'                              => 'Popular Searches',
+    'SHOP_MODULE_ffRecentlyViewed'                               => 'Recently Viewed Products',
     'SHOP_MODULE_GROUP_ffFeed'                                   => 'Feed settings',
     'SHOP_MODULE_ffExportAttributes'                             => 'Exported Attributes',
     'HELP_SHOP_MODULE_ffExportAttributes'                        => 'Select attributes which you want to export. Multi-Attribute set to `No` means that specific attribute will be exported in separate column.',

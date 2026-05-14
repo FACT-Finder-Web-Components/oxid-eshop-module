@@ -1,6 +1,6 @@
 <ff-record-list {% if oViewConf.getFFBoolConfigParam("ffUseSsr") %} ssr {% endif%} unresolved class="row gridView list-container" subscribe="{{ subscribe|default("true") }}">
     <template data-role="record">
-        <ff-record class="productData col-xs-12 col-sm-6 col-md-4 productBox">
+        <ff-record class="productData col-xs-12 col-sm-6 col-md-4 productBox mb-3">
             <div class="card product-card">
                 <div class="product-img-wrapper">
                     <a data-anchor="{{ '{{ masterValues.Deeplink }}' }}" data-redirect="{{ '{{ masterValues.Deeplink }}' }}" data-redirect-target="_self" title="{{ '{{ masterValues.Name }}' }}">
@@ -11,12 +11,12 @@
                 <div class="card-body">
                     <div class="h5 card-title text-center">
                         <a data-redirect="{{ '{{ masterValues.Deeplink }}' }}" data-redirect-target="_self" data-anchor="{{ '{{ masterValues.Deeplink }}' }}" title="{{ '{{ masterValues.Name }}' }}">
-                            <span>{{ '{{ masterValues.Name }}' }}</span>
+                            <span>{{ '{{#if masterValues.Name}} {{masterValues.Name}} {{else}} {{variantValues.0.Name}} {{/if}}' }}</span>
                         </a>
                     </div>
 
                     <div class="d-flex flex-column price">
-                        <span class="lead text-nowrap">{{ '{{ $ masterValues.Price }}' }} *</span>
+                        <span class="lead text-nowrap">{{ '{{#if masterValues.Price}} {{$ masterValues.Price}} {{else}} {{$ variantValues.0.Price}} {{/if}}' }} *</span>
                     </div>
 
                     <div class="listDetails text-center">
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-    </ff-record>
+        </ff-record>
     </template>
 </ff-record-list>
 

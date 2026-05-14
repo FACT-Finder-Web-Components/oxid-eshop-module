@@ -1,0 +1,37 @@
+<ff-recently-viewed wait-for-update>
+    <h3>Recently viewed:</h3>
+
+    <ff-record-list subscribe="false" class="row grid-row grid-view">
+        <template data-role="record">
+            <ff-record class="productData col-xs-12 col-sm-6 col-md-3 productBox">
+                    <div class="card product-card col">
+                        <div class="product-img-wrapper">
+                            <a data-anchor="{{ '{{ Deeplink }}' }}" data-redirect="{{ '{{ Deeplink }}' }}" data-redirect-target="_self" title="{{ '{{ Name }}' }}">
+                                <img width="350" height="220" data-image="{{ '{{ ImageUrl }}' }}" alt="{{ '{{ Name }}' }}" class="product-img" />
+                            </a>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="h5 card-title text-center">
+                                <a data-redirect="{{ '{{ Deeplink }}' }}" data-redirect-target="_self" data-anchor="{{ '{{ Deeplink }}' }}" title="{{ '{{ Name }}' }}">
+                                    <span>{{ '{{ Name }}' }}</span>
+                                </a>
+                            </div>
+
+                            <div class="d-flex flex-column price">
+                                <span class="lead text-nowrap">{{ '{{ $ Price }}' }} *</span>
+                            </div>
+
+                            <div class="listDetails text-center">
+                                <div class="actions text-center">
+                                    <div class="btn-group">
+                                        <a class="btn btn-primary" data-redirect="{{ '{{ Deeplink }}' }}" data-redirect-target="_self" data-anchor="{{ '{{ Deeplink }}' }}">{{ translate({ ident: "MORE_INFO" }) }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ff-record>
+        </template>
+    </ff-record-list>
+</ff-recently-viewed>

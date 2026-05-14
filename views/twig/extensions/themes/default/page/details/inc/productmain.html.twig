@@ -6,6 +6,27 @@
     {% set recordDataJson = oView.getProduct()|record_data_json %}
     {% set useSidAsUserId = oViewConf.useSidAsUserId() %}
 
+    {% if oViewConf.getFFBoolConfigParam("ffRecentlyViewed") %}
+        {% set oProduct = oView.getProduct() %}
+        {% if oProduct %}
+            <script>
+                document.addEventListener(`ffCoreReady`, ({ factfinder }) => {
+                    factfinder.components.recentlyViewed.config({
+                        maxLength: 5,
+                    });
+
+                    factfinder.components.recentlyViewed.addEntry({
+                        Name: '{{ oProduct.oxarticles__oxtitle.value|escape('js') }}',
+                        ProductNumber: '{{ oProduct.oxarticles__oxartnum.value|escape('js') }}',
+                        Deeplink: '{{ oProduct.getLink()|escape('js') }}',
+                        Price: {{ oProduct.getPrice().getBruttoPrice()|default(0) }},
+                        ImageUrl: '{{ oProduct.getPictureUrl(1)|escape('js') }}'
+                    });
+                });
+            </script>
+        {% endif %}
+    {% endif %}
+
     <script>
         registerAddToCartListener({
             selector: '.js-oxProductForm',

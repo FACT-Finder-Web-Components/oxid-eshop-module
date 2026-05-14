@@ -1,7 +1,12 @@
 # Changelog
 ## Unreleased
+### Add
+- Add Recently viewed component
+
 ### Change
-- Update WebComponents library to version 5.1.7
+- Support for Oxid 7.3 and 7.4
+- Support for PHP 8.4
+- Update WebComponents library to version 5.2.1
 
 ## [v6.2.0] - 2025.08.26
 ### Add
