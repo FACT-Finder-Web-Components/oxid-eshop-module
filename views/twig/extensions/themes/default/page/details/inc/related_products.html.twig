@@ -21,5 +21,9 @@
     {% if oViewConf.getFFBoolConfigParam("ffSimilarProducts") %}
         {% include "@ffwebcomponents/webcomponents/widget/similar.html.twig" with {recordId: recordId} %}
     {% endif %}
+
+    {% if oViewConf.getFFBoolConfigParam("ffRecentlyViewed") %}
+        {% include "@ffwebcomponents/webcomponents/widget/recently_viewed.html.twig" with {recordId: recordId} %}
+    {% endif %}
 {% endblock %}
 

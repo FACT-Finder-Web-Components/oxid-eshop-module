@@ -274,6 +274,13 @@ ff-similar-products {
 }
 
 
+/* ---- ff-recently-viewed ---- */
+
+ff-recently-viewed {
+    display: block;
+}
+
+
 /* ---- ff-onfocus-suggest ---- */
 
 ff-onfocus-suggest {
@@ -727,6 +734,13 @@ ff-slider .ffw-slider-button-right {
     transform: translate(0, -50%);
 }
 
+/* Hidden visibility is important to take nested elements out of the tabindex chain when group is collapsed.
+   `display:none` cannot be used because it breaks the recalculation of the slider's position. */
+ff-asn-group .ffw-wrapper:not([opened]),
+ff-asn-group-slider .ffw-wrapper:not([opened]) {
+    visibility: hidden;
+}
+
 ff-asn-remove-all-filters {
     display: inline-block;
 }
@@ -757,64 +771,3 @@ ff-breadcrumb-trail-item {
 .ffw-hidden {
     display: none !important;
 }
-
-.ff-asn, .ff-asn .h4 { font-weight: 300; cursor: pointer; }
-ff-asn-group, ff-asn-group-slider { max-width: none; min-width: auto; }
-.ff-sortbox select { cursor: pointer; }
-.ff-products-per-page select { cursor: pointer; }
-.boxwrapper .toolbar { margin-bottom: 2rem; }
-
-ff-paging-set { display: flex; justify-content: center; }
-.pagination-options { font-size: 12px; line-height: 1.5; }
-.ffw-page-item-container { padding: 5px 10px; border: 1px solid #ddd; border-right: 0; }
-.ffw-page-item-container:hover { color: #009EC0; background-color: #eee; }
-.active .ffw-page-item-container { color: #fff; background: #009EC0; border-color: #009EC0; }
-.prev-link.ffw-page-item-container, .next-link.ffw-page-item-container { cursor: not-allowed; color: #777; background: #fff; }
-.prev-link, [type="previousLink"] .ffw-page-item-container { border-bottom-left-radius: 3px; border-top-left-radius: 3px; }
-.next-link, [type="nextLink"] .ffw-page-item-container { border-bottom-right-radius: 3px; border-top-right-radius: 3px; border-right: 1px solid #ddd; }
-
-.search-col { position: relative; }
-.ffw-suggestContainerWrapper { left:0; right: 0; }
-.ffw-suggestContainerWrapper .searchTermContainer { flex: 1 1 33.333%; }
-.ffw-suggestContainerWrapper .productsContainer { flex: 1 1 66.667%; }
-.ffw-suggestContainerWrapper .searchTermContainer > *, .ffw-suggestContainerWrapper .productsContainer > * { padding: 15px; }
-.containerCaption { font-size: 1.8rem; width: 300px }
-ff-suggest-item { cursor: pointer; }
-ff-suggest-item img { width: 50%; margin: 0 auto; }
-.productsContainer ff-suggest-item { margin-bottom: 10px; text-align: center; }
-.productsContainer .product-name { }
-
-.ff-breadcrumb-trail { font-size: 2rem; margin-bottom: 2rem; font-weight: 300; }
-.ff-breadcrumb-trail .qty { font-weight: 400; }
-ff-breadcrumb-trail-item { font-weight: 400; color: #009EC0; }
-ff-breadcrumb-trail-item:hover { color: #FC6621; }
-
-ff-record { margin-top: 10px !important}
-#productContainer { background: #fff; margin-top: 30px }
-
-.ff-asn { width: 200px; margin-left: 20px; background: #ffffff; }
-
-ff-suggest .ff-popular-searches {
-    width: 300px;
-    padding-bottom: 20px;
-    background: #fff;
-}
-ff-suggest .ff-popular-searches h3 {
-    background: #6a7281;
-    padding: 10px;
-    color: #ffffff;
-}
-
-ff-suggest .ff-popular-searches div {
-    margin: 2px 10px;
-    cursor: pointer;
-}
-
-#searchContainer {
-    background: #fff;
-}
-
-.ff-cart-btn {
-    margin-left: 10px;
-}
-
