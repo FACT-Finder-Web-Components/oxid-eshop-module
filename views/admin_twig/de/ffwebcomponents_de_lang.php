@@ -17,6 +17,7 @@ $aLang = [
     'SHOP_MODULE_ffTrackingAddToCartCount_count_selected_amount' => 'track single click with selected amount',
     'SHOP_MODULE_ffUseProxy'                                     => 'Proxy benutzen?',
     'SHOP_MODULE_ffUseSsr'                                       => 'Verwenden Sie serverseitiges Rendering?',
+    'SHOP_MODULE_ffAtlasAi'                                      => 'Atlas AI support',
     'SHOP_MODULE_ffSidAsUserId'                                  => 'Die SID als userId senden, wenn der Benutzer nicht angemeldet ist?',
     'SHOP_MODULE_ffCartBtn'                                      => 'Schaltfläche Warenkorb hinzufügen für die Produktliste',
     'SHOP_MODULE_GROUP_ffFeatures'                               => 'Features Settings',

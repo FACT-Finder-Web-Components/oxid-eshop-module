@@ -22,7 +22,7 @@
                     apiKey: `{{oViewConf.getFFStringConfigParam('ffApiKey')}}`,
                 },
                 appConfig: {
-                    debug: true,
+                    atlasAiMode: {{ communicationParams['atlasAiSupport'] ? 'true' : 'false' }},
                     fieldRoles: {{ oViewConf.getFFStringConfigParam('ffFieldRoles')|raw }},
                     formatting: {
                         locale: `{{communicationParams['currency-country-code']}}`,

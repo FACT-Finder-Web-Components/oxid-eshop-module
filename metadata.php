@@ -106,6 +106,13 @@ $aModule = [
         ],
         [
             'group'    => 'ffAdvanced',
+            'name'     => 'ffAtlasAi',
+            'type'     => 'bool',
+            'value'    => false,
+            'position' => $settingPosition++,
+        ],
+        [
+            'group'    => 'ffAdvanced',
             'name'     => 'ffCartBtn',
             'type'     => 'bool',
             'value'    => false,

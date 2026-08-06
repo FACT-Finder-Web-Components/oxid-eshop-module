@@ -129,6 +129,16 @@ This functionality uses form data, so there is no need to save first.
     **Note:** If you plan to use proxy, consider reading below paragraph as it requires full instruction how to enable it properly.
 * `How to count single click on "Add to cart" button?` - select how would you like to count single click on "Add to cart" button
 * `Send the SID as userId when user not logged in?`
+* `Atlas AI support` - If Atlas AI support is enabled, the integration handles Atlas AI-specific requirements automatically. This includes creating a dedicated Atlas AI user ID and storing it on the client side across sessions. **Important: If you enable this function, userId will be generated automatically and the previous values for userId that were sent for logged-in users will be overwritten.**
+* `Add cart button for product list` - select this option if you want the Add to cart button on the product list
+
+#### Server Side Rendering
+That option enables Server Side Rendering (SSR) for `ff-record-list` element on category and search result pages.
+That means when user navigate to a page of mentioned type, the HTML output will contain the pre-rendered custom elements.
+This is useful especially in terms of SEO because `ff-record-list` renders product data which could have much impact on page rating in browser.
+Without SSR enabled, web crawlers could not have a chance to scan the element rendered content because it will not yet be rendered on the time of scanning.
+
+**Note:** More information about SSR concept you can find in the article [Server Side Rendering](https://web-components.fact-finder.de/documentation/5.x/server-side-rendering) from Web Components documentation.
 
 #### Proxy
 Proxy feature adds a oxid controller which serves as a middleware between Web Components and FACT-Finder®.

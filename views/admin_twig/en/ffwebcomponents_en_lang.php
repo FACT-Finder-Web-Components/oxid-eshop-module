@@ -18,6 +18,7 @@ $aLang = [
     'SHOP_MODULE_ffUseProxy'                                     => 'Use Proxy?',
     'SHOP_MODULE_ffUseSsr'                                       => 'Use Server Side Rendering?',
     'SHOP_MODULE_ffSidAsUserId'                                  => 'Send the SID as userId when user not logged in?',
+    'SHOP_MODULE_ffAtlasAi'                                      => 'Atlas AI support',
     'SHOP_MODULE_ffCartBtn'                                      => 'Add cart button for product list',
     'SHOP_MODULE_GROUP_ffFeatures'                               => 'Features Settings',
     'SHOP_MODULE_ffUseForCategories'                             => 'Use FACT-Finder® for category pages?',
