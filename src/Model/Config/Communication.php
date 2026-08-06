@@ -43,6 +43,7 @@ class Communication implements ParametersSourceInterface
             'search-immediate'      => $this->isSearch() || $this->useForCategories() || $this->useProxy() ? 'true' : 'false',
             'category-page'         => $this->useForCategories() ? $this->getCategoryPath($category) : null,
             'useSsr'                => $this->useSsr(),
+            'atlasAiSupport'        => $this->atlasAiSupport(),
         ];
 
         return $params;
@@ -122,5 +123,10 @@ class Communication implements ParametersSourceInterface
     private function useSsr(): bool
     {
         return (bool) $this->moduleSettingService->getBoolean('ffUseSsr', 'ffwebcomponents');
+    }
+
+    private function atlasAiSupport(): bool
+    {
+        return (bool) $this->moduleSettingService->getBoolean('ffAtlasAi', 'ffwebcomponents');
     }
 }

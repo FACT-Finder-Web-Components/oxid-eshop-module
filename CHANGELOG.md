@@ -1,4 +1,11 @@
 # Changelog
+## Unreleased
+### Add
+- Add support for Atlas AI
+
+### Change
+- Update WebComponents library to version 5.2.1
+
 ## [v6.3.0] - 2026.05.14
 ### Add
 - Add Recently viewed component
