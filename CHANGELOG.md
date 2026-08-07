@@ -6,6 +6,9 @@
 ### Change
 - Update WebComponents library to version 5.2.1
 
+### Fix
+- Fix ff-suggest component invalid redirections
+
 ## [v6.3.0] - 2026.05.14
 ### Add
 - Add Recently viewed component

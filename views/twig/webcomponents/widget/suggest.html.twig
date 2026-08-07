@@ -1,4 +1,4 @@
-<ff-suggest layout="block" unresolved>
+<ff-suggest layout="block" hide-delay="200" unresolved>
     <section id="searchContainer" class="searchTermContainer">
         <template data-role="popularSearches">
             <div class="ff-popular-searches">
@@ -10,21 +10,21 @@
         <div data-container="searchTerm">
             <p class="containerCaption">{{ translate({ ident: "FF_SEARCH_SUGGESTIONS" }) }}</p>
             <ff-suggest-item type="searchTerm">
-                <a href="#">{{ '{{{name}}}' }}</a>
+                <span class="ff-search-term">{{ '{{{name}}}' }}</span>
             </ff-suggest-item>
         </div>
 
         <div data-container="category">
             <p class="containerCaption">{{ translate({ ident: "FF_CATEGORY_SUGGESTIONS" }) }}</p>
             <ff-suggest-item type="category">
-                <a href="#">{{ '{{{name}}}' }}</a>
+                <span class="ff-category">{{ '{{{name}}}' }}</span>
             </ff-suggest-item>
         </div>
 
         <div data-container="brand">
             <p class="containerCaption">{{ translate({ ident: "FF_BRANDS" }) }}</p>
             <ff-suggest-item type="brand">
-                <a href="#">{{ '{{{name}}}' }}</a>
+                <span class="ff-brand">{{ '{{{name}}}' }}</span>
             </ff-suggest-item>
         </div>
     </section>
@@ -34,7 +34,7 @@
             <p class="containerCaption">{{ translate({ ident: "FF_SUGGESTED_PRODUCTS" }) }}</p>
             <ff-suggest-item type="productName">
                 <img data-image />
-                <a href="#" class="product-name">{{ '{{{name}}}' }}</a>
+                <a href="{{ '{{attributes.Deeplink}}' }}" class="product-name">{{ '{{{name}}}' }}</a>
             </ff-suggest-item>
         </div>
     </section>
