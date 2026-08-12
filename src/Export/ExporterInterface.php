@@ -14,5 +14,5 @@ interface ExporterInterface
      * @param DataProviderInterface $dataProvider
      * @param array                 $columns
      */
-    public function exportEntities(StreamInterface $stream, DataProviderInterface $dataProvider, array $columns): void;
+    public function exportEntities(StreamInterface $stream, DataProviderInterface $dataProvider, array $columns): int;
 }

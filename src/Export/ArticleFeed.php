@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omikron\FactFinder\Oxid\Export;
 
 use Omikron\FactFinder\Oxid\Export\Data\ArticleCollection;
+use Omikron\FactFinder\Oxid\Export\Entity\BatchDataProvider;
 use Omikron\FactFinder\Oxid\Export\Entity\DataProvider;
 use Omikron\FactFinder\Oxid\Export\Field\Article\FieldInterface;
 use Omikron\FactFinder\Oxid\Export\Field\Attribute as AttributeField;
@@ -44,6 +45,42 @@ class ArticleFeed extends AbstractFeed
 
         $stream->addEntity($columns);
         oxNew(Exporter::class)->exportEntities($stream, oxNew(DataProvider::class, oxNew(ArticleCollection::class), ...$fields), $columns);
+    }
+
+    public function generateBatch(
+        StreamInterface $stream,
+        int $offset,
+        int $limit,
+        bool $withHeader = false
+    ): int {
+        $fields = array_merge(
+            $this->getAdditionalFields(),
+            $this->getConfigFields(),
+            $this->fields
+        );
+
+        $columns = array_unique(
+            array_merge(
+                $this->columns,
+                array_map([$this, 'getFieldName'], $fields)
+            )
+        );
+
+        if ($withHeader) {
+            $stream->addEntity($columns);
+        }
+
+        return oxNew(Exporter::class)->exportEntities(
+            $stream,
+            oxNew(
+                BatchDataProvider::class,
+                oxNew(ArticleCollection::class),
+                $offset,
+                $limit,
+                ...$fields
+            ),
+            $columns
+        );
     }
 
     protected function getAdditionalFields(): array

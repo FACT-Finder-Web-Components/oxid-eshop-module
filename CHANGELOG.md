@@ -2,9 +2,10 @@
 ## Unreleased
 ### Add
 - Add support for Atlas AI
+- Add worker command for product export - reduce memory usage and increase performance for big catalogs
 
 ### Change
-- Update WebComponents library to version 5.2.1
+- Update WebComponents library to version 5.3.0
 
 ### Fix
 - Fix ff-suggest component invalid redirections

@@ -258,13 +258,14 @@ By clicking this button, you trigger the whole export process, including upload 
 **Note:** Category export is not available here as clicking button start import on channel but category feed is supposed to be an enrichment for main article feed
 
 #### Console Commands
-There are two console commands located in the module `bin` directory, available for use.
+There are three console commands located in the module `bin` directory, available for use.
 Simply run them using the installed PHP CLI.
 
     php [MODULE_LOCATION]/bin/[COMMAND_NAME].php
 
 * `feed-write.php` - only saves the feed file on local file system
 * `feed-upload.php` - run full integration (just like clicking the `Export Feed` button in admin panel)
+* `feed-worker.php` - run full export using separate worker processes to reduce memory usage and increase performance for big catalogs
 
 If you are using Oxid Enterprise and its multishop feature, you can specify the shop ID by using the `-s` parameter, e.g.
 
@@ -275,6 +276,14 @@ You can check the language identifiers at "Master Settings -> Languages".
 You can specify the type of the feed with the `-t` option. Default value is `product`. In order to switch for category, please use `-t category`
 
 ![Languages](docs/assets/languages.png "Languages")
+
+##### Running export with a worker
+
+Since version 6.4.0, we've introduced a new export flow based on the worker.
+The biggest advantage of this export method is the reduced memory usage, which is especially helpful when you have a large or complex products catalog.
+Currently, this command is only available from the CLI nd can be executed by:
+
+    php [MODULE_LOCATION]/bin/feed-worker.php
 
 ## Tracking
 Here you can find a full [Tracking Guide](https://web-components.fact-finder.de/documentation/4.x/tracking-guide). 

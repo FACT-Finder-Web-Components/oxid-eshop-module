@@ -29,3 +29,7 @@ services:
     Omikron\FactFinder\Communication\Client\ClientBuilder:
         class: Omikron\FactFinder\Communication\Client\ClientBuilder
         public: true
+
+    Omikron\FactFinder\Oxid\Command\ExportBatchCommand:
+        tags:
+            - { name: 'console.command' }
