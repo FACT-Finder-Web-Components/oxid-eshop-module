@@ -29,18 +29,35 @@ class Exporter implements ExporterInterface
         $this->logger            = new FfLogger('exporter');
     }
 
-    public function exportEntities(StreamInterface $stream, DataProviderInterface $dataProvider, array $columns): void
-    {
-        $emptyRecord = array_combine($columns, array_fill(0, count($columns), ''));
+    public function exportEntities(
+        StreamInterface $stream,
+
+        DataProviderInterface $dataProvider,
+        array $columns,
+    ): int {
+        $emptyRecord = array_combine(
+            $columns,
+            array_fill(0, count($columns), '')
+        );
+
+        $count = 0;
 
         foreach ($dataProvider->getEntities() as $entity) {
             try {
-                $entityData = array_merge($emptyRecord, array_intersect_key($entity->toArray(), $emptyRecord)); // phpcs:ignore
+                $entityData = array_merge(
+                    $emptyRecord,
+                    array_intersect_key($entity->toArray(), $emptyRecord)
+                );
+
                 $stream->addEntity($this->prepare($entityData));
+
+                $count++;
             } catch (\Throwable $e) {
                 $this->handleError($e, $entity);
             }
         }
+
+        return $count;
     }
 
     private function handleError(\Throwable $exception, ExportEntityInterface $entity): void

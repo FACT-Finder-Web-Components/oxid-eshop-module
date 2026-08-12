@@ -49,4 +49,25 @@ class ArticleCollection implements \IteratorAggregate, CollectionInterface
 
         return $articleList;
     }
+
+    public function getBatchByOffset(int $offset, int $limit): ListModel
+    {
+        $articleList = oxNew(ArticleList::class);
+        $articleList->setBaseObject(oxNew(Article::class));
+        $articleList->setSqlLimit($offset, $limit);
+
+        $article  = $articleList->getBaseObject();
+        $viewName = $article->getViewName();
+        $active   = $article->getSqlActiveSnippet();
+
+        $query = "SELECT {$article->getSelectFields()}
+        FROM `{$viewName}`
+        WHERE (`{$viewName}`.`oxparentid` = '')";
+
+        $articleList->selectString(
+            $query . ($active ? ' AND ' . $active : '')
+        );
+
+        return $articleList;
+    }
 }
