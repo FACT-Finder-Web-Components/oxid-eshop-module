@@ -51,7 +51,7 @@ class ArticleFeed extends AbstractFeed
         StreamInterface $stream,
         int $offset,
         int $limit,
-        bool $withHeader = false
+        bool $withHeader,
     ): int {
         $fields = array_merge(
             $this->getAdditionalFields(),

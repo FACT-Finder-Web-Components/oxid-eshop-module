@@ -84,11 +84,7 @@ try {
             $filePath,
         ]);
 
-//        $process->setWorkingDirectory(realpath($projectRoot) ?: $projectRoot);
-
-        // A batch containing many products/variants can take some time.
         $process->setTimeout(600);
-
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -113,13 +109,7 @@ try {
         }
 
         $rawOutput = trim($process->getOutput());
-
-        /*
-         * The Symfony/Oxid command may output additional information.
-         * Extract the JSON result returned by ExportBatchCommand.
-         */
         preg_match('/\{.*\}/s', $rawOutput, $matches);
-
         $jsonOutput = $matches[0] ?? null;
 
         if ($jsonOutput === null) {
@@ -151,10 +141,6 @@ try {
             $peakMemory
         );
 
-        /*
-         * No records means that there are no more master products
-         * to export.
-         */
         if ($processedCount === 0) {
             break;
         }
@@ -167,11 +153,7 @@ try {
         date('H:i:s')
     );
 
-    /*
-     * Upload the generated CSV using the existing upload mechanism.
-     */
     $uploader = oxNew(UploadFactory::class)->create();
-
     $handle = fopen($filePath, 'rb');
 
     if ($handle === false) {
@@ -202,9 +184,6 @@ try {
         date('H:i:s')
     );
 
-    /*
-     * Keep the existing PushImport behaviour.
-     */
     $pushImport = oxNew(PushImport::class);
 
     echo sprintf(

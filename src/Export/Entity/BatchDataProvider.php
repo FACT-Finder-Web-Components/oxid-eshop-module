@@ -16,7 +16,7 @@ class BatchDataProvider implements DataProviderInterface
         private readonly ArticleCollection $collection,
         private readonly int $offset,
         private readonly int $limit,
-        FieldInterface ...$fields
+        FieldInterface ...$fields,
     ) {
         $this->fields = $fields;
     }

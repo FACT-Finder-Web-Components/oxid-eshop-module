@@ -29,7 +29,7 @@ class ExportBatchCommand extends Command
 
     protected function execute(
         InputInterface $input,
-        OutputInterface $output
+        OutputInterface $output,
     ): int {
         $shopId     = (int) $input->getArgument('shop_id');
         $languageId = (int) $input->getArgument('language_id');
@@ -46,9 +46,7 @@ class ExportBatchCommand extends Command
         $handle = fopen($filePath, 'ab');
 
         if ($handle === false) {
-            throw new \RuntimeException(
-                sprintf('Unable to open export file: %s', $filePath)
-            );
+            throw new \RuntimeException(sprintf('Unable to open export file: %s', $filePath));
         }
 
         try {
@@ -56,7 +54,8 @@ class ExportBatchCommand extends Command
                 oxNew(Csv::class, $handle),
                 $offset,
                 $limit,
-                $offset === 0
+                $offset === 0,
+                false
             );
 
             $result = [

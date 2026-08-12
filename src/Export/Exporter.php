@@ -33,7 +33,7 @@ class Exporter implements ExporterInterface
         StreamInterface $stream,
 
         DataProviderInterface $dataProvider,
-        array $columns
+        array $columns,
     ): int {
         $emptyRecord = array_combine(
             $columns,
@@ -51,7 +51,7 @@ class Exporter implements ExporterInterface
 
                 $stream->addEntity($this->prepare($entityData));
 
-                ++$count;
+                $count++;
             } catch (\Throwable $e) {
                 $this->handleError($e, $entity);
             }
