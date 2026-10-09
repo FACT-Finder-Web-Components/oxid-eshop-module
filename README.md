@@ -1,3 +1,5 @@
+### This version of the SDK is no longer maintained. We encourage you to use the latest [version](https://github.com/FACT-Finder-Web-Components/oxid-eshop-module).
+
 # FACT-Finder® Web Components for OXID eShop
 
 [![Packagist Version](https://img.shields.io/packagist/v/omikron/oxid-factfinder)](https://packagist.org/packages/omikron/oxid-factfinder)
